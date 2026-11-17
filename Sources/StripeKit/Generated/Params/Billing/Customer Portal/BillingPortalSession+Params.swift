@@ -80,6 +80,10 @@ public struct BillingPortalSessionCreateAfterExpiration: StripeParams {
     }
 }
 
+public enum BillingPortalSessionCreateAfterExpirationType: String, Codable, Sendable {
+    case customerLogin = "customer_login"
+}
+
 /// Configuration for authenticating the customer after the session expires.
 public struct BillingPortalSessionCreateAfterExpirationCustomerLogin: StripeParams {
     /// The Unix timestamp after which the customer can no longer recover this session. Leave unset to allow
@@ -131,6 +135,15 @@ public struct BillingPortalSessionCreateFlowData: StripeParams {
     }
 }
 
+public enum BillingPortalSessionCreateFlowDataType: String, Codable, Sendable {
+    case customerUpdate = "customer_update"
+    case paymentMethodUpdate = "payment_method_update"
+    case subscriptionCancel = "subscription_cancel"
+    case subscriptionPause = "subscription_pause"
+    case subscriptionUpdate = "subscription_update"
+    case subscriptionUpdateConfirm = "subscription_update_confirm"
+}
+
 /// Behavior after the flow is completed.
 public struct BillingPortalSessionCreateFlowDataAfterCompletion: StripeParams {
     /// The specified behavior after the flow is completed.
@@ -151,6 +164,12 @@ public struct BillingPortalSessionCreateFlowDataAfterCompletion: StripeParams {
         case redirect
         case type
     }
+}
+
+public enum BillingPortalSessionCreateFlowDataAfterCompletionType: String, Codable, Sendable {
+    case hostedConfirmation = "hosted_confirmation"
+    case portalHomepage = "portal_homepage"
+    case redirect
 }
 
 /// Configuration when `after_completion.type=hosted_confirmation`.
@@ -220,6 +239,10 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionCoupo
     public init(coupon: String) {
         self.coupon = coupon
     }
+}
+
+public enum BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionType: String, Codable, Sendable {
+    case couponOffer = "coupon_offer"
 }
 
 /// Configuration when `flow_data.type=subscription_pause`.
@@ -295,4 +318,54 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirmDiscoun
         case coupon
         case promotionCode = "promotion_code"
     }
+}
+
+public enum BillingPortalSessionCreateLocale: String, Codable, Sendable {
+    case auto
+    case bg
+    case cs
+    case da
+    case de
+    case el
+    case en
+    case enAu = "en-AU"
+    case enCa = "en-CA"
+    case enGb = "en-GB"
+    case enIe = "en-IE"
+    case enIn = "en-IN"
+    case enNz = "en-NZ"
+    case enSg = "en-SG"
+    case es
+    case es419 = "es-419"
+    case et
+    case fi
+    case fil
+    case fr
+    case frCa = "fr-CA"
+    case hr
+    case hu
+    case id
+    case it
+    case ja
+    case ko
+    case lt
+    case lv
+    case ms
+    case mt
+    case nb
+    case nl
+    case pl
+    case pt
+    case ptBr = "pt-BR"
+    case ro
+    case ru
+    case sk
+    case sl
+    case sv
+    case th
+    case tr
+    case vi
+    case zh
+    case zhHk = "zh-HK"
+    case zhTw = "zh-TW"
 }

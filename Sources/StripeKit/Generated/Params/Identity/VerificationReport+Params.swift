@@ -55,3 +55,8 @@ public struct VerificationReportListParams: StripeParams {
         case verificationSession = "verification_session"
     }
 }
+
+public enum VerificationReportListType: String, Codable, Sendable {
+    case document
+    case idNumber = "id_number"
+}

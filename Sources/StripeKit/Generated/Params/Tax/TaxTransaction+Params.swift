@@ -123,6 +123,11 @@ public struct TaxTransactionListLineItemsParams: StripeParams {
     }
 }
 
+public enum TaxTransactionCreateReversalMode: String, Codable, Sendable {
+    case full
+    case partial
+}
+
 public struct TaxTransactionCreateReversalLineItems: StripeParams {
     /// The amount to reverse, in the [smallest currency
     /// unit](https://docs.stripe.com/currencies#minor-units) in negative.

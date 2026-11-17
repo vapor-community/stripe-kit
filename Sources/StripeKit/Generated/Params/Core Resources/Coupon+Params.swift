@@ -174,6 +174,12 @@ public struct CouponCreateCurrencyOptions: StripeParams {
     }
 }
 
+public enum CouponCreateDuration: String, Codable, Sendable {
+    case forever
+    case once
+    case repeating
+}
+
 public struct CouponUpdateCurrencyOptions: StripeParams {
     /// A positive integer representing the amount to subtract from an invoice total.
     public var amountOff: Int

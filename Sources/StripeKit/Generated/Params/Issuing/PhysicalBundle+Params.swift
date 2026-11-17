@@ -45,3 +45,14 @@ public struct PhysicalBundleListParams: StripeParams {
         case type
     }
 }
+
+public enum PhysicalBundleListStatus: String, Codable, Sendable {
+    case active
+    case inactive
+    case review
+}
+
+public enum PhysicalBundleListType: String, Codable, Sendable {
+    case custom
+    case standard
+}

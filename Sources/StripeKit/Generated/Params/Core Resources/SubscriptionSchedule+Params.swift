@@ -240,6 +240,11 @@ public struct SubscriptionScheduleCreateBillingMode: StripeParams {
     }
 }
 
+public enum SubscriptionScheduleCreateBillingModeType: String, Codable, Sendable {
+    case classic
+    case flexible
+}
+
 /// Configure behavior for flexible billing mode.
 public struct SubscriptionScheduleCreateBillingModeFlexible: StripeParams {
     /// Controls how invoices and invoice items display proration amounts and discount amounts.
@@ -252,6 +257,11 @@ public struct SubscriptionScheduleCreateBillingModeFlexible: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case prorationDiscounts = "proration_discounts"
     }
+}
+
+public enum SubscriptionScheduleCreateBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
+    case included
+    case itemized
 }
 
 /// Object representing the subscription schedule's default settings.
@@ -352,6 +362,16 @@ public struct SubscriptionScheduleCreateDefaultSettingsAutomaticTaxLiability: St
     }
 }
 
+public enum SubscriptionScheduleCreateDefaultSettingsAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum SubscriptionScheduleCreateDefaultSettingsBillingCycleAnchor: String, Codable, Sendable {
+    case automatic
+    case phaseStart = "phase_start"
+}
+
 public struct SubscriptionScheduleCreateDefaultSettingsBillingThresholds: StripeParams {
     /// Monetary threshold that triggers the subscription to advance to a new billing period
     public var amountGte: Int?
@@ -369,6 +389,11 @@ public struct SubscriptionScheduleCreateDefaultSettingsBillingThresholds: Stripe
         case amountGte = "amount_gte"
         case resetBillingCycleAnchor = "reset_billing_cycle_anchor"
     }
+}
+
+public enum SubscriptionScheduleCreateDefaultSettingsCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
 }
 
 /// All invoices will be billed using the specified settings.
@@ -431,6 +456,11 @@ public struct SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuer: St
     }
 }
 
+public enum SubscriptionScheduleCreateDefaultSettingsInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
 public struct SubscriptionScheduleCreateDefaultSettingsTransferData: StripeParams {
     /// ID of an existing, connected Stripe account.
     public var destination: String
@@ -448,6 +478,13 @@ public struct SubscriptionScheduleCreateDefaultSettingsTransferData: StripeParam
         case amountPercent = "amount_percent"
         case destination
     }
+}
+
+public enum SubscriptionScheduleCreateEndBehavior: String, Codable, Sendable {
+    case cancel
+    case none
+    case release
+    case renew
 }
 
 public struct SubscriptionScheduleCreatePauseSchedules: StripeParams {
@@ -495,6 +532,11 @@ public struct SubscriptionScheduleCreatePauseSchedulesPausePauseAt: StripeParams
         self.type = type
         self.timestamp = timestamp
     }
+}
+
+public enum SubscriptionScheduleCreatePauseSchedulesPausePauseAtType: String, Codable, Sendable {
+    case now
+    case timestamp
 }
 
 /// Settings controlling billing behavior during the pause.
@@ -550,6 +592,11 @@ public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForOutsta
     }
 }
 
+public enum SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType: String, Codable, Sendable {
+    case none
+    case pauseAt = "pause_at"
+}
+
 /// Controls how unused time on subscription items is credited when pausing.
 public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnusedTimeFrom: StripeParams {
     /// Determines which point in the billing period unused time is credited from. When adding a pause
@@ -559,6 +606,21 @@ public struct SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnused
     public init(type: SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnusedTimeFromType? = nil) {
         self.type = type
     }
+}
+
+public enum SubscriptionScheduleCreatePauseSchedulesPauseSettingsBillForUnusedTimeFromType: String, Codable, Sendable {
+    case itemCurrentPeriodStart = "item_current_period_start"
+    case none
+    case pauseAt = "pause_at"
+}
+
+public enum SubscriptionScheduleCreatePauseSchedulesPauseSettingsInvoicingBehavior: String, Codable, Sendable {
+    case invoice
+    case pendingInvoiceItem = "pending_invoice_item"
+}
+
+public enum SubscriptionScheduleCreatePauseSchedulesPauseSettingsType: String, Codable, Sendable {
+    case subscription
 }
 
 /// Configuration for when and how the subscription resumes.
@@ -596,6 +658,12 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAt: StripePara
     }
 }
 
+public enum SubscriptionScheduleCreatePauseSchedulesResumeResumeAtType: String, Codable, Sendable {
+    case duration
+    case now
+    case timestamp
+}
+
 /// The duration after which to resume the subscription. Required when `type` is `duration`.
 public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDuration: StripeParams {
     /// The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
@@ -612,6 +680,13 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDuration: St
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum SubscriptionScheduleCreatePauseSchedulesResumeResumeAtDurationInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// Settings controlling how the subscription resumes.
@@ -638,6 +713,22 @@ public struct SubscriptionScheduleCreatePauseSchedulesResumeSettings: StripePara
         case paymentBehavior = "payment_behavior"
         case prorationBehavior = "proration_behavior"
     }
+}
+
+public enum SubscriptionScheduleCreatePauseSchedulesResumeSettingsBillingCycleAnchor: String, Codable, Sendable {
+    case resumeAt = "resume_at"
+    case unchanged
+}
+
+public enum SubscriptionScheduleCreatePauseSchedulesResumeSettingsPaymentBehavior: String, Codable, Sendable {
+    case resumeOnPaymentAttempt = "resume_on_payment_attempt"
+    case resumeOnPaymentSuccess = "resume_on_payment_success"
+}
+
+public enum SubscriptionScheduleCreatePauseSchedulesResumeSettingsProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }
 
 public struct SubscriptionScheduleCreatePhases: StripeParams {
@@ -919,6 +1010,19 @@ public struct SubscriptionScheduleCreatePhasesItemsPriceDataRecurring: StripePar
     }
 }
 
+public enum SubscriptionScheduleCreatePhasesItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum SubscriptionScheduleCreatePhasesItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public struct SubscriptionScheduleCreatePhasesAddInvoiceItems: StripeParams {
     /// Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
     public var discountable: Bool?
@@ -1014,6 +1118,12 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEnd: StripePa
     }
 }
 
+public enum SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodEndType: String, Codable, Sendable {
+    case minItemPeriodEnd = "min_item_period_end"
+    case phaseEnd = "phase_end"
+    case timestamp
+}
+
 /// Start of the invoice item period.
 public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStart: StripeParams {
     /// Select how to calculate the start of the invoice item period.
@@ -1026,6 +1136,12 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStart: Stripe
         self.type = type
         self.timestamp = timestamp
     }
+}
+
+public enum SubscriptionScheduleCreatePhasesAddInvoiceItemsPeriodStartType: String, Codable, Sendable {
+    case maxItemPeriodStart = "max_item_period_start"
+    case phaseStart = "phase_start"
+    case timestamp
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
@@ -1067,6 +1183,12 @@ public struct SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceData: StripePa
     }
 }
 
+public enum SubscriptionScheduleCreatePhasesAddInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// Automatic tax settings for this phase.
 public struct SubscriptionScheduleCreatePhasesAutomaticTax: StripeParams {
     /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
@@ -1098,6 +1220,16 @@ public struct SubscriptionScheduleCreatePhasesAutomaticTaxLiability: StripeParam
     }
 }
 
+public enum SubscriptionScheduleCreatePhasesAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum SubscriptionScheduleCreatePhasesBillingCycleAnchor: String, Codable, Sendable {
+    case automatic
+    case phaseStart = "phase_start"
+}
+
 public struct SubscriptionScheduleCreatePhasesBillingThresholds: StripeParams {
     /// Monetary threshold that triggers the subscription to advance to a new billing period
     public var amountGte: Int?
@@ -1115,6 +1247,11 @@ public struct SubscriptionScheduleCreatePhasesBillingThresholds: StripeParams {
         case amountGte = "amount_gte"
         case resetBillingCycleAnchor = "reset_billing_cycle_anchor"
     }
+}
+
+public enum SubscriptionScheduleCreatePhasesCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
 }
 
 public struct SubscriptionScheduleCreatePhasesDiscounts: StripeParams {
@@ -1154,6 +1291,13 @@ public struct SubscriptionScheduleCreatePhasesDuration: StripeParams {
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum SubscriptionScheduleCreatePhasesDurationInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// All invoices will be billed using the specified settings.
@@ -1217,6 +1361,17 @@ public struct SubscriptionScheduleCreatePhasesInvoiceSettingsIssuer: StripeParam
         self.type = type
         self.account = account
     }
+}
+
+public enum SubscriptionScheduleCreatePhasesInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum SubscriptionScheduleCreatePhasesProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }
 
 /// The data with which to automatically create a Transfer for each of the associated subscription's
@@ -1370,6 +1525,16 @@ public struct SubscriptionScheduleUpdateDefaultSettingsAutomaticTaxLiability: St
     }
 }
 
+public enum SubscriptionScheduleUpdateDefaultSettingsAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum SubscriptionScheduleUpdateDefaultSettingsBillingCycleAnchor: String, Codable, Sendable {
+    case automatic
+    case phaseStart = "phase_start"
+}
+
 public struct SubscriptionScheduleUpdateDefaultSettingsBillingThresholds: StripeParams {
     /// Monetary threshold that triggers the subscription to advance to a new billing period
     public var amountGte: Int?
@@ -1387,6 +1552,11 @@ public struct SubscriptionScheduleUpdateDefaultSettingsBillingThresholds: Stripe
         case amountGte = "amount_gte"
         case resetBillingCycleAnchor = "reset_billing_cycle_anchor"
     }
+}
+
+public enum SubscriptionScheduleUpdateDefaultSettingsCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
 }
 
 /// All invoices will be billed using the specified settings.
@@ -1449,6 +1619,11 @@ public struct SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuer: St
     }
 }
 
+public enum SubscriptionScheduleUpdateDefaultSettingsInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
 public struct SubscriptionScheduleUpdateDefaultSettingsTransferData: StripeParams {
     /// ID of an existing, connected Stripe account.
     public var destination: String
@@ -1466,6 +1641,13 @@ public struct SubscriptionScheduleUpdateDefaultSettingsTransferData: StripeParam
         case amountPercent = "amount_percent"
         case destination
     }
+}
+
+public enum SubscriptionScheduleUpdateEndBehavior: String, Codable, Sendable {
+    case cancel
+    case none
+    case release
+    case renew
 }
 
 public struct SubscriptionScheduleUpdatePauseSchedules: StripeParams {
@@ -1513,6 +1695,11 @@ public struct SubscriptionScheduleUpdatePauseSchedulesPausePauseAt: StripeParams
         self.type = type
         self.timestamp = timestamp
     }
+}
+
+public enum SubscriptionScheduleUpdatePauseSchedulesPausePauseAtType: String, Codable, Sendable {
+    case now
+    case timestamp
 }
 
 /// Settings controlling billing behavior during the pause.
@@ -1568,6 +1755,11 @@ public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForOutsta
     }
 }
 
+public enum SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForOutstandingUsageThroughType: String, Codable, Sendable {
+    case none
+    case pauseAt = "pause_at"
+}
+
 /// Controls how unused time on subscription items is credited when pausing.
 public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnusedTimeFrom: StripeParams {
     /// Determines which point in the billing period unused time is credited from. When adding a pause
@@ -1577,6 +1769,21 @@ public struct SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnused
     public init(type: SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnusedTimeFromType? = nil) {
         self.type = type
     }
+}
+
+public enum SubscriptionScheduleUpdatePauseSchedulesPauseSettingsBillForUnusedTimeFromType: String, Codable, Sendable {
+    case itemCurrentPeriodStart = "item_current_period_start"
+    case none
+    case pauseAt = "pause_at"
+}
+
+public enum SubscriptionScheduleUpdatePauseSchedulesPauseSettingsInvoicingBehavior: String, Codable, Sendable {
+    case invoice
+    case pendingInvoiceItem = "pending_invoice_item"
+}
+
+public enum SubscriptionScheduleUpdatePauseSchedulesPauseSettingsType: String, Codable, Sendable {
+    case subscription
 }
 
 public struct SubscriptionScheduleUpdatePauseSchedulesResume: StripeParams {
@@ -1613,6 +1820,12 @@ public struct SubscriptionScheduleUpdatePauseSchedulesResumeResumeAt: StripePara
     }
 }
 
+public enum SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtType: String, Codable, Sendable {
+    case duration
+    case now
+    case timestamp
+}
+
 /// The duration after which to resume the subscription. Required when `type` is `duration`.
 public struct SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDuration: StripeParams {
     /// The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
@@ -1629,6 +1842,13 @@ public struct SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDuration: St
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum SubscriptionScheduleUpdatePauseSchedulesResumeResumeAtDurationInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// Settings controlling how the subscription resumes.
@@ -1655,6 +1875,22 @@ public struct SubscriptionScheduleUpdatePauseSchedulesResumeSettings: StripePara
         case paymentBehavior = "payment_behavior"
         case prorationBehavior = "proration_behavior"
     }
+}
+
+public enum SubscriptionScheduleUpdatePauseSchedulesResumeSettingsBillingCycleAnchor: String, Codable, Sendable {
+    case resumeAt = "resume_at"
+    case unchanged
+}
+
+public enum SubscriptionScheduleUpdatePauseSchedulesResumeSettingsPaymentBehavior: String, Codable, Sendable {
+    case resumeOnPaymentAttempt = "resume_on_payment_attempt"
+    case resumeOnPaymentSuccess = "resume_on_payment_success"
+}
+
+public enum SubscriptionScheduleUpdatePauseSchedulesResumeSettingsProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }
 
 public struct SubscriptionScheduleUpdatePhases: StripeParams {
@@ -1943,6 +2179,19 @@ public struct SubscriptionScheduleUpdatePhasesItemsPriceDataRecurring: StripePar
     }
 }
 
+public enum SubscriptionScheduleUpdatePhasesItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum SubscriptionScheduleUpdatePhasesItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public struct SubscriptionScheduleUpdatePhasesAddInvoiceItems: StripeParams {
     /// Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
     public var discountable: Bool?
@@ -2038,6 +2287,12 @@ public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEnd: StripePa
     }
 }
 
+public enum SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodEndType: String, Codable, Sendable {
+    case minItemPeriodEnd = "min_item_period_end"
+    case phaseEnd = "phase_end"
+    case timestamp
+}
+
 /// Start of the invoice item period.
 public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStart: StripeParams {
     /// Select how to calculate the start of the invoice item period.
@@ -2050,6 +2305,12 @@ public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStart: Stripe
         self.type = type
         self.timestamp = timestamp
     }
+}
+
+public enum SubscriptionScheduleUpdatePhasesAddInvoiceItemsPeriodStartType: String, Codable, Sendable {
+    case maxItemPeriodStart = "max_item_period_start"
+    case phaseStart = "phase_start"
+    case timestamp
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
@@ -2091,6 +2352,12 @@ public struct SubscriptionScheduleUpdatePhasesAddInvoiceItemsPriceData: StripePa
     }
 }
 
+public enum SubscriptionScheduleUpdatePhasesAddInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// Automatic tax settings for this phase.
 public struct SubscriptionScheduleUpdatePhasesAutomaticTax: StripeParams {
     /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
@@ -2122,6 +2389,16 @@ public struct SubscriptionScheduleUpdatePhasesAutomaticTaxLiability: StripeParam
     }
 }
 
+public enum SubscriptionScheduleUpdatePhasesAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum SubscriptionScheduleUpdatePhasesBillingCycleAnchor: String, Codable, Sendable {
+    case automatic
+    case phaseStart = "phase_start"
+}
+
 public struct SubscriptionScheduleUpdatePhasesBillingThresholds: StripeParams {
     /// Monetary threshold that triggers the subscription to advance to a new billing period
     public var amountGte: Int?
@@ -2139,6 +2416,11 @@ public struct SubscriptionScheduleUpdatePhasesBillingThresholds: StripeParams {
         case amountGte = "amount_gte"
         case resetBillingCycleAnchor = "reset_billing_cycle_anchor"
     }
+}
+
+public enum SubscriptionScheduleUpdatePhasesCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
 }
 
 public struct SubscriptionScheduleUpdatePhasesDiscounts: StripeParams {
@@ -2178,6 +2460,13 @@ public struct SubscriptionScheduleUpdatePhasesDuration: StripeParams {
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum SubscriptionScheduleUpdatePhasesDurationInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// One of the forms `end_date` accepts.
@@ -2275,6 +2564,17 @@ public struct SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuer: StripeParam
     }
 }
 
+public enum SubscriptionScheduleUpdatePhasesInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum SubscriptionScheduleUpdatePhasesProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
+}
+
 /// One of the forms `start_date` accepts.
 public enum SubscriptionScheduleUpdatePhasesStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
@@ -2358,4 +2658,10 @@ public enum SubscriptionScheduleUpdatePhasesTrialEnd: Codable, Sendable, Express
             try container.encode(value)
         }
     }
+}
+
+public enum SubscriptionScheduleUpdateProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }

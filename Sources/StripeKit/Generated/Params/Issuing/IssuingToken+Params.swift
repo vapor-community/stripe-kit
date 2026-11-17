@@ -61,3 +61,16 @@ public struct IssuingTokenUpdateParams: StripeParams {
         self.expand = expand
     }
 }
+
+public enum IssuingTokenListStatus: String, Codable, Sendable {
+    case active
+    case deleted
+    case requested
+    case suspended
+}
+
+public enum IssuingTokenUpdateStatus: String, Codable, Sendable {
+    case active
+    case deleted
+    case suspended
+}

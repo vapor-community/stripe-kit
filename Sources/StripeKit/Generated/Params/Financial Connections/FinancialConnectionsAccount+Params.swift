@@ -149,3 +149,17 @@ public struct FinancialConnectionsAccountListAccountHolder: StripeParams {
         case customerAccount = "customer_account"
     }
 }
+
+public enum FinancialConnectionsAccountRefreshFeatures: String, Codable, Sendable {
+    case balance
+    case ownership
+    case transactions
+}
+
+public enum FinancialConnectionsAccountSubscribeFeatures: String, Codable, Sendable {
+    case transactions
+}
+
+public enum FinancialConnectionsAccountUnsubscribeFeatures: String, Codable, Sendable {
+    case transactions
+}

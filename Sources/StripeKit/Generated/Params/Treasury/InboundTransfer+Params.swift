@@ -146,3 +146,26 @@ public struct InboundTransferFailFailureDetails: StripeParams {
         self.code = code
     }
 }
+
+public enum InboundTransferFailFailureDetailsCode: String, Codable, Sendable {
+    case accountClosed = "account_closed"
+    case accountFrozen = "account_frozen"
+    case bankAccountRestricted = "bank_account_restricted"
+    case bankOwnershipChanged = "bank_ownership_changed"
+    case debitNotAuthorized = "debit_not_authorized"
+    case incorrectAccountHolderAddress = "incorrect_account_holder_address"
+    case incorrectAccountHolderName = "incorrect_account_holder_name"
+    case incorrectAccountHolderTaxId = "incorrect_account_holder_tax_id"
+    case insufficientFunds = "insufficient_funds"
+    case invalidAccountNumber = "invalid_account_number"
+    case invalidCurrency = "invalid_currency"
+    case noAccount = "no_account"
+    case other
+}
+
+public enum InboundTransferListStatus: String, Codable, Sendable {
+    case canceled
+    case failed
+    case processing
+    case succeeded
+}

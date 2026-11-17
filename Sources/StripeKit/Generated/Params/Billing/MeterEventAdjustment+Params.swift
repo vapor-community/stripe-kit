@@ -33,6 +33,10 @@ public struct MeterEventAdjustmentCreateParams: StripeParams {
     }
 }
 
+public enum MeterEventAdjustmentCreateType: String, Codable, Sendable {
+    case cancel
+}
+
 /// Specifies which event to cancel.
 public struct MeterEventAdjustmentCreateCancel: StripeParams {
     /// Unique identifier for the event. You can only cancel events within 24 hours of Stripe receiving

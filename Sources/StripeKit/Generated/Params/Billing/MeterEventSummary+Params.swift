@@ -58,3 +58,8 @@ public struct MeterEventSummaryListParams: StripeParams {
         case valueGroupingWindow = "value_grouping_window"
     }
 }
+
+public enum MeterEventSummaryListValueGroupingWindow: String, Codable, Sendable {
+    case day
+    case hour
+}

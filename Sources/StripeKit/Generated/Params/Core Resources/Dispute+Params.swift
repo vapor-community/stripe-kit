@@ -376,6 +376,11 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
     }
 }
 
+public enum DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices: String, Codable, Sendable {
+    case merchandise
+    case services
+}
+
 /// The address to which a physical product was shipped. All fields are required for Visa Compelling
 /// Evidence 3.0 evidence submission.
 public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionShippingAddress: StripeParams {
@@ -505,4 +510,11 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompliance: StripeParams 
     public enum CodingKeys: String, CodingKey {
         case feeAcknowledged = "fee_acknowledged"
     }
+}
+
+public enum DisputeUpdateIntendedSubmissionMethod: String, Codable, Sendable {
+    case manual
+    case preferManual = "prefer_manual"
+    case preferSmartDisputes = "prefer_smart_disputes"
+    case smartDisputes = "smart_disputes"
 }

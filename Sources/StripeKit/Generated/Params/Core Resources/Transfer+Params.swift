@@ -123,3 +123,9 @@ public struct TransferUpdateParams: StripeParams {
         self.metadata = metadata
     }
 }
+
+public enum TransferCreateSourceType: String, Codable, Sendable {
+    case bankAccount = "bank_account"
+    case card
+    case fpx
+}

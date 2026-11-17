@@ -154,3 +154,14 @@ public struct PayoutUpdateParams: StripeParams {
         self.metadata = metadata
     }
 }
+
+public enum PayoutCreateMethod: String, Codable, Sendable {
+    case instant
+    case standard
+}
+
+public enum PayoutCreateSourceType: String, Codable, Sendable {
+    case bankAccount = "bank_account"
+    case card
+    case fpx
+}

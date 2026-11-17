@@ -163,3 +163,65 @@ public struct TaxRateUpdateParams: StripeParams {
         case taxType = "tax_type"
     }
 }
+
+public enum TaxRateCreateTaxType: String, Codable, Sendable {
+    case admissionsTax = "admissions_tax"
+    case amusementTax = "amusement_tax"
+    case attendanceTax = "attendance_tax"
+    case communicationsTax = "communications_tax"
+    case digitalExciseTax = "digital_excise_tax"
+    case entertainmentTax = "entertainment_tax"
+    case getFund = "get_fund"
+    case grossReceiptsTax = "gross_receipts_tax"
+    case gst
+    case hospitalityTax = "hospitality_tax"
+    case hst
+    case igst
+    case jct
+    case leaseTax = "lease_tax"
+    case luxuryTax = "luxury_tax"
+    case massTransitParkingTax = "mass_transit_parking_tax"
+    case nhil
+    case parkingTax = "parking_tax"
+    case pst
+    case qst
+    case resortTax = "resort_tax"
+    case retailDeliveryFee = "retail_delivery_fee"
+    case rst
+    case salesTax = "sales_tax"
+    case serviceTax = "service_tax"
+    case tourismTax = "tourism_tax"
+    case utilityUsersTax = "utility_users_tax"
+    case vat
+}
+
+public enum TaxRateUpdateTaxType: String, Codable, Sendable {
+    case admissionsTax = "admissions_tax"
+    case amusementTax = "amusement_tax"
+    case attendanceTax = "attendance_tax"
+    case communicationsTax = "communications_tax"
+    case digitalExciseTax = "digital_excise_tax"
+    case entertainmentTax = "entertainment_tax"
+    case getFund = "get_fund"
+    case grossReceiptsTax = "gross_receipts_tax"
+    case gst
+    case hospitalityTax = "hospitality_tax"
+    case hst
+    case igst
+    case jct
+    case leaseTax = "lease_tax"
+    case luxuryTax = "luxury_tax"
+    case massTransitParkingTax = "mass_transit_parking_tax"
+    case nhil
+    case parkingTax = "parking_tax"
+    case pst
+    case qst
+    case resortTax = "resort_tax"
+    case retailDeliveryFee = "retail_delivery_fee"
+    case rst
+    case salesTax = "sales_tax"
+    case serviceTax = "service_tax"
+    case tourismTax = "tourism_tax"
+    case utilityUsersTax = "utility_users_tax"
+    case vat
+}

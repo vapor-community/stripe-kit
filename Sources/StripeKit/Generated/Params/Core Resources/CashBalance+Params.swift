@@ -35,3 +35,9 @@ public struct CashBalanceUpdateSettings: StripeParams {
         case reconciliationMode = "reconciliation_mode"
     }
 }
+
+public enum CashBalanceUpdateSettingsReconciliationMode: String, Codable, Sendable {
+    case automatic
+    case manual
+    case merchantDefault = "merchant_default"
+}

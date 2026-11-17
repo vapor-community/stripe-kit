@@ -105,3 +105,18 @@ public struct ValueListUpdateParams: StripeParams {
         self.name = name
     }
 }
+
+public enum ValueListCreateItemType: String, Codable, Sendable {
+    case account
+    case cardBin = "card_bin"
+    case cardFingerprint = "card_fingerprint"
+    case caseSensitiveString = "case_sensitive_string"
+    case country
+    case cryptoFingerprint = "crypto_fingerprint"
+    case customerId = "customer_id"
+    case email
+    case ipAddress = "ip_address"
+    case sepaDebitFingerprint = "sepa_debit_fingerprint"
+    case string
+    case usBankAccountFingerprint = "us_bank_account_fingerprint"
+}

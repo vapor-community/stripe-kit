@@ -129,6 +129,11 @@ public struct PaymentSourceUpdateParams: StripeParams {
     }
 }
 
+public enum PaymentSourceUpdateAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
 public struct PaymentSourceUpdateOwner: StripeParams {
     /// Owner's address.
     public var address: PaymentSourceUpdateOwnerAddress?

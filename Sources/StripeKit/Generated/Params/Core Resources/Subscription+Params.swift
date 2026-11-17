@@ -695,6 +695,11 @@ public struct SubscriptionCreateAddInvoiceItemsPeriodEnd: StripeParams {
     }
 }
 
+public enum SubscriptionCreateAddInvoiceItemsPeriodEndType: String, Codable, Sendable {
+    case minItemPeriodEnd = "min_item_period_end"
+    case timestamp
+}
+
 /// Start of the invoice item period.
 public struct SubscriptionCreateAddInvoiceItemsPeriodStart: StripeParams {
     /// Select how to calculate the start of the invoice item period.
@@ -707,6 +712,12 @@ public struct SubscriptionCreateAddInvoiceItemsPeriodStart: StripeParams {
         self.type = type
         self.timestamp = timestamp
     }
+}
+
+public enum SubscriptionCreateAddInvoiceItemsPeriodStartType: String, Codable, Sendable {
+    case maxItemPeriodStart = "max_item_period_start"
+    case now
+    case timestamp
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
@@ -748,6 +759,12 @@ public struct SubscriptionCreateAddInvoiceItemsPriceData: StripeParams {
     }
 }
 
+public enum SubscriptionCreateAddInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// Automatic tax settings for this subscription.
 public struct SubscriptionCreateAutomaticTax: StripeParams {
     /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
@@ -777,6 +794,11 @@ public struct SubscriptionCreateAutomaticTaxLiability: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum SubscriptionCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
 }
 
 /// Mutually exclusive with billing_cycle_anchor and only valid with monthly and yearly price intervals.
@@ -825,6 +847,11 @@ public struct SubscriptionCreateBillingMode: StripeParams {
     }
 }
 
+public enum SubscriptionCreateBillingModeType: String, Codable, Sendable {
+    case classic
+    case flexible
+}
+
 /// Configure behavior for flexible billing mode.
 public struct SubscriptionCreateBillingModeFlexible: StripeParams {
     /// Controls how invoices and invoice items display proration amounts and discount amounts.
@@ -837,6 +864,11 @@ public struct SubscriptionCreateBillingModeFlexible: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case prorationDiscounts = "proration_discounts"
     }
+}
+
+public enum SubscriptionCreateBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
+    case included
+    case itemized
 }
 
 public struct SubscriptionCreateBillingSchedules: StripeParams {
@@ -879,6 +911,11 @@ public struct SubscriptionCreateBillingSchedulesBillUntil: StripeParams {
     }
 }
 
+public enum SubscriptionCreateBillingSchedulesBillUntilType: String, Codable, Sendable {
+    case duration
+    case timestamp
+}
+
 /// Specifies the billing period.
 public struct SubscriptionCreateBillingSchedulesBillUntilDuration: StripeParams {
     /// Specifies billing duration. Either `day`, `week`, `month` or `year`.
@@ -897,6 +934,13 @@ public struct SubscriptionCreateBillingSchedulesBillUntilDuration: StripeParams 
     }
 }
 
+public enum SubscriptionCreateBillingSchedulesBillUntilDurationInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
 public struct SubscriptionCreateBillingSchedulesAppliesTo: StripeParams {
     /// Controls which subscription items the billing schedule applies to.
     public var type: SubscriptionCreateBillingSchedulesAppliesToType
@@ -907,6 +951,10 @@ public struct SubscriptionCreateBillingSchedulesAppliesTo: StripeParams {
         self.type = type
         self.price = price
     }
+}
+
+public enum SubscriptionCreateBillingSchedulesAppliesToType: String, Codable, Sendable {
+    case price
 }
 
 public struct SubscriptionCreateBillingThresholds: StripeParams {
@@ -970,6 +1018,11 @@ public enum SubscriptionCreateCancelAt: Codable, Sendable, ExpressibleByIntegerL
             try container.encode(value)
         }
     }
+}
+
+public enum SubscriptionCreateCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
 }
 
 public struct SubscriptionCreateDiscounts: StripeParams {
@@ -1049,6 +1102,11 @@ public struct SubscriptionCreateInvoiceSettingsIssuer: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum SubscriptionCreateInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
 }
 
 public struct SubscriptionCreateItems: StripeParams {
@@ -1214,6 +1272,26 @@ public struct SubscriptionCreateItemsPriceDataRecurring: StripeParams {
     }
 }
 
+public enum SubscriptionCreateItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum SubscriptionCreateItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum SubscriptionCreatePaymentBehavior: String, Codable, Sendable {
+    case allowIncomplete = "allow_incomplete"
+    case defaultIncomplete = "default_incomplete"
+    case errorIfIncomplete = "error_if_incomplete"
+    case pendingIfIncomplete = "pending_if_incomplete"
+}
+
 /// Payment settings to pass to invoices created by the subscription.
 public struct SubscriptionCreatePaymentSettings: StripeParams {
     /// Payment-method-specific configuration to provide to invoices created by the subscription.
@@ -1342,6 +1420,17 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsAcssDebitMand
     }
 }
 
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
+    case business
+    case personal
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBancontact: StripeParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: SubscriptionCreatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage?
@@ -1353,6 +1442,13 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBancontact: S
     public enum CodingKeys: String, CodingKey {
         case preferredLanguage = "preferred_language"
     }
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case fr
+    case nl
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBillie: StripeParams {
@@ -1428,6 +1524,23 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBillieCompany
         case postalCode = "postal_code"
         case state
     }
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
+    case chEin = "ch_ein"
+    case deHrb = "de_hrb"
+    case dkCvr = "dk_cvr"
+    case esCif = "es_cif"
+    case fiTunnus = "fi_tunnus"
+    case frSiren = "fr_siren"
+    case frSiret = "fr_siret"
+    case itRea = "it_rea"
+    case nlKvk = "nl_kvk"
+    case noOrgNumber = "no_org_number"
+    case noPno = "no_pno"
+    case seOrgNumber = "se_org_number"
+    case sePno = "se_pno"
+    case ukCrn = "uk_crn"
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBlik: StripeParams {
@@ -1510,6 +1623,33 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardMandateOp
     }
 }
 
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardNetwork: String, Codable, Sendable {
+    case amex
+    case cartesBancaires = "cartes_bancaires"
+    case diners
+    case discover
+    case eftposAu = "eftpos_au"
+    case girocard
+    case interac
+    case jcb
+    case link
+    case mastercard
+    case unionpay
+    case unknown
+    case visa
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
+    case any
+    case automatic
+    case challenge
+}
+
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsCustomerBalance: StripeParams {
     /// Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
     public var bankTransfer: SubscriptionCreatePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransfer?
@@ -1585,6 +1725,20 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsPaytoMandateO
     }
 }
 
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
+    case dependantSupport = "dependant_support"
+    case government
+    case loan
+    case mortgage
+    case other
+    case pension
+    case personal
+    case retail
+    case salary
+    case tax
+    case utility
+}
+
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsPix: StripeParams {
     /// The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600,
     /// inclusive). If unspecified, defaults to 14400 seconds (4 hours).
@@ -1631,6 +1785,19 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsPixMandateOpt
     }
 }
 
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsPixMandateOptionsAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsPixMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case halfyearly
+    case monthly
+    case quarterly
+    case weekly
+    case yearly
+}
+
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpi: StripeParams {
     /// Configuration options for setting up an eMandate
     public var mandateOptions: SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptions?
@@ -1670,6 +1837,11 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpiMandateOpt
         case description
         case endDate = "end_date"
     }
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccount: StripeParams {
@@ -1722,6 +1894,89 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccount
     }
 }
 
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
+    case checking
+    case savings
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
+    case balances
+    case ownership
+    case paymentMethod = "payment_method"
+    case transactions
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
+    case balances
+    case ownership
+    case transactions
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
+public enum SubscriptionCreatePaymentSettingsPaymentMethodTypes: String, Codable, Sendable {
+    case achCreditTransfer = "ach_credit_transfer"
+    case achDebit = "ach_debit"
+    case acssDebit = "acss_debit"
+    case affirm
+    case alipay
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case custom
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case jpCreditTransfer = "jp_credit_transfer"
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case satispay
+    case sepaCreditTransfer = "sepa_credit_transfer"
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+}
+
+public enum SubscriptionCreatePaymentSettingsSaveDefaultPaymentMethod: String, Codable, Sendable {
+    case off
+    case onSubscription = "on_subscription"
+}
+
 public struct SubscriptionCreatePendingInvoiceItemInterval: StripeParams {
     /// Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
     public var interval: SubscriptionCreatePendingInvoiceItemIntervalInterval
@@ -1738,6 +1993,19 @@ public struct SubscriptionCreatePendingInvoiceItemInterval: StripeParams {
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum SubscriptionCreatePendingInvoiceItemIntervalInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum SubscriptionCreateProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }
 
 /// If specified, the funds from the subscription's invoices will be transferred to the destination and
@@ -1826,6 +2094,17 @@ public struct SubscriptionCreateTrialSettingsEndBehavior: StripeParams {
     }
 }
 
+public enum SubscriptionCreateTrialSettingsEndBehaviorBillingCycleAnchor: String, Codable, Sendable {
+    case now
+    case unchanged
+}
+
+public enum SubscriptionCreateTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
+    case cancel
+    case createInvoice = "create_invoice"
+    case pause
+}
+
 /// Filter subscriptions by their automatic tax settings.
 public struct SubscriptionListAutomaticTax: StripeParams {
     /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
@@ -1835,6 +2114,24 @@ public struct SubscriptionListAutomaticTax: StripeParams {
     public init(enabled: Bool) {
         self.enabled = enabled
     }
+}
+
+public enum SubscriptionListCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
+}
+
+public enum SubscriptionListStatus: String, Codable, Sendable {
+    case active
+    case all
+    case canceled
+    case ended
+    case incomplete
+    case incompleteExpired = "incomplete_expired"
+    case pastDue = "past_due"
+    case paused
+    case trialing
+    case unpaid
 }
 
 /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
@@ -1850,6 +2147,10 @@ public struct SubscriptionMigrateBillingMode: StripeParams {
     }
 }
 
+public enum SubscriptionMigrateBillingModeType: String, Codable, Sendable {
+    case flexible
+}
+
 /// Configure behavior for flexible billing mode.
 public struct SubscriptionMigrateBillingModeFlexible: StripeParams {
     /// Controls how invoices and invoice items display proration amounts and discount amounts.
@@ -1862,6 +2163,11 @@ public struct SubscriptionMigrateBillingModeFlexible: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case prorationDiscounts = "proration_discounts"
     }
+}
+
+public enum SubscriptionMigrateBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
+    case included
+    case itemized
 }
 
 /// Controls what to bill for when pausing the subscription.
@@ -1892,6 +2198,11 @@ public struct SubscriptionPauseBillForOutstandingUsageThrough: StripeParams {
     }
 }
 
+public enum SubscriptionPauseBillForOutstandingUsageThroughType: String, Codable, Sendable {
+    case none
+    case now
+}
+
 /// Controls when to credit for unused time on licensed items. Defaults to `{ type: "now" }`.
 public struct SubscriptionPauseBillForUnusedTimeFrom: StripeParams {
     /// When to credit for unused time.
@@ -1900,6 +2211,21 @@ public struct SubscriptionPauseBillForUnusedTimeFrom: StripeParams {
     public init(type: SubscriptionPauseBillForUnusedTimeFromType) {
         self.type = type
     }
+}
+
+public enum SubscriptionPauseBillForUnusedTimeFromType: String, Codable, Sendable {
+    case itemCurrentPeriodStart = "item_current_period_start"
+    case none
+    case now
+}
+
+public enum SubscriptionPauseInvoicingBehavior: String, Codable, Sendable {
+    case invoice
+    case pendingInvoiceItem = "pending_invoice_item"
+}
+
+public enum SubscriptionPauseType: String, Codable, Sendable {
+    case subscription
 }
 
 /// The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`.
@@ -1912,6 +2238,22 @@ public struct SubscriptionResumeBillingCycleAnchor: StripeParams {
     public init(type: SubscriptionResumeBillingCycleAnchorType) {
         self.type = type
     }
+}
+
+public enum SubscriptionResumeBillingCycleAnchorType: String, Codable, Sendable {
+    case now
+    case unchanged
+}
+
+public enum SubscriptionResumePaymentBehavior: String, Codable, Sendable {
+    case resumeOnPaymentAttempt = "resume_on_payment_attempt"
+    case resumeOnPaymentSuccess = "resume_on_payment_success"
+}
+
+public enum SubscriptionResumeProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }
 
 public struct SubscriptionUpdateAddInvoiceItems: StripeParams {
@@ -2009,6 +2351,11 @@ public struct SubscriptionUpdateAddInvoiceItemsPeriodEnd: StripeParams {
     }
 }
 
+public enum SubscriptionUpdateAddInvoiceItemsPeriodEndType: String, Codable, Sendable {
+    case minItemPeriodEnd = "min_item_period_end"
+    case timestamp
+}
+
 /// Start of the invoice item period.
 public struct SubscriptionUpdateAddInvoiceItemsPeriodStart: StripeParams {
     /// Select how to calculate the start of the invoice item period.
@@ -2021,6 +2368,12 @@ public struct SubscriptionUpdateAddInvoiceItemsPeriodStart: StripeParams {
         self.type = type
         self.timestamp = timestamp
     }
+}
+
+public enum SubscriptionUpdateAddInvoiceItemsPeriodStartType: String, Codable, Sendable {
+    case maxItemPeriodStart = "max_item_period_start"
+    case now
+    case timestamp
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
@@ -2062,6 +2415,12 @@ public struct SubscriptionUpdateAddInvoiceItemsPriceData: StripeParams {
     }
 }
 
+public enum SubscriptionUpdateAddInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// Automatic tax settings for this subscription. We recommend you only include this parameter when the
 /// existing value is being changed.
 public struct SubscriptionUpdateAutomaticTax: StripeParams {
@@ -2094,6 +2453,11 @@ public struct SubscriptionUpdateAutomaticTaxLiability: StripeParams {
     }
 }
 
+public enum SubscriptionUpdateAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
 /// Controls how the subscription's billing cycle anchor changes. Set `type` to `now` to reset the
 /// billing cycle anchor to the current time (in UTC), or `unchanged` to preserve it. For more
 /// information, see the billing cycle
@@ -2105,6 +2469,11 @@ public struct SubscriptionUpdateBillingCycleAnchor: StripeParams {
     public init(type: SubscriptionUpdateBillingCycleAnchorType) {
         self.type = type
     }
+}
+
+public enum SubscriptionUpdateBillingCycleAnchorType: String, Codable, Sendable {
+    case now
+    case unchanged
 }
 
 public struct SubscriptionUpdateBillingSchedules: StripeParams {
@@ -2142,6 +2511,10 @@ public struct SubscriptionUpdateBillingSchedulesAppliesTo: StripeParams {
     }
 }
 
+public enum SubscriptionUpdateBillingSchedulesAppliesToType: String, Codable, Sendable {
+    case price
+}
+
 /// The end date for the billing schedule. You must not set this earlier than current period end for
 /// every applicable subscription item.
 public struct SubscriptionUpdateBillingSchedulesBillUntil: StripeParams {
@@ -2157,6 +2530,11 @@ public struct SubscriptionUpdateBillingSchedulesBillUntil: StripeParams {
         self.duration = duration
         self.timestamp = timestamp
     }
+}
+
+public enum SubscriptionUpdateBillingSchedulesBillUntilType: String, Codable, Sendable {
+    case duration
+    case timestamp
 }
 
 /// Specifies the billing period.
@@ -2175,6 +2553,13 @@ public struct SubscriptionUpdateBillingSchedulesBillUntilDuration: StripeParams 
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum SubscriptionUpdateBillingSchedulesBillUntilDurationInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 public struct SubscriptionUpdateBillingThresholds: StripeParams {
@@ -2265,6 +2650,22 @@ public struct SubscriptionUpdateCancellationDetails: StripeParams {
     }
 }
 
+public enum SubscriptionUpdateCancellationDetailsFeedback: String, Codable, Sendable {
+    case customerService = "customer_service"
+    case lowQuality = "low_quality"
+    case missingFeatures = "missing_features"
+    case other
+    case switchedService = "switched_service"
+    case tooComplex = "too_complex"
+    case tooExpensive = "too_expensive"
+    case unused
+}
+
+public enum SubscriptionUpdateCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
+}
+
 public struct SubscriptionUpdateDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
@@ -2342,6 +2743,11 @@ public struct SubscriptionUpdateInvoiceSettingsIssuer: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum SubscriptionUpdateInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
 }
 
 public struct SubscriptionUpdateItems: StripeParams {
@@ -2529,6 +2935,19 @@ public struct SubscriptionUpdateItemsPriceDataRecurring: StripeParams {
     }
 }
 
+public enum SubscriptionUpdateItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum SubscriptionUpdateItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public struct SubscriptionUpdatePauseCollection: StripeParams {
     /// The payment collection behavior for this subscription while paused.
     public var behavior: SubscriptionUpdatePauseCollectionBehavior
@@ -2544,6 +2963,19 @@ public struct SubscriptionUpdatePauseCollection: StripeParams {
         case behavior
         case resumesAt = "resumes_at"
     }
+}
+
+public enum SubscriptionUpdatePauseCollectionBehavior: String, Codable, Sendable {
+    case keepAsDraft = "keep_as_draft"
+    case markUncollectible = "mark_uncollectible"
+    case void
+}
+
+public enum SubscriptionUpdatePaymentBehavior: String, Codable, Sendable {
+    case allowIncomplete = "allow_incomplete"
+    case defaultIncomplete = "default_incomplete"
+    case errorIfIncomplete = "error_if_incomplete"
+    case pendingIfIncomplete = "pending_if_incomplete"
 }
 
 /// Payment settings to pass to invoices created by the subscription.
@@ -2674,6 +3106,17 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMand
     }
 }
 
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
+    case business
+    case personal
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBancontact: StripeParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage?
@@ -2685,6 +3128,13 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBancontact: S
     public enum CodingKeys: String, CodingKey {
         case preferredLanguage = "preferred_language"
     }
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case fr
+    case nl
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBillie: StripeParams {
@@ -2760,6 +3210,23 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBillieCompany
         case postalCode = "postal_code"
         case state
     }
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
+    case chEin = "ch_ein"
+    case deHrb = "de_hrb"
+    case dkCvr = "dk_cvr"
+    case esCif = "es_cif"
+    case fiTunnus = "fi_tunnus"
+    case frSiren = "fr_siren"
+    case frSiret = "fr_siret"
+    case itRea = "it_rea"
+    case nlKvk = "nl_kvk"
+    case noOrgNumber = "no_org_number"
+    case noPno = "no_pno"
+    case seOrgNumber = "se_org_number"
+    case sePno = "se_pno"
+    case ukCrn = "uk_crn"
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBlik: StripeParams {
@@ -2842,6 +3309,33 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardMandateOp
     }
 }
 
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardNetwork: String, Codable, Sendable {
+    case amex
+    case cartesBancaires = "cartes_bancaires"
+    case diners
+    case discover
+    case eftposAu = "eftpos_au"
+    case girocard
+    case interac
+    case jcb
+    case link
+    case mastercard
+    case unionpay
+    case unknown
+    case visa
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
+    case any
+    case automatic
+    case challenge
+}
+
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCustomerBalance: StripeParams {
     /// Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
     public var bankTransfer: SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransfer?
@@ -2917,6 +3411,20 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateO
     }
 }
 
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
+    case dependantSupport = "dependant_support"
+    case government
+    case loan
+    case mortgage
+    case other
+    case pension
+    case personal
+    case retail
+    case salary
+    case tax
+    case utility
+}
+
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPix: StripeParams {
     /// The number of seconds after PaymentIntent confirmation when the Pix expires (between 60 and 1209600,
     /// inclusive). If unspecified, defaults to 14400 seconds (4 hours).
@@ -2963,6 +3471,19 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPixMandateOpt
     }
 }
 
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPixMandateOptionsAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPixMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case halfyearly
+    case monthly
+    case quarterly
+    case weekly
+    case yearly
+}
+
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpi: StripeParams {
     /// Configuration options for setting up an eMandate
     public var mandateOptions: SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptions?
@@ -3002,6 +3523,11 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOpt
         case description
         case endDate = "end_date"
     }
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccount: StripeParams {
@@ -3054,6 +3580,89 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccount
     }
 }
 
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
+    case checking
+    case savings
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
+    case balances
+    case ownership
+    case paymentMethod = "payment_method"
+    case transactions
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
+    case balances
+    case ownership
+    case transactions
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
+public enum SubscriptionUpdatePaymentSettingsPaymentMethodTypes: String, Codable, Sendable {
+    case achCreditTransfer = "ach_credit_transfer"
+    case achDebit = "ach_debit"
+    case acssDebit = "acss_debit"
+    case affirm
+    case alipay
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case custom
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case jpCreditTransfer = "jp_credit_transfer"
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case satispay
+    case sepaCreditTransfer = "sepa_credit_transfer"
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+}
+
+public enum SubscriptionUpdatePaymentSettingsSaveDefaultPaymentMethod: String, Codable, Sendable {
+    case off
+    case onSubscription = "on_subscription"
+}
+
 public struct SubscriptionUpdatePendingInvoiceItemInterval: StripeParams {
     /// Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
     public var interval: SubscriptionUpdatePendingInvoiceItemIntervalInterval
@@ -3070,6 +3679,19 @@ public struct SubscriptionUpdatePendingInvoiceItemInterval: StripeParams {
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum SubscriptionUpdatePendingInvoiceItemIntervalInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum SubscriptionUpdateProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }
 
 public struct SubscriptionUpdateTransferData: StripeParams {
@@ -3154,4 +3776,15 @@ public struct SubscriptionUpdateTrialSettingsEndBehavior: StripeParams {
         case billingCycleAnchor = "billing_cycle_anchor"
         case missingPaymentMethod = "missing_payment_method"
     }
+}
+
+public enum SubscriptionUpdateTrialSettingsEndBehaviorBillingCycleAnchor: String, Codable, Sendable {
+    case now
+    case unchanged
+}
+
+public enum SubscriptionUpdateTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
+    case cancel
+    case createInvoice = "create_invoice"
+    case pause
 }

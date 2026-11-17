@@ -98,6 +98,10 @@ public struct AlertListParams: StripeParams {
     }
 }
 
+public enum AlertCreateAlertType: String, Codable, Sendable {
+    case usageThreshold = "usage_threshold"
+}
+
 /// The configuration of the usage threshold.
 public struct AlertCreateUsageThreshold: StripeParams {
     /// Defines the threshold value that triggers the alert. The value must be greater than 0.
@@ -118,6 +122,10 @@ public struct AlertCreateUsageThreshold: StripeParams {
     }
 }
 
+public enum AlertCreateUsageThresholdRecurrence: String, Codable, Sendable {
+    case oneTime = "one_time"
+}
+
 public struct AlertCreateUsageThresholdFilters: StripeParams {
     /// What type of filter is being applied to this usage alert.
     public var type: AlertCreateUsageThresholdFiltersType
@@ -128,4 +136,12 @@ public struct AlertCreateUsageThresholdFilters: StripeParams {
         self.type = type
         self.customer = customer
     }
+}
+
+public enum AlertCreateUsageThresholdFiltersType: String, Codable, Sendable {
+    case customer
+}
+
+public enum AlertListAlertType: String, Codable, Sendable {
+    case usageThreshold = "usage_threshold"
 }

@@ -204,6 +204,11 @@ public struct FinancialAccountCloseForwardingSettings: StripeParams {
     }
 }
 
+public enum FinancialAccountCloseForwardingSettingsType: String, Codable, Sendable {
+    case financialAccount = "financial_account"
+    case paymentMethod = "payment_method"
+}
+
 /// Encodes whether a FinancialAccount has access to a particular feature. Stripe or the platform can
 /// control features via the requested field.
 public struct FinancialAccountCreateFeatures: StripeParams {
@@ -417,6 +422,21 @@ public struct FinancialAccountCreatePlatformRestrictions: StripeParams {
         case inboundFlows = "inbound_flows"
         case outboundFlows = "outbound_flows"
     }
+}
+
+public enum FinancialAccountCreatePlatformRestrictionsInboundFlows: String, Codable, Sendable {
+    case restricted
+    case unrestricted
+}
+
+public enum FinancialAccountCreatePlatformRestrictionsOutboundFlows: String, Codable, Sendable {
+    case restricted
+    case unrestricted
+}
+
+public enum FinancialAccountListStatus: String, Codable, Sendable {
+    case closed
+    case `open` = "open"
 }
 
 /// Encodes whether a FinancialAccount has access to a particular feature, with a status enum and
@@ -639,6 +659,11 @@ public struct FinancialAccountUpdateForwardingSettings: StripeParams {
     }
 }
 
+public enum FinancialAccountUpdateForwardingSettingsType: String, Codable, Sendable {
+    case financialAccount = "financial_account"
+    case paymentMethod = "payment_method"
+}
+
 /// The set of functionalities that the platform can restrict on the FinancialAccount.
 public struct FinancialAccountUpdatePlatformRestrictions: StripeParams {
     /// Restricts all inbound money movement.
@@ -655,4 +680,14 @@ public struct FinancialAccountUpdatePlatformRestrictions: StripeParams {
         case inboundFlows = "inbound_flows"
         case outboundFlows = "outbound_flows"
     }
+}
+
+public enum FinancialAccountUpdatePlatformRestrictionsInboundFlows: String, Codable, Sendable {
+    case restricted
+    case unrestricted
+}
+
+public enum FinancialAccountUpdatePlatformRestrictionsOutboundFlows: String, Codable, Sendable {
+    case restricted
+    case unrestricted
 }

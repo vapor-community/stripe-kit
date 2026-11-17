@@ -77,6 +77,14 @@ public struct ForwardingRequestListParams: StripeParams {
     }
 }
 
+public enum ForwardingRequestCreateReplacements: String, Codable, Sendable {
+    case cardCvc = "card_cvc"
+    case cardExpiry = "card_expiry"
+    case cardNumber = "card_number"
+    case cardholderName = "cardholder_name"
+    case requestSignature = "request_signature"
+}
+
 /// The request body and headers to be sent to the destination endpoint.
 public struct ForwardingRequestCreateRequest: StripeParams {
     /// The body payload to send to the destination endpoint.

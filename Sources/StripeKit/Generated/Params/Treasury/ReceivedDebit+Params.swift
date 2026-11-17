@@ -86,6 +86,10 @@ public struct ReceivedDebitListParams: StripeParams {
     }
 }
 
+public enum ReceivedDebitCreateNetwork: String, Codable, Sendable {
+    case ach
+}
+
 /// Initiating payment method details for the object.
 public struct ReceivedDebitCreateInitiatingPaymentMethodDetails: StripeParams {
     /// The source type.
@@ -102,6 +106,10 @@ public struct ReceivedDebitCreateInitiatingPaymentMethodDetails: StripeParams {
         case type
         case usBankAccount = "us_bank_account"
     }
+}
+
+public enum ReceivedDebitCreateInitiatingPaymentMethodDetailsType: String, Codable, Sendable {
+    case usBankAccount = "us_bank_account"
 }
 
 /// Optional fields for `us_bank_account`.
@@ -124,4 +132,9 @@ public struct ReceivedDebitCreateInitiatingPaymentMethodDetailsUsBankAccount: St
         case accountNumber = "account_number"
         case routingNumber = "routing_number"
     }
+}
+
+public enum ReceivedDebitListStatus: String, Codable, Sendable {
+    case failed
+    case succeeded
 }

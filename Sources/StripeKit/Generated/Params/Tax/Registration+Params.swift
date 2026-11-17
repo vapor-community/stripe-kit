@@ -464,6 +464,10 @@ public struct RegistrationCreateCountryOptionsAe: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsAeType: String, Codable, Sendable {
+    case standard
+}
+
 /// Options for the standard registration.
 public struct RegistrationCreateCountryOptionsAeStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
@@ -478,6 +482,11 @@ public struct RegistrationCreateCountryOptionsAeStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsAeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in AL.
 public struct RegistrationCreateCountryOptionsAl: StripeParams {
     /// Type of registration to be created in `country`.
@@ -489,6 +498,10 @@ public struct RegistrationCreateCountryOptionsAl: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsAlType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -505,6 +518,11 @@ public struct RegistrationCreateCountryOptionsAlStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsAlStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in AM.
 public struct RegistrationCreateCountryOptionsAm: StripeParams {
     /// Type of registration to be created in `country`.
@@ -513,6 +531,10 @@ public struct RegistrationCreateCountryOptionsAm: StripeParams {
     public init(type: RegistrationCreateCountryOptionsAmType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsAmType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in AO.
@@ -526,6 +548,10 @@ public struct RegistrationCreateCountryOptionsAo: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsAoType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -542,6 +568,11 @@ public struct RegistrationCreateCountryOptionsAoStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsAoStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in AT.
 public struct RegistrationCreateCountryOptionsAt: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -553,6 +584,13 @@ public struct RegistrationCreateCountryOptionsAt: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsAtType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -569,6 +607,12 @@ public struct RegistrationCreateCountryOptionsAtStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsAtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in AU.
 public struct RegistrationCreateCountryOptionsAu: StripeParams {
     /// Type of registration to be created in `country`.
@@ -580,6 +624,10 @@ public struct RegistrationCreateCountryOptionsAu: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsAuType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -596,6 +644,11 @@ public struct RegistrationCreateCountryOptionsAuStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsAuStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in AW.
 public struct RegistrationCreateCountryOptionsAw: StripeParams {
     /// Type of registration to be created in `country`.
@@ -607,6 +660,10 @@ public struct RegistrationCreateCountryOptionsAw: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsAwType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -623,6 +680,11 @@ public struct RegistrationCreateCountryOptionsAwStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsAwStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in AZ.
 public struct RegistrationCreateCountryOptionsAz: StripeParams {
     /// Type of registration to be created in `country`.
@@ -631,6 +693,10 @@ public struct RegistrationCreateCountryOptionsAz: StripeParams {
     public init(type: RegistrationCreateCountryOptionsAzType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsAzType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in BA.
@@ -644,6 +710,10 @@ public struct RegistrationCreateCountryOptionsBa: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsBaType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -660,6 +730,11 @@ public struct RegistrationCreateCountryOptionsBaStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsBaStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in BB.
 public struct RegistrationCreateCountryOptionsBb: StripeParams {
     /// Type of registration to be created in `country`.
@@ -671,6 +746,10 @@ public struct RegistrationCreateCountryOptionsBb: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsBbType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -687,6 +766,11 @@ public struct RegistrationCreateCountryOptionsBbStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsBbStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in BD.
 public struct RegistrationCreateCountryOptionsBd: StripeParams {
     /// Type of registration to be created in `country`.
@@ -698,6 +782,10 @@ public struct RegistrationCreateCountryOptionsBd: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsBdType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -714,6 +802,11 @@ public struct RegistrationCreateCountryOptionsBdStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsBdStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in BE.
 public struct RegistrationCreateCountryOptionsBe: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -725,6 +818,13 @@ public struct RegistrationCreateCountryOptionsBe: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsBeType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -741,6 +841,12 @@ public struct RegistrationCreateCountryOptionsBeStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsBeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in BF.
 public struct RegistrationCreateCountryOptionsBf: StripeParams {
     /// Type of registration to be created in `country`.
@@ -752,6 +858,10 @@ public struct RegistrationCreateCountryOptionsBf: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsBfType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -768,6 +878,11 @@ public struct RegistrationCreateCountryOptionsBfStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsBfStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in BG.
 public struct RegistrationCreateCountryOptionsBg: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -779,6 +894,13 @@ public struct RegistrationCreateCountryOptionsBg: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsBgType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -795,6 +917,12 @@ public struct RegistrationCreateCountryOptionsBgStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsBgStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in BH.
 public struct RegistrationCreateCountryOptionsBh: StripeParams {
     /// Type of registration to be created in `country`.
@@ -806,6 +934,10 @@ public struct RegistrationCreateCountryOptionsBh: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsBhType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -822,6 +954,11 @@ public struct RegistrationCreateCountryOptionsBhStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsBhStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in BJ.
 public struct RegistrationCreateCountryOptionsBj: StripeParams {
     /// Type of registration to be created in `country`.
@@ -830,6 +967,10 @@ public struct RegistrationCreateCountryOptionsBj: StripeParams {
     public init(type: RegistrationCreateCountryOptionsBjType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsBjType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in BS.
@@ -843,6 +984,10 @@ public struct RegistrationCreateCountryOptionsBs: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsBsType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -859,6 +1004,11 @@ public struct RegistrationCreateCountryOptionsBsStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsBsStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in BW.
 public struct RegistrationCreateCountryOptionsBw: StripeParams {
     /// Type of registration to be created in `country`.
@@ -869,6 +1019,10 @@ public struct RegistrationCreateCountryOptionsBw: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsBwType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in BY.
 public struct RegistrationCreateCountryOptionsBy: StripeParams {
     /// Type of registration to be created in `country`.
@@ -877,6 +1031,10 @@ public struct RegistrationCreateCountryOptionsBy: StripeParams {
     public init(type: RegistrationCreateCountryOptionsByType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsByType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in CA.
@@ -895,6 +1053,12 @@ public struct RegistrationCreateCountryOptionsCa: StripeParams {
         case provinceStandard = "province_standard"
         case type
     }
+}
+
+public enum RegistrationCreateCountryOptionsCaType: String, Codable, Sendable {
+    case provinceStandard = "province_standard"
+    case simplified
+    case standard
 }
 
 /// Options for the provincial tax registration.
@@ -920,6 +1084,10 @@ public struct RegistrationCreateCountryOptionsCd: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsCdType: String, Codable, Sendable {
+    case standard
+}
+
 /// Options for the standard registration.
 public struct RegistrationCreateCountryOptionsCdStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
@@ -934,6 +1102,11 @@ public struct RegistrationCreateCountryOptionsCdStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsCdStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in CH.
 public struct RegistrationCreateCountryOptionsCh: StripeParams {
     /// Type of registration to be created in `country`.
@@ -945,6 +1118,10 @@ public struct RegistrationCreateCountryOptionsCh: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsChType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -961,6 +1138,11 @@ public struct RegistrationCreateCountryOptionsChStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsChStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in CI.
 public struct RegistrationCreateCountryOptionsCi: StripeParams {
     /// Type of registration to be created in `country`.
@@ -969,6 +1151,10 @@ public struct RegistrationCreateCountryOptionsCi: StripeParams {
     public init(type: RegistrationCreateCountryOptionsCiType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsCiType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in CL.
@@ -981,6 +1167,10 @@ public struct RegistrationCreateCountryOptionsCl: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsClType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in CM.
 public struct RegistrationCreateCountryOptionsCm: StripeParams {
     /// Type of registration to be created in `country`.
@@ -989,6 +1179,10 @@ public struct RegistrationCreateCountryOptionsCm: StripeParams {
     public init(type: RegistrationCreateCountryOptionsCmType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsCmType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in CO.
@@ -1001,6 +1195,10 @@ public struct RegistrationCreateCountryOptionsCo: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsCoType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in CR.
 public struct RegistrationCreateCountryOptionsCr: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1011,6 +1209,10 @@ public struct RegistrationCreateCountryOptionsCr: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsCrType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in CV.
 public struct RegistrationCreateCountryOptionsCv: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1019,6 +1221,10 @@ public struct RegistrationCreateCountryOptionsCv: StripeParams {
     public init(type: RegistrationCreateCountryOptionsCvType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsCvType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in CY.
@@ -1032,6 +1238,13 @@ public struct RegistrationCreateCountryOptionsCy: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsCyType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1048,6 +1261,12 @@ public struct RegistrationCreateCountryOptionsCyStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsCyStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in CZ.
 public struct RegistrationCreateCountryOptionsCz: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1059,6 +1278,13 @@ public struct RegistrationCreateCountryOptionsCz: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsCzType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1075,6 +1301,12 @@ public struct RegistrationCreateCountryOptionsCzStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsCzStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in DE.
 public struct RegistrationCreateCountryOptionsDe: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1086,6 +1318,13 @@ public struct RegistrationCreateCountryOptionsDe: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsDeType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1102,6 +1341,12 @@ public struct RegistrationCreateCountryOptionsDeStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsDeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in DK.
 public struct RegistrationCreateCountryOptionsDk: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1113,6 +1358,13 @@ public struct RegistrationCreateCountryOptionsDk: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsDkType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1129,6 +1381,12 @@ public struct RegistrationCreateCountryOptionsDkStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsDkStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in EC.
 public struct RegistrationCreateCountryOptionsEc: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1137,6 +1395,10 @@ public struct RegistrationCreateCountryOptionsEc: StripeParams {
     public init(type: RegistrationCreateCountryOptionsEcType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsEcType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in EE.
@@ -1150,6 +1412,13 @@ public struct RegistrationCreateCountryOptionsEe: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsEeType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1166,6 +1435,12 @@ public struct RegistrationCreateCountryOptionsEeStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsEeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in EG.
 public struct RegistrationCreateCountryOptionsEg: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1174,6 +1449,10 @@ public struct RegistrationCreateCountryOptionsEg: StripeParams {
     public init(type: RegistrationCreateCountryOptionsEgType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsEgType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in ES.
@@ -1187,6 +1466,13 @@ public struct RegistrationCreateCountryOptionsEs: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsEsType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1203,6 +1489,12 @@ public struct RegistrationCreateCountryOptionsEsStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsEsStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in ET.
 public struct RegistrationCreateCountryOptionsEt: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1214,6 +1506,10 @@ public struct RegistrationCreateCountryOptionsEt: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsEtType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1230,6 +1526,11 @@ public struct RegistrationCreateCountryOptionsEtStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsEtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in FI.
 public struct RegistrationCreateCountryOptionsFi: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1241,6 +1542,13 @@ public struct RegistrationCreateCountryOptionsFi: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsFiType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1257,6 +1565,12 @@ public struct RegistrationCreateCountryOptionsFiStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsFiStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in FR.
 public struct RegistrationCreateCountryOptionsFr: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1268,6 +1582,13 @@ public struct RegistrationCreateCountryOptionsFr: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsFrType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1284,6 +1605,12 @@ public struct RegistrationCreateCountryOptionsFrStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsFrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in GB.
 public struct RegistrationCreateCountryOptionsGb: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1295,6 +1622,10 @@ public struct RegistrationCreateCountryOptionsGb: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsGbType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1311,6 +1642,11 @@ public struct RegistrationCreateCountryOptionsGbStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsGbStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in GE.
 public struct RegistrationCreateCountryOptionsGe: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1321,6 +1657,10 @@ public struct RegistrationCreateCountryOptionsGe: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsGeType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in GH.
 public struct RegistrationCreateCountryOptionsGh: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1329,6 +1669,10 @@ public struct RegistrationCreateCountryOptionsGh: StripeParams {
     public init(type: RegistrationCreateCountryOptionsGhType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsGhType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in GN.
@@ -1342,6 +1686,10 @@ public struct RegistrationCreateCountryOptionsGn: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsGnType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1358,6 +1706,11 @@ public struct RegistrationCreateCountryOptionsGnStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsGnStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in GR.
 public struct RegistrationCreateCountryOptionsGr: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1369,6 +1722,13 @@ public struct RegistrationCreateCountryOptionsGr: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsGrType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1385,6 +1745,12 @@ public struct RegistrationCreateCountryOptionsGrStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsGrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in HR.
 public struct RegistrationCreateCountryOptionsHr: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1396,6 +1762,13 @@ public struct RegistrationCreateCountryOptionsHr: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsHrType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1412,6 +1785,12 @@ public struct RegistrationCreateCountryOptionsHrStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsHrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in HU.
 public struct RegistrationCreateCountryOptionsHu: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1423,6 +1802,13 @@ public struct RegistrationCreateCountryOptionsHu: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsHuType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1439,6 +1825,12 @@ public struct RegistrationCreateCountryOptionsHuStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsHuStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in ID.
 public struct RegistrationCreateCountryOptionsId: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1447,6 +1839,10 @@ public struct RegistrationCreateCountryOptionsId: StripeParams {
     public init(type: RegistrationCreateCountryOptionsIdType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsIdType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in IE.
@@ -1460,6 +1856,13 @@ public struct RegistrationCreateCountryOptionsIe: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsIeType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1476,6 +1879,12 @@ public struct RegistrationCreateCountryOptionsIeStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsIeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in IN.
 public struct RegistrationCreateCountryOptionsIn: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1484,6 +1893,10 @@ public struct RegistrationCreateCountryOptionsIn: StripeParams {
     public init(type: RegistrationCreateCountryOptionsInType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsInType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in IS.
@@ -1497,6 +1910,10 @@ public struct RegistrationCreateCountryOptionsIs: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsIsType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1513,6 +1930,11 @@ public struct RegistrationCreateCountryOptionsIsStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsIsStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in IT.
 public struct RegistrationCreateCountryOptionsIt: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1524,6 +1946,13 @@ public struct RegistrationCreateCountryOptionsIt: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsItType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1540,6 +1969,12 @@ public struct RegistrationCreateCountryOptionsItStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsItStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in JP.
 public struct RegistrationCreateCountryOptionsJp: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1551,6 +1986,10 @@ public struct RegistrationCreateCountryOptionsJp: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsJpType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1567,6 +2006,11 @@ public struct RegistrationCreateCountryOptionsJpStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsJpStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in KE.
 public struct RegistrationCreateCountryOptionsKe: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1575,6 +2019,10 @@ public struct RegistrationCreateCountryOptionsKe: StripeParams {
     public init(type: RegistrationCreateCountryOptionsKeType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsKeType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in KG.
@@ -1587,6 +2035,10 @@ public struct RegistrationCreateCountryOptionsKg: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsKgType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in KH.
 public struct RegistrationCreateCountryOptionsKh: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1595,6 +2047,10 @@ public struct RegistrationCreateCountryOptionsKh: StripeParams {
     public init(type: RegistrationCreateCountryOptionsKhType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsKhType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in KR.
@@ -1607,6 +2063,10 @@ public struct RegistrationCreateCountryOptionsKr: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsKrType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in KZ.
 public struct RegistrationCreateCountryOptionsKz: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1615,6 +2075,10 @@ public struct RegistrationCreateCountryOptionsKz: StripeParams {
     public init(type: RegistrationCreateCountryOptionsKzType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsKzType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in LA.
@@ -1627,6 +2091,10 @@ public struct RegistrationCreateCountryOptionsLa: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsLaType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in LK.
 public struct RegistrationCreateCountryOptionsLk: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1635,6 +2103,10 @@ public struct RegistrationCreateCountryOptionsLk: StripeParams {
     public init(type: RegistrationCreateCountryOptionsLkType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsLkType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in LT.
@@ -1648,6 +2120,13 @@ public struct RegistrationCreateCountryOptionsLt: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsLtType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1664,6 +2143,12 @@ public struct RegistrationCreateCountryOptionsLtStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsLtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in LU.
 public struct RegistrationCreateCountryOptionsLu: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1675,6 +2160,13 @@ public struct RegistrationCreateCountryOptionsLu: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsLuType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1691,6 +2183,12 @@ public struct RegistrationCreateCountryOptionsLuStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsLuStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in LV.
 public struct RegistrationCreateCountryOptionsLv: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1702,6 +2200,13 @@ public struct RegistrationCreateCountryOptionsLv: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsLvType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1718,6 +2223,12 @@ public struct RegistrationCreateCountryOptionsLvStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsLvStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in MA.
 public struct RegistrationCreateCountryOptionsMa: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1728,6 +2239,10 @@ public struct RegistrationCreateCountryOptionsMa: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsMaType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in MD.
 public struct RegistrationCreateCountryOptionsMd: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1736,6 +2251,10 @@ public struct RegistrationCreateCountryOptionsMd: StripeParams {
     public init(type: RegistrationCreateCountryOptionsMdType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsMdType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in ME.
@@ -1749,6 +2268,10 @@ public struct RegistrationCreateCountryOptionsMe: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsMeType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1765,6 +2288,11 @@ public struct RegistrationCreateCountryOptionsMeStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsMeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in MK.
 public struct RegistrationCreateCountryOptionsMk: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1776,6 +2304,10 @@ public struct RegistrationCreateCountryOptionsMk: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsMkType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1792,6 +2324,11 @@ public struct RegistrationCreateCountryOptionsMkStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsMkStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in MR.
 public struct RegistrationCreateCountryOptionsMr: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1803,6 +2340,10 @@ public struct RegistrationCreateCountryOptionsMr: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsMrType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1819,6 +2360,11 @@ public struct RegistrationCreateCountryOptionsMrStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsMrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in MT.
 public struct RegistrationCreateCountryOptionsMt: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -1830,6 +2376,13 @@ public struct RegistrationCreateCountryOptionsMt: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsMtType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1846,6 +2399,12 @@ public struct RegistrationCreateCountryOptionsMtStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsMtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in MU.
 public struct RegistrationCreateCountryOptionsMu: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1854,6 +2413,10 @@ public struct RegistrationCreateCountryOptionsMu: StripeParams {
     public init(type: RegistrationCreateCountryOptionsMuType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsMuType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in MX.
@@ -1866,6 +2429,10 @@ public struct RegistrationCreateCountryOptionsMx: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsMxType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in MY.
 public struct RegistrationCreateCountryOptionsMy: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1876,6 +2443,10 @@ public struct RegistrationCreateCountryOptionsMy: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsMyType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in NG.
 public struct RegistrationCreateCountryOptionsNg: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1884,6 +2455,10 @@ public struct RegistrationCreateCountryOptionsNg: StripeParams {
     public init(type: RegistrationCreateCountryOptionsNgType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsNgType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in NL.
@@ -1897,6 +2472,13 @@ public struct RegistrationCreateCountryOptionsNl: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsNlType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1913,6 +2495,12 @@ public struct RegistrationCreateCountryOptionsNlStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsNlStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in NO.
 public struct RegistrationCreateCountryOptionsNo: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1924,6 +2512,10 @@ public struct RegistrationCreateCountryOptionsNo: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsNoType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1940,6 +2532,11 @@ public struct RegistrationCreateCountryOptionsNoStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsNoStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in NP.
 public struct RegistrationCreateCountryOptionsNp: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1948,6 +2545,10 @@ public struct RegistrationCreateCountryOptionsNp: StripeParams {
     public init(type: RegistrationCreateCountryOptionsNpType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsNpType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in NZ.
@@ -1961,6 +2562,10 @@ public struct RegistrationCreateCountryOptionsNz: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsNzType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -1977,6 +2582,11 @@ public struct RegistrationCreateCountryOptionsNzStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsNzStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in OM.
 public struct RegistrationCreateCountryOptionsOm: StripeParams {
     /// Type of registration to be created in `country`.
@@ -1988,6 +2598,10 @@ public struct RegistrationCreateCountryOptionsOm: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsOmType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2004,6 +2618,11 @@ public struct RegistrationCreateCountryOptionsOmStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsOmStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in PE.
 public struct RegistrationCreateCountryOptionsPe: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2014,6 +2633,10 @@ public struct RegistrationCreateCountryOptionsPe: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsPeType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in PH.
 public struct RegistrationCreateCountryOptionsPh: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2022,6 +2645,10 @@ public struct RegistrationCreateCountryOptionsPh: StripeParams {
     public init(type: RegistrationCreateCountryOptionsPhType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsPhType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in PL.
@@ -2035,6 +2662,13 @@ public struct RegistrationCreateCountryOptionsPl: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsPlType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2051,6 +2685,12 @@ public struct RegistrationCreateCountryOptionsPlStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsPlStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in PT.
 public struct RegistrationCreateCountryOptionsPt: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -2062,6 +2702,13 @@ public struct RegistrationCreateCountryOptionsPt: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsPtType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2078,6 +2725,12 @@ public struct RegistrationCreateCountryOptionsPtStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsPtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in RO.
 public struct RegistrationCreateCountryOptionsRo: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -2089,6 +2742,13 @@ public struct RegistrationCreateCountryOptionsRo: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsRoType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2105,6 +2765,12 @@ public struct RegistrationCreateCountryOptionsRoStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsRoStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in RS.
 public struct RegistrationCreateCountryOptionsRs: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2116,6 +2782,10 @@ public struct RegistrationCreateCountryOptionsRs: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsRsType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2132,6 +2802,11 @@ public struct RegistrationCreateCountryOptionsRsStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsRsStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in RU.
 public struct RegistrationCreateCountryOptionsRu: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2142,6 +2817,10 @@ public struct RegistrationCreateCountryOptionsRu: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsRuType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in SA.
 public struct RegistrationCreateCountryOptionsSa: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2150,6 +2829,10 @@ public struct RegistrationCreateCountryOptionsSa: StripeParams {
     public init(type: RegistrationCreateCountryOptionsSaType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsSaType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in SE.
@@ -2163,6 +2846,13 @@ public struct RegistrationCreateCountryOptionsSe: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsSeType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2179,6 +2869,12 @@ public struct RegistrationCreateCountryOptionsSeStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsSeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in SG.
 public struct RegistrationCreateCountryOptionsSg: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2190,6 +2886,10 @@ public struct RegistrationCreateCountryOptionsSg: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsSgType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2206,6 +2906,11 @@ public struct RegistrationCreateCountryOptionsSgStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsSgStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in SI.
 public struct RegistrationCreateCountryOptionsSi: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -2217,6 +2922,13 @@ public struct RegistrationCreateCountryOptionsSi: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsSiType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2233,6 +2945,12 @@ public struct RegistrationCreateCountryOptionsSiStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsSiStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in SK.
 public struct RegistrationCreateCountryOptionsSk: StripeParams {
     /// Type of registration to be created in an EU country.
@@ -2244,6 +2962,13 @@ public struct RegistrationCreateCountryOptionsSk: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsSkType: String, Codable, Sendable {
+    case ioss
+    case ossNonUnion = "oss_non_union"
+    case ossUnion = "oss_union"
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2260,6 +2985,12 @@ public struct RegistrationCreateCountryOptionsSkStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsSkStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case smallSeller = "small_seller"
+    case standard
+}
+
 /// Options for the registration in SN.
 public struct RegistrationCreateCountryOptionsSn: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2268,6 +2999,10 @@ public struct RegistrationCreateCountryOptionsSn: StripeParams {
     public init(type: RegistrationCreateCountryOptionsSnType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsSnType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in SR.
@@ -2281,6 +3016,10 @@ public struct RegistrationCreateCountryOptionsSr: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsSrType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2297,6 +3036,11 @@ public struct RegistrationCreateCountryOptionsSrStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsSrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in TH.
 public struct RegistrationCreateCountryOptionsTh: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2305,6 +3049,10 @@ public struct RegistrationCreateCountryOptionsTh: StripeParams {
     public init(type: RegistrationCreateCountryOptionsThType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsThType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in TJ.
@@ -2317,6 +3065,10 @@ public struct RegistrationCreateCountryOptionsTj: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsTjType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in TR.
 public struct RegistrationCreateCountryOptionsTr: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2325,6 +3077,10 @@ public struct RegistrationCreateCountryOptionsTr: StripeParams {
     public init(type: RegistrationCreateCountryOptionsTrType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsTrType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in TW.
@@ -2337,6 +3093,10 @@ public struct RegistrationCreateCountryOptionsTw: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsTwType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in TZ.
 public struct RegistrationCreateCountryOptionsTz: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2345,6 +3105,10 @@ public struct RegistrationCreateCountryOptionsTz: StripeParams {
     public init(type: RegistrationCreateCountryOptionsTzType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsTzType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in UA.
@@ -2357,6 +3121,10 @@ public struct RegistrationCreateCountryOptionsUa: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsUaType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in UG.
 public struct RegistrationCreateCountryOptionsUg: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2365,6 +3133,10 @@ public struct RegistrationCreateCountryOptionsUg: StripeParams {
     public init(type: RegistrationCreateCountryOptionsUgType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsUgType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in US.
@@ -2439,6 +3211,26 @@ public struct RegistrationCreateCountryOptionsUs: StripeParams {
         case type
         case utilityUsersTax = "utility_users_tax"
     }
+}
+
+public enum RegistrationCreateCountryOptionsUsType: String, Codable, Sendable {
+    case admissionsTax = "admissions_tax"
+    case attendanceTax = "attendance_tax"
+    case digitalExciseTax = "digital_excise_tax"
+    case entertainmentTax = "entertainment_tax"
+    case grossReceiptsTax = "gross_receipts_tax"
+    case hospitalityTax = "hospitality_tax"
+    case localAmusementTax = "local_amusement_tax"
+    case localLeaseTax = "local_lease_tax"
+    case luxuryTax = "luxury_tax"
+    case massTransitParkingTax = "mass_transit_parking_tax"
+    case parkingTax = "parking_tax"
+    case resortTax = "resort_tax"
+    case stateCommunicationsTax = "state_communications_tax"
+    case stateRetailDeliveryFee = "state_retail_delivery_fee"
+    case stateSalesTax = "state_sales_tax"
+    case tourismTax = "tourism_tax"
+    case utilityUsersTax = "utility_users_tax"
 }
 
 /// Options for the admission tax registration.
@@ -2585,6 +3377,12 @@ public struct RegistrationCreateCountryOptionsUsStateSalesTaxElections: StripePa
     }
 }
 
+public enum RegistrationCreateCountryOptionsUsStateSalesTaxElectionsType: String, Codable, Sendable {
+    case localUseTax = "local_use_tax"
+    case simplifiedSellersUseTax = "simplified_sellers_use_tax"
+    case singleLocalUseTax = "single_local_use_tax"
+}
+
 /// Options for the tourism tax registration.
 public struct RegistrationCreateCountryOptionsUsTourismTax: StripeParams {
     /// A jurisdiction code representing the [local
@@ -2620,6 +3418,10 @@ public struct RegistrationCreateCountryOptionsUy: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsUyType: String, Codable, Sendable {
+    case standard
+}
+
 /// Options for the standard registration.
 public struct RegistrationCreateCountryOptionsUyStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
@@ -2634,6 +3436,11 @@ public struct RegistrationCreateCountryOptionsUyStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsUyStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in UZ.
 public struct RegistrationCreateCountryOptionsUz: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2644,6 +3451,10 @@ public struct RegistrationCreateCountryOptionsUz: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsUzType: String, Codable, Sendable {
+    case simplified
+}
+
 /// Options for the registration in VN.
 public struct RegistrationCreateCountryOptionsVn: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2652,6 +3463,10 @@ public struct RegistrationCreateCountryOptionsVn: StripeParams {
     public init(type: RegistrationCreateCountryOptionsVnType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsVnType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in ZA.
@@ -2665,6 +3480,10 @@ public struct RegistrationCreateCountryOptionsZa: StripeParams {
         self.type = type
         self.standard = standard
     }
+}
+
+public enum RegistrationCreateCountryOptionsZaType: String, Codable, Sendable {
+    case standard
 }
 
 /// Options for the standard registration.
@@ -2681,6 +3500,11 @@ public struct RegistrationCreateCountryOptionsZaStandard: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsZaStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
 /// Options for the registration in ZM.
 public struct RegistrationCreateCountryOptionsZm: StripeParams {
     /// Type of registration to be created in `country`.
@@ -2689,6 +3513,10 @@ public struct RegistrationCreateCountryOptionsZm: StripeParams {
     public init(type: RegistrationCreateCountryOptionsZmType) {
         self.type = type
     }
+}
+
+public enum RegistrationCreateCountryOptionsZmType: String, Codable, Sendable {
+    case simplified
 }
 
 /// Options for the registration in ZW.
@@ -2704,6 +3532,10 @@ public struct RegistrationCreateCountryOptionsZw: StripeParams {
     }
 }
 
+public enum RegistrationCreateCountryOptionsZwType: String, Codable, Sendable {
+    case standard
+}
+
 /// Options for the standard registration.
 public struct RegistrationCreateCountryOptionsZwStandard: StripeParams {
     /// Place of supply scheme used in an standard registration.
@@ -2716,6 +3548,18 @@ public struct RegistrationCreateCountryOptionsZwStandard: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case placeOfSupplyScheme = "place_of_supply_scheme"
     }
+}
+
+public enum RegistrationCreateCountryOptionsZwStandardPlaceOfSupplyScheme: String, Codable, Sendable {
+    case inboundGoods = "inbound_goods"
+    case standard
+}
+
+public enum RegistrationListStatus: String, Codable, Sendable {
+    case active
+    case all
+    case expired
+    case scheduled
 }
 
 /// One of the forms `active_from` accepts.

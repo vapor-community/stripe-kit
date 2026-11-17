@@ -199,6 +199,10 @@ public struct PaymentEvaluationCreatePaymentDetailsMoneyMovementDetails: StripeP
     }
 }
 
+public enum PaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsMoneyMovementType: String, Codable, Sendable {
+    case card
+}
+
 /// Describes card money movement details.
 public struct PaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCard: StripeParams {
     /// Describes the presence of the customer during the payment.
@@ -215,6 +219,18 @@ public struct PaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCard: Str
         case customerPresence = "customer_presence"
         case paymentType = "payment_type"
     }
+}
+
+public enum PaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardCustomerPresence: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardPaymentType: String, Codable, Sendable {
+    case oneOff = "one_off"
+    case recurring
+    case setupOneOff = "setup_one_off"
+    case setupRecurring = "setup_recurring"
 }
 
 /// Shipping details for the payment evaluation.

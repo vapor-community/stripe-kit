@@ -376,6 +376,12 @@ public struct ProductCreateDefaultPriceDataCurrencyOptionsCustomUnitAmount: Stri
     }
 }
 
+public enum ProductCreateDefaultPriceDataCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public struct ProductCreateDefaultPriceDataCurrencyOptionsTiers: StripeParams {
     /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
     /// tier adding one. Use `inf` to define a fallback tier.
@@ -481,6 +487,19 @@ public struct ProductCreateDefaultPriceDataRecurring: StripeParams {
     }
 }
 
+public enum ProductCreateDefaultPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum ProductCreateDefaultPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public struct ProductCreateMarketingFeatures: StripeParams {
     /// The marketing feature name. Up to 80 characters long.
     public var name: String
@@ -528,6 +547,16 @@ public struct ProductCreateTaxDetails: StripeParams {
         case performanceLocation = "performance_location"
         case taxCode = "tax_code"
     }
+}
+
+public enum ProductCreateType: String, Codable, Sendable {
+    case good
+    case service
+}
+
+public enum ProductListType: String, Codable, Sendable {
+    case good
+    case service
 }
 
 public struct ProductUpdateMarketingFeatures: StripeParams {

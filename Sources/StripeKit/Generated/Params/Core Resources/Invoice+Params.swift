@@ -935,6 +935,12 @@ public struct InvoiceAddLinesLinesPriceDataProductDataTaxDetails: StripeParams {
     }
 }
 
+public enum InvoiceAddLinesLinesPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// The pricing information for the invoice item.
 public struct InvoiceAddLinesLinesPricing: StripeParams {
     /// The ID of the price object.
@@ -1029,6 +1035,64 @@ public struct InvoiceAddLinesLinesTaxAmountsTaxRateData: StripeParams {
     }
 }
 
+public enum InvoiceAddLinesLinesTaxAmountsTaxRateDataJurisdictionLevel: String, Codable, Sendable {
+    case city
+    case country
+    case county
+    case district
+    case multiple
+    case state
+}
+
+public enum InvoiceAddLinesLinesTaxAmountsTaxRateDataTaxType: String, Codable, Sendable {
+    case admissionsTax = "admissions_tax"
+    case amusementTax = "amusement_tax"
+    case attendanceTax = "attendance_tax"
+    case communicationsTax = "communications_tax"
+    case digitalExciseTax = "digital_excise_tax"
+    case entertainmentTax = "entertainment_tax"
+    case getFund = "get_fund"
+    case grossReceiptsTax = "gross_receipts_tax"
+    case gst
+    case hospitalityTax = "hospitality_tax"
+    case hst
+    case igst
+    case jct
+    case leaseTax = "lease_tax"
+    case luxuryTax = "luxury_tax"
+    case massTransitParkingTax = "mass_transit_parking_tax"
+    case nhil
+    case parkingTax = "parking_tax"
+    case pst
+    case qst
+    case resortTax = "resort_tax"
+    case retailDeliveryFee = "retail_delivery_fee"
+    case rst
+    case salesTax = "sales_tax"
+    case serviceTax = "service_tax"
+    case tourismTax = "tourism_tax"
+    case utilityUsersTax = "utility_users_tax"
+    case vat
+}
+
+public enum InvoiceAddLinesLinesTaxAmountsTaxabilityReason: String, Codable, Sendable {
+    case customerExempt = "customer_exempt"
+    case notCollecting = "not_collecting"
+    case notSubjectToTax = "not_subject_to_tax"
+    case notSupported = "not_supported"
+    case portionProductExempt = "portion_product_exempt"
+    case portionReducedRated = "portion_reduced_rated"
+    case portionStandardRated = "portion_standard_rated"
+    case productExempt = "product_exempt"
+    case productExemptHoliday = "product_exempt_holiday"
+    case proportionallyRated = "proportionally_rated"
+    case reducedRated = "reduced_rated"
+    case reverseCharge = "reverse_charge"
+    case standardRated = "standard_rated"
+    case taxableBasisReduced = "taxable_basis_reduced"
+    case zeroRated = "zero_rated"
+}
+
 /// Settings for automatic tax lookup for this invoice.
 public struct InvoiceCreateAutomaticTax: StripeParams {
     /// Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items
@@ -1059,6 +1123,16 @@ public struct InvoiceCreateAutomaticTaxLiability: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum InvoiceCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum InvoiceCreateCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
 }
 
 public struct InvoiceCreateCustomFields: StripeParams {
@@ -1109,6 +1183,10 @@ public struct InvoiceCreateFromInvoice: StripeParams {
     }
 }
 
+public enum InvoiceCreateFromInvoiceAction: String, Codable, Sendable {
+    case revision
+}
+
 /// The connected account that issues the invoice. The invoice is presented with the branding and
 /// support information of the specified account.
 public struct InvoiceCreateIssuer: StripeParams {
@@ -1121,6 +1199,11 @@ public struct InvoiceCreateIssuer: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum InvoiceCreateIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
 }
 
 /// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
@@ -1250,6 +1333,17 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOp
     }
 }
 
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
+    case business
+    case personal
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBancontact: StripeParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: InvoiceCreatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage?
@@ -1261,6 +1355,13 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBancontact: Stripe
     public enum CodingKeys: String, CodingKey {
         case preferredLanguage = "preferred_language"
     }
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case fr
+    case nl
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBillie: StripeParams {
@@ -1342,6 +1443,23 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBillieCompanyDetai
     }
 }
 
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
+    case chEin = "ch_ein"
+    case deHrb = "de_hrb"
+    case dkCvr = "dk_cvr"
+    case esCif = "es_cif"
+    case fiTunnus = "fi_tunnus"
+    case frSiren = "fr_siren"
+    case frSiret = "fr_siret"
+    case itRea = "it_rea"
+    case nlKvk = "nl_kvk"
+    case noOrgNumber = "no_org_number"
+    case noPno = "no_pno"
+    case seOrgNumber = "se_org_number"
+    case sePno = "se_pno"
+    case ukCrn = "uk_crn"
+}
+
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsCard: StripeParams {
     /// Installment configuration for payments attempted on this invoice. For more information, see the
     /// [installments integration guide](https://docs.stripe.com/payments/installments).
@@ -1396,6 +1514,22 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsCardInstallmentsPl
         self.count = count
         self.interval = interval
     }
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType: String, Codable, Sendable {
+    case bonus
+    case fixedCount = "fixed_count"
+    case revolving
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval: String, Codable, Sendable {
+    case month
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
+    case any
+    case automatic
+    case challenge
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsCustomerBalance: StripeParams {
@@ -1473,6 +1607,20 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsPaytoMandateOption
     }
 }
 
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
+    case dependantSupport = "dependant_support"
+    case government
+    case loan
+    case mortgage
+    case other
+    case pension
+    case personal
+    case retail
+    case salary
+    case tax
+    case utility
+}
+
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsPix: StripeParams {
     /// Determines if the amount includes the IOF tax. Defaults to `never`.
     public var amountIncludesIof: InvoiceCreatePaymentSettingsPaymentMethodOptionsPixAmountIncludesIof?
@@ -1489,6 +1637,11 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsPix: StripeParams 
         case amountIncludesIof = "amount_includes_iof"
         case expiresAfterSeconds = "expires_after_seconds"
     }
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUpi: StripeParams {
@@ -1530,6 +1683,11 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptions:
         case description
         case endDate = "end_date"
     }
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccount: StripeParams {
@@ -1582,6 +1740,89 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinan
     }
 }
 
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
+    case checking
+    case savings
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
+    case balances
+    case ownership
+    case paymentMethod = "payment_method"
+    case transactions
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
+    case balances
+    case ownership
+    case transactions
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
+public enum InvoiceCreatePaymentSettingsPaymentMethodTypes: String, Codable, Sendable {
+    case achCreditTransfer = "ach_credit_transfer"
+    case achDebit = "ach_debit"
+    case acssDebit = "acss_debit"
+    case affirm
+    case alipay
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case custom
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case jpCreditTransfer = "jp_credit_transfer"
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case satispay
+    case sepaCreditTransfer = "sepa_credit_transfer"
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+}
+
+public enum InvoiceCreatePendingInvoiceItemsBehavior: String, Codable, Sendable {
+    case exclude
+    case include
+}
+
 /// The rendering-related settings that control how invoices render in customer-facing interfaces such
 /// as the PDF or hosted invoice page.
 public struct InvoiceCreateRendering: StripeParams {
@@ -1612,6 +1853,11 @@ public struct InvoiceCreateRendering: StripeParams {
     }
 }
 
+public enum InvoiceCreateRenderingAmountTaxDisplay: String, Codable, Sendable {
+    case excludeTax = "exclude_tax"
+    case includeInclusiveTax = "include_inclusive_tax"
+}
+
 /// Invoice pdf rendering options
 public struct InvoiceCreateRenderingPdf: StripeParams {
     /// Page size for invoice PDF. Can be set to `a4`, `letter`, or `auto`. If set to `auto`, invoice PDF
@@ -1626,6 +1872,12 @@ public struct InvoiceCreateRenderingPdf: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case pageSize = "page_size"
     }
+}
+
+public enum InvoiceCreateRenderingPdfPageSize: String, Codable, Sendable {
+    case a4
+    case auto
+    case letter
 }
 
 /// Settings for the cost of shipping for this invoice.
@@ -1718,6 +1970,14 @@ public struct InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMaximum: 
     }
 }
 
+public enum InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMaximumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
+}
+
 /// The lower bound of the estimated range. If empty, represents no lower bound.
 public struct InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMinimum: StripeParams {
     /// A unit of time.
@@ -1729,6 +1989,14 @@ public struct InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMinimum: 
         self.unit = unit
         self.value = value
     }
+}
+
+public enum InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMinimumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -1772,6 +2040,22 @@ public struct InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOption
         case amount
         case taxBehavior = "tax_behavior"
     }
+}
+
+public enum InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum InvoiceCreateShippingCostShippingRateDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum InvoiceCreateShippingCostShippingRateDataType: String, Codable, Sendable {
+    case fixedAmount = "fixed_amount"
 }
 
 /// Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is
@@ -1870,6 +2154,11 @@ public struct InvoiceCreatePreviewAutomaticTaxLiability: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum InvoiceCreatePreviewAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
 }
 
 /// Details about the customer you want to invoice or overrides for an existing customer. If
@@ -2006,6 +2295,12 @@ public struct InvoiceCreatePreviewCustomerDetailsTax: StripeParams {
     }
 }
 
+public enum InvoiceCreatePreviewCustomerDetailsTaxExempt: String, Codable, Sendable {
+    case exempt
+    case none
+    case reverse
+}
+
 public struct InvoiceCreatePreviewCustomerDetailsTaxIds: StripeParams {
     /// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`,
     /// `au_acn`, `au_arn`, `au_wpn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`,
@@ -2030,6 +2325,144 @@ public struct InvoiceCreatePreviewCustomerDetailsTaxIds: StripeParams {
         self.type = type
         self.value = value
     }
+}
+
+public enum InvoiceCreatePreviewCustomerDetailsTaxIdsType: String, Codable, Sendable {
+    case adNrt = "ad_nrt"
+    case aeTrn = "ae_trn"
+    case alTin = "al_tin"
+    case amTin = "am_tin"
+    case aoTin = "ao_tin"
+    case arCuit = "ar_cuit"
+    case auAbn = "au_abn"
+    case auAcn = "au_acn"
+    case auArn = "au_arn"
+    case auWpn = "au_wpn"
+    case awTin = "aw_tin"
+    case azTin = "az_tin"
+    case baTin = "ba_tin"
+    case bbTin = "bb_tin"
+    case bdBin = "bd_bin"
+    case bfIfu = "bf_ifu"
+    case bgUic = "bg_uic"
+    case bhVat = "bh_vat"
+    case bjIfu = "bj_ifu"
+    case boTin = "bo_tin"
+    case brCnpj = "br_cnpj"
+    case brCpf = "br_cpf"
+    case bsTin = "bs_tin"
+    case bwVat = "bw_vat"
+    case byTin = "by_tin"
+    case caBn = "ca_bn"
+    case caGstHst = "ca_gst_hst"
+    case caPstBc = "ca_pst_bc"
+    case caPstMb = "ca_pst_mb"
+    case caPstSk = "ca_pst_sk"
+    case caQst = "ca_qst"
+    case cdNif = "cd_nif"
+    case chUid = "ch_uid"
+    case chVat = "ch_vat"
+    case ciVat = "ci_vat"
+    case clTin = "cl_tin"
+    case cmNiu = "cm_niu"
+    case cnTin = "cn_tin"
+    case coNit = "co_nit"
+    case crTin = "cr_tin"
+    case cvNif = "cv_nif"
+    case czDic = "cz_dic"
+    case deStn = "de_stn"
+    case doRcn = "do_rcn"
+    case ecRuc = "ec_ruc"
+    case egTin = "eg_tin"
+    case esCif = "es_cif"
+    case etTin = "et_tin"
+    case euOssVat = "eu_oss_vat"
+    case euVat = "eu_vat"
+    case foVat = "fo_vat"
+    case frSiren = "fr_siren"
+    case frSiret = "fr_siret"
+    case frSpi = "fr_spi"
+    case gbVat = "gb_vat"
+    case geVat = "ge_vat"
+    case ghTin = "gh_tin"
+    case giTin = "gi_tin"
+    case gnNif = "gn_nif"
+    case hkBr = "hk_br"
+    case hrOib = "hr_oib"
+    case huTin = "hu_tin"
+    case icNif = "ic_nif"
+    case idNpwp = "id_npwp"
+    case ilVat = "il_vat"
+    case inGst = "in_gst"
+    case isKt = "is_kt"
+    case isVat = "is_vat"
+    case itCf = "it_cf"
+    case jpCn = "jp_cn"
+    case jpRn = "jp_rn"
+    case jpTrn = "jp_trn"
+    case kePin = "ke_pin"
+    case kgTin = "kg_tin"
+    case khTin = "kh_tin"
+    case krBrn = "kr_brn"
+    case kzBin = "kz_bin"
+    case laTin = "la_tin"
+    case liUid = "li_uid"
+    case liVat = "li_vat"
+    case lkVat = "lk_vat"
+    case maVat = "ma_vat"
+    case mdCf = "md_cf"
+    case mdVat = "md_vat"
+    case mePib = "me_pib"
+    case mkVat = "mk_vat"
+    case mrNif = "mr_nif"
+    case muVat = "mu_vat"
+    case mxRfc = "mx_rfc"
+    case myFrp = "my_frp"
+    case myItn = "my_itn"
+    case mySst = "my_sst"
+    case mzNuit = "mz_nuit"
+    case ngTin = "ng_tin"
+    case noVat = "no_vat"
+    case noVoec = "no_voec"
+    case npPan = "np_pan"
+    case nzBn = "nz_bn"
+    case nzGst = "nz_gst"
+    case omVat = "om_vat"
+    case peRuc = "pe_ruc"
+    case phTin = "ph_tin"
+    case plNip = "pl_nip"
+    case ptNif = "pt_nif"
+    case pyRuc = "py_ruc"
+    case roTin = "ro_tin"
+    case rsPib = "rs_pib"
+    case ruInn = "ru_inn"
+    case ruKpp = "ru_kpp"
+    case saVat = "sa_vat"
+    case sgGst = "sg_gst"
+    case sgUen = "sg_uen"
+    case siTin = "si_tin"
+    case smCoe = "sm_coe"
+    case snNinea = "sn_ninea"
+    case srFin = "sr_fin"
+    case svNit = "sv_nit"
+    case thVat = "th_vat"
+    case tjTin = "tj_tin"
+    case trTin = "tr_tin"
+    case ttBir = "tt_bir"
+    case ttVat = "tt_vat"
+    case twVat = "tw_vat"
+    case tzVat = "tz_vat"
+    case uaVat = "ua_vat"
+    case ugTin = "ug_tin"
+    case usEin = "us_ein"
+    case uyRuc = "uy_ruc"
+    case uzTin = "uz_tin"
+    case uzVat = "uz_vat"
+    case veRif = "ve_rif"
+    case vnTin = "vn_tin"
+    case zaVat = "za_vat"
+    case zmTin = "zm_tin"
+    case zwTin = "zw_tin"
 }
 
 public struct InvoiceCreatePreviewDiscounts: StripeParams {
@@ -2229,6 +2662,18 @@ public struct InvoiceCreatePreviewInvoiceItemsPriceData: StripeParams {
     }
 }
 
+public enum InvoiceCreatePreviewInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum InvoiceCreatePreviewInvoiceItemsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// The connected account that issues the invoice. The invoice is presented with the branding and
 /// support information of the specified account.
 public struct InvoiceCreatePreviewIssuer: StripeParams {
@@ -2241,6 +2686,16 @@ public struct InvoiceCreatePreviewIssuer: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum InvoiceCreatePreviewIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum InvoiceCreatePreviewPreviewMode: String, Codable, Sendable {
+    case next
+    case recurring
 }
 
 /// The schedule creation or modification params to apply as a preview. Cannot be used with
@@ -2296,6 +2751,11 @@ public struct InvoiceCreatePreviewScheduleDetailsBillingMode: StripeParams {
     }
 }
 
+public enum InvoiceCreatePreviewScheduleDetailsBillingModeType: String, Codable, Sendable {
+    case classic
+    case flexible
+}
+
 /// Configure behavior for flexible billing mode.
 public struct InvoiceCreatePreviewScheduleDetailsBillingModeFlexible: StripeParams {
     /// Controls how invoices and invoice items display proration amounts and discount amounts.
@@ -2308,6 +2768,16 @@ public struct InvoiceCreatePreviewScheduleDetailsBillingModeFlexible: StripePara
     public enum CodingKeys: String, CodingKey {
         case prorationDiscounts = "proration_discounts"
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
+    case included
+    case itemized
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsEndBehavior: String, Codable, Sendable {
+    case cancel
+    case release
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPauseSchedules: StripeParams {
@@ -2355,6 +2825,11 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPausePauseAt: Str
         self.type = type
         self.timestamp = timestamp
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPausePauseAtType: String, Codable, Sendable {
+    case now
+    case timestamp
 }
 
 /// Settings controlling billing behavior during the pause.
@@ -2410,6 +2885,11 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBill
     }
 }
 
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBillForOutstandingUsageThroughType: String, Codable, Sendable {
+    case none
+    case pauseAt = "pause_at"
+}
+
 /// Controls how unused time on subscription items is credited when pausing.
 public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBillForUnusedTimeFrom: StripeParams {
     /// Determines which point in the billing period unused time is credited from. When adding a pause
@@ -2419,6 +2899,21 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBill
     public init(type: InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBillForUnusedTimeFromType? = nil) {
         self.type = type
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBillForUnusedTimeFromType: String, Codable, Sendable {
+    case itemCurrentPeriodStart = "item_current_period_start"
+    case none
+    case pauseAt = "pause_at"
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsInvoicingBehavior: String, Codable, Sendable {
+    case invoice
+    case pendingInvoiceItem = "pending_invoice_item"
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsType: String, Codable, Sendable {
+    case subscription
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResume: StripeParams {
@@ -2455,6 +2950,12 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAt: S
     }
 }
 
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtType: String, Codable, Sendable {
+    case duration
+    case now
+    case timestamp
+}
+
 /// The duration after which to resume the subscription. Required when `type` is `duration`.
 public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtDuration: StripeParams {
     /// The time unit for the resume duration. One of `day`, `week`, `month`, or `year`.
@@ -2471,6 +2972,13 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtDur
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtDurationInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// Settings controlling how the subscription resumes.
@@ -2497,6 +3005,22 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettings: S
         case paymentBehavior = "payment_behavior"
         case prorationBehavior = "proration_behavior"
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettingsBillingCycleAnchor: String, Codable, Sendable {
+    case resumeAt = "resume_at"
+    case unchanged
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettingsPaymentBehavior: String, Codable, Sendable {
+    case resumeOnPaymentAttempt = "resume_on_payment_attempt"
+    case resumeOnPaymentSuccess = "resume_on_payment_success"
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettingsProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPhases: StripeParams {
@@ -2785,6 +3309,19 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesItemsPriceDataRecurring: 
     }
 }
 
+public enum InvoiceCreatePreviewScheduleDetailsPhasesItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPhasesItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItems: StripeParams {
     /// Controls whether discounts apply to this invoice item. Defaults to true if no value is provided.
     public var discountable: Bool?
@@ -2880,6 +3417,12 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodEnd:
     }
 }
 
+public enum InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodEndType: String, Codable, Sendable {
+    case minItemPeriodEnd = "min_item_period_end"
+    case phaseEnd = "phase_end"
+    case timestamp
+}
+
 /// Start of the invoice item period.
 public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStart: StripeParams {
     /// Select how to calculate the start of the invoice item period.
@@ -2892,6 +3435,12 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStar
         self.type = type
         self.timestamp = timestamp
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStartType: String, Codable, Sendable {
+    case maxItemPeriodStart = "max_item_period_start"
+    case phaseStart = "phase_start"
+    case timestamp
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
@@ -2933,6 +3482,12 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPriceData:
     }
 }
 
+public enum InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// Automatic tax settings for this phase.
 public struct InvoiceCreatePreviewScheduleDetailsPhasesAutomaticTax: StripeParams {
     /// Enabled automatic tax calculation which will automatically compute tax rates on all invoices
@@ -2964,6 +3519,16 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAutomaticTaxLiability: St
     }
 }
 
+public enum InvoiceCreatePreviewScheduleDetailsPhasesAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPhasesBillingCycleAnchor: String, Codable, Sendable {
+    case automatic
+    case phaseStart = "phase_start"
+}
+
 public struct InvoiceCreatePreviewScheduleDetailsPhasesBillingThresholds: StripeParams {
     /// Monetary threshold that triggers the subscription to advance to a new billing period
     public var amountGte: Int?
@@ -2981,6 +3546,11 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesBillingThresholds: Stripe
         case amountGte = "amount_gte"
         case resetBillingCycleAnchor = "reset_billing_cycle_anchor"
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPhasesCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPhasesDiscounts: StripeParams {
@@ -3020,6 +3590,13 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesDuration: StripeParams {
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPhasesDurationInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// One of the forms `end_date` accepts.
@@ -3091,6 +3668,17 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettingsIssuer: St
         self.type = type
         self.account = account
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsPhasesProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }
 
 /// One of the forms `start_date` accepts.
@@ -3176,6 +3764,12 @@ public enum InvoiceCreatePreviewScheduleDetailsPhasesTrialEnd: Codable, Sendable
             try container.encode(value)
         }
     }
+}
+
+public enum InvoiceCreatePreviewScheduleDetailsProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }
 
 /// The subscription creation or modification params to apply as a preview. Cannot be used with
@@ -3290,6 +3884,12 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchor: StripeP
     }
 }
 
+public enum InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchorType: String, Codable, Sendable {
+    case now
+    case timestamp
+    case unchanged
+}
+
 /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
 public struct InvoiceCreatePreviewSubscriptionDetailsBillingMode: StripeParams {
     /// Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value
@@ -3304,6 +3904,11 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingMode: StripeParams {
     }
 }
 
+public enum InvoiceCreatePreviewSubscriptionDetailsBillingModeType: String, Codable, Sendable {
+    case classic
+    case flexible
+}
+
 /// Configure behavior for flexible billing mode.
 public struct InvoiceCreatePreviewSubscriptionDetailsBillingModeFlexible: StripeParams {
     /// Controls how invoices and invoice items display proration amounts and discount amounts.
@@ -3316,6 +3921,11 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingModeFlexible: Stripe
     public enum CodingKeys: String, CodingKey {
         case prorationDiscounts = "proration_discounts"
     }
+}
+
+public enum InvoiceCreatePreviewSubscriptionDetailsBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
+    case included
+    case itemized
 }
 
 public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedules: StripeParams {
@@ -3353,6 +3963,10 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesAppliesTo: 
     }
 }
 
+public enum InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesAppliesToType: String, Codable, Sendable {
+    case price
+}
+
 /// The end date for the billing schedule. You must not set this earlier than current period end for
 /// every applicable subscription item.
 public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntil: StripeParams {
@@ -3368,6 +3982,11 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntil: 
         self.duration = duration
         self.timestamp = timestamp
     }
+}
+
+public enum InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilType: String, Codable, Sendable {
+    case duration
+    case timestamp
 }
 
 /// Specifies the billing period.
@@ -3386,6 +4005,13 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilDu
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilDurationInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// One of the forms `cancel_at` accepts.
@@ -3617,6 +4243,19 @@ public struct InvoiceCreatePreviewSubscriptionDetailsItemsPriceDataRecurring: St
     }
 }
 
+public enum InvoiceCreatePreviewSubscriptionDetailsItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum InvoiceCreatePreviewSubscriptionDetailsItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// Previews the invoice that would be generated when pausing the subscription. Passing an empty hash
 /// won't preview pausing and instead returns the next invoice. To receive a preview invoice, set
 /// `invoicing_behavior` to `invoice`. A preview isn't available if the `bill_for` options produce no
@@ -3671,6 +4310,11 @@ public struct InvoiceCreatePreviewSubscriptionDetailsPauseBillForOutstandingUsag
     }
 }
 
+public enum InvoiceCreatePreviewSubscriptionDetailsPauseBillForOutstandingUsageThroughType: String, Codable, Sendable {
+    case none
+    case now
+}
+
 /// Controls when to credit for unused time on licensed items. Defaults to `{ type: "now" }`.
 public struct InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFrom: StripeParams {
     /// When to credit for unused time.
@@ -3679,6 +4323,31 @@ public struct InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFrom:
     public init(type: InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFromType) {
         self.type = type
     }
+}
+
+public enum InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFromType: String, Codable, Sendable {
+    case itemCurrentPeriodStart = "item_current_period_start"
+    case none
+    case now
+}
+
+public enum InvoiceCreatePreviewSubscriptionDetailsPauseInvoicingBehavior: String, Codable, Sendable {
+    case invoice
+    case pendingInvoiceItem = "pending_invoice_item"
+}
+
+public enum InvoiceCreatePreviewSubscriptionDetailsPauseType: String, Codable, Sendable {
+    case subscription
+}
+
+public enum InvoiceCreatePreviewSubscriptionDetailsProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
+}
+
+public enum InvoiceCreatePreviewSubscriptionDetailsResumeAt: String, Codable, Sendable {
+    case now
 }
 
 /// One of the forms `trial_end` accepts.
@@ -3713,6 +4382,19 @@ public enum InvoiceCreatePreviewSubscriptionDetailsTrialEnd: Codable, Sendable, 
     }
 }
 
+public enum InvoiceListCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
+}
+
+public enum InvoiceListStatus: String, Codable, Sendable {
+    case draft
+    case `open` = "open"
+    case paid
+    case uncollectible
+    case void
+}
+
 public struct InvoiceRemoveLinesLines: StripeParams {
     /// Either `delete` or `unassign`. Deleted line items are permanently deleted. Unassigned line items can
     /// be reassigned to an invoice.
@@ -3724,6 +4406,11 @@ public struct InvoiceRemoveLinesLines: StripeParams {
         self.behavior = behavior
         self.id = id
     }
+}
+
+public enum InvoiceRemoveLinesLinesBehavior: String, Codable, Sendable {
+    case delete
+    case unassign
 }
 
 /// Settings for automatic tax lookup for this invoice.
@@ -3756,6 +4443,16 @@ public struct InvoiceUpdateAutomaticTaxLiability: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum InvoiceUpdateAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum InvoiceUpdateCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
 }
 
 public struct InvoiceUpdateCustomFields: StripeParams {
@@ -3803,6 +4500,11 @@ public struct InvoiceUpdateIssuer: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum InvoiceUpdateIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
 }
 
 /// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
@@ -3932,6 +4634,17 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOp
     }
 }
 
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
+    case business
+    case personal
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBancontact: StripeParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: InvoiceUpdatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage?
@@ -3943,6 +4656,13 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBancontact: Stripe
     public enum CodingKeys: String, CodingKey {
         case preferredLanguage = "preferred_language"
     }
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case fr
+    case nl
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBillie: StripeParams {
@@ -4024,6 +4744,23 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBillieCompanyDetai
     }
 }
 
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
+    case chEin = "ch_ein"
+    case deHrb = "de_hrb"
+    case dkCvr = "dk_cvr"
+    case esCif = "es_cif"
+    case fiTunnus = "fi_tunnus"
+    case frSiren = "fr_siren"
+    case frSiret = "fr_siret"
+    case itRea = "it_rea"
+    case nlKvk = "nl_kvk"
+    case noOrgNumber = "no_org_number"
+    case noPno = "no_pno"
+    case seOrgNumber = "se_org_number"
+    case sePno = "se_pno"
+    case ukCrn = "uk_crn"
+}
+
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsCard: StripeParams {
     /// Installment configuration for payments attempted on this invoice. For more information, see the
     /// [installments integration guide](https://docs.stripe.com/payments/installments).
@@ -4078,6 +4815,22 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardInstallmentsPl
         self.count = count
         self.interval = interval
     }
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType: String, Codable, Sendable {
+    case bonus
+    case fixedCount = "fixed_count"
+    case revolving
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval: String, Codable, Sendable {
+    case month
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
+    case any
+    case automatic
+    case challenge
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsCustomerBalance: StripeParams {
@@ -4155,6 +4908,20 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateOption
     }
 }
 
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
+    case dependantSupport = "dependant_support"
+    case government
+    case loan
+    case mortgage
+    case other
+    case pension
+    case personal
+    case retail
+    case salary
+    case tax
+    case utility
+}
+
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsPix: StripeParams {
     /// Determines if the amount includes the IOF tax. Defaults to `never`.
     public var amountIncludesIof: InvoiceUpdatePaymentSettingsPaymentMethodOptionsPixAmountIncludesIof?
@@ -4171,6 +4938,11 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsPix: StripeParams 
         case amountIncludesIof = "amount_includes_iof"
         case expiresAfterSeconds = "expires_after_seconds"
     }
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpi: StripeParams {
@@ -4212,6 +4984,11 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptions:
         case description
         case endDate = "end_date"
     }
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccount: StripeParams {
@@ -4264,6 +5041,84 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinan
     }
 }
 
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
+    case checking
+    case savings
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
+    case balances
+    case ownership
+    case paymentMethod = "payment_method"
+    case transactions
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
+    case balances
+    case ownership
+    case transactions
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
+public enum InvoiceUpdatePaymentSettingsPaymentMethodTypes: String, Codable, Sendable {
+    case achCreditTransfer = "ach_credit_transfer"
+    case achDebit = "ach_debit"
+    case acssDebit = "acss_debit"
+    case affirm
+    case alipay
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case custom
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case jpCreditTransfer = "jp_credit_transfer"
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case satispay
+    case sepaCreditTransfer = "sepa_credit_transfer"
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+}
+
 /// The rendering-related settings that control how invoices render in customer-facing interfaces such
 /// as the PDF or hosted invoice page.
 public struct InvoiceUpdateRendering: StripeParams {
@@ -4294,6 +5149,11 @@ public struct InvoiceUpdateRendering: StripeParams {
     }
 }
 
+public enum InvoiceUpdateRenderingAmountTaxDisplay: String, Codable, Sendable {
+    case excludeTax = "exclude_tax"
+    case includeInclusiveTax = "include_inclusive_tax"
+}
+
 /// Invoice pdf rendering options
 public struct InvoiceUpdateRenderingPdf: StripeParams {
     /// Page size for invoice PDF. Can be set to `a4`, `letter`, or `auto`. If set to `auto`, invoice PDF
@@ -4308,6 +5168,12 @@ public struct InvoiceUpdateRenderingPdf: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case pageSize = "page_size"
     }
+}
+
+public enum InvoiceUpdateRenderingPdfPageSize: String, Codable, Sendable {
+    case a4
+    case auto
+    case letter
 }
 
 public struct InvoiceUpdateShippingCost: StripeParams {
@@ -4399,6 +5265,14 @@ public struct InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMaximum: 
     }
 }
 
+public enum InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMaximumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
+}
+
 /// The lower bound of the estimated range. If empty, represents no lower bound.
 public struct InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMinimum: StripeParams {
     /// A unit of time.
@@ -4410,6 +5284,14 @@ public struct InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMinimum: 
         self.unit = unit
         self.value = value
     }
+}
+
+public enum InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMinimumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -4453,6 +5335,22 @@ public struct InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOption
         case amount
         case taxBehavior = "tax_behavior"
     }
+}
+
+public enum InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum InvoiceUpdateShippingCostShippingRateDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum InvoiceUpdateShippingCostShippingRateDataType: String, Codable, Sendable {
+    case fixedAmount = "fixed_amount"
 }
 
 public struct InvoiceUpdateShippingDetails: StripeParams {
@@ -4752,6 +5650,12 @@ public struct InvoiceUpdateLinesLinesPriceDataProductDataTaxDetails: StripeParam
     }
 }
 
+public enum InvoiceUpdateLinesLinesPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// The pricing information for the invoice item.
 public struct InvoiceUpdateLinesLinesPricing: StripeParams {
     /// The ID of the price object.
@@ -4844,4 +5748,62 @@ public struct InvoiceUpdateLinesLinesTaxAmountsTaxRateData: StripeParams {
         case state
         case taxType = "tax_type"
     }
+}
+
+public enum InvoiceUpdateLinesLinesTaxAmountsTaxRateDataJurisdictionLevel: String, Codable, Sendable {
+    case city
+    case country
+    case county
+    case district
+    case multiple
+    case state
+}
+
+public enum InvoiceUpdateLinesLinesTaxAmountsTaxRateDataTaxType: String, Codable, Sendable {
+    case admissionsTax = "admissions_tax"
+    case amusementTax = "amusement_tax"
+    case attendanceTax = "attendance_tax"
+    case communicationsTax = "communications_tax"
+    case digitalExciseTax = "digital_excise_tax"
+    case entertainmentTax = "entertainment_tax"
+    case getFund = "get_fund"
+    case grossReceiptsTax = "gross_receipts_tax"
+    case gst
+    case hospitalityTax = "hospitality_tax"
+    case hst
+    case igst
+    case jct
+    case leaseTax = "lease_tax"
+    case luxuryTax = "luxury_tax"
+    case massTransitParkingTax = "mass_transit_parking_tax"
+    case nhil
+    case parkingTax = "parking_tax"
+    case pst
+    case qst
+    case resortTax = "resort_tax"
+    case retailDeliveryFee = "retail_delivery_fee"
+    case rst
+    case salesTax = "sales_tax"
+    case serviceTax = "service_tax"
+    case tourismTax = "tourism_tax"
+    case utilityUsersTax = "utility_users_tax"
+    case vat
+}
+
+public enum InvoiceUpdateLinesLinesTaxAmountsTaxabilityReason: String, Codable, Sendable {
+    case customerExempt = "customer_exempt"
+    case notCollecting = "not_collecting"
+    case notSubjectToTax = "not_subject_to_tax"
+    case notSupported = "not_supported"
+    case portionProductExempt = "portion_product_exempt"
+    case portionReducedRated = "portion_reduced_rated"
+    case portionStandardRated = "portion_standard_rated"
+    case productExempt = "product_exempt"
+    case productExemptHoliday = "product_exempt_holiday"
+    case proportionallyRated = "proportionally_rated"
+    case reducedRated = "reduced_rated"
+    case reverseCharge = "reverse_charge"
+    case standardRated = "standard_rated"
+    case taxableBasisReduced = "taxable_basis_reduced"
+    case zeroRated = "zero_rated"
 }

@@ -356,6 +356,12 @@ public struct InvoiceitemCreatePriceData: StripeParams {
     }
 }
 
+public enum InvoiceitemCreatePriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// The pricing information for the invoice item.
 public struct InvoiceitemCreatePricing: StripeParams {
     /// The ID of the price object.
@@ -364,6 +370,12 @@ public struct InvoiceitemCreatePricing: StripeParams {
     public init(price: String? = nil) {
         self.price = price
     }
+}
+
+public enum InvoiceitemCreateTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }
 
 public struct InvoiceitemUpdateDiscounts: StripeParams {
@@ -443,6 +455,12 @@ public struct InvoiceitemUpdatePriceData: StripeParams {
     }
 }
 
+public enum InvoiceitemUpdatePriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// The pricing information for the invoice item.
 public struct InvoiceitemUpdatePricing: StripeParams {
     /// The ID of the price object.
@@ -451,4 +469,10 @@ public struct InvoiceitemUpdatePricing: StripeParams {
     public init(price: String? = nil) {
         self.price = price
     }
+}
+
+public enum InvoiceitemUpdateTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }

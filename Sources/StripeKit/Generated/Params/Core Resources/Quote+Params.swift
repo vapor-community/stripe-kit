@@ -406,6 +406,16 @@ public struct QuoteCreateAutomaticTaxLiability: StripeParams {
     }
 }
 
+public enum QuoteCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum QuoteCreateCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
+}
+
 public struct QuoteCreateDiscounts: StripeParams {
     /// ID of the coupon to create a new discount for.
     public var coupon: String?
@@ -502,6 +512,11 @@ public struct QuoteCreateInvoiceSettingsIssuer: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum QuoteCreateInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
 }
 
 public struct QuoteCreateLineItems: StripeParams {
@@ -619,6 +634,19 @@ public struct QuoteCreateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
+public enum QuoteCreateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum QuoteCreateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// When creating a subscription or subscription schedule, the specified configuration data will be
 /// used. There must be at least one line item with a recurring price for a subscription or subscription
 /// schedule to be created. A subscription schedule is created if `subscription_data[effective_date]` is
@@ -675,6 +703,11 @@ public struct QuoteCreateSubscriptionDataBillingMode: StripeParams {
     }
 }
 
+public enum QuoteCreateSubscriptionDataBillingModeType: String, Codable, Sendable {
+    case classic
+    case flexible
+}
+
 /// Configure behavior for flexible billing mode.
 public struct QuoteCreateSubscriptionDataBillingModeFlexible: StripeParams {
     /// Controls how invoices and invoice items display proration amounts and discount amounts.
@@ -687,6 +720,11 @@ public struct QuoteCreateSubscriptionDataBillingModeFlexible: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case prorationDiscounts = "proration_discounts"
     }
+}
+
+public enum QuoteCreateSubscriptionDataBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
+    case included
+    case itemized
 }
 
 /// One of the forms `effective_date` accepts.
@@ -747,6 +785,13 @@ public struct QuoteCreateTransferData: StripeParams {
     }
 }
 
+public enum QuoteListStatus: String, Codable, Sendable {
+    case accepted
+    case canceled
+    case draft
+    case `open` = "open"
+}
+
 /// Settings for automatic tax lookup for this quote and resulting invoices and subscriptions.
 public struct QuoteUpdateAutomaticTax: StripeParams {
     /// Controls whether Stripe will automatically compute tax on the resulting invoices or subscriptions as
@@ -776,6 +821,16 @@ public struct QuoteUpdateAutomaticTaxLiability: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum QuoteUpdateAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum QuoteUpdateCollectionMethod: String, Codable, Sendable {
+    case chargeAutomatically = "charge_automatically"
+    case sendInvoice = "send_invoice"
 }
 
 public struct QuoteUpdateDiscounts: StripeParams {
@@ -855,6 +910,11 @@ public struct QuoteUpdateInvoiceSettingsIssuer: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum QuoteUpdateInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
 }
 
 public struct QuoteUpdateLineItems: StripeParams {
@@ -974,6 +1034,19 @@ public struct QuoteUpdateLineItemsPriceDataRecurring: StripeParams {
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum QuoteUpdateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum QuoteUpdateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }
 
 /// When creating a subscription or subscription schedule, the specified configuration data will be

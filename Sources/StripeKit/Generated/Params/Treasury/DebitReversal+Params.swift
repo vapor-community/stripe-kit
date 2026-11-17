@@ -77,3 +77,14 @@ public struct DebitReversalListParams: StripeParams {
         case status
     }
 }
+
+public enum DebitReversalListResolution: String, Codable, Sendable {
+    case lost
+    case won
+}
+
+public enum DebitReversalListStatus: String, Codable, Sendable {
+    case canceled
+    case completed
+    case processing
+}

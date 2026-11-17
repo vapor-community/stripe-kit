@@ -57,3 +57,8 @@ public struct TransactionEntryListParams: StripeParams {
         case transaction
     }
 }
+
+public enum TransactionEntryListOrderBy: String, Codable, Sendable {
+    case created
+    case effectiveAt = "effective_at"
+}

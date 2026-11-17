@@ -911,6 +911,12 @@ public struct TerminalConfigurationCreateWifi: StripeParams {
     }
 }
 
+public enum TerminalConfigurationCreateWifiType: String, Codable, Sendable {
+    case enterpriseEapPeap = "enterprise_eap_peap"
+    case enterpriseEapTls = "enterprise_eap_tls"
+    case personalPsk = "personal_psk"
+}
+
 /// Credentials for a WPA-Enterprise WiFi network using the EAP-PEAP authentication method.
 public struct TerminalConfigurationCreateWifiEnterpriseEapPeap: StripeParams {
     /// Password for connecting to the WiFi network
@@ -1674,6 +1680,12 @@ public struct TerminalConfigurationUpdateWifi: StripeParams {
         case personalPsk = "personal_psk"
         case type
     }
+}
+
+public enum TerminalConfigurationUpdateWifiType: String, Codable, Sendable {
+    case enterpriseEapPeap = "enterprise_eap_peap"
+    case enterpriseEapTls = "enterprise_eap_tls"
+    case personalPsk = "personal_psk"
 }
 
 /// Credentials for a WPA-Enterprise WiFi network using the EAP-PEAP authentication method.

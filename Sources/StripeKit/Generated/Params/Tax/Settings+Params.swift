@@ -49,6 +49,12 @@ public struct SettingsUpdateDefaults: StripeParams {
     }
 }
 
+public enum SettingsUpdateDefaultsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case inferredByCurrency = "inferred_by_currency"
+}
+
 /// The place where your business is located.
 public struct SettingsUpdateHeadOffice: StripeParams {
     /// The location of the business for tax purposes.

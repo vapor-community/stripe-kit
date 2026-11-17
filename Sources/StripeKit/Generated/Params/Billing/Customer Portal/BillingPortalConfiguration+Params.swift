@@ -192,6 +192,15 @@ public struct BillingPortalConfigurationCreateFeaturesCustomerUpdate: StripePara
     }
 }
 
+public enum BillingPortalConfigurationCreateFeaturesCustomerUpdateAllowedUpdates: String, Codable, Sendable {
+    case address
+    case email
+    case name
+    case phone
+    case shipping
+    case taxId = "tax_id"
+}
+
 /// Information about showing the billing history in the portal.
 public struct BillingPortalConfigurationCreateFeaturesInvoiceHistory: StripeParams {
     /// Whether the feature is enabled.
@@ -276,6 +285,28 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancella
     }
 }
 
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReasonOptions: String, Codable, Sendable {
+    case customerService = "customer_service"
+    case lowQuality = "low_quality"
+    case missingFeatures = "missing_features"
+    case other
+    case switchedService = "switched_service"
+    case tooComplex = "too_complex"
+    case tooExpensive = "too_expensive"
+    case unused
+}
+
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionCancelMode: String, Codable, Sendable {
+    case atPeriodEnd = "at_period_end"
+    case immediately
+}
+
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionCancelProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
+}
+
 /// Information about pausing subscriptions in the portal.
 public struct BillingPortalConfigurationCreateFeaturesSubscriptionPause: StripeParams {
     /// Controls how long a subscription can be paused. Defaults to `interval_options` with a single
@@ -310,6 +341,11 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDuration:
     }
 }
 
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationType: String, Codable, Sendable {
+    case indefinite
+    case intervalOptions = "interval_options"
+}
+
 public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptions: StripeParams {
     /// Specifies the pause duration unit. Either `day`, `week`, `month`, or `year`.
     public var interval: BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptionsInterval
@@ -325,6 +361,13 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationI
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptionsInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// Information about updating subscriptions in the portal.
@@ -370,6 +413,17 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdate: Stripe
     }
 }
 
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateBillingCycleAnchor: String, Codable, Sendable {
+    case now
+    case unchanged
+}
+
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateDefaultAllowedUpdates: String, Codable, Sendable {
+    case price
+    case promotionCode = "promotion_code"
+    case quantity
+}
+
 public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts: StripeParams {
     /// The list of price IDs for the product that a subscription can be updated to.
     public var prices: [String]
@@ -407,6 +461,12 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts
     }
 }
 
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
+}
+
 /// Setting to control when an update should be scheduled at the end of the period instead of applying
 /// immediately.
 public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEnd: StripeParams {
@@ -426,6 +486,16 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateSchedule
     public init(type: BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType) {
         self.type = type
     }
+}
+
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType: String, Codable, Sendable {
+    case decreasingItemAmount = "decreasing_item_amount"
+    case shorteningInterval = "shortening_interval"
+}
+
+public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateTrialUpdateBehavior: String, Codable, Sendable {
+    case continueTrial = "continue_trial"
+    case endTrial = "end_trial"
 }
 
 /// The business information shown to customers in the portal.
@@ -537,6 +607,15 @@ public struct BillingPortalConfigurationUpdateFeaturesCustomerUpdate: StripePara
     }
 }
 
+public enum BillingPortalConfigurationUpdateFeaturesCustomerUpdateAllowedUpdates: String, Codable, Sendable {
+    case address
+    case email
+    case name
+    case phone
+    case shipping
+    case taxId = "tax_id"
+}
+
 /// Information about showing the billing history in the portal.
 public struct BillingPortalConfigurationUpdateFeaturesInvoiceHistory: StripeParams {
     /// Whether the feature is enabled.
@@ -621,6 +700,28 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancella
     }
 }
 
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReasonOptions: String, Codable, Sendable {
+    case customerService = "customer_service"
+    case lowQuality = "low_quality"
+    case missingFeatures = "missing_features"
+    case other
+    case switchedService = "switched_service"
+    case tooComplex = "too_complex"
+    case tooExpensive = "too_expensive"
+    case unused
+}
+
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionCancelMode: String, Codable, Sendable {
+    case atPeriodEnd = "at_period_end"
+    case immediately
+}
+
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionCancelProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
+}
+
 /// Information about pausing subscriptions in the portal.
 public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPause: StripeParams {
     /// Controls how long a subscription can be paused. Defaults to `interval_options` with a single
@@ -655,6 +756,11 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDuration:
     }
 }
 
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationType: String, Codable, Sendable {
+    case indefinite
+    case intervalOptions = "interval_options"
+}
+
 public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptions: StripeParams {
     /// Specifies the pause duration unit. Either `day`, `week`, `month`, or `year`.
     public var interval: BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptionsInterval
@@ -670,6 +776,13 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationI
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptionsInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// Information about updating subscriptions in the portal.
@@ -715,6 +828,17 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate: Stripe
     }
 }
 
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateBillingCycleAnchor: String, Codable, Sendable {
+    case now
+    case unchanged
+}
+
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateDefaultAllowedUpdates: String, Codable, Sendable {
+    case price
+    case promotionCode = "promotion_code"
+    case quantity
+}
+
 public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProducts: StripeParams {
     /// The list of price IDs for the product that a subscription can be updated to.
     public var prices: [String]
@@ -752,6 +876,12 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProducts
     }
 }
 
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
+}
+
 /// Setting to control when an update should be scheduled at the end of the period instead of applying
 /// immediately.
 public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEnd: StripeParams {
@@ -771,6 +901,16 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateSchedule
     public init(type: BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType) {
         self.type = type
     }
+}
+
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType: String, Codable, Sendable {
+    case decreasingItemAmount = "decreasing_item_amount"
+    case shorteningInterval = "shortening_interval"
+}
+
+public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateTrialUpdateBehavior: String, Codable, Sendable {
+    case continueTrial = "continue_trial"
+    case endTrial = "end_trial"
 }
 
 /// The hosted login page for this configuration. Learn more about the portal login page in our

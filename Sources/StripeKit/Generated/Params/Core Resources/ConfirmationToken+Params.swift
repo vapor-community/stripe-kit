@@ -332,6 +332,64 @@ public struct ConfirmationTokenCreatePaymentMethodData: StripeParams {
     }
 }
 
+public enum ConfirmationTokenCreatePaymentMethodDataType: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case cashapp
+    case crypto
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
+}
+
 /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
 /// method.
 public struct ConfirmationTokenCreatePaymentMethodDataAcssDebit: StripeParams {
@@ -353,6 +411,12 @@ public struct ConfirmationTokenCreatePaymentMethodDataAcssDebit: StripeParams {
         case institutionNumber = "institution_number"
         case transitNumber = "transit_number"
     }
+}
+
+public enum ConfirmationTokenCreatePaymentMethodDataAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
 }
 
 /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
@@ -481,6 +545,37 @@ public struct ConfirmationTokenCreatePaymentMethodDataEps: StripeParams {
     }
 }
 
+public enum ConfirmationTokenCreatePaymentMethodDataEpsBank: String, Codable, Sendable {
+    case arzteUndApothekerBank = "arzte_und_apotheker_bank"
+    case austrianAnadiBankAg = "austrian_anadi_bank_ag"
+    case bankAustria = "bank_austria"
+    case bankhausCarlSpangler = "bankhaus_carl_spangler"
+    case bankhausSchelhammerUndSchatteraAg = "bankhaus_schelhammer_und_schattera_ag"
+    case bawagPskAg = "bawag_psk_ag"
+    case bksBankAg = "bks_bank_ag"
+    case brullKallmusBankAg = "brull_kallmus_bank_ag"
+    case btvVierLanderBank = "btv_vier_lander_bank"
+    case capitalBankGraweGruppeAg = "capital_bank_grawe_gruppe_ag"
+    case deutscheBankAg = "deutsche_bank_ag"
+    case dolomitenbank
+    case easybankAg = "easybank_ag"
+    case ersteBankUndSparkassen = "erste_bank_und_sparkassen"
+    case hypoAlpeadriabankInternationalAg = "hypo_alpeadriabank_international_ag"
+    case hypoBankBurgenlandAktiengesellschaft = "hypo_bank_burgenland_aktiengesellschaft"
+    case hypoNoeLbFurNiederosterreichUWien = "hypo_noe_lb_fur_niederosterreich_u_wien"
+    case hypoOberosterreichSalzburgSteiermark = "hypo_oberosterreich_salzburg_steiermark"
+    case hypoTirolBankAg = "hypo_tirol_bank_ag"
+    case hypoVorarlbergBankAg = "hypo_vorarlberg_bank_ag"
+    case marchfelderBank = "marchfelder_bank"
+    case oberbankAg = "oberbank_ag"
+    case raiffeisenBankengruppeOsterreich = "raiffeisen_bankengruppe_osterreich"
+    case schoellerbankAg = "schoellerbank_ag"
+    case spardaBankWien = "sparda_bank_wien"
+    case volksbankGruppe = "volksbank_gruppe"
+    case volkskreditbankAg = "volkskreditbank_ag"
+    case vrBankBraunau = "vr_bank_braunau"
+}
+
 /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
 public struct ConfirmationTokenCreatePaymentMethodDataFpx: StripeParams {
     /// The customer's bank.
@@ -499,6 +594,39 @@ public struct ConfirmationTokenCreatePaymentMethodDataFpx: StripeParams {
     }
 }
 
+public enum ConfirmationTokenCreatePaymentMethodDataFpxBank: String, Codable, Sendable {
+    case affinBank = "affin_bank"
+    case agrobank
+    case allianceBank = "alliance_bank"
+    case ambank
+    case bankIslam = "bank_islam"
+    case bankMuamalat = "bank_muamalat"
+    case bankOfChina = "bank_of_china"
+    case bankRakyat = "bank_rakyat"
+    case bnpParibas = "bnp_paribas"
+    case bsn
+    case cimb
+    case citibank
+    case deutscheBank = "deutsche_bank"
+    case hongLeongBank = "hong_leong_bank"
+    case hsbc
+    case kfh
+    case maybank2e
+    case maybank2u
+    case mbsbBank = "mbsb_bank"
+    case ocbc
+    case pbEnterprise = "pb_enterprise"
+    case publicBank = "public_bank"
+    case rhb
+    case standardChartered = "standard_chartered"
+    case uob
+}
+
+public enum ConfirmationTokenCreatePaymentMethodDataFpxAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
 /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
 public struct ConfirmationTokenCreatePaymentMethodDataIdeal: StripeParams {
     /// The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
@@ -507,6 +635,29 @@ public struct ConfirmationTokenCreatePaymentMethodDataIdeal: StripeParams {
     public init(bank: ConfirmationTokenCreatePaymentMethodDataIdealBank? = nil) {
         self.bank = bank
     }
+}
+
+public enum ConfirmationTokenCreatePaymentMethodDataIdealBank: String, Codable, Sendable {
+    case abnAmro = "abn_amro"
+    case adyen
+    case asnBank = "asn_bank"
+    case bunq
+    case buut
+    case finom
+    case handelsbanken
+    case ing
+    case knab
+    case mollie
+    case moneyou
+    case n26
+    case nn
+    case rabobank
+    case regiobank
+    case revolut
+    case snsBank = "sns_bank"
+    case triodosBank = "triodos_bank"
+    case vanLanschot = "van_lanschot"
+    case yoursafe
 }
 
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
@@ -545,6 +696,11 @@ public struct ConfirmationTokenCreatePaymentMethodDataNaverPay: StripeParams {
     public init(funding: ConfirmationTokenCreatePaymentMethodDataNaverPayFunding? = nil) {
         self.funding = funding
     }
+}
+
+public enum ConfirmationTokenCreatePaymentMethodDataNaverPayFunding: String, Codable, Sendable {
+    case card
+    case points
 }
 
 /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
@@ -590,6 +746,35 @@ public struct ConfirmationTokenCreatePaymentMethodDataP24: StripeParams {
     public init(bank: ConfirmationTokenCreatePaymentMethodDataP24Bank? = nil) {
         self.bank = bank
     }
+}
+
+public enum ConfirmationTokenCreatePaymentMethodDataP24Bank: String, Codable, Sendable {
+    case aliorBank = "alior_bank"
+    case bankMillennium = "bank_millennium"
+    case bankNowyBfgSa = "bank_nowy_bfg_sa"
+    case bankPekaoSa = "bank_pekao_sa"
+    case bankiSpbdzielcze = "banki_spbdzielcze"
+    case blik
+    case bnpParibas = "bnp_paribas"
+    case boz
+    case citiHandlowy = "citi_handlowy"
+    case creditAgricole = "credit_agricole"
+    case envelobank
+    case etransferPocztowy24 = "etransfer_pocztowy24"
+    case getinBank = "getin_bank"
+    case ideabank
+    case ing
+    case inteligo
+    case mbankMtransfer = "mbank_mtransfer"
+    case nestPrzelew = "nest_przelew"
+    case noblePay = "noble_pay"
+    case pbacZIpko = "pbac_z_ipko"
+    case plusBank = "plus_bank"
+    case santanderPrzelew24 = "santander_przelew24"
+    case tmobileUsbugiBankowe = "tmobile_usbugi_bankowe"
+    case toyotaBank = "toyota_bank"
+    case velobank
+    case volkswagenBank = "volkswagen_bank"
 }
 
 /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
@@ -647,6 +832,15 @@ public struct ConfirmationTokenCreatePaymentMethodDataSofort: StripeParams {
     }
 }
 
+public enum ConfirmationTokenCreatePaymentMethodDataSofortCountry: String, Codable, Sendable {
+    case at = "AT"
+    case be = "BE"
+    case de = "DE"
+    case es = "ES"
+    case it = "IT"
+    case nl = "NL"
+}
+
 /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
 public struct ConfirmationTokenCreatePaymentMethodDataUpi: StripeParams {
     /// Configuration options for setting up an eMandate
@@ -689,6 +883,11 @@ public struct ConfirmationTokenCreatePaymentMethodDataUpiMandateOptions: StripeP
     }
 }
 
+public enum ConfirmationTokenCreatePaymentMethodDataUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
 /// payment method.
 public struct ConfirmationTokenCreatePaymentMethodDataUsBankAccount: StripeParams {
@@ -718,6 +917,16 @@ public struct ConfirmationTokenCreatePaymentMethodDataUsBankAccount: StripeParam
         case financialConnectionsAccount = "financial_connections_account"
         case routingNumber = "routing_number"
     }
+}
+
+public enum ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
+public enum ConfirmationTokenCreatePaymentMethodDataUsBankAccountAccountType: String, Codable, Sendable {
+    case checking
+    case savings
 }
 
 /// Payment-method-specific configuration for this ConfirmationToken.
@@ -768,6 +977,21 @@ public struct ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlan: S
         self.count = count
         self.interval = interval
     }
+}
+
+public enum ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlanType: String, Codable, Sendable {
+    case bonus
+    case fixedCount = "fixed_count"
+    case revolving
+}
+
+public enum ConfirmationTokenCreatePaymentMethodOptionsCardInstallmentsPlanInterval: String, Codable, Sendable {
+    case month
+}
+
+public enum ConfirmationTokenCreateSetupFutureUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 /// Shipping information for this ConfirmationToken.

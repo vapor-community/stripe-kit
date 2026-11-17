@@ -211,6 +211,12 @@ public struct VerificationSessionCreateOptionsDocument: StripeParams {
     }
 }
 
+public enum VerificationSessionCreateOptionsDocumentAllowedTypes: String, Codable, Sendable {
+    case drivingLicense = "driving_license"
+    case idCard = "id_card"
+    case passport
+}
+
 /// Details provided about the user being verified. These details might be shown to the user.
 public struct VerificationSessionCreateProvidedDetails: StripeParams {
     /// Email of user being verified
@@ -236,6 +242,18 @@ public struct VerificationSessionCreateRelatedPerson: StripeParams {
         self.account = account
         self.person = person
     }
+}
+
+public enum VerificationSessionCreateType: String, Codable, Sendable {
+    case document
+    case idNumber = "id_number"
+}
+
+public enum VerificationSessionListStatus: String, Codable, Sendable {
+    case canceled
+    case processing
+    case requiresInput = "requires_input"
+    case verified
 }
 
 /// A set of options for the session’s verification checks.
@@ -279,6 +297,12 @@ public struct VerificationSessionUpdateOptionsDocument: StripeParams {
     }
 }
 
+public enum VerificationSessionUpdateOptionsDocumentAllowedTypes: String, Codable, Sendable {
+    case drivingLicense = "driving_license"
+    case idCard = "id_card"
+    case passport
+}
+
 /// Details provided about the user being verified. These details may be shown to the user.
 public struct VerificationSessionUpdateProvidedDetails: StripeParams {
     /// Email of user being verified
@@ -290,4 +314,9 @@ public struct VerificationSessionUpdateProvidedDetails: StripeParams {
         self.email = email
         self.phone = phone
     }
+}
+
+public enum VerificationSessionUpdateType: String, Codable, Sendable {
+    case document
+    case idNumber = "id_number"
 }

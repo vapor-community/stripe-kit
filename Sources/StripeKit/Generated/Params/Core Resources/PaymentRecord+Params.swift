@@ -426,6 +426,10 @@ public struct PaymentRecordReportPaymentPaymentMethodDetailsCustom: StripeParams
     }
 }
 
+public enum PaymentRecordReportPaymentPaymentMethodDetailsType: String, Codable, Sendable {
+    case custom
+}
+
 /// Information about the payment attempt cancelation.
 public struct PaymentRecordReportPaymentCanceled: StripeParams {
     /// When the reported payment was canceled. Measured in seconds since the Unix epoch.
@@ -459,6 +463,11 @@ public struct PaymentRecordReportPaymentCustomerDetails: StripeParams {
     }
 }
 
+public enum PaymentRecordReportPaymentCustomerPresence: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 /// Information about the payment attempt failure.
 public struct PaymentRecordReportPaymentFailed: StripeParams {
     /// When the reported payment failed. Measured in seconds since the Unix epoch.
@@ -487,6 +496,12 @@ public struct PaymentRecordReportPaymentGuaranteed: StripeParams {
     }
 }
 
+public enum PaymentRecordReportPaymentOutcome: String, Codable, Sendable {
+    case canceled
+    case failed
+    case guaranteed
+}
+
 /// Processor information for this payment.
 public struct PaymentRecordReportPaymentProcessorDetails: StripeParams {
     /// The type of the processor details. An additional hash is included on processor_details with a name
@@ -499,6 +514,10 @@ public struct PaymentRecordReportPaymentProcessorDetails: StripeParams {
         self.type = type
         self.custom = custom
     }
+}
+
+public enum PaymentRecordReportPaymentProcessorDetailsType: String, Codable, Sendable {
+    case custom
 }
 
 /// Information about the custom processor used to make this payment.
@@ -608,6 +627,12 @@ public struct PaymentRecordReportPaymentAttemptGuaranteed: StripeParams {
     }
 }
 
+public enum PaymentRecordReportPaymentAttemptOutcome: String, Codable, Sendable {
+    case canceled
+    case failed
+    case guaranteed
+}
+
 /// Information about the Payment Method debited for this payment.
 public struct PaymentRecordReportPaymentAttemptPaymentMethodDetails: StripeParams {
     /// The billing details associated with the method of payment.
@@ -704,6 +729,10 @@ public struct PaymentRecordReportPaymentAttemptPaymentMethodDetailsCustom: Strip
         case displayName = "display_name"
         case type
     }
+}
+
+public enum PaymentRecordReportPaymentAttemptPaymentMethodDetailsType: String, Codable, Sendable {
+    case custom
 }
 
 /// Shipping information for this payment.
@@ -824,6 +853,10 @@ public struct PaymentRecordReportPaymentAttemptInformationalShippingDetailsAddre
     }
 }
 
+public enum PaymentRecordReportRefundOutcome: String, Codable, Sendable {
+    case refunded
+}
+
 /// Processor information for this refund.
 public struct PaymentRecordReportRefundProcessorDetails: StripeParams {
     /// The type of the processor details. An additional hash is included on processor_details with a name
@@ -836,6 +869,10 @@ public struct PaymentRecordReportRefundProcessorDetails: StripeParams {
         self.type = type
         self.custom = custom
     }
+}
+
+public enum PaymentRecordReportRefundProcessorDetailsType: String, Codable, Sendable {
+    case custom
 }
 
 /// Information about the custom processor used to make this refund.

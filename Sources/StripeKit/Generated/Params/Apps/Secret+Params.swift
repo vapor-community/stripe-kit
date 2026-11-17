@@ -121,6 +121,11 @@ public struct SecretCreateScope: StripeParams {
     }
 }
 
+public enum SecretCreateScopeType: String, Codable, Sendable {
+    case account
+    case user
+}
+
 /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
 /// account-scoped secrets or secrets scoped to their own user.
 public struct SecretDeleteWhereScope: StripeParams {
@@ -134,6 +139,11 @@ public struct SecretDeleteWhereScope: StripeParams {
         self.type = type
         self.user = user
     }
+}
+
+public enum SecretDeleteWhereScopeType: String, Codable, Sendable {
+    case account
+    case user
 }
 
 /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
@@ -151,6 +161,11 @@ public struct SecretFindScope: StripeParams {
     }
 }
 
+public enum SecretFindScopeType: String, Codable, Sendable {
+    case account
+    case user
+}
+
 /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
 /// account-scoped secrets or secrets scoped to their own user.
 public struct SecretListScope: StripeParams {
@@ -164,4 +179,9 @@ public struct SecretListScope: StripeParams {
         self.type = type
         self.user = user
     }
+}
+
+public enum SecretListScopeType: String, Codable, Sendable {
+    case account
+    case user
 }

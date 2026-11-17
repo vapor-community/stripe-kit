@@ -159,6 +159,14 @@ public struct ShippingRateCreateDeliveryEstimateMaximum: StripeParams {
     }
 }
 
+public enum ShippingRateCreateDeliveryEstimateMaximumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
+}
+
 /// The lower bound of the estimated range. If empty, represents no lower bound.
 public struct ShippingRateCreateDeliveryEstimateMinimum: StripeParams {
     /// A unit of time.
@@ -170,6 +178,14 @@ public struct ShippingRateCreateDeliveryEstimateMinimum: StripeParams {
         self.unit = unit
         self.value = value
     }
+}
+
+public enum ShippingRateCreateDeliveryEstimateMinimumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -215,6 +231,22 @@ public struct ShippingRateCreateFixedAmountCurrencyOptions: StripeParams {
     }
 }
 
+public enum ShippingRateCreateFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum ShippingRateCreateTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum ShippingRateCreateType: String, Codable, Sendable {
+    case fixedAmount = "fixed_amount"
+}
+
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
 public struct ShippingRateUpdateFixedAmount: StripeParams {
     /// Shipping rates defined in each available currency option. Each key must be a three-letter [ISO
@@ -247,4 +279,16 @@ public struct ShippingRateUpdateFixedAmountCurrencyOptions: StripeParams {
         case amount
         case taxBehavior = "tax_behavior"
     }
+}
+
+public enum ShippingRateUpdateFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum ShippingRateUpdateTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }

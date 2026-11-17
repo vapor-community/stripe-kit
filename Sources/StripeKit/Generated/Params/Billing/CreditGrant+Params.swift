@@ -157,6 +157,10 @@ public struct CreditGrantCreateAmount: StripeParams {
     }
 }
 
+public enum CreditGrantCreateAmountType: String, Codable, Sendable {
+    case monetary
+}
+
 /// The monetary amount.
 public struct CreditGrantCreateAmountMonetary: StripeParams {
     /// Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `value`
@@ -202,6 +206,10 @@ public struct CreditGrantCreateApplicabilityConfigScope: StripeParams {
     }
 }
 
+public enum CreditGrantCreateApplicabilityConfigScopePriceType: String, Codable, Sendable {
+    case metered
+}
+
 public struct CreditGrantCreateApplicabilityConfigScopePrices: StripeParams {
     /// The price ID this credit grant should apply to.
     public var id: String
@@ -209,4 +217,9 @@ public struct CreditGrantCreateApplicabilityConfigScopePrices: StripeParams {
     public init(id: String) {
         self.id = id
     }
+}
+
+public enum CreditGrantCreateCategory: String, Codable, Sendable {
+    case paid
+    case promotional
 }

@@ -200,6 +200,11 @@ public struct AuthenticationCreateChannel: StripeParams {
     }
 }
 
+public enum AuthenticationCreateChannelType: String, Codable, Sendable {
+    case browser
+    case threeRI = "three_r_i"
+}
+
 /// Contains additional details about the browser details you collected.
 public struct AuthenticationCreateChannelBrowser: StripeParams {
     /// The HTTP accept headers from the cardholder's browser. Collected server-side.
@@ -284,6 +289,18 @@ public struct AuthenticationCreateChannelThreeRI: StripeParams {
     }
 }
 
+public enum AuthenticationCreateChannelThreeRIType: String, Codable, Sendable {
+    case delayedShipment = "delayed_shipment"
+    case otherPayment = "other_payment"
+    case recurring
+    case splitShipment = "split_shipment"
+}
+
+public enum AuthenticationCreateMessageCategory: String, Codable, Sendable {
+    case nonPaymentAuthentication = "non_payment_authentication"
+    case paymentAuthentication = "payment_authentication"
+}
+
 /// Contains additional details about the acquirer for this 3DS Authentication. Refer to the [Pass
 /// acquirer details and directory server section of the standalone 3DS
 /// guide](/payments/3d-secure/standalone-3d-secure#pass-acquirer-details-and-directory-server) for more
@@ -326,6 +343,14 @@ public struct AuthenticationCreateAcquirerDetails: StripeParams {
     }
 }
 
+public enum AuthenticationCreateDirectoryServer: String, Codable, Sendable {
+    case americanExpress = "american_express"
+    case cartesBancaires = "cartes_bancaires"
+    case discover
+    case mastercard
+    case visa
+}
+
 /// Contains additional details on your flow preference for this 3DS Authentication. Refer to the
 /// [Specify a flow preference section of the standalone 3DS
 /// guide](/payments/3d-secure/standalone-3d-secure#specify-a-flow-preference) for more information.
@@ -354,6 +379,12 @@ public struct AuthenticationCreateFlowPreference: StripeParams {
     }
 }
 
+public enum AuthenticationCreateFlowPreferenceType: String, Codable, Sendable {
+    case challenge
+    case dataShare = "data_share"
+    case frictionless
+}
+
 /// Contains additional details about your challenge flow preference for this 3DS Authentication.
 public struct AuthenticationCreateFlowPreferenceChallenge: StripeParams {
     /// Type of challenge flow you requested for this 3DS Authentication.
@@ -362,6 +393,11 @@ public struct AuthenticationCreateFlowPreferenceChallenge: StripeParams {
     public init(type: AuthenticationCreateFlowPreferenceChallengeType) {
         self.type = type
     }
+}
+
+public enum AuthenticationCreateFlowPreferenceChallengeType: String, Codable, Sendable {
+    case mandated
+    case preferred
 }
 
 /// Contains additional details about your data share only flow preference for this 3DS Authentication.
@@ -374,6 +410,11 @@ public struct AuthenticationCreateFlowPreferenceDataShare: StripeParams {
     }
 }
 
+public enum AuthenticationCreateFlowPreferenceDataShareType: String, Codable, Sendable {
+    case dsSpecific = "ds_specific"
+    case emvStandard = "emv_standard"
+}
+
 /// Contains additional details about your frictionless flow preference for this 3DS Authentication.
 public struct AuthenticationCreateFlowPreferenceFrictionless: StripeParams {
     /// Type of frictionless flow you requested for this 3DS Authentication.
@@ -382,6 +423,11 @@ public struct AuthenticationCreateFlowPreferenceFrictionless: StripeParams {
     public init(type: AuthenticationCreateFlowPreferenceFrictionlessType) {
         self.type = type
     }
+}
+
+public enum AuthenticationCreateFlowPreferenceFrictionlessType: String, Codable, Sendable {
+    case lowRisk = "low_risk"
+    case none
 }
 
 /// Contains information about future usage of this 3DS Authentication
@@ -398,6 +444,12 @@ public struct AuthenticationCreateFutureUsage: StripeParams {
         self.installment = installment
         self.recurring = recurring
     }
+}
+
+public enum AuthenticationCreateFutureUsageType: String, Codable, Sendable {
+    case cardOnFile = "card_on_file"
+    case installment
+    case recurring
 }
 
 /// Parameters related to an installment payment.
@@ -445,6 +497,15 @@ public struct AuthenticationCreateFutureUsageInstallmentExpiry: StripeParams {
     }
 }
 
+public enum AuthenticationCreateFutureUsageInstallmentExpiryType: String, Codable, Sendable {
+    case date
+    case never
+}
+
+public enum AuthenticationCreateFutureUsageInstallmentInterval: String, Codable, Sendable {
+    case day
+}
+
 /// Parameters related to a recurring payment.
 public struct AuthenticationCreateFutureUsageRecurring: StripeParams {
     /// A non-negative integer representing the future authorizations' amount in the [smallest currency
@@ -484,6 +545,15 @@ public struct AuthenticationCreateFutureUsageRecurringExpiry: StripeParams {
         self.type = type
         self.date = date
     }
+}
+
+public enum AuthenticationCreateFutureUsageRecurringExpiryType: String, Codable, Sendable {
+    case date
+    case never
+}
+
+public enum AuthenticationCreateFutureUsageRecurringInterval: String, Codable, Sendable {
+    case day
 }
 
 /// Hash used to generate the PaymentMethod to be used for this Authentication. This is mutually
@@ -561,6 +631,10 @@ public enum AuthenticationCreatePaymentMethodDataCard: Codable, Sendable {
     }
 }
 
+public enum AuthenticationCreatePaymentMethodDataType: String, Codable, Sendable {
+    case card
+}
+
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
 public struct AuthenticationCreatePaymentMethodDataBillingDetails: StripeParams {
@@ -615,6 +689,14 @@ public struct AuthenticationCreatePaymentMethodDataBillingDetailsAddress: Stripe
     }
 }
 
+public enum AuthenticationCreateReason: String, Codable, Sendable {
+    case cardholderAuthentication = "cardholder_authentication"
+    case issuerRequested = "issuer_requested"
+    case liabilityShift = "liability_shift"
+    case processingCosts = "processing_costs"
+    case regulatoryCompliance = "regulatory_compliance"
+}
+
 /// The shipping address requested by the cardholder. You should try to include as complete address
 /// information as possible.
 public struct AuthenticationCreateShippingAddress: StripeParams {
@@ -648,4 +730,19 @@ public struct AuthenticationCreateShippingAddress: StripeParams {
         case postalCode = "postal_code"
         case state
     }
+}
+
+public enum AuthenticationCreateSubmit: String, Codable, Sendable {
+    case always
+    case ifFingerprintingNotSupported = "if_fingerprinting_not_supported"
+    case never
+}
+
+public enum AuthenticationListStatus: String, Codable, Sendable {
+    case canceled
+    case error
+    case failed
+    case requiresChallenge = "requires_challenge"
+    case requiresSubmission = "requires_submission"
+    case succeeded
 }

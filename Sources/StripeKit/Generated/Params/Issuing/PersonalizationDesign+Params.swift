@@ -252,6 +252,13 @@ public struct PersonalizationDesignListPreferences: StripeParams {
     }
 }
 
+public enum PersonalizationDesignListStatus: String, Codable, Sendable {
+    case active
+    case inactive
+    case rejected
+    case review
+}
+
 /// The reason(s) the personalization design was rejected.
 public struct PersonalizationDesignRejectRejectionReasons: StripeParams {
     /// The reason(s) the card logo was rejected.
@@ -268,6 +275,27 @@ public struct PersonalizationDesignRejectRejectionReasons: StripeParams {
         case cardLogo = "card_logo"
         case carrierText = "carrier_text"
     }
+}
+
+public enum PersonalizationDesignRejectRejectionReasonsCardLogo: String, Codable, Sendable {
+    case geographicLocation = "geographic_location"
+    case inappropriate
+    case networkName = "network_name"
+    case nonBinaryImage = "non_binary_image"
+    case nonFiatCurrency = "non_fiat_currency"
+    case other
+    case otherEntity = "other_entity"
+    case promotionalMaterial = "promotional_material"
+}
+
+public enum PersonalizationDesignRejectRejectionReasonsCarrierText: String, Codable, Sendable {
+    case geographicLocation = "geographic_location"
+    case inappropriate
+    case networkName = "network_name"
+    case nonFiatCurrency = "non_fiat_currency"
+    case other
+    case otherEntity = "other_entity"
+    case promotionalMaterial = "promotional_material"
 }
 
 public struct PersonalizationDesignUpdateCarrierText: StripeParams {

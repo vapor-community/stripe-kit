@@ -213,6 +213,16 @@ public struct IssuingDisputeCreateEvidenceCanceled: StripeParams {
     }
 }
 
+public enum IssuingDisputeCreateEvidenceCanceledProductType: String, Codable, Sendable {
+    case merchandise
+    case service
+}
+
+public enum IssuingDisputeCreateEvidenceCanceledReturnStatus: String, Codable, Sendable {
+    case merchantRejected = "merchant_rejected"
+    case successful
+}
+
 public struct IssuingDisputeCreateEvidenceDuplicate: StripeParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
@@ -303,6 +313,11 @@ public struct IssuingDisputeCreateEvidenceMerchandiseNotAsDescribed: StripeParam
     }
 }
 
+public enum IssuingDisputeCreateEvidenceMerchandiseNotAsDescribedReturnStatus: String, Codable, Sendable {
+    case merchantRejected = "merchant_rejected"
+    case successful
+}
+
 public struct IssuingDisputeCreateEvidenceNoValidAuthorization: StripeParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
@@ -351,6 +366,11 @@ public struct IssuingDisputeCreateEvidenceNotReceived: StripeParams {
     }
 }
 
+public enum IssuingDisputeCreateEvidenceNotReceivedProductType: String, Codable, Sendable {
+    case merchandise
+    case service
+}
+
 public struct IssuingDisputeCreateEvidenceOther: StripeParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
@@ -375,6 +395,22 @@ public struct IssuingDisputeCreateEvidenceOther: StripeParams {
         case productDescription = "product_description"
         case productType = "product_type"
     }
+}
+
+public enum IssuingDisputeCreateEvidenceOtherProductType: String, Codable, Sendable {
+    case merchandise
+    case service
+}
+
+public enum IssuingDisputeCreateEvidenceReason: String, Codable, Sendable {
+    case canceled
+    case duplicate
+    case fraudulent
+    case merchandiseNotAsDescribed = "merchandise_not_as_described"
+    case noValidAuthorization = "no_valid_authorization"
+    case notReceived = "not_received"
+    case other
+    case serviceNotAsDescribed = "service_not_as_described"
 }
 
 public struct IssuingDisputeCreateEvidenceServiceNotAsDescribed: StripeParams {
@@ -419,6 +455,14 @@ public struct IssuingDisputeCreateTreasury: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case receivedDebit = "received_debit"
     }
+}
+
+public enum IssuingDisputeListStatus: String, Codable, Sendable {
+    case expired
+    case lost
+    case submitted
+    case unsubmitted
+    case won
 }
 
 /// Evidence provided for the dispute.
@@ -517,6 +561,16 @@ public struct IssuingDisputeUpdateEvidenceCanceled: StripeParams {
     }
 }
 
+public enum IssuingDisputeUpdateEvidenceCanceledProductType: String, Codable, Sendable {
+    case merchandise
+    case service
+}
+
+public enum IssuingDisputeUpdateEvidenceCanceledReturnStatus: String, Codable, Sendable {
+    case merchantRejected = "merchant_rejected"
+    case successful
+}
+
 public struct IssuingDisputeUpdateEvidenceDuplicate: StripeParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
@@ -607,6 +661,11 @@ public struct IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribed: StripeParam
     }
 }
 
+public enum IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribedReturnStatus: String, Codable, Sendable {
+    case merchantRejected = "merchant_rejected"
+    case successful
+}
+
 public struct IssuingDisputeUpdateEvidenceNoValidAuthorization: StripeParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
@@ -655,6 +714,11 @@ public struct IssuingDisputeUpdateEvidenceNotReceived: StripeParams {
     }
 }
 
+public enum IssuingDisputeUpdateEvidenceNotReceivedProductType: String, Codable, Sendable {
+    case merchandise
+    case service
+}
+
 public struct IssuingDisputeUpdateEvidenceOther: StripeParams {
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation
     /// supporting the dispute.
@@ -679,6 +743,22 @@ public struct IssuingDisputeUpdateEvidenceOther: StripeParams {
         case productDescription = "product_description"
         case productType = "product_type"
     }
+}
+
+public enum IssuingDisputeUpdateEvidenceOtherProductType: String, Codable, Sendable {
+    case merchandise
+    case service
+}
+
+public enum IssuingDisputeUpdateEvidenceReason: String, Codable, Sendable {
+    case canceled
+    case duplicate
+    case fraudulent
+    case merchandiseNotAsDescribed = "merchandise_not_as_described"
+    case noValidAuthorization = "no_valid_authorization"
+    case notReceived = "not_received"
+    case other
+    case serviceNotAsDescribed = "service_not_as_described"
 }
 
 public struct IssuingDisputeUpdateEvidenceServiceNotAsDescribed: StripeParams {

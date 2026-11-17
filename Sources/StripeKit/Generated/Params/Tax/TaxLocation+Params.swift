@@ -95,3 +95,11 @@ public struct TaxLocationCreateAddress: StripeParams {
         case state
     }
 }
+
+public enum TaxLocationCreateType: String, Codable, Sendable {
+    case performance
+}
+
+public enum TaxLocationListType: String, Codable, Sendable {
+    case performance
+}

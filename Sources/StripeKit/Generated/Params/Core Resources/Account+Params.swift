@@ -406,6 +406,14 @@ public struct AccountCreateBusinessProfileAnnualRevenue: StripeParams {
     }
 }
 
+public enum AccountCreateBusinessProfileMinorityOwnedBusinessDesignation: String, Codable, Sendable {
+    case lgbtqiOwnedBusiness = "lgbtqi_owned_business"
+    case minorityOwnedBusiness = "minority_owned_business"
+    case noneOfTheseApply = "none_of_these_apply"
+    case preferNotToAnswer = "prefer_not_to_answer"
+    case womenOwnedBusiness = "women_owned_business"
+}
+
 /// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
 public struct AccountCreateBusinessProfileMonthlyEstimatedRevenue: StripeParams {
     /// A non-negative integer representing how much to charge in the [smallest currency
@@ -453,6 +461,13 @@ public struct AccountCreateBusinessProfileSupportAddress: StripeParams {
         case postalCode = "postal_code"
         case state
     }
+}
+
+public enum AccountCreateBusinessType: String, Codable, Sendable {
+    case company
+    case governmentEntity = "government_entity"
+    case individual
+    case nonProfit = "non_profit"
 }
 
 /// Each key of the dictionary represents a capability, and each capability maps to its settings (for
@@ -1919,6 +1934,11 @@ public struct AccountCreateCompanyOwnershipDeclaration: StripeParams {
     }
 }
 
+public enum AccountCreateCompanyOwnershipExemptionReason: String, Codable, Sendable {
+    case qualifiedEntityExceedsOwnershipThreshold = "qualified_entity_exceeds_ownership_threshold"
+    case qualifiesAsFinancialInstitution = "qualifies_as_financial_institution"
+}
+
 /// A location where the business has a meaningful physical operating presence.
 public struct AccountCreateCompanyPhysicalAddress: StripeParams {
     /// City, district, suburb, town, or village.
@@ -2025,6 +2045,32 @@ public struct AccountCreateCompanyRepresentativeDeclaration: StripeParams {
     }
 }
 
+public enum AccountCreateCompanyStructure: String, Codable, Sendable {
+    case freeZoneEstablishment = "free_zone_establishment"
+    case freeZoneLlc = "free_zone_llc"
+    case governmentInstrumentality = "government_instrumentality"
+    case governmentalUnit = "governmental_unit"
+    case incorporatedNonProfit = "incorporated_non_profit"
+    case incorporatedPartnership = "incorporated_partnership"
+    case limitedLiabilityPartnership = "limited_liability_partnership"
+    case llc
+    case multiMemberLlc = "multi_member_llc"
+    case privateCompany = "private_company"
+    case privateCorporation = "private_corporation"
+    case privatePartnership = "private_partnership"
+    case publicCompany = "public_company"
+    case publicCorporation = "public_corporation"
+    case publicPartnership = "public_partnership"
+    case registeredCharity = "registered_charity"
+    case singleMemberLlc = "single_member_llc"
+    case soleEstablishment = "sole_establishment"
+    case soleProprietorship = "sole_proprietorship"
+    case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
+    case unincorporatedAssociation = "unincorporated_association"
+    case unincorporatedNonProfit = "unincorporated_non_profit"
+    case unincorporatedPartnership = "unincorporated_partnership"
+}
+
 /// Information on the verification state of the company.
 public struct AccountCreateCompanyVerification: StripeParams {
     /// A document verifying the business.
@@ -2096,6 +2142,11 @@ public struct AccountCreateControllerFees: StripeParams {
     }
 }
 
+public enum AccountCreateControllerFeesPayer: String, Codable, Sendable {
+    case account
+    case application
+}
+
 /// A hash of configuration for products that have negative balance liability, and whether Stripe or a
 /// Connect application is responsible for them.
 public struct AccountCreateControllerLosses: StripeParams {
@@ -2110,6 +2161,16 @@ public struct AccountCreateControllerLosses: StripeParams {
     }
 }
 
+public enum AccountCreateControllerLossesPayments: String, Codable, Sendable {
+    case application
+    case stripe
+}
+
+public enum AccountCreateControllerRequirementCollection: String, Codable, Sendable {
+    case application
+    case stripe
+}
+
 /// A hash of configuration for Stripe-hosted dashboards.
 public struct AccountCreateControllerStripeDashboard: StripeParams {
     /// Whether this account should have access to the full Stripe Dashboard (`full`), to the Express
@@ -2119,6 +2180,12 @@ public struct AccountCreateControllerStripeDashboard: StripeParams {
     public init(type: AccountCreateControllerStripeDashboardType? = nil) {
         self.type = type
     }
+}
+
+public enum AccountCreateControllerStripeDashboardType: String, Codable, Sendable {
+    case express
+    case full
+    case none
 }
 
 /// Documents that may be submitted to satisfy various informational requests.
@@ -2549,6 +2616,11 @@ public struct AccountCreateIndividualDob: StripeParams {
     }
 }
 
+public enum AccountCreateIndividualPoliticalExposure: String, Codable, Sendable {
+    case existing
+    case none
+}
+
 /// The individual's registered address.
 public struct AccountCreateIndividualRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
@@ -2879,6 +2951,12 @@ public struct AccountCreateSettingsInvoices: StripeParams {
     }
 }
 
+public enum AccountCreateSettingsInvoicesHostedPaymentMethodSave: String, Codable, Sendable {
+    case always
+    case never
+    case offer
+}
+
 /// Settings that apply across payment methods for charging on the account.
 public struct AccountCreateSettingsPayments: StripeParams {
     /// The default text that appears on statements for non-card charges outside of Japan. For card charges,
@@ -3016,6 +3094,31 @@ public enum AccountCreateSettingsPayoutsScheduleDelayDays: Codable, Sendable, Ex
     }
 }
 
+public enum AccountCreateSettingsPayoutsScheduleInterval: String, Codable, Sendable {
+    case daily
+    case manual
+    case monthly
+    case weekly
+}
+
+public enum AccountCreateSettingsPayoutsScheduleWeeklyAnchor: String, Codable, Sendable {
+    case friday
+    case monday
+    case saturday
+    case sunday
+    case thursday
+    case tuesday
+    case wednesday
+}
+
+public enum AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays: String, Codable, Sendable {
+    case friday
+    case monday
+    case thursday
+    case tuesday
+    case wednesday
+}
+
 /// Settings specific to the PayPay payments method.
 public struct AccountCreateSettingsPaypayPayments: StripeParams {
     /// Additional files that are required to support the onboarding process of your business.
@@ -3037,6 +3140,11 @@ public struct AccountCreateSettingsPaypayPayments: StripeParams {
         case goodsType = "goods_type"
         case site
     }
+}
+
+public enum AccountCreateSettingsPaypayPaymentsGoodsType: String, Codable, Sendable {
+    case digitalContent = "digital_content"
+    case other
 }
 
 /// Details regarding your business's website.
@@ -3090,6 +3198,12 @@ public struct AccountCreateSettingsPaypayPaymentsSiteRestricted: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case paymentFlowFile = "payment_flow_file"
     }
+}
+
+public enum AccountCreateSettingsPaypayPaymentsSiteType: String, Codable, Sendable {
+    case accessible
+    case inDevelopment = "in_development"
+    case restricted
 }
 
 /// Settings specific to SEPA Direct Debit payments.
@@ -3172,6 +3286,27 @@ public struct AccountCreateTosAcceptance: StripeParams {
         case serviceAgreement = "service_agreement"
         case userAgent = "user_agent"
     }
+}
+
+public enum AccountCreateType: String, Codable, Sendable {
+    case custom
+    case express
+    case standard
+}
+
+public enum AccountRejectReason: String, Codable, Sendable {
+    case credit
+    case fraudNoIntentToFulfill = "fraud_no_intent_to_fulfill"
+    case fraudOther = "fraud_other"
+    case fraudPaymentMethodCasher = "fraud_payment_method_casher"
+    case fraudPaymentMethodTester = "fraud_payment_method_tester"
+    case other
+    case termsOfService = "terms_of_service"
+}
+
+public enum AccountRejectPayoutsAction: String, Codable, Sendable {
+    case none
+    case pause
 }
 
 /// Business information about the account.
@@ -3265,6 +3400,14 @@ public struct AccountUpdateBusinessProfileAnnualRevenue: StripeParams {
     }
 }
 
+public enum AccountUpdateBusinessProfileMinorityOwnedBusinessDesignation: String, Codable, Sendable {
+    case lgbtqiOwnedBusiness = "lgbtqi_owned_business"
+    case minorityOwnedBusiness = "minority_owned_business"
+    case noneOfTheseApply = "none_of_these_apply"
+    case preferNotToAnswer = "prefer_not_to_answer"
+    case womenOwnedBusiness = "women_owned_business"
+}
+
 /// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
 public struct AccountUpdateBusinessProfileMonthlyEstimatedRevenue: StripeParams {
     /// A non-negative integer representing how much to charge in the [smallest currency
@@ -3312,6 +3455,13 @@ public struct AccountUpdateBusinessProfileSupportAddress: StripeParams {
         case postalCode = "postal_code"
         case state
     }
+}
+
+public enum AccountUpdateBusinessType: String, Codable, Sendable {
+    case company
+    case governmentEntity = "government_entity"
+    case individual
+    case nonProfit = "non_profit"
 }
 
 /// Each key of the dictionary represents a capability, and each capability maps to its settings (for
@@ -4777,6 +4927,11 @@ public struct AccountUpdateCompanyOwnershipDeclaration: StripeParams {
     }
 }
 
+public enum AccountUpdateCompanyOwnershipExemptionReason: String, Codable, Sendable {
+    case qualifiedEntityExceedsOwnershipThreshold = "qualified_entity_exceeds_ownership_threshold"
+    case qualifiesAsFinancialInstitution = "qualifies_as_financial_institution"
+}
+
 /// A location where the business has a meaningful physical operating presence.
 public struct AccountUpdateCompanyPhysicalAddress: StripeParams {
     /// City, district, suburb, town, or village.
@@ -4881,6 +5036,32 @@ public struct AccountUpdateCompanyRepresentativeDeclaration: StripeParams {
         case ip
         case userAgent = "user_agent"
     }
+}
+
+public enum AccountUpdateCompanyStructure: String, Codable, Sendable {
+    case freeZoneEstablishment = "free_zone_establishment"
+    case freeZoneLlc = "free_zone_llc"
+    case governmentInstrumentality = "government_instrumentality"
+    case governmentalUnit = "governmental_unit"
+    case incorporatedNonProfit = "incorporated_non_profit"
+    case incorporatedPartnership = "incorporated_partnership"
+    case limitedLiabilityPartnership = "limited_liability_partnership"
+    case llc
+    case multiMemberLlc = "multi_member_llc"
+    case privateCompany = "private_company"
+    case privateCorporation = "private_corporation"
+    case privatePartnership = "private_partnership"
+    case publicCompany = "public_company"
+    case publicCorporation = "public_corporation"
+    case publicPartnership = "public_partnership"
+    case registeredCharity = "registered_charity"
+    case singleMemberLlc = "single_member_llc"
+    case soleEstablishment = "sole_establishment"
+    case soleProprietorship = "sole_proprietorship"
+    case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
+    case unincorporatedAssociation = "unincorporated_association"
+    case unincorporatedNonProfit = "unincorporated_non_profit"
+    case unincorporatedPartnership = "unincorporated_partnership"
 }
 
 /// Information on the verification state of the company.
@@ -5368,6 +5549,11 @@ public struct AccountUpdateIndividualDob: StripeParams {
     }
 }
 
+public enum AccountUpdateIndividualPoliticalExposure: String, Codable, Sendable {
+    case existing
+    case none
+}
+
 /// The individual's registered address.
 public struct AccountUpdateIndividualRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
@@ -5703,6 +5889,12 @@ public struct AccountUpdateSettingsInvoices: StripeParams {
     }
 }
 
+public enum AccountUpdateSettingsInvoicesHostedPaymentMethodSave: String, Codable, Sendable {
+    case always
+    case never
+    case offer
+}
+
 /// Settings that apply across payment methods for charging on the account.
 public struct AccountUpdateSettingsPayments: StripeParams {
     /// The default text that appears on statements for non-card charges outside of Japan. For card charges,
@@ -5840,6 +6032,31 @@ public enum AccountUpdateSettingsPayoutsScheduleDelayDays: Codable, Sendable, Ex
     }
 }
 
+public enum AccountUpdateSettingsPayoutsScheduleInterval: String, Codable, Sendable {
+    case daily
+    case manual
+    case monthly
+    case weekly
+}
+
+public enum AccountUpdateSettingsPayoutsScheduleWeeklyAnchor: String, Codable, Sendable {
+    case friday
+    case monday
+    case saturday
+    case sunday
+    case thursday
+    case tuesday
+    case wednesday
+}
+
+public enum AccountUpdateSettingsPayoutsScheduleWeeklyPayoutDays: String, Codable, Sendable {
+    case friday
+    case monday
+    case thursday
+    case tuesday
+    case wednesday
+}
+
 /// Settings specific to the PayPay payments method.
 public struct AccountUpdateSettingsPaypayPayments: StripeParams {
     /// Additional files that are required to support the onboarding process of your business.
@@ -5861,6 +6078,11 @@ public struct AccountUpdateSettingsPaypayPayments: StripeParams {
         case goodsType = "goods_type"
         case site
     }
+}
+
+public enum AccountUpdateSettingsPaypayPaymentsGoodsType: String, Codable, Sendable {
+    case digitalContent = "digital_content"
+    case other
 }
 
 /// Details regarding your business's website.
@@ -5914,6 +6136,12 @@ public struct AccountUpdateSettingsPaypayPaymentsSiteRestricted: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case paymentFlowFile = "payment_flow_file"
     }
+}
+
+public enum AccountUpdateSettingsPaypayPaymentsSiteType: String, Codable, Sendable {
+    case accessible
+    case inDevelopment = "in_development"
+    case restricted
 }
 
 /// Settings specific to SEPA Direct Debit payments.

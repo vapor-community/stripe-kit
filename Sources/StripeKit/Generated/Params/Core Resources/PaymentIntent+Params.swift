@@ -826,6 +826,13 @@ public struct PaymentIntentVerifyMicrodepositsParams: StripeParams {
     }
 }
 
+public enum PaymentIntentCancelCancellationReason: String, Codable, Sendable {
+    case abandoned
+    case duplicate
+    case fraudulent
+    case requestedByCustomer = "requested_by_customer"
+}
+
 /// Provides industry-specific information about the amount.
 public struct PaymentIntentCaptureAmountDetails: StripeParams {
     /// The total discount applied on the transaction represented in the [smallest currency
@@ -1017,6 +1024,12 @@ public struct PaymentIntentCaptureAmountDetailsLineItemsPaymentMethodOptionsPayp
     }
 }
 
+public enum PaymentIntentCaptureAmountDetailsLineItemsPaymentMethodOptionsPaypalCategory: String, Codable, Sendable {
+    case digitalGoods = "digital_goods"
+    case donation
+    case physicalGoods = "physical_goods"
+}
+
 /// Contains information about the tax on the item.
 public struct PaymentIntentCaptureAmountDetailsLineItemsTax: StripeParams {
     /// The total amount of tax on a single line item represented in the [smallest currency
@@ -1135,6 +1148,108 @@ public struct PaymentIntentCaptureTransferData: StripeParams {
     public init(amount: Int? = nil) {
         self.amount = amount
     }
+}
+
+public enum PaymentIntentConfirmAllowedPaymentMethodTypes: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case bokuPromptpay = "boku_promptpay"
+    case boleto
+    case capchasePay = "capchase_pay"
+    case card
+    case cardPresent = "card_present"
+    case cashapp
+    case checkScan = "check_scan"
+    case clickToPay = "click_to_pay"
+    case crypto
+    case customerBalance = "customer_balance"
+    case demoPay = "demo_pay"
+    case duitnow
+    case dummyAuthPush = "dummy_auth_push"
+    case dummyPassthroughCard = "dummy_passthrough_card"
+    case edenred
+    case eps
+    case fpx
+    case gcash
+    case getbalance
+    case giftCard = "gift_card"
+    case giropay
+    case gopay
+    case grabpay
+    case idBankTransfer = "id_bank_transfer"
+    case ideal
+    case interacPresent = "interac_present"
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case knet
+    case konbini
+    case krCard = "kr_card"
+    case krMarket = "kr_market"
+    case kriya
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case momo
+    case mondu
+    case multibanco
+    case naverPay = "naver_pay"
+    case netbanking
+    case ngBank = "ng_bank"
+    case ngBankTransfer = "ng_bank_transfer"
+    case ngCard = "ng_card"
+    case ngMarket = "ng_market"
+    case ngUssd = "ng_ussd"
+    case ngWallet = "ng_wallet"
+    case nzBankAccount = "nz_bank_account"
+    case octopus
+    case oxxo
+    case p24
+    case paperCheck = "paper_check"
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case qris
+    case rechnung
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case shopPay = "shop_pay"
+    case shopeepay
+    case sofort
+    case southKoreaMarket = "south_korea_market"
+    case stripeBalance = "stripe_balance"
+    case sunbit
+    case swish
+    case tamara
+    case testPay = "test_pay"
+    case touchNGo = "touch_n_go"
+    case truemoney
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case usCashVoucher = "us_cash_voucher"
+    case vipps
+    case wechatPay = "wechat_pay"
+    case wero
+    case zip
 }
 
 public struct PaymentIntentConfirmAmountDetails: StripeParams {
@@ -1327,6 +1442,12 @@ public struct PaymentIntentConfirmAmountDetailsLineItemsPaymentMethodOptionsPayp
     }
 }
 
+public enum PaymentIntentConfirmAmountDetailsLineItemsPaymentMethodOptionsPaypalCategory: String, Codable, Sendable {
+    case digitalGoods = "digital_goods"
+    case donation
+    case physicalGoods = "physical_goods"
+}
+
 /// Contains information about the tax on the item.
 public struct PaymentIntentConfirmAmountDetailsLineItemsTax: StripeParams {
     /// The total amount of tax on a single line item represented in the [smallest currency
@@ -1382,6 +1503,70 @@ public struct PaymentIntentConfirmAmountDetailsTax: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case totalTaxAmount = "total_tax_amount"
     }
+}
+
+public enum PaymentIntentConfirmCaptureMethod: String, Codable, Sendable {
+    case automatic
+    case automaticAsync = "automatic_async"
+    case manual
+}
+
+public enum PaymentIntentConfirmExcludedPaymentMethodTypes: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
 }
 
 /// Automations to be run during the PaymentIntent lifecycle
@@ -1453,6 +1638,11 @@ public struct PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptance: Stripe
     }
 }
 
+public enum PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptanceType: String, Codable, Sendable {
+    case offline
+    case online
+}
+
 /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
 public struct PaymentIntentConfirmMandateDataSecretKeyCustomerAcceptanceOnline: StripeParams {
     /// The IP address from which the Mandate was accepted by the customer.
@@ -1514,6 +1704,10 @@ public struct PaymentIntentConfirmMandateDataClientKeyCustomerAcceptanceOnline: 
         case ipAddress = "ip_address"
         case userAgent = "user_agent"
     }
+}
+
+public enum PaymentIntentConfirmMandateDataClientKeyCustomerAcceptanceType: String, Codable, Sendable {
+    case online
 }
 
 /// One of the forms `mandate_data` accepts.
@@ -1885,6 +2079,64 @@ public struct PaymentIntentConfirmPaymentMethodData: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodDataType: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case cashapp
+    case crypto
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
+}
+
 /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
 /// method.
 public struct PaymentIntentConfirmPaymentMethodDataAcssDebit: StripeParams {
@@ -1906,6 +2158,12 @@ public struct PaymentIntentConfirmPaymentMethodDataAcssDebit: StripeParams {
         case institutionNumber = "institution_number"
         case transitNumber = "transit_number"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodDataAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
 }
 
 /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
@@ -2034,6 +2292,37 @@ public struct PaymentIntentConfirmPaymentMethodDataEps: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodDataEpsBank: String, Codable, Sendable {
+    case arzteUndApothekerBank = "arzte_und_apotheker_bank"
+    case austrianAnadiBankAg = "austrian_anadi_bank_ag"
+    case bankAustria = "bank_austria"
+    case bankhausCarlSpangler = "bankhaus_carl_spangler"
+    case bankhausSchelhammerUndSchatteraAg = "bankhaus_schelhammer_und_schattera_ag"
+    case bawagPskAg = "bawag_psk_ag"
+    case bksBankAg = "bks_bank_ag"
+    case brullKallmusBankAg = "brull_kallmus_bank_ag"
+    case btvVierLanderBank = "btv_vier_lander_bank"
+    case capitalBankGraweGruppeAg = "capital_bank_grawe_gruppe_ag"
+    case deutscheBankAg = "deutsche_bank_ag"
+    case dolomitenbank
+    case easybankAg = "easybank_ag"
+    case ersteBankUndSparkassen = "erste_bank_und_sparkassen"
+    case hypoAlpeadriabankInternationalAg = "hypo_alpeadriabank_international_ag"
+    case hypoBankBurgenlandAktiengesellschaft = "hypo_bank_burgenland_aktiengesellschaft"
+    case hypoNoeLbFurNiederosterreichUWien = "hypo_noe_lb_fur_niederosterreich_u_wien"
+    case hypoOberosterreichSalzburgSteiermark = "hypo_oberosterreich_salzburg_steiermark"
+    case hypoTirolBankAg = "hypo_tirol_bank_ag"
+    case hypoVorarlbergBankAg = "hypo_vorarlberg_bank_ag"
+    case marchfelderBank = "marchfelder_bank"
+    case oberbankAg = "oberbank_ag"
+    case raiffeisenBankengruppeOsterreich = "raiffeisen_bankengruppe_osterreich"
+    case schoellerbankAg = "schoellerbank_ag"
+    case spardaBankWien = "sparda_bank_wien"
+    case volksbankGruppe = "volksbank_gruppe"
+    case volkskreditbankAg = "volkskreditbank_ag"
+    case vrBankBraunau = "vr_bank_braunau"
+}
+
 /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
 public struct PaymentIntentConfirmPaymentMethodDataFpx: StripeParams {
     /// The customer's bank.
@@ -2052,6 +2341,39 @@ public struct PaymentIntentConfirmPaymentMethodDataFpx: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodDataFpxBank: String, Codable, Sendable {
+    case affinBank = "affin_bank"
+    case agrobank
+    case allianceBank = "alliance_bank"
+    case ambank
+    case bankIslam = "bank_islam"
+    case bankMuamalat = "bank_muamalat"
+    case bankOfChina = "bank_of_china"
+    case bankRakyat = "bank_rakyat"
+    case bnpParibas = "bnp_paribas"
+    case bsn
+    case cimb
+    case citibank
+    case deutscheBank = "deutsche_bank"
+    case hongLeongBank = "hong_leong_bank"
+    case hsbc
+    case kfh
+    case maybank2e
+    case maybank2u
+    case mbsbBank = "mbsb_bank"
+    case ocbc
+    case pbEnterprise = "pb_enterprise"
+    case publicBank = "public_bank"
+    case rhb
+    case standardChartered = "standard_chartered"
+    case uob
+}
+
+public enum PaymentIntentConfirmPaymentMethodDataFpxAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
 /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
 public struct PaymentIntentConfirmPaymentMethodDataIdeal: StripeParams {
     /// The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
@@ -2060,6 +2382,29 @@ public struct PaymentIntentConfirmPaymentMethodDataIdeal: StripeParams {
     public init(bank: PaymentIntentConfirmPaymentMethodDataIdealBank? = nil) {
         self.bank = bank
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodDataIdealBank: String, Codable, Sendable {
+    case abnAmro = "abn_amro"
+    case adyen
+    case asnBank = "asn_bank"
+    case bunq
+    case buut
+    case finom
+    case handelsbanken
+    case ing
+    case knab
+    case mollie
+    case moneyou
+    case n26
+    case nn
+    case rabobank
+    case regiobank
+    case revolut
+    case snsBank = "sns_bank"
+    case triodosBank = "triodos_bank"
+    case vanLanschot = "van_lanschot"
+    case yoursafe
 }
 
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
@@ -2098,6 +2443,11 @@ public struct PaymentIntentConfirmPaymentMethodDataNaverPay: StripeParams {
     public init(funding: PaymentIntentConfirmPaymentMethodDataNaverPayFunding? = nil) {
         self.funding = funding
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodDataNaverPayFunding: String, Codable, Sendable {
+    case card
+    case points
 }
 
 /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
@@ -2143,6 +2493,35 @@ public struct PaymentIntentConfirmPaymentMethodDataP24: StripeParams {
     public init(bank: PaymentIntentConfirmPaymentMethodDataP24Bank? = nil) {
         self.bank = bank
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodDataP24Bank: String, Codable, Sendable {
+    case aliorBank = "alior_bank"
+    case bankMillennium = "bank_millennium"
+    case bankNowyBfgSa = "bank_nowy_bfg_sa"
+    case bankPekaoSa = "bank_pekao_sa"
+    case bankiSpbdzielcze = "banki_spbdzielcze"
+    case blik
+    case bnpParibas = "bnp_paribas"
+    case boz
+    case citiHandlowy = "citi_handlowy"
+    case creditAgricole = "credit_agricole"
+    case envelobank
+    case etransferPocztowy24 = "etransfer_pocztowy24"
+    case getinBank = "getin_bank"
+    case ideabank
+    case ing
+    case inteligo
+    case mbankMtransfer = "mbank_mtransfer"
+    case nestPrzelew = "nest_przelew"
+    case noblePay = "noble_pay"
+    case pbacZIpko = "pbac_z_ipko"
+    case plusBank = "plus_bank"
+    case santanderPrzelew24 = "santander_przelew24"
+    case tmobileUsbugiBankowe = "tmobile_usbugi_bankowe"
+    case toyotaBank = "toyota_bank"
+    case velobank
+    case volkswagenBank = "volkswagen_bank"
 }
 
 /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
@@ -2200,6 +2579,15 @@ public struct PaymentIntentConfirmPaymentMethodDataSofort: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodDataSofortCountry: String, Codable, Sendable {
+    case at = "AT"
+    case be = "BE"
+    case de = "DE"
+    case es = "ES"
+    case it = "IT"
+    case nl = "NL"
+}
+
 /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
 public struct PaymentIntentConfirmPaymentMethodDataUpi: StripeParams {
     /// Configuration options for setting up an eMandate
@@ -2242,6 +2630,11 @@ public struct PaymentIntentConfirmPaymentMethodDataUpiMandateOptions: StripePara
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodDataUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
 /// payment method.
 public struct PaymentIntentConfirmPaymentMethodDataUsBankAccount: StripeParams {
@@ -2271,6 +2664,16 @@ public struct PaymentIntentConfirmPaymentMethodDataUsBankAccount: StripeParams {
         case financialConnectionsAccount = "financial_connections_account"
         case routingNumber = "routing_number"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodDataUsBankAccountAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
+public enum PaymentIntentConfirmPaymentMethodDataUsBankAccountAccountType: String, Codable, Sendable {
+    case checking
+    case savings
 }
 
 /// Payment method-specific configuration for this PaymentIntent.
@@ -2640,6 +3043,29 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptions: S
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case combined
+    case interval
+    case sporadic
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
+    case business
+    case personal
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsAcssDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsAffirm: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -2676,6 +3102,14 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAffirm: StripeParams {
         case preferredLocale = "preferred_locale"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsAffirmCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsAffirmSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpay: StripeParams {
@@ -2718,6 +3152,14 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpay: StripePa
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsAfterpayClearpaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsAlipay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -2743,6 +3185,11 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAlipay: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsAlipaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsAlma: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -2759,6 +3206,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAlma: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsAlmaCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsAmazonPay: StripeParams {
@@ -2793,6 +3244,15 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAmazonPay: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsAmazonPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsAmazonPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsAuBecsDebit: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -2822,6 +3282,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsAuBecsDebit: StripeParams 
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsAuBecsDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsBacsDebit: StripeParams {
@@ -2875,6 +3341,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBacsDebitMandateOptions: S
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsBacsDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsBancontact: StripeParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: PaymentIntentConfirmPaymentMethodOptionsBancontactPreferredLanguage?
@@ -2904,6 +3376,18 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBancontact: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case fr
+    case nl
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsBancontactSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsBillie: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -2928,6 +3412,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBillie: StripeParams {
         case companyDetails = "company_details"
         case reference
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsBillieCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetails: StripeParams {
@@ -2992,6 +3480,23 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetailsRegist
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
+    case chEin = "ch_ein"
+    case deHrb = "de_hrb"
+    case dkCvr = "dk_cvr"
+    case esCif = "es_cif"
+    case fiTunnus = "fi_tunnus"
+    case frSiren = "fr_siren"
+    case frSiret = "fr_siret"
+    case itRea = "it_rea"
+    case nlKvk = "nl_kvk"
+    case noOrgNumber = "no_org_number"
+    case noPno = "no_pno"
+    case seOrgNumber = "se_org_number"
+    case sePno = "se_pno"
+    case ukCrn = "uk_crn"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsBlik: StripeParams {
     /// The 6-digit BLIK code that a customer has generated using their banking application. Can only be set
     /// on confirmation.
@@ -3040,6 +3545,11 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBlikMandateOptions: Stripe
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsBlikSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsBoleto: StripeParams {
     /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto
     /// voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday
@@ -3069,6 +3579,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsBoleto: StripeParams {
         case expiresAfterDays = "expires_after_days"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsBoletoSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsCard: StripeParams {
@@ -3201,6 +3717,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCard: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsCardCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
 /// Installment configuration for payments attempted on this PaymentIntent. For more information, see
 /// the [installments integration guide](https://docs.stripe.com/payments/installments).
 public struct PaymentIntentConfirmPaymentMethodOptionsCardInstallments: StripeParams {
@@ -3233,6 +3753,16 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCardInstallmentsPlan: Stri
         self.count = count
         self.interval = interval
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardInstallmentsPlanType: String, Codable, Sendable {
+    case bonus
+    case fixedCount = "fixed_count"
+    case revolving
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardInstallmentsPlanInterval: String, Codable, Sendable {
+    case month
 }
 
 /// Configuration options for setting up an eMandate for cards issued in India.
@@ -3286,6 +3816,83 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCardMandateOptions: Stripe
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsCardMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardMandateOptionsInterval: String, Codable, Sendable {
+    case day
+    case month
+    case sporadic
+    case week
+    case year
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardMandateOptionsSupportedTypes: String, Codable, Sendable {
+    case india
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardNetwork: String, Codable, Sendable {
+    case amex
+    case cartesBancaires = "cartes_bancaires"
+    case diners
+    case discover
+    case eftposAu = "eftpos_au"
+    case girocard
+    case interac
+    case jcb
+    case link
+    case mastercard
+    case unionpay
+    case unknown
+    case visa
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardRequestExtendedAuthorization: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardRequestIncrementalAuthorization: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardRequestMulticapture: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardRequestOvercapture: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
+    case any
+    case automatic
+    case challenge
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardSetupCredentialUsage: String, Codable, Sendable {
+    case installment
+    case recurring
+    case unscheduled
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardStoredCredentialUsage: String, Codable, Sendable {
+    case installment
+    case recurring
+    case unscheduled
+}
+
 /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
 /// use for this payment.
 public struct PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecure: StripeParams {
@@ -3334,6 +3941,37 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecure: StripePa
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecureVersion: String, Codable, Sendable {
+    case v102 = "1.0.2"
+    case v210 = "2.1.0"
+    case v220 = "2.2.0"
+    case v230 = "2.3.0"
+    case v231 = "2.3.1"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecureAresTransStatus: String, Codable, Sendable {
+    case a = "A"
+    case c = "C"
+    case i = "I"
+    case n = "N"
+    case r = "R"
+    case u = "U"
+    case y = "Y"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator: String, Codable, Sendable {
+    case v01 = "01"
+    case v02 = "02"
+    case v05 = "05"
+    case v06 = "06"
+    case v07 = "07"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecureExemptionIndicator: String, Codable, Sendable {
+    case lowRisk = "low_risk"
+    case none
+}
+
 /// Network specific 3DS fields. Network specific arguments require an explicit card brand choice. The
 /// parameter `payment_method_options.card.network`` must be populated accordingly
 public struct PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptions: StripeParams {
@@ -3375,6 +4013,15 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOpt
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo: String, Codable, Sendable {
+    case v0 = "0"
+    case v1 = "1"
+    case v2 = "2"
+    case v3 = "3"
+    case v4 = "4"
+    case a = "A"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsCardPresent: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -3410,6 +4057,11 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCardPresent: StripeParams 
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsCardPresentCaptureMethod: String, Codable, Sendable {
+    case manual
+    case manualPreferred = "manual_preferred"
+}
+
 /// Network routing priority on co-branded EMV cards supporting domestic debit and international card
 /// schemes.
 public struct PaymentIntentConfirmPaymentMethodOptionsCardPresentRouting: StripeParams {
@@ -3423,6 +4075,11 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCardPresentRouting: Stripe
     public enum CodingKeys: String, CodingKey {
         case requestedPriority = "requested_priority"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCardPresentRoutingRequestedPriority: String, Codable, Sendable {
+    case domestic
+    case international
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsCashapp: StripeParams {
@@ -3459,6 +4116,16 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCashapp: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsCashappCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCashappSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsCrypto: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -3482,6 +4149,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCrypto: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCryptoSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsCustomerBalance: StripeParams {
@@ -3544,6 +4215,14 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCustomerBalanceBankTransfe
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsCustomerBalanceBankTransferType: String, Codable, Sendable {
+    case euBankTransfer = "eu_bank_transfer"
+    case gbBankTransfer = "gb_bank_transfer"
+    case jpBankTransfer = "jp_bank_transfer"
+    case mxBankTransfer = "mx_bank_transfer"
+    case usBankTransfer = "us_bank_transfer"
+}
+
 /// Configuration for the eu_bank_transfer funding type.
 public struct PaymentIntentConfirmPaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer: StripeParams {
     /// The desired country code of the bank account information. Permitted values include: `DE`, `FR`,
@@ -3553,6 +4232,24 @@ public struct PaymentIntentConfirmPaymentMethodOptionsCustomerBalanceBankTransfe
     public init(country: String) {
         self.country = country
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCustomerBalanceBankTransferRequestedAddressTypes: String, Codable, Sendable {
+    case aba
+    case iban
+    case sepa
+    case sortCode = "sort_code"
+    case spei
+    case swift
+    case zengin
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCustomerBalanceFundingType: String, Codable, Sendable {
+    case bankTransfer = "bank_transfer"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsCustomerBalanceSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsEps: StripeParams {
@@ -3580,6 +4277,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsEps: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsEpsSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsFpx: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -3603,6 +4304,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsFpx: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsFpxSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsGiropay: StripeParams {
@@ -3630,6 +4335,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsGiropay: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsGiropaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsGrabpay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -3655,6 +4364,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsGrabpay: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsGrabpaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsIdeal: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -3678,6 +4391,11 @@ public struct PaymentIntentConfirmPaymentMethodOptionsIdeal: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsIdealSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsKakaoPay: StripeParams {
@@ -3710,6 +4428,15 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKakaoPay: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsKakaoPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsKakaoPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsKlarna: StripeParams {
@@ -3758,6 +4485,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKlarna: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsKlarnaCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
 /// On-demand details if setting up or charging an on-demand payment.
 public struct PaymentIntentConfirmPaymentMethodOptionsKlarnaOnDemand: StripeParams {
     /// Your average amount value. You can use a value across your customer base, or segment based on
@@ -3791,6 +4522,68 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKlarnaOnDemand: StripePara
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsKlarnaOnDemandPurchaseInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsKlarnaPreferredLocale: String, Codable, Sendable {
+    case csCz = "cs-CZ"
+    case daDk = "da-DK"
+    case deAt = "de-AT"
+    case deCh = "de-CH"
+    case deDe = "de-DE"
+    case elGr = "el-GR"
+    case enAt = "en-AT"
+    case enAu = "en-AU"
+    case enBe = "en-BE"
+    case enCa = "en-CA"
+    case enCh = "en-CH"
+    case enCz = "en-CZ"
+    case enDe = "en-DE"
+    case enDk = "en-DK"
+    case enEs = "en-ES"
+    case enFi = "en-FI"
+    case enFr = "en-FR"
+    case enGb = "en-GB"
+    case enGr = "en-GR"
+    case enIe = "en-IE"
+    case enIt = "en-IT"
+    case enNl = "en-NL"
+    case enNo = "en-NO"
+    case enNz = "en-NZ"
+    case enPl = "en-PL"
+    case enPt = "en-PT"
+    case enRo = "en-RO"
+    case enSe = "en-SE"
+    case enUs = "en-US"
+    case esEs = "es-ES"
+    case esUs = "es-US"
+    case fiFi = "fi-FI"
+    case frBe = "fr-BE"
+    case frCa = "fr-CA"
+    case frCh = "fr-CH"
+    case frFr = "fr-FR"
+    case itCh = "it-CH"
+    case itIt = "it-IT"
+    case nbNo = "nb-NO"
+    case nlBe = "nl-BE"
+    case nlNl = "nl-NL"
+    case plPl = "pl-PL"
+    case ptPt = "pt-PT"
+    case roRo = "ro-RO"
+    case svFi = "sv-FI"
+    case svSe = "sv-SE"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsKlarnaSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsKlarnaSubscriptions: StripeParams {
     /// Unit of time between subscription charges.
     public var interval: PaymentIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsInterval
@@ -3820,6 +4613,13 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKlarnaSubscriptions: Strip
         case nextBilling = "next_billing"
         case reference
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsKlarnaSubscriptionsInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// Describes the upcoming charge for this subscription.
@@ -3882,6 +4682,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKonbini: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsKonbiniSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsKrCard: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -3912,6 +4716,15 @@ public struct PaymentIntentConfirmPaymentMethodOptionsKrCard: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsKrCardCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsKrCardSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsLink: StripeParams {
@@ -3952,6 +4765,15 @@ public struct PaymentIntentConfirmPaymentMethodOptionsLink: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsLinkCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsLinkSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsMbWay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -3975,6 +4797,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsMbWay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsMbWaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsMobilepay: StripeParams {
@@ -4011,6 +4837,14 @@ public struct PaymentIntentConfirmPaymentMethodOptionsMobilepay: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsMobilepayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsMobilepaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsMultibanco: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -4034,6 +4868,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsMultibanco: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsMultibancoSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsNaverPay: StripeParams {
@@ -4068,6 +4906,15 @@ public struct PaymentIntentConfirmPaymentMethodOptionsNaverPay: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsNaverPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsNaverPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsNzBankAccount: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -4097,6 +4944,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsNzBankAccount: StripeParam
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsNzBankAccountSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsOxxo: StripeParams {
@@ -4130,6 +4983,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsOxxo: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsOxxoSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsP24: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -4157,6 +5014,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsP24: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case tosShownAndAccepted = "tos_shown_and_accepted"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsP24SetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsPayco: StripeParams {
@@ -4191,6 +5052,14 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPayco: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsPaycoCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPaycoSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsPaynow: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -4214,6 +5083,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPaynow: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPaynowSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsPaypal: StripeParams {
@@ -4258,6 +5131,39 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPaypal: StripeParams {
         case riskCorrelationId = "risk_correlation_id"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPaypalCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPaypalPreferredLocale: String, Codable, Sendable {
+    case csCz = "cs-CZ"
+    case daDk = "da-DK"
+    case deAt = "de-AT"
+    case deDe = "de-DE"
+    case deLu = "de-LU"
+    case elGr = "el-GR"
+    case enGb = "en-GB"
+    case enUs = "en-US"
+    case esEs = "es-ES"
+    case fiFi = "fi-FI"
+    case frBe = "fr-BE"
+    case frFr = "fr-FR"
+    case frLu = "fr-LU"
+    case huHu = "hu-HU"
+    case itIt = "it-IT"
+    case nlBe = "nl-BE"
+    case nlNl = "nl-NL"
+    case plPl = "pl-PL"
+    case ptPt = "pt-PT"
+    case skSk = "sk-SK"
+    case svSe = "sv-SE"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPaypalSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsPayto: StripeParams {
@@ -4329,6 +5235,41 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptions: Strip
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case adhoc
+    case annual
+    case daily
+    case fortnightly
+    case monthly
+    case quarterly
+    case semiAnnual = "semi_annual"
+    case weekly
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
+    case dependantSupport = "dependant_support"
+    case government
+    case loan
+    case mortgage
+    case other
+    case pension
+    case personal
+    case retail
+    case salary
+    case tax
+    case utility
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPaytoSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsPix: StripeParams {
     /// Determines if the amount includes the IOF tax. Defaults to `never`.
     public var amountIncludesIof: PaymentIntentConfirmPaymentMethodOptionsPixAmountIncludesIof?
@@ -4370,6 +5311,11 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPix: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
 }
 
 /// Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
@@ -4419,6 +5365,29 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPixMandateOptions: StripeP
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPixMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPixMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case halfyearly
+    case monthly
+    case quarterly
+    case weekly
+    case yearly
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPixSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsPromptpay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -4442,6 +5411,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsPromptpay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsPromptpaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsRevolutPay: StripeParams {
@@ -4476,6 +5449,15 @@ public struct PaymentIntentConfirmPaymentMethodOptionsRevolutPay: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsRevolutPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsRevolutPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsSamsungPay: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -4506,6 +5488,14 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSamsungPay: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsSamsungPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsSamsungPaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsSatispay: StripeParams {
@@ -4540,6 +5530,16 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSatispay: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsSatispayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsSatispaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsScalapay: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -4556,6 +5556,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsScalapay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsScalapayCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsSepaDebit: StripeParams {
@@ -4609,6 +5613,12 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSepaDebitMandateOptions: S
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsSepaDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsSequra: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -4643,6 +5653,14 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSequra: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsSequraCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsSequraSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsSofort: StripeParams {
     /// Language shown to the payer on redirect.
     public var preferredLanguage: PaymentIntentConfirmPaymentMethodOptionsSofortPreferredLanguage?
@@ -4670,6 +5688,21 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSofort: StripeParams {
         case preferredLanguage = "preferred_language"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsSofortPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case es
+    case fr
+    case it
+    case nl
+    case pl
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsSofortSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsSunbit: StripeParams {
@@ -4704,6 +5737,14 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSunbit: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsSunbitCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsSunbitSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsSwish: StripeParams {
     /// A reference for this payment to be displayed in the Swish app.
     public var reference: String?
@@ -4733,6 +5774,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsSwish: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsSwishSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsTwint: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -4756,6 +5801,11 @@ public struct PaymentIntentConfirmPaymentMethodOptionsTwint: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsTwintSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsUpi: StripeParams {
@@ -4800,6 +5850,17 @@ public struct PaymentIntentConfirmPaymentMethodOptionsUpiMandateOptions: StripeP
         case description
         case endDate = "end_date"
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsUpiSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccount: StripeParams {
@@ -4897,6 +5958,24 @@ public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConn
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
+    case checking
+    case savings
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
+    case balances
+    case ownership
+    case paymentMethod = "payment_method"
+    case transactions
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
+    case balances
+    case ownership
+    case transactions
+}
+
 /// Additional fields for Mandate creation
 public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptions: StripeParams {
     /// The method used to collect offline mandate customer acceptance.
@@ -4911,6 +5990,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccountMandateOption
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: String, Codable, Sendable {
+    case paper
+}
+
 /// Additional fields for network related functions
 public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccountNetworks: StripeParams {
     /// Triggers validations to run across the selected networks
@@ -4919,6 +6002,30 @@ public struct PaymentIntentConfirmPaymentMethodOptionsUsBankAccountNetworks: Str
     public init(requested: [PaymentIntentConfirmPaymentMethodOptionsUsBankAccountNetworksRequested]? = nil) {
         self.requested = requested
     }
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsUsBankAccountNetworksRequested: String, Codable, Sendable {
+    case ach
+    case usDomesticWire = "us_domestic_wire"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsUsBankAccountSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsUsBankAccountTransactionPurpose: String, Codable, Sendable {
+    case goods
+    case other
+    case services
+    case unspecified
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
 }
 
 public struct PaymentIntentConfirmPaymentMethodOptionsWechatPay: StripeParams {
@@ -4954,6 +6061,16 @@ public struct PaymentIntentConfirmPaymentMethodOptionsWechatPay: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsWechatPayClient: String, Codable, Sendable {
+    case android
+    case ios
+    case web
+}
+
+public enum PaymentIntentConfirmPaymentMethodOptionsWechatPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentConfirmPaymentMethodOptionsZip: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -4979,6 +6096,10 @@ public struct PaymentIntentConfirmPaymentMethodOptionsZip: StripeParams {
     }
 }
 
+public enum PaymentIntentConfirmPaymentMethodOptionsZipSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// Options to configure Radar. Learn more about [Radar
 /// Sessions](https://docs.stripe.com/radar/radar-session).
 public struct PaymentIntentConfirmRadarOptions: StripeParams {
@@ -4993,6 +6114,11 @@ public struct PaymentIntentConfirmRadarOptions: StripeParams {
         self.referrer = referrer
         self.session = session
     }
+}
+
+public enum PaymentIntentConfirmSetupFutureUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentConfirmShipping: StripeParams {
@@ -5057,6 +6183,108 @@ public struct PaymentIntentConfirmShippingAddress: StripeParams {
         case postalCode = "postal_code"
         case state
     }
+}
+
+public enum PaymentIntentCreateAllowedPaymentMethodTypes: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case bokuPromptpay = "boku_promptpay"
+    case boleto
+    case capchasePay = "capchase_pay"
+    case card
+    case cardPresent = "card_present"
+    case cashapp
+    case checkScan = "check_scan"
+    case clickToPay = "click_to_pay"
+    case crypto
+    case customerBalance = "customer_balance"
+    case demoPay = "demo_pay"
+    case duitnow
+    case dummyAuthPush = "dummy_auth_push"
+    case dummyPassthroughCard = "dummy_passthrough_card"
+    case edenred
+    case eps
+    case fpx
+    case gcash
+    case getbalance
+    case giftCard = "gift_card"
+    case giropay
+    case gopay
+    case grabpay
+    case idBankTransfer = "id_bank_transfer"
+    case ideal
+    case interacPresent = "interac_present"
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case knet
+    case konbini
+    case krCard = "kr_card"
+    case krMarket = "kr_market"
+    case kriya
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case momo
+    case mondu
+    case multibanco
+    case naverPay = "naver_pay"
+    case netbanking
+    case ngBank = "ng_bank"
+    case ngBankTransfer = "ng_bank_transfer"
+    case ngCard = "ng_card"
+    case ngMarket = "ng_market"
+    case ngUssd = "ng_ussd"
+    case ngWallet = "ng_wallet"
+    case nzBankAccount = "nz_bank_account"
+    case octopus
+    case oxxo
+    case p24
+    case paperCheck = "paper_check"
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case qris
+    case rechnung
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case shopPay = "shop_pay"
+    case shopeepay
+    case sofort
+    case southKoreaMarket = "south_korea_market"
+    case stripeBalance = "stripe_balance"
+    case sunbit
+    case swish
+    case tamara
+    case testPay = "test_pay"
+    case touchNGo = "touch_n_go"
+    case truemoney
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case usCashVoucher = "us_cash_voucher"
+    case vipps
+    case wechatPay = "wechat_pay"
+    case wero
+    case zip
 }
 
 /// Provides industry-specific information about the amount.
@@ -5250,6 +6478,12 @@ public struct PaymentIntentCreateAmountDetailsLineItemsPaymentMethodOptionsPaypa
     }
 }
 
+public enum PaymentIntentCreateAmountDetailsLineItemsPaymentMethodOptionsPaypalCategory: String, Codable, Sendable {
+    case digitalGoods = "digital_goods"
+    case donation
+    case physicalGoods = "physical_goods"
+}
+
 /// Contains information about the tax on the item.
 public struct PaymentIntentCreateAmountDetailsLineItemsTax: StripeParams {
     /// The total amount of tax on a single line item represented in the [smallest currency
@@ -5331,6 +6565,80 @@ public struct PaymentIntentCreateAutomaticPaymentMethods: StripeParams {
     }
 }
 
+public enum PaymentIntentCreateAutomaticPaymentMethodsAllowRedirects: String, Codable, Sendable {
+    case always
+    case never
+}
+
+public enum PaymentIntentCreateCaptureMethod: String, Codable, Sendable {
+    case automatic
+    case automaticAsync = "automatic_async"
+    case manual
+}
+
+public enum PaymentIntentCreateConfirmationMethod: String, Codable, Sendable {
+    case automatic
+    case manual
+}
+
+public enum PaymentIntentCreateExcludedPaymentMethodTypes: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
+}
+
 /// Automations to be run during the PaymentIntent lifecycle
 public struct PaymentIntentCreateHooks: StripeParams {
     /// Arguments passed in automations
@@ -5398,6 +6706,11 @@ public struct PaymentIntentCreateMandateDataCustomerAcceptance: StripeParams {
         case online
         case type
     }
+}
+
+public enum PaymentIntentCreateMandateDataCustomerAcceptanceType: String, Codable, Sendable {
+    case offline
+    case online
 }
 
 /// If this is a Mandate accepted online, this hash contains details about the online acceptance.
@@ -5766,6 +7079,64 @@ public struct PaymentIntentCreatePaymentMethodData: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodDataType: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case cashapp
+    case crypto
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
+}
+
 /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
 /// method.
 public struct PaymentIntentCreatePaymentMethodDataAcssDebit: StripeParams {
@@ -5787,6 +7158,12 @@ public struct PaymentIntentCreatePaymentMethodDataAcssDebit: StripeParams {
         case institutionNumber = "institution_number"
         case transitNumber = "transit_number"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodDataAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
 }
 
 /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
@@ -5915,6 +7292,37 @@ public struct PaymentIntentCreatePaymentMethodDataEps: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodDataEpsBank: String, Codable, Sendable {
+    case arzteUndApothekerBank = "arzte_und_apotheker_bank"
+    case austrianAnadiBankAg = "austrian_anadi_bank_ag"
+    case bankAustria = "bank_austria"
+    case bankhausCarlSpangler = "bankhaus_carl_spangler"
+    case bankhausSchelhammerUndSchatteraAg = "bankhaus_schelhammer_und_schattera_ag"
+    case bawagPskAg = "bawag_psk_ag"
+    case bksBankAg = "bks_bank_ag"
+    case brullKallmusBankAg = "brull_kallmus_bank_ag"
+    case btvVierLanderBank = "btv_vier_lander_bank"
+    case capitalBankGraweGruppeAg = "capital_bank_grawe_gruppe_ag"
+    case deutscheBankAg = "deutsche_bank_ag"
+    case dolomitenbank
+    case easybankAg = "easybank_ag"
+    case ersteBankUndSparkassen = "erste_bank_und_sparkassen"
+    case hypoAlpeadriabankInternationalAg = "hypo_alpeadriabank_international_ag"
+    case hypoBankBurgenlandAktiengesellschaft = "hypo_bank_burgenland_aktiengesellschaft"
+    case hypoNoeLbFurNiederosterreichUWien = "hypo_noe_lb_fur_niederosterreich_u_wien"
+    case hypoOberosterreichSalzburgSteiermark = "hypo_oberosterreich_salzburg_steiermark"
+    case hypoTirolBankAg = "hypo_tirol_bank_ag"
+    case hypoVorarlbergBankAg = "hypo_vorarlberg_bank_ag"
+    case marchfelderBank = "marchfelder_bank"
+    case oberbankAg = "oberbank_ag"
+    case raiffeisenBankengruppeOsterreich = "raiffeisen_bankengruppe_osterreich"
+    case schoellerbankAg = "schoellerbank_ag"
+    case spardaBankWien = "sparda_bank_wien"
+    case volksbankGruppe = "volksbank_gruppe"
+    case volkskreditbankAg = "volkskreditbank_ag"
+    case vrBankBraunau = "vr_bank_braunau"
+}
+
 /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
 public struct PaymentIntentCreatePaymentMethodDataFpx: StripeParams {
     /// The customer's bank.
@@ -5933,6 +7341,39 @@ public struct PaymentIntentCreatePaymentMethodDataFpx: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodDataFpxBank: String, Codable, Sendable {
+    case affinBank = "affin_bank"
+    case agrobank
+    case allianceBank = "alliance_bank"
+    case ambank
+    case bankIslam = "bank_islam"
+    case bankMuamalat = "bank_muamalat"
+    case bankOfChina = "bank_of_china"
+    case bankRakyat = "bank_rakyat"
+    case bnpParibas = "bnp_paribas"
+    case bsn
+    case cimb
+    case citibank
+    case deutscheBank = "deutsche_bank"
+    case hongLeongBank = "hong_leong_bank"
+    case hsbc
+    case kfh
+    case maybank2e
+    case maybank2u
+    case mbsbBank = "mbsb_bank"
+    case ocbc
+    case pbEnterprise = "pb_enterprise"
+    case publicBank = "public_bank"
+    case rhb
+    case standardChartered = "standard_chartered"
+    case uob
+}
+
+public enum PaymentIntentCreatePaymentMethodDataFpxAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
 /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
 public struct PaymentIntentCreatePaymentMethodDataIdeal: StripeParams {
     /// The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
@@ -5941,6 +7382,29 @@ public struct PaymentIntentCreatePaymentMethodDataIdeal: StripeParams {
     public init(bank: PaymentIntentCreatePaymentMethodDataIdealBank? = nil) {
         self.bank = bank
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodDataIdealBank: String, Codable, Sendable {
+    case abnAmro = "abn_amro"
+    case adyen
+    case asnBank = "asn_bank"
+    case bunq
+    case buut
+    case finom
+    case handelsbanken
+    case ing
+    case knab
+    case mollie
+    case moneyou
+    case n26
+    case nn
+    case rabobank
+    case regiobank
+    case revolut
+    case snsBank = "sns_bank"
+    case triodosBank = "triodos_bank"
+    case vanLanschot = "van_lanschot"
+    case yoursafe
 }
 
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
@@ -5979,6 +7443,11 @@ public struct PaymentIntentCreatePaymentMethodDataNaverPay: StripeParams {
     public init(funding: PaymentIntentCreatePaymentMethodDataNaverPayFunding? = nil) {
         self.funding = funding
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodDataNaverPayFunding: String, Codable, Sendable {
+    case card
+    case points
 }
 
 /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
@@ -6024,6 +7493,35 @@ public struct PaymentIntentCreatePaymentMethodDataP24: StripeParams {
     public init(bank: PaymentIntentCreatePaymentMethodDataP24Bank? = nil) {
         self.bank = bank
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodDataP24Bank: String, Codable, Sendable {
+    case aliorBank = "alior_bank"
+    case bankMillennium = "bank_millennium"
+    case bankNowyBfgSa = "bank_nowy_bfg_sa"
+    case bankPekaoSa = "bank_pekao_sa"
+    case bankiSpbdzielcze = "banki_spbdzielcze"
+    case blik
+    case bnpParibas = "bnp_paribas"
+    case boz
+    case citiHandlowy = "citi_handlowy"
+    case creditAgricole = "credit_agricole"
+    case envelobank
+    case etransferPocztowy24 = "etransfer_pocztowy24"
+    case getinBank = "getin_bank"
+    case ideabank
+    case ing
+    case inteligo
+    case mbankMtransfer = "mbank_mtransfer"
+    case nestPrzelew = "nest_przelew"
+    case noblePay = "noble_pay"
+    case pbacZIpko = "pbac_z_ipko"
+    case plusBank = "plus_bank"
+    case santanderPrzelew24 = "santander_przelew24"
+    case tmobileUsbugiBankowe = "tmobile_usbugi_bankowe"
+    case toyotaBank = "toyota_bank"
+    case velobank
+    case volkswagenBank = "volkswagen_bank"
 }
 
 /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
@@ -6081,6 +7579,15 @@ public struct PaymentIntentCreatePaymentMethodDataSofort: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodDataSofortCountry: String, Codable, Sendable {
+    case at = "AT"
+    case be = "BE"
+    case de = "DE"
+    case es = "ES"
+    case it = "IT"
+    case nl = "NL"
+}
+
 /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
 public struct PaymentIntentCreatePaymentMethodDataUpi: StripeParams {
     /// Configuration options for setting up an eMandate
@@ -6123,6 +7630,11 @@ public struct PaymentIntentCreatePaymentMethodDataUpiMandateOptions: StripeParam
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodDataUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
 /// payment method.
 public struct PaymentIntentCreatePaymentMethodDataUsBankAccount: StripeParams {
@@ -6152,6 +7664,16 @@ public struct PaymentIntentCreatePaymentMethodDataUsBankAccount: StripeParams {
         case financialConnectionsAccount = "financial_connections_account"
         case routingNumber = "routing_number"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodDataUsBankAccountAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
+public enum PaymentIntentCreatePaymentMethodDataUsBankAccountAccountType: String, Codable, Sendable {
+    case checking
+    case savings
 }
 
 /// Payment method-specific configuration for this PaymentIntent.
@@ -6521,6 +8043,29 @@ public struct PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptions: St
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case combined
+    case interval
+    case sporadic
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
+    case business
+    case personal
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsAcssDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsAffirm: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -6557,6 +8102,14 @@ public struct PaymentIntentCreatePaymentMethodOptionsAffirm: StripeParams {
         case preferredLocale = "preferred_locale"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsAffirmCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsAffirmSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsAfterpayClearpay: StripeParams {
@@ -6599,6 +8152,14 @@ public struct PaymentIntentCreatePaymentMethodOptionsAfterpayClearpay: StripePar
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsAfterpayClearpayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsAfterpayClearpaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsAlipay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -6624,6 +8185,11 @@ public struct PaymentIntentCreatePaymentMethodOptionsAlipay: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsAlipaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsAlma: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -6640,6 +8206,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsAlma: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsAlmaCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsAmazonPay: StripeParams {
@@ -6674,6 +8244,15 @@ public struct PaymentIntentCreatePaymentMethodOptionsAmazonPay: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsAmazonPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsAmazonPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsAuBecsDebit: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -6703,6 +8282,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsAuBecsDebit: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsAuBecsDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsBacsDebit: StripeParams {
@@ -6756,6 +8341,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsBacsDebitMandateOptions: St
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsBacsDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsBancontact: StripeParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: PaymentIntentCreatePaymentMethodOptionsBancontactPreferredLanguage?
@@ -6785,6 +8376,18 @@ public struct PaymentIntentCreatePaymentMethodOptionsBancontact: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case fr
+    case nl
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsBancontactSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsBillie: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -6809,6 +8412,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsBillie: StripeParams {
         case companyDetails = "company_details"
         case reference
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsBillieCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetails: StripeParams {
@@ -6873,6 +8480,23 @@ public struct PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetailsRegiste
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
+    case chEin = "ch_ein"
+    case deHrb = "de_hrb"
+    case dkCvr = "dk_cvr"
+    case esCif = "es_cif"
+    case fiTunnus = "fi_tunnus"
+    case frSiren = "fr_siren"
+    case frSiret = "fr_siret"
+    case itRea = "it_rea"
+    case nlKvk = "nl_kvk"
+    case noOrgNumber = "no_org_number"
+    case noPno = "no_pno"
+    case seOrgNumber = "se_org_number"
+    case sePno = "se_pno"
+    case ukCrn = "uk_crn"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsBlik: StripeParams {
     /// The 6-digit BLIK code that a customer has generated using their banking application. Can only be set
     /// on confirmation.
@@ -6921,6 +8545,11 @@ public struct PaymentIntentCreatePaymentMethodOptionsBlikMandateOptions: StripeP
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsBlikSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsBoleto: StripeParams {
     /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto
     /// voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday
@@ -6950,6 +8579,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsBoleto: StripeParams {
         case expiresAfterDays = "expires_after_days"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsBoletoSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsCard: StripeParams {
@@ -7082,6 +8717,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsCard: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsCardCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
 /// Installment configuration for payments attempted on this PaymentIntent. For more information, see
 /// the [installments integration guide](https://docs.stripe.com/payments/installments).
 public struct PaymentIntentCreatePaymentMethodOptionsCardInstallments: StripeParams {
@@ -7114,6 +8753,16 @@ public struct PaymentIntentCreatePaymentMethodOptionsCardInstallmentsPlan: Strip
         self.count = count
         self.interval = interval
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardInstallmentsPlanType: String, Codable, Sendable {
+    case bonus
+    case fixedCount = "fixed_count"
+    case revolving
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardInstallmentsPlanInterval: String, Codable, Sendable {
+    case month
 }
 
 /// Configuration options for setting up an eMandate for cards issued in India.
@@ -7167,6 +8816,83 @@ public struct PaymentIntentCreatePaymentMethodOptionsCardMandateOptions: StripeP
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsCardMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardMandateOptionsInterval: String, Codable, Sendable {
+    case day
+    case month
+    case sporadic
+    case week
+    case year
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardMandateOptionsSupportedTypes: String, Codable, Sendable {
+    case india
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardNetwork: String, Codable, Sendable {
+    case amex
+    case cartesBancaires = "cartes_bancaires"
+    case diners
+    case discover
+    case eftposAu = "eftpos_au"
+    case girocard
+    case interac
+    case jcb
+    case link
+    case mastercard
+    case unionpay
+    case unknown
+    case visa
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardRequestExtendedAuthorization: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardRequestIncrementalAuthorization: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardRequestMulticapture: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardRequestOvercapture: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
+    case any
+    case automatic
+    case challenge
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardSetupCredentialUsage: String, Codable, Sendable {
+    case installment
+    case recurring
+    case unscheduled
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardStoredCredentialUsage: String, Codable, Sendable {
+    case installment
+    case recurring
+    case unscheduled
+}
+
 /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
 /// use for this payment.
 public struct PaymentIntentCreatePaymentMethodOptionsCardThreeDSecure: StripeParams {
@@ -7215,6 +8941,37 @@ public struct PaymentIntentCreatePaymentMethodOptionsCardThreeDSecure: StripePar
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsCardThreeDSecureVersion: String, Codable, Sendable {
+    case v102 = "1.0.2"
+    case v210 = "2.1.0"
+    case v220 = "2.2.0"
+    case v230 = "2.3.0"
+    case v231 = "2.3.1"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardThreeDSecureAresTransStatus: String, Codable, Sendable {
+    case a = "A"
+    case c = "C"
+    case i = "I"
+    case n = "N"
+    case r = "R"
+    case u = "U"
+    case y = "Y"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator: String, Codable, Sendable {
+    case v01 = "01"
+    case v02 = "02"
+    case v05 = "05"
+    case v06 = "06"
+    case v07 = "07"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardThreeDSecureExemptionIndicator: String, Codable, Sendable {
+    case lowRisk = "low_risk"
+    case none
+}
+
 /// Network specific 3DS fields. Network specific arguments require an explicit card brand choice. The
 /// parameter `payment_method_options.card.network`` must be populated accordingly
 public struct PaymentIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptions: StripeParams {
@@ -7256,6 +9013,15 @@ public struct PaymentIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOpti
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo: String, Codable, Sendable {
+    case v0 = "0"
+    case v1 = "1"
+    case v2 = "2"
+    case v3 = "3"
+    case v4 = "4"
+    case a = "A"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsCardPresent: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -7291,6 +9057,11 @@ public struct PaymentIntentCreatePaymentMethodOptionsCardPresent: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsCardPresentCaptureMethod: String, Codable, Sendable {
+    case manual
+    case manualPreferred = "manual_preferred"
+}
+
 /// Network routing priority on co-branded EMV cards supporting domestic debit and international card
 /// schemes.
 public struct PaymentIntentCreatePaymentMethodOptionsCardPresentRouting: StripeParams {
@@ -7304,6 +9075,11 @@ public struct PaymentIntentCreatePaymentMethodOptionsCardPresentRouting: StripeP
     public enum CodingKeys: String, CodingKey {
         case requestedPriority = "requested_priority"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCardPresentRoutingRequestedPriority: String, Codable, Sendable {
+    case domestic
+    case international
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsCashapp: StripeParams {
@@ -7340,6 +9116,16 @@ public struct PaymentIntentCreatePaymentMethodOptionsCashapp: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsCashappCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCashappSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsCrypto: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -7363,6 +9149,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsCrypto: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCryptoSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsCustomerBalance: StripeParams {
@@ -7425,6 +9215,14 @@ public struct PaymentIntentCreatePaymentMethodOptionsCustomerBalanceBankTransfer
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsCustomerBalanceBankTransferType: String, Codable, Sendable {
+    case euBankTransfer = "eu_bank_transfer"
+    case gbBankTransfer = "gb_bank_transfer"
+    case jpBankTransfer = "jp_bank_transfer"
+    case mxBankTransfer = "mx_bank_transfer"
+    case usBankTransfer = "us_bank_transfer"
+}
+
 /// Configuration for the eu_bank_transfer funding type.
 public struct PaymentIntentCreatePaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer: StripeParams {
     /// The desired country code of the bank account information. Permitted values include: `DE`, `FR`,
@@ -7434,6 +9232,24 @@ public struct PaymentIntentCreatePaymentMethodOptionsCustomerBalanceBankTransfer
     public init(country: String) {
         self.country = country
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCustomerBalanceBankTransferRequestedAddressTypes: String, Codable, Sendable {
+    case aba
+    case iban
+    case sepa
+    case sortCode = "sort_code"
+    case spei
+    case swift
+    case zengin
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCustomerBalanceFundingType: String, Codable, Sendable {
+    case bankTransfer = "bank_transfer"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsCustomerBalanceSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsEps: StripeParams {
@@ -7461,6 +9277,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsEps: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsEpsSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsFpx: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -7484,6 +9304,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsFpx: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsFpxSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsGiropay: StripeParams {
@@ -7511,6 +9335,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsGiropay: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsGiropaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsGrabpay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -7536,6 +9364,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsGrabpay: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsGrabpaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsIdeal: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -7559,6 +9391,11 @@ public struct PaymentIntentCreatePaymentMethodOptionsIdeal: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsIdealSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsKakaoPay: StripeParams {
@@ -7591,6 +9428,15 @@ public struct PaymentIntentCreatePaymentMethodOptionsKakaoPay: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsKakaoPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsKakaoPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsKlarna: StripeParams {
@@ -7639,6 +9485,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsKlarna: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsKlarnaCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
 /// On-demand details if setting up or charging an on-demand payment.
 public struct PaymentIntentCreatePaymentMethodOptionsKlarnaOnDemand: StripeParams {
     /// Your average amount value. You can use a value across your customer base, or segment based on
@@ -7672,6 +9522,68 @@ public struct PaymentIntentCreatePaymentMethodOptionsKlarnaOnDemand: StripeParam
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsKlarnaOnDemandPurchaseInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsKlarnaPreferredLocale: String, Codable, Sendable {
+    case csCz = "cs-CZ"
+    case daDk = "da-DK"
+    case deAt = "de-AT"
+    case deCh = "de-CH"
+    case deDe = "de-DE"
+    case elGr = "el-GR"
+    case enAt = "en-AT"
+    case enAu = "en-AU"
+    case enBe = "en-BE"
+    case enCa = "en-CA"
+    case enCh = "en-CH"
+    case enCz = "en-CZ"
+    case enDe = "en-DE"
+    case enDk = "en-DK"
+    case enEs = "en-ES"
+    case enFi = "en-FI"
+    case enFr = "en-FR"
+    case enGb = "en-GB"
+    case enGr = "en-GR"
+    case enIe = "en-IE"
+    case enIt = "en-IT"
+    case enNl = "en-NL"
+    case enNo = "en-NO"
+    case enNz = "en-NZ"
+    case enPl = "en-PL"
+    case enPt = "en-PT"
+    case enRo = "en-RO"
+    case enSe = "en-SE"
+    case enUs = "en-US"
+    case esEs = "es-ES"
+    case esUs = "es-US"
+    case fiFi = "fi-FI"
+    case frBe = "fr-BE"
+    case frCa = "fr-CA"
+    case frCh = "fr-CH"
+    case frFr = "fr-FR"
+    case itCh = "it-CH"
+    case itIt = "it-IT"
+    case nbNo = "nb-NO"
+    case nlBe = "nl-BE"
+    case nlNl = "nl-NL"
+    case plPl = "pl-PL"
+    case ptPt = "pt-PT"
+    case roRo = "ro-RO"
+    case svFi = "sv-FI"
+    case svSe = "sv-SE"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsKlarnaSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsKlarnaSubscriptions: StripeParams {
     /// Unit of time between subscription charges.
     public var interval: PaymentIntentCreatePaymentMethodOptionsKlarnaSubscriptionsInterval
@@ -7701,6 +9613,13 @@ public struct PaymentIntentCreatePaymentMethodOptionsKlarnaSubscriptions: Stripe
         case nextBilling = "next_billing"
         case reference
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsKlarnaSubscriptionsInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// Describes the upcoming charge for this subscription.
@@ -7763,6 +9682,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsKonbini: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsKonbiniSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsKrCard: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -7793,6 +9716,15 @@ public struct PaymentIntentCreatePaymentMethodOptionsKrCard: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsKrCardCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsKrCardSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsLink: StripeParams {
@@ -7833,6 +9765,15 @@ public struct PaymentIntentCreatePaymentMethodOptionsLink: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsLinkCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsLinkSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsMbWay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -7856,6 +9797,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsMbWay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsMbWaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsMobilepay: StripeParams {
@@ -7892,6 +9837,14 @@ public struct PaymentIntentCreatePaymentMethodOptionsMobilepay: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsMobilepayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsMobilepaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsMultibanco: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -7915,6 +9868,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsMultibanco: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsMultibancoSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsNaverPay: StripeParams {
@@ -7949,6 +9906,15 @@ public struct PaymentIntentCreatePaymentMethodOptionsNaverPay: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsNaverPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsNaverPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsNzBankAccount: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -7978,6 +9944,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsNzBankAccount: StripeParams
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsNzBankAccountSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsOxxo: StripeParams {
@@ -8011,6 +9983,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsOxxo: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsOxxoSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsP24: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -8038,6 +10014,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsP24: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case tosShownAndAccepted = "tos_shown_and_accepted"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsP24SetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsPayco: StripeParams {
@@ -8072,6 +10052,14 @@ public struct PaymentIntentCreatePaymentMethodOptionsPayco: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsPaycoCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPaycoSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsPaynow: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -8095,6 +10083,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsPaynow: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPaynowSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsPaypal: StripeParams {
@@ -8139,6 +10131,39 @@ public struct PaymentIntentCreatePaymentMethodOptionsPaypal: StripeParams {
         case riskCorrelationId = "risk_correlation_id"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPaypalCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPaypalPreferredLocale: String, Codable, Sendable {
+    case csCz = "cs-CZ"
+    case daDk = "da-DK"
+    case deAt = "de-AT"
+    case deDe = "de-DE"
+    case deLu = "de-LU"
+    case elGr = "el-GR"
+    case enGb = "en-GB"
+    case enUs = "en-US"
+    case esEs = "es-ES"
+    case fiFi = "fi-FI"
+    case frBe = "fr-BE"
+    case frFr = "fr-FR"
+    case frLu = "fr-LU"
+    case huHu = "hu-HU"
+    case itIt = "it-IT"
+    case nlBe = "nl-BE"
+    case nlNl = "nl-NL"
+    case plPl = "pl-PL"
+    case ptPt = "pt-PT"
+    case skSk = "sk-SK"
+    case svSe = "sv-SE"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPaypalSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsPayto: StripeParams {
@@ -8210,6 +10235,41 @@ public struct PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptions: Stripe
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case adhoc
+    case annual
+    case daily
+    case fortnightly
+    case monthly
+    case quarterly
+    case semiAnnual = "semi_annual"
+    case weekly
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
+    case dependantSupport = "dependant_support"
+    case government
+    case loan
+    case mortgage
+    case other
+    case pension
+    case personal
+    case retail
+    case salary
+    case tax
+    case utility
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPaytoSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsPix: StripeParams {
     /// Determines if the amount includes the IOF tax. Defaults to `never`.
     public var amountIncludesIof: PaymentIntentCreatePaymentMethodOptionsPixAmountIncludesIof?
@@ -8251,6 +10311,11 @@ public struct PaymentIntentCreatePaymentMethodOptionsPix: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
 }
 
 /// Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
@@ -8300,6 +10365,29 @@ public struct PaymentIntentCreatePaymentMethodOptionsPixMandateOptions: StripePa
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPixMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPixMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case halfyearly
+    case monthly
+    case quarterly
+    case weekly
+    case yearly
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPixSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsPromptpay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -8323,6 +10411,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsPromptpay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsPromptpaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsRevolutPay: StripeParams {
@@ -8357,6 +10449,15 @@ public struct PaymentIntentCreatePaymentMethodOptionsRevolutPay: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsRevolutPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsRevolutPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsSamsungPay: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -8387,6 +10488,14 @@ public struct PaymentIntentCreatePaymentMethodOptionsSamsungPay: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsSamsungPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsSamsungPaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsSatispay: StripeParams {
@@ -8421,6 +10530,16 @@ public struct PaymentIntentCreatePaymentMethodOptionsSatispay: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsSatispayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsSatispaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsScalapay: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -8437,6 +10556,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsScalapay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsScalapayCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsSepaDebit: StripeParams {
@@ -8490,6 +10613,12 @@ public struct PaymentIntentCreatePaymentMethodOptionsSepaDebitMandateOptions: St
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsSepaDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsSequra: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -8524,6 +10653,14 @@ public struct PaymentIntentCreatePaymentMethodOptionsSequra: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsSequraCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsSequraSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsSofort: StripeParams {
     /// Language shown to the payer on redirect.
     public var preferredLanguage: PaymentIntentCreatePaymentMethodOptionsSofortPreferredLanguage?
@@ -8551,6 +10688,21 @@ public struct PaymentIntentCreatePaymentMethodOptionsSofort: StripeParams {
         case preferredLanguage = "preferred_language"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsSofortPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case es
+    case fr
+    case it
+    case nl
+    case pl
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsSofortSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsSunbit: StripeParams {
@@ -8585,6 +10737,14 @@ public struct PaymentIntentCreatePaymentMethodOptionsSunbit: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsSunbitCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsSunbitSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsSwish: StripeParams {
     /// A reference for this payment to be displayed in the Swish app.
     public var reference: String?
@@ -8614,6 +10774,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsSwish: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsSwishSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsTwint: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -8637,6 +10801,11 @@ public struct PaymentIntentCreatePaymentMethodOptionsTwint: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsTwintSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsUpi: StripeParams {
@@ -8681,6 +10850,17 @@ public struct PaymentIntentCreatePaymentMethodOptionsUpiMandateOptions: StripePa
         case description
         case endDate = "end_date"
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsUpiSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccount: StripeParams {
@@ -8778,6 +10958,24 @@ public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccountFinancialConne
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
+    case checking
+    case savings
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
+    case balances
+    case ownership
+    case paymentMethod = "payment_method"
+    case transactions
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
+    case balances
+    case ownership
+    case transactions
+}
+
 /// Additional fields for Mandate creation
 public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccountMandateOptions: StripeParams {
     /// The method used to collect offline mandate customer acceptance.
@@ -8792,6 +10990,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccountMandateOptions
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: String, Codable, Sendable {
+    case paper
+}
+
 /// Additional fields for network related functions
 public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccountNetworks: StripeParams {
     /// Triggers validations to run across the selected networks
@@ -8800,6 +11002,30 @@ public struct PaymentIntentCreatePaymentMethodOptionsUsBankAccountNetworks: Stri
     public init(requested: [PaymentIntentCreatePaymentMethodOptionsUsBankAccountNetworksRequested]? = nil) {
         self.requested = requested
     }
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsUsBankAccountNetworksRequested: String, Codable, Sendable {
+    case ach
+    case usDomesticWire = "us_domestic_wire"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsUsBankAccountSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsUsBankAccountTransactionPurpose: String, Codable, Sendable {
+    case goods
+    case other
+    case services
+    case unspecified
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
 }
 
 public struct PaymentIntentCreatePaymentMethodOptionsWechatPay: StripeParams {
@@ -8835,6 +11061,16 @@ public struct PaymentIntentCreatePaymentMethodOptionsWechatPay: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsWechatPayClient: String, Codable, Sendable {
+    case android
+    case ios
+    case web
+}
+
+public enum PaymentIntentCreatePaymentMethodOptionsWechatPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentCreatePaymentMethodOptionsZip: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -8860,6 +11096,10 @@ public struct PaymentIntentCreatePaymentMethodOptionsZip: StripeParams {
     }
 }
 
+public enum PaymentIntentCreatePaymentMethodOptionsZipSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// Options to configure Radar. Learn more about [Radar
 /// Sessions](https://docs.stripe.com/radar/radar-session).
 public struct PaymentIntentCreateRadarOptions: StripeParams {
@@ -8874,6 +11114,11 @@ public struct PaymentIntentCreateRadarOptions: StripeParams {
         self.referrer = referrer
         self.session = session
     }
+}
+
+public enum PaymentIntentCreateSetupFutureUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 /// Shipping information for this PaymentIntent.
@@ -9184,6 +11429,12 @@ public struct PaymentIntentIncrementAuthorizationAmountDetailsLineItemsPaymentMe
     }
 }
 
+public enum PaymentIntentIncrementAuthorizationAmountDetailsLineItemsPaymentMethodOptionsPaypalCategory: String, Codable, Sendable {
+    case digitalGoods = "digital_goods"
+    case donation
+    case physicalGoods = "physical_goods"
+}
+
 /// Contains information about the tax on the item.
 public struct PaymentIntentIncrementAuthorizationAmountDetailsLineItemsTax: StripeParams {
     /// The total amount of tax on a single line item represented in the [smallest currency
@@ -9302,6 +11553,108 @@ public struct PaymentIntentIncrementAuthorizationTransferData: StripeParams {
     public init(amount: Int? = nil) {
         self.amount = amount
     }
+}
+
+public enum PaymentIntentUpdateAllowedPaymentMethodTypes: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case bokuPromptpay = "boku_promptpay"
+    case boleto
+    case capchasePay = "capchase_pay"
+    case card
+    case cardPresent = "card_present"
+    case cashapp
+    case checkScan = "check_scan"
+    case clickToPay = "click_to_pay"
+    case crypto
+    case customerBalance = "customer_balance"
+    case demoPay = "demo_pay"
+    case duitnow
+    case dummyAuthPush = "dummy_auth_push"
+    case dummyPassthroughCard = "dummy_passthrough_card"
+    case edenred
+    case eps
+    case fpx
+    case gcash
+    case getbalance
+    case giftCard = "gift_card"
+    case giropay
+    case gopay
+    case grabpay
+    case idBankTransfer = "id_bank_transfer"
+    case ideal
+    case interacPresent = "interac_present"
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case knet
+    case konbini
+    case krCard = "kr_card"
+    case krMarket = "kr_market"
+    case kriya
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case momo
+    case mondu
+    case multibanco
+    case naverPay = "naver_pay"
+    case netbanking
+    case ngBank = "ng_bank"
+    case ngBankTransfer = "ng_bank_transfer"
+    case ngCard = "ng_card"
+    case ngMarket = "ng_market"
+    case ngUssd = "ng_ussd"
+    case ngWallet = "ng_wallet"
+    case nzBankAccount = "nz_bank_account"
+    case octopus
+    case oxxo
+    case p24
+    case paperCheck = "paper_check"
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case qris
+    case rechnung
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case shopPay = "shop_pay"
+    case shopeepay
+    case sofort
+    case southKoreaMarket = "south_korea_market"
+    case stripeBalance = "stripe_balance"
+    case sunbit
+    case swish
+    case tamara
+    case testPay = "test_pay"
+    case touchNGo = "touch_n_go"
+    case truemoney
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case usCashVoucher = "us_cash_voucher"
+    case vipps
+    case wechatPay = "wechat_pay"
+    case wero
+    case zip
 }
 
 public struct PaymentIntentUpdateAmountDetails: StripeParams {
@@ -9494,6 +11847,12 @@ public struct PaymentIntentUpdateAmountDetailsLineItemsPaymentMethodOptionsPaypa
     }
 }
 
+public enum PaymentIntentUpdateAmountDetailsLineItemsPaymentMethodOptionsPaypalCategory: String, Codable, Sendable {
+    case digitalGoods = "digital_goods"
+    case donation
+    case physicalGoods = "physical_goods"
+}
+
 /// Contains information about the tax on the item.
 public struct PaymentIntentUpdateAmountDetailsLineItemsTax: StripeParams {
     /// The total amount of tax on a single line item represented in the [smallest currency
@@ -9549,6 +11908,70 @@ public struct PaymentIntentUpdateAmountDetailsTax: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case totalTaxAmount = "total_tax_amount"
     }
+}
+
+public enum PaymentIntentUpdateCaptureMethod: String, Codable, Sendable {
+    case automatic
+    case automaticAsync = "automatic_async"
+    case manual
+}
+
+public enum PaymentIntentUpdateExcludedPaymentMethodTypes: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
 }
 
 /// Automations to be run during the PaymentIntent lifecycle
@@ -9890,6 +12313,64 @@ public struct PaymentIntentUpdatePaymentMethodData: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodDataType: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case cashapp
+    case crypto
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
+}
+
 /// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment
 /// method.
 public struct PaymentIntentUpdatePaymentMethodDataAcssDebit: StripeParams {
@@ -9911,6 +12392,12 @@ public struct PaymentIntentUpdatePaymentMethodDataAcssDebit: StripeParams {
         case institutionNumber = "institution_number"
         case transitNumber = "transit_number"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodDataAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
 }
 
 /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
@@ -10039,6 +12526,37 @@ public struct PaymentIntentUpdatePaymentMethodDataEps: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodDataEpsBank: String, Codable, Sendable {
+    case arzteUndApothekerBank = "arzte_und_apotheker_bank"
+    case austrianAnadiBankAg = "austrian_anadi_bank_ag"
+    case bankAustria = "bank_austria"
+    case bankhausCarlSpangler = "bankhaus_carl_spangler"
+    case bankhausSchelhammerUndSchatteraAg = "bankhaus_schelhammer_und_schattera_ag"
+    case bawagPskAg = "bawag_psk_ag"
+    case bksBankAg = "bks_bank_ag"
+    case brullKallmusBankAg = "brull_kallmus_bank_ag"
+    case btvVierLanderBank = "btv_vier_lander_bank"
+    case capitalBankGraweGruppeAg = "capital_bank_grawe_gruppe_ag"
+    case deutscheBankAg = "deutsche_bank_ag"
+    case dolomitenbank
+    case easybankAg = "easybank_ag"
+    case ersteBankUndSparkassen = "erste_bank_und_sparkassen"
+    case hypoAlpeadriabankInternationalAg = "hypo_alpeadriabank_international_ag"
+    case hypoBankBurgenlandAktiengesellschaft = "hypo_bank_burgenland_aktiengesellschaft"
+    case hypoNoeLbFurNiederosterreichUWien = "hypo_noe_lb_fur_niederosterreich_u_wien"
+    case hypoOberosterreichSalzburgSteiermark = "hypo_oberosterreich_salzburg_steiermark"
+    case hypoTirolBankAg = "hypo_tirol_bank_ag"
+    case hypoVorarlbergBankAg = "hypo_vorarlberg_bank_ag"
+    case marchfelderBank = "marchfelder_bank"
+    case oberbankAg = "oberbank_ag"
+    case raiffeisenBankengruppeOsterreich = "raiffeisen_bankengruppe_osterreich"
+    case schoellerbankAg = "schoellerbank_ag"
+    case spardaBankWien = "sparda_bank_wien"
+    case volksbankGruppe = "volksbank_gruppe"
+    case volkskreditbankAg = "volkskreditbank_ag"
+    case vrBankBraunau = "vr_bank_braunau"
+}
+
 /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
 public struct PaymentIntentUpdatePaymentMethodDataFpx: StripeParams {
     /// The customer's bank.
@@ -10057,6 +12575,39 @@ public struct PaymentIntentUpdatePaymentMethodDataFpx: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodDataFpxBank: String, Codable, Sendable {
+    case affinBank = "affin_bank"
+    case agrobank
+    case allianceBank = "alliance_bank"
+    case ambank
+    case bankIslam = "bank_islam"
+    case bankMuamalat = "bank_muamalat"
+    case bankOfChina = "bank_of_china"
+    case bankRakyat = "bank_rakyat"
+    case bnpParibas = "bnp_paribas"
+    case bsn
+    case cimb
+    case citibank
+    case deutscheBank = "deutsche_bank"
+    case hongLeongBank = "hong_leong_bank"
+    case hsbc
+    case kfh
+    case maybank2e
+    case maybank2u
+    case mbsbBank = "mbsb_bank"
+    case ocbc
+    case pbEnterprise = "pb_enterprise"
+    case publicBank = "public_bank"
+    case rhb
+    case standardChartered = "standard_chartered"
+    case uob
+}
+
+public enum PaymentIntentUpdatePaymentMethodDataFpxAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
 /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
 public struct PaymentIntentUpdatePaymentMethodDataIdeal: StripeParams {
     /// The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
@@ -10065,6 +12616,29 @@ public struct PaymentIntentUpdatePaymentMethodDataIdeal: StripeParams {
     public init(bank: PaymentIntentUpdatePaymentMethodDataIdealBank? = nil) {
         self.bank = bank
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodDataIdealBank: String, Codable, Sendable {
+    case abnAmro = "abn_amro"
+    case adyen
+    case asnBank = "asn_bank"
+    case bunq
+    case buut
+    case finom
+    case handelsbanken
+    case ing
+    case knab
+    case mollie
+    case moneyou
+    case n26
+    case nn
+    case rabobank
+    case regiobank
+    case revolut
+    case snsBank = "sns_bank"
+    case triodosBank = "triodos_bank"
+    case vanLanschot = "van_lanschot"
+    case yoursafe
 }
 
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
@@ -10103,6 +12677,11 @@ public struct PaymentIntentUpdatePaymentMethodDataNaverPay: StripeParams {
     public init(funding: PaymentIntentUpdatePaymentMethodDataNaverPayFunding? = nil) {
         self.funding = funding
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodDataNaverPayFunding: String, Codable, Sendable {
+    case card
+    case points
 }
 
 /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
@@ -10148,6 +12727,35 @@ public struct PaymentIntentUpdatePaymentMethodDataP24: StripeParams {
     public init(bank: PaymentIntentUpdatePaymentMethodDataP24Bank? = nil) {
         self.bank = bank
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodDataP24Bank: String, Codable, Sendable {
+    case aliorBank = "alior_bank"
+    case bankMillennium = "bank_millennium"
+    case bankNowyBfgSa = "bank_nowy_bfg_sa"
+    case bankPekaoSa = "bank_pekao_sa"
+    case bankiSpbdzielcze = "banki_spbdzielcze"
+    case blik
+    case bnpParibas = "bnp_paribas"
+    case boz
+    case citiHandlowy = "citi_handlowy"
+    case creditAgricole = "credit_agricole"
+    case envelobank
+    case etransferPocztowy24 = "etransfer_pocztowy24"
+    case getinBank = "getin_bank"
+    case ideabank
+    case ing
+    case inteligo
+    case mbankMtransfer = "mbank_mtransfer"
+    case nestPrzelew = "nest_przelew"
+    case noblePay = "noble_pay"
+    case pbacZIpko = "pbac_z_ipko"
+    case plusBank = "plus_bank"
+    case santanderPrzelew24 = "santander_przelew24"
+    case tmobileUsbugiBankowe = "tmobile_usbugi_bankowe"
+    case toyotaBank = "toyota_bank"
+    case velobank
+    case volkswagenBank = "volkswagen_bank"
 }
 
 /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
@@ -10205,6 +12813,15 @@ public struct PaymentIntentUpdatePaymentMethodDataSofort: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodDataSofortCountry: String, Codable, Sendable {
+    case at = "AT"
+    case be = "BE"
+    case de = "DE"
+    case es = "ES"
+    case it = "IT"
+    case nl = "NL"
+}
+
 /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
 public struct PaymentIntentUpdatePaymentMethodDataUpi: StripeParams {
     /// Configuration options for setting up an eMandate
@@ -10247,6 +12864,11 @@ public struct PaymentIntentUpdatePaymentMethodDataUpiMandateOptions: StripeParam
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodDataUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
 /// payment method.
 public struct PaymentIntentUpdatePaymentMethodDataUsBankAccount: StripeParams {
@@ -10276,6 +12898,16 @@ public struct PaymentIntentUpdatePaymentMethodDataUsBankAccount: StripeParams {
         case financialConnectionsAccount = "financial_connections_account"
         case routingNumber = "routing_number"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodDataUsBankAccountAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
+public enum PaymentIntentUpdatePaymentMethodDataUsBankAccountAccountType: String, Codable, Sendable {
+    case checking
+    case savings
 }
 
 /// Payment-method-specific configuration for this PaymentIntent.
@@ -10645,6 +13277,29 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptions: St
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case combined
+    case interval
+    case sporadic
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
+    case business
+    case personal
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsAcssDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsAffirm: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -10681,6 +13336,14 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAffirm: StripeParams {
         case preferredLocale = "preferred_locale"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsAffirmCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsAffirmSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpay: StripeParams {
@@ -10723,6 +13386,14 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpay: StripePar
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsAfterpayClearpaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsAlipay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -10748,6 +13419,11 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAlipay: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsAlipaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsAlma: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -10764,6 +13440,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAlma: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsAlmaCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsAmazonPay: StripeParams {
@@ -10798,6 +13478,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAmazonPay: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsAmazonPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsAmazonPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsAuBecsDebit: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -10827,6 +13516,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsAuBecsDebit: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsAuBecsDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsBacsDebit: StripeParams {
@@ -10880,6 +13575,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBacsDebitMandateOptions: St
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsBacsDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsBancontact: StripeParams {
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     public var preferredLanguage: PaymentIntentUpdatePaymentMethodOptionsBancontactPreferredLanguage?
@@ -10909,6 +13610,18 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBancontact: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case fr
+    case nl
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsBancontactSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsBillie: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -10933,6 +13646,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBillie: StripeParams {
         case companyDetails = "company_details"
         case reference
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsBillieCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetails: StripeParams {
@@ -10997,6 +13714,23 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetailsRegiste
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
+    case chEin = "ch_ein"
+    case deHrb = "de_hrb"
+    case dkCvr = "dk_cvr"
+    case esCif = "es_cif"
+    case fiTunnus = "fi_tunnus"
+    case frSiren = "fr_siren"
+    case frSiret = "fr_siret"
+    case itRea = "it_rea"
+    case nlKvk = "nl_kvk"
+    case noOrgNumber = "no_org_number"
+    case noPno = "no_pno"
+    case seOrgNumber = "se_org_number"
+    case sePno = "se_pno"
+    case ukCrn = "uk_crn"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsBlik: StripeParams {
     /// The 6-digit BLIK code that a customer has generated using their banking application. Can only be set
     /// on confirmation.
@@ -11045,6 +13779,11 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBlikMandateOptions: StripeP
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsBlikSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsBoleto: StripeParams {
     /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto
     /// voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday
@@ -11074,6 +13813,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsBoleto: StripeParams {
         case expiresAfterDays = "expires_after_days"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsBoletoSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsCard: StripeParams {
@@ -11206,6 +13951,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCard: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsCardCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
 /// Installment configuration for payments attempted on this PaymentIntent. For more information, see
 /// the [installments integration guide](https://docs.stripe.com/payments/installments).
 public struct PaymentIntentUpdatePaymentMethodOptionsCardInstallments: StripeParams {
@@ -11238,6 +13987,16 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCardInstallmentsPlan: Strip
         self.count = count
         self.interval = interval
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardInstallmentsPlanType: String, Codable, Sendable {
+    case bonus
+    case fixedCount = "fixed_count"
+    case revolving
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardInstallmentsPlanInterval: String, Codable, Sendable {
+    case month
 }
 
 /// Configuration options for setting up an eMandate for cards issued in India.
@@ -11291,6 +14050,83 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCardMandateOptions: StripeP
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsCardMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardMandateOptionsInterval: String, Codable, Sendable {
+    case day
+    case month
+    case sporadic
+    case week
+    case year
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardMandateOptionsSupportedTypes: String, Codable, Sendable {
+    case india
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardNetwork: String, Codable, Sendable {
+    case amex
+    case cartesBancaires = "cartes_bancaires"
+    case diners
+    case discover
+    case eftposAu = "eftpos_au"
+    case girocard
+    case interac
+    case jcb
+    case link
+    case mastercard
+    case unionpay
+    case unknown
+    case visa
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardRequestExtendedAuthorization: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardRequestIncrementalAuthorization: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardRequestMulticapture: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardRequestOvercapture: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
+    case any
+    case automatic
+    case challenge
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardSetupCredentialUsage: String, Codable, Sendable {
+    case installment
+    case recurring
+    case unscheduled
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardStoredCredentialUsage: String, Codable, Sendable {
+    case installment
+    case recurring
+    case unscheduled
+}
+
 /// If 3D Secure authentication was performed with a third-party provider, the authentication details to
 /// use for this payment.
 public struct PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecure: StripeParams {
@@ -11339,6 +14175,37 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecure: StripePar
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecureVersion: String, Codable, Sendable {
+    case v102 = "1.0.2"
+    case v210 = "2.1.0"
+    case v220 = "2.2.0"
+    case v230 = "2.3.0"
+    case v231 = "2.3.1"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecureAresTransStatus: String, Codable, Sendable {
+    case a = "A"
+    case c = "C"
+    case i = "I"
+    case n = "N"
+    case r = "R"
+    case u = "U"
+    case y = "Y"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecureElectronicCommerceIndicator: String, Codable, Sendable {
+    case v01 = "01"
+    case v02 = "02"
+    case v05 = "05"
+    case v06 = "06"
+    case v07 = "07"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecureExemptionIndicator: String, Codable, Sendable {
+    case lowRisk = "low_risk"
+    case none
+}
+
 /// Network specific 3DS fields. Network specific arguments require an explicit card brand choice. The
 /// parameter `payment_method_options.card.network`` must be populated accordingly
 public struct PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptions: StripeParams {
@@ -11380,6 +14247,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOpti
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsCardThreeDSecureNetworkOptionsCartesBancairesCbAvalgo: String, Codable, Sendable {
+    case v0 = "0"
+    case v1 = "1"
+    case v2 = "2"
+    case v3 = "3"
+    case v4 = "4"
+    case a = "A"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsCardPresent: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -11415,6 +14291,11 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCardPresent: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsCardPresentCaptureMethod: String, Codable, Sendable {
+    case manual
+    case manualPreferred = "manual_preferred"
+}
+
 /// Network routing priority on co-branded EMV cards supporting domestic debit and international card
 /// schemes.
 public struct PaymentIntentUpdatePaymentMethodOptionsCardPresentRouting: StripeParams {
@@ -11428,6 +14309,11 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCardPresentRouting: StripeP
     public enum CodingKeys: String, CodingKey {
         case requestedPriority = "requested_priority"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCardPresentRoutingRequestedPriority: String, Codable, Sendable {
+    case domestic
+    case international
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsCashapp: StripeParams {
@@ -11464,6 +14350,16 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCashapp: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsCashappCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCashappSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsCrypto: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -11487,6 +14383,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCrypto: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCryptoSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsCustomerBalance: StripeParams {
@@ -11549,6 +14449,14 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCustomerBalanceBankTransfer
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsCustomerBalanceBankTransferType: String, Codable, Sendable {
+    case euBankTransfer = "eu_bank_transfer"
+    case gbBankTransfer = "gb_bank_transfer"
+    case jpBankTransfer = "jp_bank_transfer"
+    case mxBankTransfer = "mx_bank_transfer"
+    case usBankTransfer = "us_bank_transfer"
+}
+
 /// Configuration for the eu_bank_transfer funding type.
 public struct PaymentIntentUpdatePaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer: StripeParams {
     /// The desired country code of the bank account information. Permitted values include: `DE`, `FR`,
@@ -11558,6 +14466,24 @@ public struct PaymentIntentUpdatePaymentMethodOptionsCustomerBalanceBankTransfer
     public init(country: String) {
         self.country = country
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCustomerBalanceBankTransferRequestedAddressTypes: String, Codable, Sendable {
+    case aba
+    case iban
+    case sepa
+    case sortCode = "sort_code"
+    case spei
+    case swift
+    case zengin
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCustomerBalanceFundingType: String, Codable, Sendable {
+    case bankTransfer = "bank_transfer"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsCustomerBalanceSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsEps: StripeParams {
@@ -11585,6 +14511,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsEps: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsEpsSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsFpx: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -11608,6 +14538,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsFpx: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsFpxSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsGiropay: StripeParams {
@@ -11635,6 +14569,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsGiropay: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsGiropaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsGrabpay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -11660,6 +14598,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsGrabpay: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsGrabpaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsIdeal: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -11683,6 +14625,11 @@ public struct PaymentIntentUpdatePaymentMethodOptionsIdeal: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsIdealSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsKakaoPay: StripeParams {
@@ -11715,6 +14662,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKakaoPay: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsKakaoPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsKakaoPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsKlarna: StripeParams {
@@ -11763,6 +14719,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKlarna: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsKlarnaCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
 /// On-demand details if setting up or charging an on-demand payment.
 public struct PaymentIntentUpdatePaymentMethodOptionsKlarnaOnDemand: StripeParams {
     /// Your average amount value. You can use a value across your customer base, or segment based on
@@ -11796,6 +14756,68 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKlarnaOnDemand: StripeParam
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsKlarnaOnDemandPurchaseInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsKlarnaPreferredLocale: String, Codable, Sendable {
+    case csCz = "cs-CZ"
+    case daDk = "da-DK"
+    case deAt = "de-AT"
+    case deCh = "de-CH"
+    case deDe = "de-DE"
+    case elGr = "el-GR"
+    case enAt = "en-AT"
+    case enAu = "en-AU"
+    case enBe = "en-BE"
+    case enCa = "en-CA"
+    case enCh = "en-CH"
+    case enCz = "en-CZ"
+    case enDe = "en-DE"
+    case enDk = "en-DK"
+    case enEs = "en-ES"
+    case enFi = "en-FI"
+    case enFr = "en-FR"
+    case enGb = "en-GB"
+    case enGr = "en-GR"
+    case enIe = "en-IE"
+    case enIt = "en-IT"
+    case enNl = "en-NL"
+    case enNo = "en-NO"
+    case enNz = "en-NZ"
+    case enPl = "en-PL"
+    case enPt = "en-PT"
+    case enRo = "en-RO"
+    case enSe = "en-SE"
+    case enUs = "en-US"
+    case esEs = "es-ES"
+    case esUs = "es-US"
+    case fiFi = "fi-FI"
+    case frBe = "fr-BE"
+    case frCa = "fr-CA"
+    case frCh = "fr-CH"
+    case frFr = "fr-FR"
+    case itCh = "it-CH"
+    case itIt = "it-IT"
+    case nbNo = "nb-NO"
+    case nlBe = "nl-BE"
+    case nlNl = "nl-NL"
+    case plPl = "pl-PL"
+    case ptPt = "pt-PT"
+    case roRo = "ro-RO"
+    case svFi = "sv-FI"
+    case svSe = "sv-SE"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsKlarnaSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsKlarnaSubscriptions: StripeParams {
     /// Unit of time between subscription charges.
     public var interval: PaymentIntentUpdatePaymentMethodOptionsKlarnaSubscriptionsInterval
@@ -11825,6 +14847,13 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKlarnaSubscriptions: Stripe
         case nextBilling = "next_billing"
         case reference
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsKlarnaSubscriptionsInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// Describes the upcoming charge for this subscription.
@@ -11887,6 +14916,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKonbini: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsKonbiniSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsKrCard: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -11917,6 +14950,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsKrCard: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsKrCardCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsKrCardSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsLink: StripeParams {
@@ -11957,6 +14999,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsLink: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsLinkCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsLinkSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsMbWay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -11980,6 +15031,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsMbWay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsMbWaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsMobilepay: StripeParams {
@@ -12016,6 +15071,14 @@ public struct PaymentIntentUpdatePaymentMethodOptionsMobilepay: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsMobilepayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsMobilepaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsMultibanco: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -12039,6 +15102,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsMultibanco: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsMultibancoSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsNaverPay: StripeParams {
@@ -12073,6 +15140,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsNaverPay: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsNaverPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsNaverPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsNzBankAccount: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -12102,6 +15178,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsNzBankAccount: StripeParams
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsNzBankAccountSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsOxxo: StripeParams {
@@ -12135,6 +15217,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsOxxo: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsOxxoSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsP24: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -12162,6 +15248,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsP24: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case tosShownAndAccepted = "tos_shown_and_accepted"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsP24SetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsPayco: StripeParams {
@@ -12196,6 +15286,14 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPayco: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsPaycoCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPaycoSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsPaynow: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -12219,6 +15317,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPaynow: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPaynowSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsPaypal: StripeParams {
@@ -12263,6 +15365,39 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPaypal: StripeParams {
         case riskCorrelationId = "risk_correlation_id"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPaypalCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPaypalPreferredLocale: String, Codable, Sendable {
+    case csCz = "cs-CZ"
+    case daDk = "da-DK"
+    case deAt = "de-AT"
+    case deDe = "de-DE"
+    case deLu = "de-LU"
+    case elGr = "el-GR"
+    case enGb = "en-GB"
+    case enUs = "en-US"
+    case esEs = "es-ES"
+    case fiFi = "fi-FI"
+    case frBe = "fr-BE"
+    case frFr = "fr-FR"
+    case frLu = "fr-LU"
+    case huHu = "hu-HU"
+    case itIt = "it-IT"
+    case nlBe = "nl-BE"
+    case nlNl = "nl-NL"
+    case plPl = "pl-PL"
+    case ptPt = "pt-PT"
+    case skSk = "sk-SK"
+    case svSe = "sv-SE"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPaypalSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsPayto: StripeParams {
@@ -12334,6 +15469,41 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptions: Stripe
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case adhoc
+    case annual
+    case daily
+    case fortnightly
+    case monthly
+    case quarterly
+    case semiAnnual = "semi_annual"
+    case weekly
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
+    case dependantSupport = "dependant_support"
+    case government
+    case loan
+    case mortgage
+    case other
+    case pension
+    case personal
+    case retail
+    case salary
+    case tax
+    case utility
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPaytoSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsPix: StripeParams {
     /// Determines if the amount includes the IOF tax. Defaults to `never`.
     public var amountIncludesIof: PaymentIntentUpdatePaymentMethodOptionsPixAmountIncludesIof?
@@ -12375,6 +15545,11 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPix: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
 }
 
 /// Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
@@ -12424,6 +15599,29 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPixMandateOptions: StripePa
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPixMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPixMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case halfyearly
+    case monthly
+    case quarterly
+    case weekly
+    case yearly
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPixSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsPromptpay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -12447,6 +15645,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsPromptpay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsPromptpaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsRevolutPay: StripeParams {
@@ -12481,6 +15683,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsRevolutPay: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsRevolutPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsRevolutPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsSamsungPay: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -12511,6 +15722,14 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSamsungPay: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsSamsungPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsSamsungPaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsSatispay: StripeParams {
@@ -12545,6 +15764,16 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSatispay: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsSatispayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsSatispaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsScalapay: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -12561,6 +15790,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsScalapay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsScalapayCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsSepaDebit: StripeParams {
@@ -12614,6 +15847,12 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSepaDebitMandateOptions: St
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsSepaDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsSequra: StripeParams {
     /// Controls when the funds are captured from the customer's account. If provided, this parameter
     /// overrides the behavior of the top-level
@@ -12648,6 +15887,14 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSequra: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsSequraCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsSequraSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsSofort: StripeParams {
     /// Language shown to the payer on redirect.
     public var preferredLanguage: PaymentIntentUpdatePaymentMethodOptionsSofortPreferredLanguage?
@@ -12675,6 +15922,21 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSofort: StripeParams {
         case preferredLanguage = "preferred_language"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsSofortPreferredLanguage: String, Codable, Sendable {
+    case de
+    case en
+    case es
+    case fr
+    case it
+    case nl
+    case pl
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsSofortSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsSunbit: StripeParams {
@@ -12709,6 +15971,14 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSunbit: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsSunbitCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsSunbitSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsSwish: StripeParams {
     /// A reference for this payment to be displayed in the Swish app.
     public var reference: String?
@@ -12738,6 +16008,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsSwish: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsSwishSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsTwint: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -12761,6 +16035,11 @@ public struct PaymentIntentUpdatePaymentMethodOptionsTwint: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsTwintSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsUpi: StripeParams {
@@ -12805,6 +16084,17 @@ public struct PaymentIntentUpdatePaymentMethodOptionsUpiMandateOptions: StripePa
         case description
         case endDate = "end_date"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsUpiSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccount: StripeParams {
@@ -12902,6 +16192,24 @@ public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConne
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
+    case checking
+    case savings
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
+    case balances
+    case ownership
+    case paymentMethod = "payment_method"
+    case transactions
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
+    case balances
+    case ownership
+    case transactions
+}
+
 /// Additional fields for Mandate creation
 public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptions: StripeParams {
     /// The method used to collect offline mandate customer acceptance.
@@ -12916,6 +16224,10 @@ public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptions
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: String, Codable, Sendable {
+    case paper
+}
+
 /// Additional fields for network related functions
 public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccountNetworks: StripeParams {
     /// Triggers validations to run across the selected networks
@@ -12924,6 +16236,30 @@ public struct PaymentIntentUpdatePaymentMethodOptionsUsBankAccountNetworks: Stri
     public init(requested: [PaymentIntentUpdatePaymentMethodOptionsUsBankAccountNetworksRequested]? = nil) {
         self.requested = requested
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsUsBankAccountNetworksRequested: String, Codable, Sendable {
+    case ach
+    case usDomesticWire = "us_domestic_wire"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsUsBankAccountSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsUsBankAccountTransactionPurpose: String, Codable, Sendable {
+    case goods
+    case other
+    case services
+    case unspecified
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
 }
 
 public struct PaymentIntentUpdatePaymentMethodOptionsWechatPay: StripeParams {
@@ -12959,6 +16295,16 @@ public struct PaymentIntentUpdatePaymentMethodOptionsWechatPay: StripeParams {
     }
 }
 
+public enum PaymentIntentUpdatePaymentMethodOptionsWechatPayClient: String, Codable, Sendable {
+    case android
+    case ios
+    case web
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsWechatPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct PaymentIntentUpdatePaymentMethodOptionsZip: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
     /// provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment
@@ -12982,6 +16328,15 @@ public struct PaymentIntentUpdatePaymentMethodOptionsZip: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum PaymentIntentUpdatePaymentMethodOptionsZipSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
+public enum PaymentIntentUpdateSetupFutureUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct PaymentIntentUpdateShipping: StripeParams {

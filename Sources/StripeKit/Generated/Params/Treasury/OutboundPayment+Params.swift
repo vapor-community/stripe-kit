@@ -219,6 +219,11 @@ public struct OutboundPaymentCreateDestinationPaymentMethodData: StripeParams {
     }
 }
 
+public enum OutboundPaymentCreateDestinationPaymentMethodDataType: String, Codable, Sendable {
+    case financialAccount = "financial_account"
+    case usBankAccount = "us_bank_account"
+}
+
 /// Billing information associated with the PaymentMethod that may be used or required by particular
 /// types of payment methods.
 public struct OutboundPaymentCreateDestinationPaymentMethodDataBillingDetails: StripeParams {
@@ -302,6 +307,16 @@ public struct OutboundPaymentCreateDestinationPaymentMethodDataUsBankAccount: St
     }
 }
 
+public enum OutboundPaymentCreateDestinationPaymentMethodDataUsBankAccountAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
+public enum OutboundPaymentCreateDestinationPaymentMethodDataUsBankAccountAccountType: String, Codable, Sendable {
+    case checking
+    case savings
+}
+
 /// Payment method-specific configuration for this OutboundPayment.
 public struct OutboundPaymentCreateDestinationPaymentMethodOptions: StripeParams {
     /// Optional fields for `us_bank_account`.
@@ -327,6 +342,11 @@ public struct OutboundPaymentCreateDestinationPaymentMethodOptionsUsBankAccount:
     }
 }
 
+public enum OutboundPaymentCreateDestinationPaymentMethodOptionsUsBankAccountNetwork: String, Codable, Sendable {
+    case ach
+    case usDomesticWire = "us_domestic_wire"
+}
+
 /// End user details.
 public struct OutboundPaymentCreateEndUserDetails: StripeParams {
     /// `True` if the OutboundPayment creation request is being made on behalf of an end user by a platform.
@@ -347,6 +367,14 @@ public struct OutboundPaymentCreateEndUserDetails: StripeParams {
     }
 }
 
+public enum OutboundPaymentListStatus: String, Codable, Sendable {
+    case canceled
+    case failed
+    case posted
+    case processing
+    case returned
+}
+
 /// Optional hash to set the return code.
 public struct OutboundPaymentReturnOutboundPaymentReturnedDetails: StripeParams {
     /// The return code to be set on the OutboundPayment object.
@@ -355,6 +383,19 @@ public struct OutboundPaymentReturnOutboundPaymentReturnedDetails: StripeParams 
     public init(code: OutboundPaymentReturnOutboundPaymentReturnedDetailsCode? = nil) {
         self.code = code
     }
+}
+
+public enum OutboundPaymentReturnOutboundPaymentReturnedDetailsCode: String, Codable, Sendable {
+    case accountClosed = "account_closed"
+    case accountFrozen = "account_frozen"
+    case bankAccountRestricted = "bank_account_restricted"
+    case bankOwnershipChanged = "bank_ownership_changed"
+    case declined
+    case incorrectAccountHolderName = "incorrect_account_holder_name"
+    case invalidAccountNumber = "invalid_account_number"
+    case invalidCurrency = "invalid_currency"
+    case noAccount = "no_account"
+    case other
 }
 
 /// Details about network-specific tracking information.
@@ -377,6 +418,11 @@ public struct OutboundPaymentUpdateTrackingDetails: StripeParams {
         case type
         case usDomesticWire = "us_domestic_wire"
     }
+}
+
+public enum OutboundPaymentUpdateTrackingDetailsType: String, Codable, Sendable {
+    case ach
+    case usDomesticWire = "us_domestic_wire"
 }
 
 /// ACH network tracking details.

@@ -55,6 +55,16 @@ public struct AccountLinkCreateParams: StripeParams {
     }
 }
 
+public enum AccountLinkCreateType: String, Codable, Sendable {
+    case accountOnboarding = "account_onboarding"
+    case accountUpdate = "account_update"
+}
+
+public enum AccountLinkCreateCollect: String, Codable, Sendable {
+    case currentlyDue = "currently_due"
+    case eventuallyDue = "eventually_due"
+}
+
 /// Specifies the requirements that Stripe collects from connected accounts in the Connect Onboarding
 /// flow.
 public struct AccountLinkCreateCollectionOptions: StripeParams {
@@ -75,4 +85,14 @@ public struct AccountLinkCreateCollectionOptions: StripeParams {
         case fields
         case futureRequirements = "future_requirements"
     }
+}
+
+public enum AccountLinkCreateCollectionOptionsFields: String, Codable, Sendable {
+    case currentlyDue = "currently_due"
+    case eventuallyDue = "eventually_due"
+}
+
+public enum AccountLinkCreateCollectionOptionsFutureRequirements: String, Codable, Sendable {
+    case include
+    case omit
 }

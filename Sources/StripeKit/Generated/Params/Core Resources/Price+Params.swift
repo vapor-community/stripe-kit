@@ -252,6 +252,11 @@ public struct PriceUpdateParams: StripeParams {
     }
 }
 
+public enum PriceCreateBillingScheme: String, Codable, Sendable {
+    case perUnit = "per_unit"
+    case tiered
+}
+
 public struct PriceCreateCurrencyOptions: StripeParams {
     /// When set, provides configuration for the amount to be adjusted by the customer during Checkout
     /// Sessions and Payment Links.
@@ -308,6 +313,12 @@ public struct PriceCreateCurrencyOptionsCustomUnitAmount: StripeParams {
         self.minimum = minimum
         self.preset = preset
     }
+}
+
+public enum PriceCreateCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }
 
 public struct PriceCreateCurrencyOptionsTiers: StripeParams {
@@ -503,6 +514,24 @@ public struct PriceCreateRecurring: StripeParams {
     }
 }
 
+public enum PriceCreateRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum PriceCreateRecurringUsageType: String, Codable, Sendable {
+    case licensed
+    case metered
+}
+
+public enum PriceCreateTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 public struct PriceCreateTiers: StripeParams {
     /// Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous
     /// tier adding one. Use `inf` to define a fallback tier.
@@ -567,6 +596,11 @@ public enum PriceCreateTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral
     }
 }
 
+public enum PriceCreateTiersMode: String, Codable, Sendable {
+    case graduated
+    case volume
+}
+
 /// Apply a transformation to the reported usage or set quantity before computing the billed price.
 /// Cannot be combined with `tiers`.
 public struct PriceCreateTransformQuantity: StripeParams {
@@ -584,6 +618,11 @@ public struct PriceCreateTransformQuantity: StripeParams {
         case divideBy = "divide_by"
         case round
     }
+}
+
+public enum PriceCreateTransformQuantityRound: String, Codable, Sendable {
+    case down
+    case up
 }
 
 /// Only return prices with these recurring fields.
@@ -606,6 +645,23 @@ public struct PriceListRecurring: StripeParams {
         case meter
         case usageType = "usage_type"
     }
+}
+
+public enum PriceListRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum PriceListRecurringUsageType: String, Codable, Sendable {
+    case licensed
+    case metered
+}
+
+public enum PriceListType: String, Codable, Sendable {
+    case oneTime = "one_time"
+    case recurring
 }
 
 public struct PriceUpdateCurrencyOptions: StripeParams {
@@ -664,6 +720,12 @@ public struct PriceUpdateCurrencyOptionsCustomUnitAmount: StripeParams {
         self.minimum = minimum
         self.preset = preset
     }
+}
+
+public enum PriceUpdateCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }
 
 public struct PriceUpdateCurrencyOptionsTiers: StripeParams {
@@ -728,4 +790,10 @@ public enum PriceUpdateCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleB
             try container.encode(value)
         }
     }
+}
+
+public enum PriceUpdateTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
 }

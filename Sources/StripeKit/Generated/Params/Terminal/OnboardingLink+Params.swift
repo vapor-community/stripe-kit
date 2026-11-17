@@ -63,3 +63,7 @@ public struct OnboardingLinkCreateLinkOptionsAppleTermsAndConditions: StripePara
         case merchantDisplayName = "merchant_display_name"
     }
 }
+
+public enum OnboardingLinkCreateLinkType: String, Codable, Sendable {
+    case appleTermsAndConditions = "apple_terms_and_conditions"
+}

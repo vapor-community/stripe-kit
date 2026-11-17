@@ -190,6 +190,18 @@ public struct PlanUpdateParams: StripeParams {
     }
 }
 
+public enum PlanCreateInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum PlanCreateBillingScheme: String, Codable, Sendable {
+    case perUnit = "per_unit"
+    case tiered
+}
+
 /// The product whose pricing the created plan will represent. This can either be the ID of an existing
 /// product, or a dictionary containing fields used to create a [service
 /// product](https://docs.stripe.com/api#product_object-type).
@@ -354,6 +366,11 @@ public enum PlanCreateTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral 
     }
 }
 
+public enum PlanCreateTiersMode: String, Codable, Sendable {
+    case graduated
+    case volume
+}
+
 /// Apply a transformation to the reported usage or set quantity before computing the billed price.
 /// Cannot be combined with `tiers`.
 public struct PlanCreateTransformUsage: StripeParams {
@@ -371,4 +388,14 @@ public struct PlanCreateTransformUsage: StripeParams {
         case divideBy = "divide_by"
         case round
     }
+}
+
+public enum PlanCreateTransformUsageRound: String, Codable, Sendable {
+    case down
+    case up
+}
+
+public enum PlanCreateUsageType: String, Codable, Sendable {
+    case licensed
+    case metered
 }

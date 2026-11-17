@@ -461,6 +461,12 @@ public struct PaymentMethodCreateAcssDebit: StripeParams {
     }
 }
 
+public enum PaymentMethodCreateAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
+}
+
 /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
 public struct PaymentMethodCreateAuBecsDebit: StripeParams {
     /// The account number for the bank account.
@@ -618,6 +624,12 @@ public struct PaymentMethodCreateCardCardDetailsNetworks: StripeParams {
     }
 }
 
+public enum PaymentMethodCreateCardCardDetailsNetworksPreferred: String, Codable, Sendable {
+    case cartesBancaires = "cartes_bancaires"
+    case mastercard
+    case visa
+}
+
 public struct PaymentMethodCreateCardToken: StripeParams {
     /// For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex
     /// Express Checkout, or legacy Checkout) into the card hash with format card: {token: "tok_visa"}.
@@ -671,6 +683,37 @@ public struct PaymentMethodCreateEps: StripeParams {
     }
 }
 
+public enum PaymentMethodCreateEpsBank: String, Codable, Sendable {
+    case arzteUndApothekerBank = "arzte_und_apotheker_bank"
+    case austrianAnadiBankAg = "austrian_anadi_bank_ag"
+    case bankAustria = "bank_austria"
+    case bankhausCarlSpangler = "bankhaus_carl_spangler"
+    case bankhausSchelhammerUndSchatteraAg = "bankhaus_schelhammer_und_schattera_ag"
+    case bawagPskAg = "bawag_psk_ag"
+    case bksBankAg = "bks_bank_ag"
+    case brullKallmusBankAg = "brull_kallmus_bank_ag"
+    case btvVierLanderBank = "btv_vier_lander_bank"
+    case capitalBankGraweGruppeAg = "capital_bank_grawe_gruppe_ag"
+    case deutscheBankAg = "deutsche_bank_ag"
+    case dolomitenbank
+    case easybankAg = "easybank_ag"
+    case ersteBankUndSparkassen = "erste_bank_und_sparkassen"
+    case hypoAlpeadriabankInternationalAg = "hypo_alpeadriabank_international_ag"
+    case hypoBankBurgenlandAktiengesellschaft = "hypo_bank_burgenland_aktiengesellschaft"
+    case hypoNoeLbFurNiederosterreichUWien = "hypo_noe_lb_fur_niederosterreich_u_wien"
+    case hypoOberosterreichSalzburgSteiermark = "hypo_oberosterreich_salzburg_steiermark"
+    case hypoTirolBankAg = "hypo_tirol_bank_ag"
+    case hypoVorarlbergBankAg = "hypo_vorarlberg_bank_ag"
+    case marchfelderBank = "marchfelder_bank"
+    case oberbankAg = "oberbank_ag"
+    case raiffeisenBankengruppeOsterreich = "raiffeisen_bankengruppe_osterreich"
+    case schoellerbankAg = "schoellerbank_ag"
+    case spardaBankWien = "sparda_bank_wien"
+    case volksbankGruppe = "volksbank_gruppe"
+    case volkskreditbankAg = "volkskreditbank_ag"
+    case vrBankBraunau = "vr_bank_braunau"
+}
+
 /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
 public struct PaymentMethodCreateFpx: StripeParams {
     /// The customer's bank.
@@ -689,6 +732,39 @@ public struct PaymentMethodCreateFpx: StripeParams {
     }
 }
 
+public enum PaymentMethodCreateFpxBank: String, Codable, Sendable {
+    case affinBank = "affin_bank"
+    case agrobank
+    case allianceBank = "alliance_bank"
+    case ambank
+    case bankIslam = "bank_islam"
+    case bankMuamalat = "bank_muamalat"
+    case bankOfChina = "bank_of_china"
+    case bankRakyat = "bank_rakyat"
+    case bnpParibas = "bnp_paribas"
+    case bsn
+    case cimb
+    case citibank
+    case deutscheBank = "deutsche_bank"
+    case hongLeongBank = "hong_leong_bank"
+    case hsbc
+    case kfh
+    case maybank2e
+    case maybank2u
+    case mbsbBank = "mbsb_bank"
+    case ocbc
+    case pbEnterprise = "pb_enterprise"
+    case publicBank = "public_bank"
+    case rhb
+    case standardChartered = "standard_chartered"
+    case uob
+}
+
+public enum PaymentMethodCreateFpxAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
 /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
 public struct PaymentMethodCreateIdeal: StripeParams {
     /// The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
@@ -697,6 +773,29 @@ public struct PaymentMethodCreateIdeal: StripeParams {
     public init(bank: PaymentMethodCreateIdealBank? = nil) {
         self.bank = bank
     }
+}
+
+public enum PaymentMethodCreateIdealBank: String, Codable, Sendable {
+    case abnAmro = "abn_amro"
+    case adyen
+    case asnBank = "asn_bank"
+    case bunq
+    case buut
+    case finom
+    case handelsbanken
+    case ing
+    case knab
+    case mollie
+    case moneyou
+    case n26
+    case nn
+    case rabobank
+    case regiobank
+    case revolut
+    case snsBank = "sns_bank"
+    case triodosBank = "triodos_bank"
+    case vanLanschot = "van_lanschot"
+    case yoursafe
 }
 
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
@@ -735,6 +834,11 @@ public struct PaymentMethodCreateNaverPay: StripeParams {
     public init(funding: PaymentMethodCreateNaverPayFunding? = nil) {
         self.funding = funding
     }
+}
+
+public enum PaymentMethodCreateNaverPayFunding: String, Codable, Sendable {
+    case card
+    case points
 }
 
 /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
@@ -780,6 +884,35 @@ public struct PaymentMethodCreateP24: StripeParams {
     public init(bank: PaymentMethodCreateP24Bank? = nil) {
         self.bank = bank
     }
+}
+
+public enum PaymentMethodCreateP24Bank: String, Codable, Sendable {
+    case aliorBank = "alior_bank"
+    case bankMillennium = "bank_millennium"
+    case bankNowyBfgSa = "bank_nowy_bfg_sa"
+    case bankPekaoSa = "bank_pekao_sa"
+    case bankiSpbdzielcze = "banki_spbdzielcze"
+    case blik
+    case bnpParibas = "bnp_paribas"
+    case boz
+    case citiHandlowy = "citi_handlowy"
+    case creditAgricole = "credit_agricole"
+    case envelobank
+    case etransferPocztowy24 = "etransfer_pocztowy24"
+    case getinBank = "getin_bank"
+    case ideabank
+    case ing
+    case inteligo
+    case mbankMtransfer = "mbank_mtransfer"
+    case nestPrzelew = "nest_przelew"
+    case noblePay = "noble_pay"
+    case pbacZIpko = "pbac_z_ipko"
+    case plusBank = "plus_bank"
+    case santanderPrzelew24 = "santander_przelew24"
+    case tmobileUsbugiBankowe = "tmobile_usbugi_bankowe"
+    case toyotaBank = "toyota_bank"
+    case velobank
+    case volkswagenBank = "volkswagen_bank"
 }
 
 /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
@@ -837,6 +970,75 @@ public struct PaymentMethodCreateSofort: StripeParams {
     }
 }
 
+public enum PaymentMethodCreateSofortCountry: String, Codable, Sendable {
+    case at = "AT"
+    case be = "BE"
+    case de = "DE"
+    case es = "ES"
+    case it = "IT"
+    case nl = "NL"
+}
+
+public enum PaymentMethodCreateType: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case custom
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
+}
+
 /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
 public struct PaymentMethodCreateUpi: StripeParams {
     /// Configuration options for setting up an eMandate
@@ -879,6 +1081,11 @@ public struct PaymentMethodCreateUpiMandateOptions: StripeParams {
     }
 }
 
+public enum PaymentMethodCreateUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
 /// payment method.
 public struct PaymentMethodCreateUsBankAccount: StripeParams {
@@ -908,6 +1115,88 @@ public struct PaymentMethodCreateUsBankAccount: StripeParams {
         case financialConnectionsAccount = "financial_connections_account"
         case routingNumber = "routing_number"
     }
+}
+
+public enum PaymentMethodCreateUsBankAccountAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
+public enum PaymentMethodCreateUsBankAccountAccountType: String, Codable, Sendable {
+    case checking
+    case savings
+}
+
+public enum PaymentMethodListAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
+}
+
+public enum PaymentMethodListType: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case custom
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
+}
+
+public enum PaymentMethodUpdateAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
 }
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
@@ -1009,6 +1298,12 @@ public struct PaymentMethodUpdateCardNetworks: StripeParams {
     }
 }
 
+public enum PaymentMethodUpdateCardNetworksPreferred: String, Codable, Sendable {
+    case cartesBancaires = "cartes_bancaires"
+    case mastercard
+    case visa
+}
+
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
 /// payment method.
 public struct PaymentMethodUpdateUsBankAccount: StripeParams {
@@ -1026,4 +1321,14 @@ public struct PaymentMethodUpdateUsBankAccount: StripeParams {
         case accountHolderType = "account_holder_type"
         case accountType = "account_type"
     }
+}
+
+public enum PaymentMethodUpdateUsBankAccountAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
+public enum PaymentMethodUpdateUsBankAccountAccountType: String, Codable, Sendable {
+    case checking
+    case savings
 }

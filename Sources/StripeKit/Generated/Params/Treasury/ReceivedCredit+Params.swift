@@ -90,6 +90,12 @@ public struct ReceivedCreditListParams: StripeParams {
     }
 }
 
+public enum ReceivedCreditCreateNetwork: String, Codable, Sendable {
+    case ach
+    case rtp
+    case usDomesticWire = "us_domestic_wire"
+}
+
 /// Initiating payment method details for the object.
 public struct ReceivedCreditCreateInitiatingPaymentMethodDetails: StripeParams {
     /// The source type.
@@ -106,6 +112,10 @@ public struct ReceivedCreditCreateInitiatingPaymentMethodDetails: StripeParams {
         case type
         case usBankAccount = "us_bank_account"
     }
+}
+
+public enum ReceivedCreditCreateInitiatingPaymentMethodDetailsType: String, Codable, Sendable {
+    case usBankAccount = "us_bank_account"
 }
 
 /// Optional fields for `us_bank_account`.
@@ -142,4 +152,17 @@ public struct ReceivedCreditListLinkedFlows: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case sourceFlowType = "source_flow_type"
     }
+}
+
+public enum ReceivedCreditListLinkedFlowsSourceFlowType: String, Codable, Sendable {
+    case creditReversal = "credit_reversal"
+    case other
+    case outboundPayment = "outbound_payment"
+    case outboundTransfer = "outbound_transfer"
+    case payout
+}
+
+public enum ReceivedCreditListStatus: String, Codable, Sendable {
+    case failed
+    case succeeded
 }

@@ -272,6 +272,12 @@ public struct LineItemUpdatePriceDataProductDataTaxDetails: StripeParams {
     }
 }
 
+public enum LineItemUpdatePriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// The pricing information for the invoice item.
 public struct LineItemUpdatePricing: StripeParams {
     /// The ID of the price object.
@@ -364,4 +370,62 @@ public struct LineItemUpdateTaxAmountsTaxRateData: StripeParams {
         case state
         case taxType = "tax_type"
     }
+}
+
+public enum LineItemUpdateTaxAmountsTaxRateDataJurisdictionLevel: String, Codable, Sendable {
+    case city
+    case country
+    case county
+    case district
+    case multiple
+    case state
+}
+
+public enum LineItemUpdateTaxAmountsTaxRateDataTaxType: String, Codable, Sendable {
+    case admissionsTax = "admissions_tax"
+    case amusementTax = "amusement_tax"
+    case attendanceTax = "attendance_tax"
+    case communicationsTax = "communications_tax"
+    case digitalExciseTax = "digital_excise_tax"
+    case entertainmentTax = "entertainment_tax"
+    case getFund = "get_fund"
+    case grossReceiptsTax = "gross_receipts_tax"
+    case gst
+    case hospitalityTax = "hospitality_tax"
+    case hst
+    case igst
+    case jct
+    case leaseTax = "lease_tax"
+    case luxuryTax = "luxury_tax"
+    case massTransitParkingTax = "mass_transit_parking_tax"
+    case nhil
+    case parkingTax = "parking_tax"
+    case pst
+    case qst
+    case resortTax = "resort_tax"
+    case retailDeliveryFee = "retail_delivery_fee"
+    case rst
+    case salesTax = "sales_tax"
+    case serviceTax = "service_tax"
+    case tourismTax = "tourism_tax"
+    case utilityUsersTax = "utility_users_tax"
+    case vat
+}
+
+public enum LineItemUpdateTaxAmountsTaxabilityReason: String, Codable, Sendable {
+    case customerExempt = "customer_exempt"
+    case notCollecting = "not_collecting"
+    case notSubjectToTax = "not_subject_to_tax"
+    case notSupported = "not_supported"
+    case portionProductExempt = "portion_product_exempt"
+    case portionReducedRated = "portion_reduced_rated"
+    case portionStandardRated = "portion_standard_rated"
+    case productExempt = "product_exempt"
+    case productExemptHoliday = "product_exempt_holiday"
+    case proportionallyRated = "proportionally_rated"
+    case reducedRated = "reduced_rated"
+    case reverseCharge = "reverse_charge"
+    case standardRated = "standard_rated"
+    case taxableBasisReduced = "taxable_basis_reduced"
+    case zeroRated = "zero_rated"
 }

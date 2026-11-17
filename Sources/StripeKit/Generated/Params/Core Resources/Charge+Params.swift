@@ -462,6 +462,11 @@ public struct ChargeUpdateFraudDetails: StripeParams {
     }
 }
 
+public enum ChargeUpdateFraudDetailsUserReport: String, Codable, Sendable {
+    case fraudulent
+    case safe
+}
+
 /// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
 public struct ChargeUpdateShipping: StripeParams {
     /// Shipping address.

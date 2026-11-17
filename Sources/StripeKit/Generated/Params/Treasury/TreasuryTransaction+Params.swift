@@ -60,6 +60,17 @@ public struct TreasuryTransactionListParams: StripeParams {
     }
 }
 
+public enum TreasuryTransactionListOrderBy: String, Codable, Sendable {
+    case created
+    case postedAt = "posted_at"
+}
+
+public enum TreasuryTransactionListStatus: String, Codable, Sendable {
+    case `open` = "open"
+    case posted
+    case void
+}
+
 /// A filter for the `status_transitions.posted_at` timestamp. When using this filter, `status=posted`
 /// and `order_by=posted_at` must also be specified.
 public struct TreasuryTransactionListStatusTransitions: StripeParams {

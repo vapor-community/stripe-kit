@@ -331,6 +331,11 @@ public struct CreditNoteVoidCreditNoteParams: StripeParams {
     }
 }
 
+public enum CreditNoteCreateEmailType: String, Codable, Sendable {
+    case creditNote = "credit_note"
+    case none
+}
+
 public struct CreditNoteCreateLines: StripeParams {
     /// Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`.
     /// `custom_line_item` is not valid when the invoice is set up with `automatic_tax[enabled]=true`.
@@ -390,6 +395,11 @@ public struct CreditNoteCreateLines: StripeParams {
     }
 }
 
+public enum CreditNoteCreateLinesType: String, Codable, Sendable {
+    case customLineItem = "custom_line_item"
+    case invoiceLineItem = "invoice_line_item"
+}
+
 public struct CreditNoteCreateLinesTaxAmounts: StripeParams {
     /// The amount, in cents (or local equivalent), of the tax.
     public var amount: Int
@@ -410,6 +420,13 @@ public struct CreditNoteCreateLinesTaxAmounts: StripeParams {
         case taxRate = "tax_rate"
         case taxableAmount = "taxable_amount"
     }
+}
+
+public enum CreditNoteCreateReason: String, Codable, Sendable {
+    case duplicate
+    case fraudulent
+    case orderChange = "order_change"
+    case productUnsatisfactory = "product_unsatisfactory"
 }
 
 public struct CreditNoteCreateRefunds: StripeParams {
@@ -460,6 +477,11 @@ public struct CreditNoteCreateRefundsPaymentRecordRefund: StripeParams {
     }
 }
 
+public enum CreditNoteCreateRefundsType: String, Codable, Sendable {
+    case paymentRecordRefund = "payment_record_refund"
+    case refund
+}
+
 /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
 /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
 public struct CreditNoteCreateShippingCost: StripeParams {
@@ -473,6 +495,11 @@ public struct CreditNoteCreateShippingCost: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case shippingRate = "shipping_rate"
     }
+}
+
+public enum CreditNotePreviewEmailType: String, Codable, Sendable {
+    case creditNote = "credit_note"
+    case none
 }
 
 public struct CreditNotePreviewLines: StripeParams {
@@ -534,6 +561,11 @@ public struct CreditNotePreviewLines: StripeParams {
     }
 }
 
+public enum CreditNotePreviewLinesType: String, Codable, Sendable {
+    case customLineItem = "custom_line_item"
+    case invoiceLineItem = "invoice_line_item"
+}
+
 public struct CreditNotePreviewLinesTaxAmounts: StripeParams {
     /// The amount, in cents (or local equivalent), of the tax.
     public var amount: Int
@@ -554,6 +586,13 @@ public struct CreditNotePreviewLinesTaxAmounts: StripeParams {
         case taxRate = "tax_rate"
         case taxableAmount = "taxable_amount"
     }
+}
+
+public enum CreditNotePreviewReason: String, Codable, Sendable {
+    case duplicate
+    case fraudulent
+    case orderChange = "order_change"
+    case productUnsatisfactory = "product_unsatisfactory"
 }
 
 public struct CreditNotePreviewRefunds: StripeParams {
@@ -604,6 +643,11 @@ public struct CreditNotePreviewRefundsPaymentRecordRefund: StripeParams {
     }
 }
 
+public enum CreditNotePreviewRefundsType: String, Codable, Sendable {
+    case paymentRecordRefund = "payment_record_refund"
+    case refund
+}
+
 /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
 /// credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
 public struct CreditNotePreviewShippingCost: StripeParams {
@@ -617,6 +661,11 @@ public struct CreditNotePreviewShippingCost: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case shippingRate = "shipping_rate"
     }
+}
+
+public enum CreditNotePreviewLinesEmailType: String, Codable, Sendable {
+    case creditNote = "credit_note"
+    case none
 }
 
 public struct CreditNotePreviewLinesLines: StripeParams {
@@ -678,6 +727,11 @@ public struct CreditNotePreviewLinesLines: StripeParams {
     }
 }
 
+public enum CreditNotePreviewLinesLinesType: String, Codable, Sendable {
+    case customLineItem = "custom_line_item"
+    case invoiceLineItem = "invoice_line_item"
+}
+
 public struct CreditNotePreviewLinesLinesTaxAmounts: StripeParams {
     /// The amount, in cents (or local equivalent), of the tax.
     public var amount: Int
@@ -698,6 +752,13 @@ public struct CreditNotePreviewLinesLinesTaxAmounts: StripeParams {
         case taxRate = "tax_rate"
         case taxableAmount = "taxable_amount"
     }
+}
+
+public enum CreditNotePreviewLinesReason: String, Codable, Sendable {
+    case duplicate
+    case fraudulent
+    case orderChange = "order_change"
+    case productUnsatisfactory = "product_unsatisfactory"
 }
 
 public struct CreditNotePreviewLinesRefunds: StripeParams {
@@ -746,6 +807,11 @@ public struct CreditNotePreviewLinesRefundsPaymentRecordRefund: StripeParams {
         case paymentRecord = "payment_record"
         case refundGroup = "refund_group"
     }
+}
+
+public enum CreditNotePreviewLinesRefundsType: String, Codable, Sendable {
+    case paymentRecordRefund = "payment_record_refund"
+    case refund
 }
 
 /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the

@@ -125,6 +125,12 @@ public struct MeterCreateDefaultAggregation: StripeParams {
     }
 }
 
+public enum MeterCreateDefaultAggregationFormula: String, Codable, Sendable {
+    case count
+    case last
+    case sum
+}
+
 /// Fields that specify how to map a meter event to a customer.
 public struct MeterCreateCustomerMapping: StripeParams {
     /// The key in the meter event payload to use for mapping the event to a customer.
@@ -143,6 +149,15 @@ public struct MeterCreateCustomerMapping: StripeParams {
     }
 }
 
+public enum MeterCreateCustomerMappingType: String, Codable, Sendable {
+    case byId = "by_id"
+}
+
+public enum MeterCreateEventTimeWindow: String, Codable, Sendable {
+    case day
+    case hour
+}
+
 /// Fields that specify how to calculate a meter event's value.
 public struct MeterCreateValueSettings: StripeParams {
     /// The key in the usage event payload to use as the value for this meter. For example, if the event
@@ -156,4 +171,9 @@ public struct MeterCreateValueSettings: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case eventPayloadKey = "event_payload_key"
     }
+}
+
+public enum MeterListStatus: String, Codable, Sendable {
+    case active
+    case inactive
 }

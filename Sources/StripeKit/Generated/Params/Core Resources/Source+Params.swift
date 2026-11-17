@@ -193,6 +193,13 @@ public struct SourceVerifyParams: StripeParams {
     }
 }
 
+public enum SourceCreateFlow: String, Codable, Sendable {
+    case codeVerification = "code_verification"
+    case none
+    case receiver
+    case redirect
+}
+
 /// Information about a mandate possibility attached to a source object (generally for bank debits) as
 /// well as its acceptance status.
 public struct SourceCreateMandate: StripeParams {
@@ -271,6 +278,13 @@ public struct SourceCreateMandateAcceptance: StripeParams {
     }
 }
 
+public enum SourceCreateMandateAcceptanceStatus: String, Codable, Sendable {
+    case accepted
+    case pending
+    case refused
+    case revoked
+}
+
 /// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
 /// is `offline`
 public struct SourceCreateMandateAcceptanceOffline: StripeParams {
@@ -307,6 +321,25 @@ public struct SourceCreateMandateAcceptanceOnline: StripeParams {
         case ip
         case userAgent = "user_agent"
     }
+}
+
+public enum SourceCreateMandateAcceptanceType: String, Codable, Sendable {
+    case offline
+    case online
+}
+
+public enum SourceCreateMandateInterval: String, Codable, Sendable {
+    case oneTime = "one_time"
+    case scheduled
+    case variable
+}
+
+public enum SourceCreateMandateNotificationMethod: String, Codable, Sendable {
+    case deprecatedNone = "deprecated_none"
+    case email
+    case manual
+    case none
+    case stripeEmail = "stripe_email"
 }
 
 /// Information about the owner of the payment instrument that may be used or required by particular
@@ -381,6 +414,12 @@ public struct SourceCreateReceiver: StripeParams {
     }
 }
 
+public enum SourceCreateReceiverRefundAttributesMethod: String, Codable, Sendable {
+    case email
+    case manual
+    case none
+}
+
 /// Parameters required for the redirect flow. Required if the source is authenticated by a redirect
 /// (`flow` is `redirect`).
 public struct SourceCreateRedirect: StripeParams {
@@ -431,6 +470,13 @@ public struct SourceCreateSourceOrderItems: StripeParams {
         self.quantity = quantity
         self.type = type
     }
+}
+
+public enum SourceCreateSourceOrderItemsType: String, Codable, Sendable {
+    case discount
+    case shipping
+    case sku
+    case tax
 }
 
 /// Shipping address for the order. Required if any of the SKUs are for products that have `shippable`
@@ -497,6 +543,11 @@ public struct SourceCreateSourceOrderShippingAddress: StripeParams {
         case postalCode = "postal_code"
         case state
     }
+}
+
+public enum SourceCreateUsage: String, Codable, Sendable {
+    case reusable
+    case singleUse = "single_use"
 }
 
 /// Information about a mandate possibility attached to a source object (generally for bank debits) as
@@ -577,6 +628,13 @@ public struct SourceUpdateMandateAcceptance: StripeParams {
     }
 }
 
+public enum SourceUpdateMandateAcceptanceStatus: String, Codable, Sendable {
+    case accepted
+    case pending
+    case refused
+    case revoked
+}
+
 /// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
 /// is `offline`
 public struct SourceUpdateMandateAcceptanceOffline: StripeParams {
@@ -613,6 +671,25 @@ public struct SourceUpdateMandateAcceptanceOnline: StripeParams {
         case ip
         case userAgent = "user_agent"
     }
+}
+
+public enum SourceUpdateMandateAcceptanceType: String, Codable, Sendable {
+    case offline
+    case online
+}
+
+public enum SourceUpdateMandateInterval: String, Codable, Sendable {
+    case oneTime = "one_time"
+    case scheduled
+    case variable
+}
+
+public enum SourceUpdateMandateNotificationMethod: String, Codable, Sendable {
+    case deprecatedNone = "deprecated_none"
+    case email
+    case manual
+    case none
+    case stripeEmail = "stripe_email"
 }
 
 /// Information about the owner of the payment instrument that may be used or required by particular
@@ -703,6 +780,13 @@ public struct SourceUpdateSourceOrderItems: StripeParams {
         self.quantity = quantity
         self.type = type
     }
+}
+
+public enum SourceUpdateSourceOrderItemsType: String, Codable, Sendable {
+    case discount
+    case shipping
+    case sku
+    case tax
 }
 
 /// Shipping address for the order. Required if any of the SKUs are for products that have `shippable`

@@ -70,3 +70,8 @@ public struct InvoiceRenderingTemplateUnarchiveParams: StripeParams {
         self.expand = expand
     }
 }
+
+public enum InvoiceRenderingTemplateListStatus: String, Codable, Sendable {
+    case active
+    case archived
+}

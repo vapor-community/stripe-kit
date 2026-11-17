@@ -250,6 +250,13 @@ public struct SubscriptionItemCreateDiscounts: StripeParams {
     }
 }
 
+public enum SubscriptionItemCreatePaymentBehavior: String, Codable, Sendable {
+    case allowIncomplete = "allow_incomplete"
+    case defaultIncomplete = "default_incomplete"
+    case errorIfIncomplete = "error_if_incomplete"
+    case pendingIfIncomplete = "pending_if_incomplete"
+}
+
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
 public struct SubscriptionItemCreatePriceData: StripeParams {
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -312,6 +319,25 @@ public struct SubscriptionItemCreatePriceDataRecurring: StripeParams {
     }
 }
 
+public enum SubscriptionItemCreatePriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum SubscriptionItemCreatePriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum SubscriptionItemCreateProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
+}
+
 public struct SubscriptionItemUpdateBillingThresholds: StripeParams {
     /// Number of units that meets the billing threshold to advance the subscription to a new billing period
     /// (e.g., it takes 10 $5 units to meet a $50 [monetary
@@ -360,6 +386,13 @@ public struct SubscriptionItemUpdateDiscounts: StripeParams {
         case discount
         case promotionCode = "promotion_code"
     }
+}
+
+public enum SubscriptionItemUpdatePaymentBehavior: String, Codable, Sendable {
+    case allowIncomplete = "allow_incomplete"
+    case defaultIncomplete = "default_incomplete"
+    case errorIfIncomplete = "error_if_incomplete"
+    case pendingIfIncomplete = "pending_if_incomplete"
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. You can use
@@ -424,4 +457,23 @@ public struct SubscriptionItemUpdatePriceDataRecurring: StripeParams {
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum SubscriptionItemUpdatePriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum SubscriptionItemUpdatePriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum SubscriptionItemUpdateProrationBehavior: String, Codable, Sendable {
+    case alwaysInvoice = "always_invoice"
+    case createProrations = "create_prorations"
+    case none
 }

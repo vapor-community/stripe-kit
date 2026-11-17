@@ -183,6 +183,10 @@ public struct OutboundTransferCreateDestinationPaymentMethodData: StripeParams {
     }
 }
 
+public enum OutboundTransferCreateDestinationPaymentMethodDataType: String, Codable, Sendable {
+    case financialAccount = "financial_account"
+}
+
 /// Hash describing payment method configuration details.
 public struct OutboundTransferCreateDestinationPaymentMethodOptions: StripeParams {
     /// Optional fields for `us_bank_account`.
@@ -208,6 +212,19 @@ public struct OutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccount
     }
 }
 
+public enum OutboundTransferCreateDestinationPaymentMethodOptionsUsBankAccountNetwork: String, Codable, Sendable {
+    case ach
+    case usDomesticWire = "us_domestic_wire"
+}
+
+public enum OutboundTransferListStatus: String, Codable, Sendable {
+    case canceled
+    case failed
+    case posted
+    case processing
+    case returned
+}
+
 /// Details about a returned OutboundTransfer.
 public struct OutboundTransferReturnOutboundTransferReturnedDetails: StripeParams {
     /// Reason for the return.
@@ -216,6 +233,19 @@ public struct OutboundTransferReturnOutboundTransferReturnedDetails: StripeParam
     public init(code: OutboundTransferReturnOutboundTransferReturnedDetailsCode? = nil) {
         self.code = code
     }
+}
+
+public enum OutboundTransferReturnOutboundTransferReturnedDetailsCode: String, Codable, Sendable {
+    case accountClosed = "account_closed"
+    case accountFrozen = "account_frozen"
+    case bankAccountRestricted = "bank_account_restricted"
+    case bankOwnershipChanged = "bank_ownership_changed"
+    case declined
+    case incorrectAccountHolderName = "incorrect_account_holder_name"
+    case invalidAccountNumber = "invalid_account_number"
+    case invalidCurrency = "invalid_currency"
+    case noAccount = "no_account"
+    case other
 }
 
 /// Details about network-specific tracking information.
@@ -238,6 +268,11 @@ public struct OutboundTransferUpdateTrackingDetails: StripeParams {
         case type
         case usDomesticWire = "us_domestic_wire"
     }
+}
+
+public enum OutboundTransferUpdateTrackingDetailsType: String, Codable, Sendable {
+    case ach
+    case usDomesticWire = "us_domestic_wire"
 }
 
 /// ACH network tracking details.

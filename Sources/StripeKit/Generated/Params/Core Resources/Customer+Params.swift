@@ -443,6 +443,12 @@ public struct CustomerCreateCashBalanceSettings: StripeParams {
     }
 }
 
+public enum CustomerCreateCashBalanceSettingsReconciliationMode: String, Codable, Sendable {
+    case automatic
+    case manual
+    case merchantDefault = "merchant_default"
+}
+
 /// Default invoice settings for this customer.
 public struct CustomerCreateInvoiceSettings: StripeParams {
     /// The list of up to 4 default custom fields to be displayed on invoices for this customer. When
@@ -501,6 +507,11 @@ public struct CustomerCreateInvoiceSettingsRenderingOptions: StripeParams {
         case amountTaxDisplay = "amount_tax_display"
         case template
     }
+}
+
+public enum CustomerCreateInvoiceSettingsRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
+    case excludeTax = "exclude_tax"
+    case includeInclusiveTax = "include_inclusive_tax"
 }
 
 public struct CustomerCreateShipping: StripeParams {
@@ -575,6 +586,17 @@ public struct CustomerCreateTax: StripeParams {
     }
 }
 
+public enum CustomerCreateTaxValidateLocation: String, Codable, Sendable {
+    case deferred
+    case immediately
+}
+
+public enum CustomerCreateTaxExempt: String, Codable, Sendable {
+    case exempt
+    case none
+    case reverse
+}
+
 public struct CustomerCreateTaxIdData: StripeParams {
     /// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`,
     /// `au_acn`, `au_arn`, `au_wpn`, `aw_tin`, `az_tin`, `ba_tin`, `bb_tin`, `bd_bin`, `bf_ifu`, `bg_uic`,
@@ -601,6 +623,144 @@ public struct CustomerCreateTaxIdData: StripeParams {
     }
 }
 
+public enum CustomerCreateTaxIdDataType: String, Codable, Sendable {
+    case adNrt = "ad_nrt"
+    case aeTrn = "ae_trn"
+    case alTin = "al_tin"
+    case amTin = "am_tin"
+    case aoTin = "ao_tin"
+    case arCuit = "ar_cuit"
+    case auAbn = "au_abn"
+    case auAcn = "au_acn"
+    case auArn = "au_arn"
+    case auWpn = "au_wpn"
+    case awTin = "aw_tin"
+    case azTin = "az_tin"
+    case baTin = "ba_tin"
+    case bbTin = "bb_tin"
+    case bdBin = "bd_bin"
+    case bfIfu = "bf_ifu"
+    case bgUic = "bg_uic"
+    case bhVat = "bh_vat"
+    case bjIfu = "bj_ifu"
+    case boTin = "bo_tin"
+    case brCnpj = "br_cnpj"
+    case brCpf = "br_cpf"
+    case bsTin = "bs_tin"
+    case bwVat = "bw_vat"
+    case byTin = "by_tin"
+    case caBn = "ca_bn"
+    case caGstHst = "ca_gst_hst"
+    case caPstBc = "ca_pst_bc"
+    case caPstMb = "ca_pst_mb"
+    case caPstSk = "ca_pst_sk"
+    case caQst = "ca_qst"
+    case cdNif = "cd_nif"
+    case chUid = "ch_uid"
+    case chVat = "ch_vat"
+    case ciVat = "ci_vat"
+    case clTin = "cl_tin"
+    case cmNiu = "cm_niu"
+    case cnTin = "cn_tin"
+    case coNit = "co_nit"
+    case crTin = "cr_tin"
+    case cvNif = "cv_nif"
+    case czDic = "cz_dic"
+    case deStn = "de_stn"
+    case doRcn = "do_rcn"
+    case ecRuc = "ec_ruc"
+    case egTin = "eg_tin"
+    case esCif = "es_cif"
+    case etTin = "et_tin"
+    case euOssVat = "eu_oss_vat"
+    case euVat = "eu_vat"
+    case foVat = "fo_vat"
+    case frSiren = "fr_siren"
+    case frSiret = "fr_siret"
+    case frSpi = "fr_spi"
+    case gbVat = "gb_vat"
+    case geVat = "ge_vat"
+    case ghTin = "gh_tin"
+    case giTin = "gi_tin"
+    case gnNif = "gn_nif"
+    case hkBr = "hk_br"
+    case hrOib = "hr_oib"
+    case huTin = "hu_tin"
+    case icNif = "ic_nif"
+    case idNpwp = "id_npwp"
+    case ilVat = "il_vat"
+    case inGst = "in_gst"
+    case isKt = "is_kt"
+    case isVat = "is_vat"
+    case itCf = "it_cf"
+    case jpCn = "jp_cn"
+    case jpRn = "jp_rn"
+    case jpTrn = "jp_trn"
+    case kePin = "ke_pin"
+    case kgTin = "kg_tin"
+    case khTin = "kh_tin"
+    case krBrn = "kr_brn"
+    case kzBin = "kz_bin"
+    case laTin = "la_tin"
+    case liUid = "li_uid"
+    case liVat = "li_vat"
+    case lkVat = "lk_vat"
+    case maVat = "ma_vat"
+    case mdCf = "md_cf"
+    case mdVat = "md_vat"
+    case mePib = "me_pib"
+    case mkVat = "mk_vat"
+    case mrNif = "mr_nif"
+    case muVat = "mu_vat"
+    case mxRfc = "mx_rfc"
+    case myFrp = "my_frp"
+    case myItn = "my_itn"
+    case mySst = "my_sst"
+    case mzNuit = "mz_nuit"
+    case ngTin = "ng_tin"
+    case noVat = "no_vat"
+    case noVoec = "no_voec"
+    case npPan = "np_pan"
+    case nzBn = "nz_bn"
+    case nzGst = "nz_gst"
+    case omVat = "om_vat"
+    case peRuc = "pe_ruc"
+    case phTin = "ph_tin"
+    case plNip = "pl_nip"
+    case ptNif = "pt_nif"
+    case pyRuc = "py_ruc"
+    case roTin = "ro_tin"
+    case rsPib = "rs_pib"
+    case ruInn = "ru_inn"
+    case ruKpp = "ru_kpp"
+    case saVat = "sa_vat"
+    case sgGst = "sg_gst"
+    case sgUen = "sg_uen"
+    case siTin = "si_tin"
+    case smCoe = "sm_coe"
+    case snNinea = "sn_ninea"
+    case srFin = "sr_fin"
+    case svNit = "sv_nit"
+    case thVat = "th_vat"
+    case tjTin = "tj_tin"
+    case trTin = "tr_tin"
+    case ttBir = "tt_bir"
+    case ttVat = "tt_vat"
+    case twVat = "tw_vat"
+    case tzVat = "tz_vat"
+    case uaVat = "ua_vat"
+    case ugTin = "ug_tin"
+    case usEin = "us_ein"
+    case uyRuc = "uy_ruc"
+    case uzTin = "uz_tin"
+    case uzVat = "uz_vat"
+    case veRif = "ve_rif"
+    case vnTin = "vn_tin"
+    case zaVat = "za_vat"
+    case zmTin = "zm_tin"
+    case zwTin = "zw_tin"
+}
+
 /// Additional parameters for `bank_transfer` funding types
 public struct CustomerCreateFundingInstructionsBankTransfer: StripeParams {
     /// The type of the `bank_transfer`
@@ -625,6 +785,14 @@ public struct CustomerCreateFundingInstructionsBankTransfer: StripeParams {
     }
 }
 
+public enum CustomerCreateFundingInstructionsBankTransferType: String, Codable, Sendable {
+    case euBankTransfer = "eu_bank_transfer"
+    case gbBankTransfer = "gb_bank_transfer"
+    case jpBankTransfer = "jp_bank_transfer"
+    case mxBankTransfer = "mx_bank_transfer"
+    case usBankTransfer = "us_bank_transfer"
+}
+
 /// Configuration for eu_bank_transfer funding type.
 public struct CustomerCreateFundingInstructionsBankTransferEuBankTransfer: StripeParams {
     /// The desired country code of the bank account information. Permitted values include: `DE`, `FR`,
@@ -634,6 +802,83 @@ public struct CustomerCreateFundingInstructionsBankTransferEuBankTransfer: Strip
     public init(country: String) {
         self.country = country
     }
+}
+
+public enum CustomerCreateFundingInstructionsBankTransferRequestedAddressTypes: String, Codable, Sendable {
+    case iban
+    case sortCode = "sort_code"
+    case spei
+    case zengin
+}
+
+public enum CustomerCreateFundingInstructionsFundingType: String, Codable, Sendable {
+    case bankTransfer = "bank_transfer"
+}
+
+public enum CustomerListPaymentMethodsAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
+}
+
+public enum CustomerListPaymentMethodsType: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case custom
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
 }
 
 public struct CustomerUpdateAddress: StripeParams {
@@ -700,6 +945,12 @@ public struct CustomerUpdateCashBalanceSettings: StripeParams {
     }
 }
 
+public enum CustomerUpdateCashBalanceSettingsReconciliationMode: String, Codable, Sendable {
+    case automatic
+    case manual
+    case merchantDefault = "merchant_default"
+}
+
 /// Default invoice settings for this customer.
 public struct CustomerUpdateInvoiceSettings: StripeParams {
     /// The list of up to 4 default custom fields to be displayed on invoices for this customer. When
@@ -758,6 +1009,11 @@ public struct CustomerUpdateInvoiceSettingsRenderingOptions: StripeParams {
         case amountTaxDisplay = "amount_tax_display"
         case template
     }
+}
+
+public enum CustomerUpdateInvoiceSettingsRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
+    case excludeTax = "exclude_tax"
+    case includeInclusiveTax = "include_inclusive_tax"
 }
 
 public struct CustomerUpdateShipping: StripeParams {
@@ -830,4 +1086,16 @@ public struct CustomerUpdateTax: StripeParams {
         case ipAddress = "ip_address"
         case validateLocation = "validate_location"
     }
+}
+
+public enum CustomerUpdateTaxValidateLocation: String, Codable, Sendable {
+    case auto
+    case deferred
+    case immediately
+}
+
+public enum CustomerUpdateTaxExempt: String, Codable, Sendable {
+    case exempt
+    case none
+    case reverse
 }

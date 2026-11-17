@@ -109,6 +109,10 @@ public struct TrialOfferCreateDuration: StripeParams {
     }
 }
 
+public enum TrialOfferCreateDurationType: String, Codable, Sendable {
+    case relative
+}
+
 /// The relative duration of the trial period computed as the number of recurring price intervals.
 public struct TrialOfferCreateDurationRelative: StripeParams {
     /// The number of recurring price's interval to apply for the trial period.

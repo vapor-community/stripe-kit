@@ -594,6 +594,19 @@ public struct PaymentLinkCreateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
+public enum PaymentLinkCreateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum PaymentLinkCreateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// Behavior after the purchase is complete.
 public struct PaymentLinkCreateAfterCompletion: StripeParams {
     /// The specified behavior after the purchase is complete. Either `redirect` or `hosted_confirmation`.
@@ -614,6 +627,11 @@ public struct PaymentLinkCreateAfterCompletion: StripeParams {
         case redirect
         case type
     }
+}
+
+public enum PaymentLinkCreateAfterCompletionType: String, Codable, Sendable {
+    case hostedConfirmation = "hosted_confirmation"
+    case redirect
 }
 
 /// Configuration when `type=hosted_confirmation`.
@@ -674,6 +692,16 @@ public struct PaymentLinkCreateAutomaticTaxLiability: StripeParams {
     }
 }
 
+public enum PaymentLinkCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum PaymentLinkCreateBillingAddressCollection: String, Codable, Sendable {
+    case auto
+    case required
+}
+
 /// Configure fields to gather active consent from customers.
 public struct PaymentLinkCreateConsentCollection: StripeParams {
     /// Determines the display of payment method reuse agreement text in the UI. If set to `hidden`, it will
@@ -713,6 +741,21 @@ public struct PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreement: Str
     public init(position: PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreementPosition) {
         self.position = position
     }
+}
+
+public enum PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreementPosition: String, Codable, Sendable {
+    case auto
+    case hidden
+}
+
+public enum PaymentLinkCreateConsentCollectionPromotions: String, Codable, Sendable {
+    case auto
+    case none
+}
+
+public enum PaymentLinkCreateConsentCollectionTermsOfService: String, Codable, Sendable {
+    case none
+    case required
 }
 
 public struct PaymentLinkCreateCustomFields: StripeParams {
@@ -755,6 +798,16 @@ public struct PaymentLinkCreateCustomFieldsLabel: StripeParams {
         self.custom = custom
         self.type = type
     }
+}
+
+public enum PaymentLinkCreateCustomFieldsLabelType: String, Codable, Sendable {
+    case custom
+}
+
+public enum PaymentLinkCreateCustomFieldsType: String, Codable, Sendable {
+    case dropdown
+    case numeric
+    case text
 }
 
 /// Configuration for `type=dropdown` fields.
@@ -896,6 +949,11 @@ public struct PaymentLinkCreateCustomTextTermsOfServiceAcceptance: StripeParams 
     }
 }
 
+public enum PaymentLinkCreateCustomerCreation: String, Codable, Sendable {
+    case always
+    case ifRequired = "if_required"
+}
+
 /// Generate a post-purchase Invoice for one-time payments.
 public struct PaymentLinkCreateInvoiceCreation: StripeParams {
     /// Whether the feature is enabled
@@ -982,6 +1040,11 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataIssuer: StripeParams {
     }
 }
 
+public enum PaymentLinkCreateInvoiceCreationInvoiceDataIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
 public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: StripeParams {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
     /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
@@ -1000,6 +1063,11 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: Strip
         case amountTaxDisplay = "amount_tax_display"
         case template
     }
+}
+
+public enum PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
+    case excludeTax = "exclude_tax"
+    case includeInclusiveTax = "include_inclusive_tax"
 }
 
 /// Settings for Managed Payments for this Payment Link and resulting
@@ -1159,6 +1227,22 @@ public struct PaymentLinkCreatePaymentIntentData: StripeParams {
     }
 }
 
+public enum PaymentLinkCreatePaymentIntentDataCaptureMethod: String, Codable, Sendable {
+    case automatic
+    case automaticAsync = "automatic_async"
+    case manual
+}
+
+public enum PaymentLinkCreatePaymentIntentDataSetupFutureUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentLinkCreatePaymentMethodCollection: String, Codable, Sendable {
+    case always
+    case ifRequired = "if_required"
+}
+
 /// Payment-method-specific configuration.
 public struct PaymentLinkCreatePaymentMethodOptions: StripeParams {
     /// Configuration for `card` payment methods.
@@ -1192,6 +1276,61 @@ public struct PaymentLinkCreatePaymentMethodOptionsCardRestrictions: StripeParam
     public enum CodingKeys: String, CodingKey {
         case brandsBlocked = "brands_blocked"
     }
+}
+
+public enum PaymentLinkCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked: String, Codable, Sendable {
+    case americanExpress = "american_express"
+    case discoverGlobalNetwork = "discover_global_network"
+    case mastercard
+    case visa
+}
+
+public enum PaymentLinkCreatePaymentMethodTypes: String, Codable, Sendable {
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case klarna
+    case konbini
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
 }
 
 /// Controls phone number collection settings during checkout. We recommend that you review your privacy
@@ -1245,6 +1384,247 @@ public struct PaymentLinkCreateShippingAddressCollection: StripeParams {
     }
 }
 
+public enum PaymentLinkCreateShippingAddressCollectionAllowedCountries: String, Codable, Sendable {
+    case ac = "AC"
+    case ad = "AD"
+    case ae = "AE"
+    case af = "AF"
+    case ag = "AG"
+    case ai = "AI"
+    case al = "AL"
+    case am = "AM"
+    case ao = "AO"
+    case aq = "AQ"
+    case ar = "AR"
+    case at = "AT"
+    case au = "AU"
+    case aw = "AW"
+    case ax = "AX"
+    case az = "AZ"
+    case ba = "BA"
+    case bb = "BB"
+    case bd = "BD"
+    case be = "BE"
+    case bf = "BF"
+    case bg = "BG"
+    case bh = "BH"
+    case bi = "BI"
+    case bj = "BJ"
+    case bl = "BL"
+    case bm = "BM"
+    case bn = "BN"
+    case bo = "BO"
+    case bq = "BQ"
+    case br = "BR"
+    case bs = "BS"
+    case bt = "BT"
+    case bv = "BV"
+    case bw = "BW"
+    case by = "BY"
+    case bz = "BZ"
+    case ca = "CA"
+    case cd = "CD"
+    case cf = "CF"
+    case cg = "CG"
+    case ch = "CH"
+    case ci = "CI"
+    case ck = "CK"
+    case cl = "CL"
+    case cm = "CM"
+    case cn = "CN"
+    case co = "CO"
+    case cr = "CR"
+    case cv = "CV"
+    case cw = "CW"
+    case cy = "CY"
+    case cz = "CZ"
+    case de = "DE"
+    case dj = "DJ"
+    case dk = "DK"
+    case dm = "DM"
+    case `do` = "DO"
+    case dz = "DZ"
+    case ec = "EC"
+    case ee = "EE"
+    case eg = "EG"
+    case eh = "EH"
+    case er = "ER"
+    case es = "ES"
+    case et = "ET"
+    case fi = "FI"
+    case fj = "FJ"
+    case fk = "FK"
+    case fo = "FO"
+    case fr = "FR"
+    case ga = "GA"
+    case gb = "GB"
+    case gd = "GD"
+    case ge = "GE"
+    case gf = "GF"
+    case gg = "GG"
+    case gh = "GH"
+    case gi = "GI"
+    case gl = "GL"
+    case gm = "GM"
+    case gn = "GN"
+    case gp = "GP"
+    case gq = "GQ"
+    case gr = "GR"
+    case gs = "GS"
+    case gt = "GT"
+    case gu = "GU"
+    case gw = "GW"
+    case gy = "GY"
+    case hk = "HK"
+    case hn = "HN"
+    case hr = "HR"
+    case ht = "HT"
+    case hu = "HU"
+    case id = "ID"
+    case ie = "IE"
+    case il = "IL"
+    case im = "IM"
+    case `in` = "IN"
+    case io = "IO"
+    case iq = "IQ"
+    case `is` = "IS"
+    case it = "IT"
+    case je = "JE"
+    case jm = "JM"
+    case jo = "JO"
+    case jp = "JP"
+    case ke = "KE"
+    case kg = "KG"
+    case kh = "KH"
+    case ki = "KI"
+    case km = "KM"
+    case kn = "KN"
+    case kr = "KR"
+    case kw = "KW"
+    case ky = "KY"
+    case kz = "KZ"
+    case la = "LA"
+    case lb = "LB"
+    case lc = "LC"
+    case li = "LI"
+    case lk = "LK"
+    case lr = "LR"
+    case ls = "LS"
+    case lt = "LT"
+    case lu = "LU"
+    case lv = "LV"
+    case ly = "LY"
+    case ma = "MA"
+    case mc = "MC"
+    case md = "MD"
+    case me = "ME"
+    case mf = "MF"
+    case mg = "MG"
+    case mk = "MK"
+    case ml = "ML"
+    case mm = "MM"
+    case mn = "MN"
+    case mo = "MO"
+    case mq = "MQ"
+    case mr = "MR"
+    case ms = "MS"
+    case mt = "MT"
+    case mu = "MU"
+    case mv = "MV"
+    case mw = "MW"
+    case mx = "MX"
+    case my = "MY"
+    case mz = "MZ"
+    case na = "NA"
+    case nc = "NC"
+    case ne = "NE"
+    case ng = "NG"
+    case ni = "NI"
+    case nl = "NL"
+    case no = "NO"
+    case np = "NP"
+    case nr = "NR"
+    case nu = "NU"
+    case nz = "NZ"
+    case om = "OM"
+    case pa = "PA"
+    case pe = "PE"
+    case pf = "PF"
+    case pg = "PG"
+    case ph = "PH"
+    case pk = "PK"
+    case pl = "PL"
+    case pm = "PM"
+    case pn = "PN"
+    case pr = "PR"
+    case ps = "PS"
+    case pt = "PT"
+    case py = "PY"
+    case qa = "QA"
+    case re = "RE"
+    case ro = "RO"
+    case rs = "RS"
+    case ru = "RU"
+    case rw = "RW"
+    case sa = "SA"
+    case sb = "SB"
+    case sc = "SC"
+    case sd = "SD"
+    case se = "SE"
+    case sg = "SG"
+    case sh = "SH"
+    case si = "SI"
+    case sj = "SJ"
+    case sk = "SK"
+    case sl = "SL"
+    case sm = "SM"
+    case sn = "SN"
+    case so = "SO"
+    case sr = "SR"
+    case ss = "SS"
+    case st = "ST"
+    case sv = "SV"
+    case sx = "SX"
+    case sz = "SZ"
+    case ta = "TA"
+    case tc = "TC"
+    case td = "TD"
+    case tf = "TF"
+    case tg = "TG"
+    case th = "TH"
+    case tj = "TJ"
+    case tk = "TK"
+    case tl = "TL"
+    case tm = "TM"
+    case tn = "TN"
+    case to = "TO"
+    case tr = "TR"
+    case tt = "TT"
+    case tv = "TV"
+    case tw = "TW"
+    case tz = "TZ"
+    case ua = "UA"
+    case ug = "UG"
+    case us = "US"
+    case uy = "UY"
+    case uz = "UZ"
+    case va = "VA"
+    case vc = "VC"
+    case ve = "VE"
+    case vg = "VG"
+    case vn = "VN"
+    case vu = "VU"
+    case wf = "WF"
+    case ws = "WS"
+    case xk = "XK"
+    case ye = "YE"
+    case yt = "YT"
+    case za = "ZA"
+    case zm = "ZM"
+    case zw = "ZW"
+    case zz = "ZZ"
+}
+
 public struct PaymentLinkCreateShippingOptions: StripeParams {
     /// The ID of the Shipping Rate to use for this shipping option.
     public var shippingRate: String?
@@ -1256,6 +1636,14 @@ public struct PaymentLinkCreateShippingOptions: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case shippingRate = "shipping_rate"
     }
+}
+
+public enum PaymentLinkCreateSubmitType: String, Codable, Sendable {
+    case auto
+    case book
+    case donate
+    case pay
+    case subscribe
 }
 
 /// When creating a subscription, the specified configuration data will be used. There must be at least
@@ -1352,6 +1740,11 @@ public struct PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuer: StripePara
     }
 }
 
+public enum PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
 /// Settings related to subscription trials.
 public struct PaymentLinkCreateSubscriptionDataTrialSettings: StripeParams {
     /// Defines how the subscription should behave when the user's free trial ends.
@@ -1381,6 +1774,12 @@ public struct PaymentLinkCreateSubscriptionDataTrialSettingsEndBehavior: StripeP
     }
 }
 
+public enum PaymentLinkCreateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
+    case cancel
+    case createInvoice = "create_invoice"
+    case pause
+}
+
 /// Controls tax ID collection during checkout.
 public struct PaymentLinkCreateTaxIdCollection: StripeParams {
     /// Enable tax ID collection during checkout. Defaults to `false`.
@@ -1393,6 +1792,11 @@ public struct PaymentLinkCreateTaxIdCollection: StripeParams {
         self.enabled = enabled
         self.required = required
     }
+}
+
+public enum PaymentLinkCreateTaxIdCollectionRequired: String, Codable, Sendable {
+    case ifSupported = "if_supported"
+    case never
 }
 
 /// The account (if any) the payments will be attributed to for tax reporting, and where funds from each
@@ -1431,6 +1835,11 @@ public struct PaymentLinkUpdateAfterCompletion: StripeParams {
         case redirect
         case type
     }
+}
+
+public enum PaymentLinkUpdateAfterCompletionType: String, Codable, Sendable {
+    case hostedConfirmation = "hosted_confirmation"
+    case redirect
 }
 
 /// Configuration when `type=hosted_confirmation`.
@@ -1491,6 +1900,16 @@ public struct PaymentLinkUpdateAutomaticTaxLiability: StripeParams {
     }
 }
 
+public enum PaymentLinkUpdateAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum PaymentLinkUpdateBillingAddressCollection: String, Codable, Sendable {
+    case auto
+    case required
+}
+
 /// Configure fields to gather active consent from customers.
 public struct PaymentLinkUpdateConsentCollection: StripeParams {
     /// Determines the display of payment method reuse agreement text in the UI. If set to `hidden`, it will
@@ -1530,6 +1949,21 @@ public struct PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreement: Str
     public init(position: PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreementPosition) {
         self.position = position
     }
+}
+
+public enum PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreementPosition: String, Codable, Sendable {
+    case auto
+    case hidden
+}
+
+public enum PaymentLinkUpdateConsentCollectionPromotions: String, Codable, Sendable {
+    case auto
+    case none
+}
+
+public enum PaymentLinkUpdateConsentCollectionTermsOfService: String, Codable, Sendable {
+    case none
+    case required
 }
 
 public struct PaymentLinkUpdateCustomFields: StripeParams {
@@ -1572,6 +2006,16 @@ public struct PaymentLinkUpdateCustomFieldsLabel: StripeParams {
         self.custom = custom
         self.type = type
     }
+}
+
+public enum PaymentLinkUpdateCustomFieldsLabelType: String, Codable, Sendable {
+    case custom
+}
+
+public enum PaymentLinkUpdateCustomFieldsType: String, Codable, Sendable {
+    case dropdown
+    case numeric
+    case text
 }
 
 /// Configuration for `type=dropdown` fields.
@@ -1713,6 +2157,11 @@ public struct PaymentLinkUpdateCustomTextTermsOfServiceAcceptance: StripeParams 
     }
 }
 
+public enum PaymentLinkUpdateCustomerCreation: String, Codable, Sendable {
+    case always
+    case ifRequired = "if_required"
+}
+
 /// Generate a post-purchase Invoice for one-time payments.
 public struct PaymentLinkUpdateInvoiceCreation: StripeParams {
     /// Whether the feature is enabled
@@ -1799,6 +2248,11 @@ public struct PaymentLinkUpdateInvoiceCreationInvoiceDataIssuer: StripeParams {
     }
 }
 
+public enum PaymentLinkUpdateInvoiceCreationInvoiceDataIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
 public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions: StripeParams {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
     /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
@@ -1817,6 +2271,11 @@ public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions: Strip
         case amountTaxDisplay = "amount_tax_display"
         case template
     }
+}
+
+public enum PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
+    case excludeTax = "exclude_tax"
+    case includeInclusiveTax = "include_inclusive_tax"
 }
 
 public struct PaymentLinkUpdateLineItems: StripeParams {
@@ -1999,6 +2458,16 @@ public struct PaymentLinkUpdatePaymentIntentData: StripeParams {
     }
 }
 
+public enum PaymentLinkUpdatePaymentIntentDataSetupFutureUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum PaymentLinkUpdatePaymentMethodCollection: String, Codable, Sendable {
+    case always
+    case ifRequired = "if_required"
+}
+
 public struct PaymentLinkUpdatePaymentMethodOptions: StripeParams {
     /// Configuration for `card` payment methods.
     public var card: PaymentLinkUpdatePaymentMethodOptionsCard?
@@ -2029,6 +2498,61 @@ public struct PaymentLinkUpdatePaymentMethodOptionsCardRestrictions: StripeParam
     public enum CodingKeys: String, CodingKey {
         case brandsBlocked = "brands_blocked"
     }
+}
+
+public enum PaymentLinkUpdatePaymentMethodOptionsCardRestrictionsBrandsBlocked: String, Codable, Sendable {
+    case americanExpress = "american_express"
+    case discoverGlobalNetwork = "discover_global_network"
+    case mastercard
+    case visa
+}
+
+public enum PaymentLinkUpdatePaymentMethodTypes: String, Codable, Sendable {
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case klarna
+    case konbini
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
 }
 
 /// Controls phone number collection settings during checkout. We recommend that you review your privacy
@@ -2080,6 +2604,247 @@ public struct PaymentLinkUpdateShippingAddressCollection: StripeParams {
     }
 }
 
+public enum PaymentLinkUpdateShippingAddressCollectionAllowedCountries: String, Codable, Sendable {
+    case ac = "AC"
+    case ad = "AD"
+    case ae = "AE"
+    case af = "AF"
+    case ag = "AG"
+    case ai = "AI"
+    case al = "AL"
+    case am = "AM"
+    case ao = "AO"
+    case aq = "AQ"
+    case ar = "AR"
+    case at = "AT"
+    case au = "AU"
+    case aw = "AW"
+    case ax = "AX"
+    case az = "AZ"
+    case ba = "BA"
+    case bb = "BB"
+    case bd = "BD"
+    case be = "BE"
+    case bf = "BF"
+    case bg = "BG"
+    case bh = "BH"
+    case bi = "BI"
+    case bj = "BJ"
+    case bl = "BL"
+    case bm = "BM"
+    case bn = "BN"
+    case bo = "BO"
+    case bq = "BQ"
+    case br = "BR"
+    case bs = "BS"
+    case bt = "BT"
+    case bv = "BV"
+    case bw = "BW"
+    case by = "BY"
+    case bz = "BZ"
+    case ca = "CA"
+    case cd = "CD"
+    case cf = "CF"
+    case cg = "CG"
+    case ch = "CH"
+    case ci = "CI"
+    case ck = "CK"
+    case cl = "CL"
+    case cm = "CM"
+    case cn = "CN"
+    case co = "CO"
+    case cr = "CR"
+    case cv = "CV"
+    case cw = "CW"
+    case cy = "CY"
+    case cz = "CZ"
+    case de = "DE"
+    case dj = "DJ"
+    case dk = "DK"
+    case dm = "DM"
+    case `do` = "DO"
+    case dz = "DZ"
+    case ec = "EC"
+    case ee = "EE"
+    case eg = "EG"
+    case eh = "EH"
+    case er = "ER"
+    case es = "ES"
+    case et = "ET"
+    case fi = "FI"
+    case fj = "FJ"
+    case fk = "FK"
+    case fo = "FO"
+    case fr = "FR"
+    case ga = "GA"
+    case gb = "GB"
+    case gd = "GD"
+    case ge = "GE"
+    case gf = "GF"
+    case gg = "GG"
+    case gh = "GH"
+    case gi = "GI"
+    case gl = "GL"
+    case gm = "GM"
+    case gn = "GN"
+    case gp = "GP"
+    case gq = "GQ"
+    case gr = "GR"
+    case gs = "GS"
+    case gt = "GT"
+    case gu = "GU"
+    case gw = "GW"
+    case gy = "GY"
+    case hk = "HK"
+    case hn = "HN"
+    case hr = "HR"
+    case ht = "HT"
+    case hu = "HU"
+    case id = "ID"
+    case ie = "IE"
+    case il = "IL"
+    case im = "IM"
+    case `in` = "IN"
+    case io = "IO"
+    case iq = "IQ"
+    case `is` = "IS"
+    case it = "IT"
+    case je = "JE"
+    case jm = "JM"
+    case jo = "JO"
+    case jp = "JP"
+    case ke = "KE"
+    case kg = "KG"
+    case kh = "KH"
+    case ki = "KI"
+    case km = "KM"
+    case kn = "KN"
+    case kr = "KR"
+    case kw = "KW"
+    case ky = "KY"
+    case kz = "KZ"
+    case la = "LA"
+    case lb = "LB"
+    case lc = "LC"
+    case li = "LI"
+    case lk = "LK"
+    case lr = "LR"
+    case ls = "LS"
+    case lt = "LT"
+    case lu = "LU"
+    case lv = "LV"
+    case ly = "LY"
+    case ma = "MA"
+    case mc = "MC"
+    case md = "MD"
+    case me = "ME"
+    case mf = "MF"
+    case mg = "MG"
+    case mk = "MK"
+    case ml = "ML"
+    case mm = "MM"
+    case mn = "MN"
+    case mo = "MO"
+    case mq = "MQ"
+    case mr = "MR"
+    case ms = "MS"
+    case mt = "MT"
+    case mu = "MU"
+    case mv = "MV"
+    case mw = "MW"
+    case mx = "MX"
+    case my = "MY"
+    case mz = "MZ"
+    case na = "NA"
+    case nc = "NC"
+    case ne = "NE"
+    case ng = "NG"
+    case ni = "NI"
+    case nl = "NL"
+    case no = "NO"
+    case np = "NP"
+    case nr = "NR"
+    case nu = "NU"
+    case nz = "NZ"
+    case om = "OM"
+    case pa = "PA"
+    case pe = "PE"
+    case pf = "PF"
+    case pg = "PG"
+    case ph = "PH"
+    case pk = "PK"
+    case pl = "PL"
+    case pm = "PM"
+    case pn = "PN"
+    case pr = "PR"
+    case ps = "PS"
+    case pt = "PT"
+    case py = "PY"
+    case qa = "QA"
+    case re = "RE"
+    case ro = "RO"
+    case rs = "RS"
+    case ru = "RU"
+    case rw = "RW"
+    case sa = "SA"
+    case sb = "SB"
+    case sc = "SC"
+    case sd = "SD"
+    case se = "SE"
+    case sg = "SG"
+    case sh = "SH"
+    case si = "SI"
+    case sj = "SJ"
+    case sk = "SK"
+    case sl = "SL"
+    case sm = "SM"
+    case sn = "SN"
+    case so = "SO"
+    case sr = "SR"
+    case ss = "SS"
+    case st = "ST"
+    case sv = "SV"
+    case sx = "SX"
+    case sz = "SZ"
+    case ta = "TA"
+    case tc = "TC"
+    case td = "TD"
+    case tf = "TF"
+    case tg = "TG"
+    case th = "TH"
+    case tj = "TJ"
+    case tk = "TK"
+    case tl = "TL"
+    case tm = "TM"
+    case tn = "TN"
+    case to = "TO"
+    case tr = "TR"
+    case tt = "TT"
+    case tv = "TV"
+    case tw = "TW"
+    case tz = "TZ"
+    case ua = "UA"
+    case ug = "UG"
+    case us = "US"
+    case uy = "UY"
+    case uz = "UZ"
+    case va = "VA"
+    case vc = "VC"
+    case ve = "VE"
+    case vg = "VG"
+    case vn = "VN"
+    case vu = "VU"
+    case wf = "WF"
+    case ws = "WS"
+    case xk = "XK"
+    case ye = "YE"
+    case yt = "YT"
+    case za = "ZA"
+    case zm = "ZM"
+    case zw = "ZW"
+    case zz = "ZZ"
+}
+
 public struct PaymentLinkUpdateShippingOptions: StripeParams {
     /// The ID of the Shipping Rate to use for this shipping option.
     public var shippingRate: String?
@@ -2091,6 +2856,14 @@ public struct PaymentLinkUpdateShippingOptions: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case shippingRate = "shipping_rate"
     }
+}
+
+public enum PaymentLinkUpdateSubmitType: String, Codable, Sendable {
+    case auto
+    case book
+    case donate
+    case pay
+    case subscribe
 }
 
 /// When creating a subscription, the specified configuration data will be used. There must be at least
@@ -2181,6 +2954,11 @@ public struct PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuer: StripePara
     }
 }
 
+public enum PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
 public struct PaymentLinkUpdateSubscriptionDataTrialSettings: StripeParams {
     /// Defines how the subscription should behave when the user's free trial ends.
     public var endBehavior: PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehavior
@@ -2209,6 +2987,12 @@ public struct PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehavior: StripeP
     }
 }
 
+public enum PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
+    case cancel
+    case createInvoice = "create_invoice"
+    case pause
+}
+
 /// Controls tax ID collection during checkout.
 public struct PaymentLinkUpdateTaxIdCollection: StripeParams {
     /// Enable tax ID collection during checkout. Defaults to `false`.
@@ -2221,6 +3005,11 @@ public struct PaymentLinkUpdateTaxIdCollection: StripeParams {
         self.enabled = enabled
         self.required = required
     }
+}
+
+public enum PaymentLinkUpdateTaxIdCollectionRequired: String, Codable, Sendable {
+    case ifSupported = "if_supported"
+    case never
 }
 
 public struct PaymentLinkUpdateTransferData: StripeParams {

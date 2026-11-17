@@ -96,6 +96,11 @@ public struct BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurren
     }
 }
 
+public enum BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrencyType: String, Codable, Sendable {
+    case transferAll = "transfer_all"
+    case transferUpToAmount = "transfer_up_to_amount"
+}
+
 /// Details on when funds from charges are available, and when they are paid out to an external account.
 /// For details, see our [Setting Bank and Debit Card
 /// Payouts](/connect/bank-transfers#payout-information) documentation.
@@ -122,6 +127,21 @@ public struct BalanceSettingsUpdatePaymentsPayoutsSchedule: StripeParams {
         case monthlyPayoutDays = "monthly_payout_days"
         case weeklyPayoutDays = "weekly_payout_days"
     }
+}
+
+public enum BalanceSettingsUpdatePaymentsPayoutsScheduleInterval: String, Codable, Sendable {
+    case daily
+    case manual
+    case monthly
+    case weekly
+}
+
+public enum BalanceSettingsUpdatePaymentsPayoutsScheduleWeeklyPayoutDays: String, Codable, Sendable {
+    case friday
+    case monday
+    case thursday
+    case tuesday
+    case wednesday
 }
 
 /// Settings related to the account's balance settlement timing.

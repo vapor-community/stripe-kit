@@ -73,3 +73,9 @@ public struct CreditReversalListParams: StripeParams {
         case status
     }
 }
+
+public enum CreditReversalListStatus: String, Codable, Sendable {
+    case canceled
+    case posted
+    case processing
+}

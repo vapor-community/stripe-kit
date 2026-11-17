@@ -544,6 +544,11 @@ public struct PersonCreateDocumentsVisa: StripeParams {
     }
 }
 
+public enum PersonCreatePoliticalExposure: String, Codable, Sendable {
+    case existing
+    case none
+}
+
 /// The person's registered address.
 public struct PersonCreateRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
@@ -665,6 +670,16 @@ public struct PersonCreateUsCfpbDataEthnicityDetails: StripeParams {
     }
 }
 
+public enum PersonCreateUsCfpbDataEthnicityDetailsEthnicity: String, Codable, Sendable {
+    case cuban
+    case hispanicOrLatino = "hispanic_or_latino"
+    case mexican
+    case notHispanicOrLatino = "not_hispanic_or_latino"
+    case otherHispanicOrLatino = "other_hispanic_or_latino"
+    case preferNotToAnswer = "prefer_not_to_answer"
+    case puertoRican = "puerto_rican"
+}
+
 /// The persons race details
 public struct PersonCreateUsCfpbDataRaceDetails: StripeParams {
     /// The persons race.
@@ -681,6 +696,33 @@ public struct PersonCreateUsCfpbDataRaceDetails: StripeParams {
         case race
         case raceOther = "race_other"
     }
+}
+
+public enum PersonCreateUsCfpbDataRaceDetailsRace: String, Codable, Sendable {
+    case africanAmerican = "african_american"
+    case americanIndianOrAlaskaNative = "american_indian_or_alaska_native"
+    case asian
+    case asianIndian = "asian_indian"
+    case blackOrAfricanAmerican = "black_or_african_american"
+    case chinese
+    case ethiopian
+    case filipino
+    case guamanianOrChamorro = "guamanian_or_chamorro"
+    case haitian
+    case jamaican
+    case japanese
+    case korean
+    case nativeHawaiian = "native_hawaiian"
+    case nativeHawaiianOrOtherPacificIslander = "native_hawaiian_or_other_pacific_islander"
+    case nigerian
+    case otherAsian = "other_asian"
+    case otherBlackOrAfricanAmerican = "other_black_or_african_american"
+    case otherPacificIslander = "other_pacific_islander"
+    case preferNotToAnswer = "prefer_not_to_answer"
+    case samoan
+    case somali
+    case vietnamese
+    case white
 }
 
 /// The person's verification status.
@@ -993,6 +1035,11 @@ public struct PersonUpdateDocumentsVisa: StripeParams {
     }
 }
 
+public enum PersonUpdatePoliticalExposure: String, Codable, Sendable {
+    case existing
+    case none
+}
+
 /// The person's registered address.
 public struct PersonUpdateRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
@@ -1114,6 +1161,16 @@ public struct PersonUpdateUsCfpbDataEthnicityDetails: StripeParams {
     }
 }
 
+public enum PersonUpdateUsCfpbDataEthnicityDetailsEthnicity: String, Codable, Sendable {
+    case cuban
+    case hispanicOrLatino = "hispanic_or_latino"
+    case mexican
+    case notHispanicOrLatino = "not_hispanic_or_latino"
+    case otherHispanicOrLatino = "other_hispanic_or_latino"
+    case preferNotToAnswer = "prefer_not_to_answer"
+    case puertoRican = "puerto_rican"
+}
+
 /// The persons race details
 public struct PersonUpdateUsCfpbDataRaceDetails: StripeParams {
     /// The persons race.
@@ -1130,6 +1187,33 @@ public struct PersonUpdateUsCfpbDataRaceDetails: StripeParams {
         case race
         case raceOther = "race_other"
     }
+}
+
+public enum PersonUpdateUsCfpbDataRaceDetailsRace: String, Codable, Sendable {
+    case africanAmerican = "african_american"
+    case americanIndianOrAlaskaNative = "american_indian_or_alaska_native"
+    case asian
+    case asianIndian = "asian_indian"
+    case blackOrAfricanAmerican = "black_or_african_american"
+    case chinese
+    case ethiopian
+    case filipino
+    case guamanianOrChamorro = "guamanian_or_chamorro"
+    case haitian
+    case jamaican
+    case japanese
+    case korean
+    case nativeHawaiian = "native_hawaiian"
+    case nativeHawaiianOrOtherPacificIslander = "native_hawaiian_or_other_pacific_islander"
+    case nigerian
+    case otherAsian = "other_asian"
+    case otherBlackOrAfricanAmerican = "other_black_or_african_american"
+    case otherPacificIslander = "other_pacific_islander"
+    case preferNotToAnswer = "prefer_not_to_answer"
+    case samoan
+    case somali
+    case vietnamese
+    case white
 }
 
 /// The person's verification status.

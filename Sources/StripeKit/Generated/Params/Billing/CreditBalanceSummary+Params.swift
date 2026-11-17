@@ -55,6 +55,11 @@ public struct CreditBalanceSummaryRetrieveFilter: StripeParams {
     }
 }
 
+public enum CreditBalanceSummaryRetrieveFilterType: String, Codable, Sendable {
+    case applicabilityScope = "applicability_scope"
+    case creditGrant = "credit_grant"
+}
+
 /// The billing credit applicability scope for which to fetch credit balance summary.
 public struct CreditBalanceSummaryRetrieveFilterApplicabilityScope: StripeParams {
     /// The price type that credit grants can apply to. We currently only support the `metered` price type.
@@ -73,6 +78,10 @@ public struct CreditBalanceSummaryRetrieveFilterApplicabilityScope: StripeParams
         case priceType = "price_type"
         case prices
     }
+}
+
+public enum CreditBalanceSummaryRetrieveFilterApplicabilityScopePriceType: String, Codable, Sendable {
+    case metered
 }
 
 public struct CreditBalanceSummaryRetrieveFilterApplicabilityScopePrices: StripeParams {

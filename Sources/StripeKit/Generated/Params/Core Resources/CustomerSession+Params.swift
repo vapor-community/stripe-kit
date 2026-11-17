@@ -140,6 +140,17 @@ public struct CustomerSessionCreateComponentsCustomerSheetFeatures: StripeParams
     }
 }
 
+public enum CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodAllowRedisplayFilters: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
+}
+
+public enum CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodRemove: String, Codable, Sendable {
+    case disabled
+    case enabled
+}
+
 /// Configuration for the mobile payment element.
 public struct CustomerSessionCreateComponentsMobilePaymentElement: StripeParams {
     /// Whether the mobile payment element is enabled.
@@ -197,6 +208,33 @@ public struct CustomerSessionCreateComponentsMobilePaymentElementFeatures: Strip
         case paymentMethodSave = "payment_method_save"
         case paymentMethodSaveAllowRedisplayOverride = "payment_method_save_allow_redisplay_override"
     }
+}
+
+public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodAllowRedisplayFilters: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
+}
+
+public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRedisplay: String, Codable, Sendable {
+    case disabled
+    case enabled
+}
+
+public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRemove: String, Codable, Sendable {
+    case disabled
+    case enabled
+}
+
+public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSave: String, Codable, Sendable {
+    case disabled
+    case enabled
+}
+
+public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSaveAllowRedisplayOverride: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
 }
 
 /// Configuration for the Payment Element.
@@ -265,6 +303,32 @@ public struct CustomerSessionCreateComponentsPaymentElementFeatures: StripeParam
         case paymentMethodSave = "payment_method_save"
         case paymentMethodSaveUsage = "payment_method_save_usage"
     }
+}
+
+public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
+}
+
+public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRedisplay: String, Codable, Sendable {
+    case disabled
+    case enabled
+}
+
+public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRemove: String, Codable, Sendable {
+    case disabled
+    case enabled
+}
+
+public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSave: String, Codable, Sendable {
+    case disabled
+    case enabled
+}
+
+public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSaveUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 /// Configuration for the pricing table.

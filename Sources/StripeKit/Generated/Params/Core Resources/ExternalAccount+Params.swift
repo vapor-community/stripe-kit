@@ -150,6 +150,23 @@ public struct ExternalAccountUpdateParams: StripeParams {
     }
 }
 
+public enum ExternalAccountListObject: String, Codable, Sendable {
+    case bankAccount = "bank_account"
+    case card
+}
+
+public enum ExternalAccountUpdateAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
+public enum ExternalAccountUpdateAccountType: String, Codable, Sendable {
+    case checking
+    case futsu
+    case savings
+    case toza
+}
+
 /// Documents that may be submitted to satisfy various informational requests.
 public struct ExternalAccountUpdateDocuments: StripeParams {
     /// One or more documents that support the [Bank account ownership

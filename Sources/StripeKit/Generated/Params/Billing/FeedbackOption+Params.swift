@@ -74,3 +74,8 @@ public struct FeedbackOptionUpdateParams: StripeParams {
         self.expand = expand
     }
 }
+
+public enum FeedbackOptionListStatus: String, Codable, Sendable {
+    case active
+    case inactive
+}

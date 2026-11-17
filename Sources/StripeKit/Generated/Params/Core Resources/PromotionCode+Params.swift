@@ -156,6 +156,10 @@ public struct PromotionCodeCreatePromotion: StripeParams {
     }
 }
 
+public enum PromotionCodeCreatePromotionType: String, Codable, Sendable {
+    case coupon
+}
+
 /// Settings that restrict the redemption of the promotion code.
 public struct PromotionCodeCreateRestrictions: StripeParams {
     /// Promotion codes defined in each available currency option. Each key must be a three-letter [ISO

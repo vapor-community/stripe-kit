@@ -183,3 +183,13 @@ public struct RefundUpdateParams: StripeParams {
         self.metadata = metadata
     }
 }
+
+public enum RefundCreateOrigin: String, Codable, Sendable {
+    case customerBalance = "customer_balance"
+}
+
+public enum RefundCreateReason: String, Codable, Sendable {
+    case duplicate
+    case fraudulent
+    case requestedByCustomer = "requested_by_customer"
+}

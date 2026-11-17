@@ -506,6 +506,65 @@ public struct CheckoutSessionCreateAfterExpirationRecovery: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreateAllowedPaymentMethodTypes: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case link
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
+}
+
 /// Settings for automatic tax lookup for this session and resulting payments, invoices, and
 /// subscriptions.
 public struct CheckoutSessionCreateAutomaticTax: StripeParams {
@@ -537,6 +596,16 @@ public struct CheckoutSessionCreateAutomaticTaxLiability: StripeParams {
         self.type = type
         self.account = account
     }
+}
+
+public enum CheckoutSessionCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
+public enum CheckoutSessionCreateBillingAddressCollection: String, Codable, Sendable {
+    case auto
+    case required
 }
 
 /// The branding settings for the Checkout Session. This parameter is not allowed if ui_mode is
@@ -580,6 +649,41 @@ public struct CheckoutSessionCreateBrandingSettings: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreateBrandingSettingsBorderStyle: String, Codable, Sendable {
+    case pill
+    case rectangular
+    case rounded
+}
+
+public enum CheckoutSessionCreateBrandingSettingsFontFamily: String, Codable, Sendable {
+    case beVietnamPro = "be_vietnam_pro"
+    case bitter
+    case chakraPetch = "chakra_petch"
+    case `default` = "default"
+    case hahmlet
+    case inconsolata
+    case inter
+    case lato
+    case lora
+    case mPlus1Code = "m_plus_1_code"
+    case montserrat
+    case notoSans = "noto_sans"
+    case notoSansJp = "noto_sans_jp"
+    case notoSerif = "noto_serif"
+    case nunito
+    case openSans = "open_sans"
+    case pridi
+    case ptSans = "pt_sans"
+    case ptSerif = "pt_serif"
+    case raleway
+    case roboto
+    case robotoSlab = "roboto_slab"
+    case sourceSansPro = "source_sans_pro"
+    case titilliumWeb = "titillium_web"
+    case ubuntuMono = "ubuntu_mono"
+    case zenMaruGothic = "zen_maru_gothic"
+}
+
 /// The icon for the Checkout Session. For best results, use a square image.
 public struct CheckoutSessionCreateBrandingSettingsIcon: StripeParams {
     /// The type of image for the icon. Must be one of `file` or `url`.
@@ -597,6 +701,11 @@ public struct CheckoutSessionCreateBrandingSettingsIcon: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreateBrandingSettingsIconType: String, Codable, Sendable {
+    case file
+    case url
+}
+
 /// The logo for the Checkout Session.
 public struct CheckoutSessionCreateBrandingSettingsLogo: StripeParams {
     /// The type of image for the logo. Must be one of `file` or `url`.
@@ -612,6 +721,11 @@ public struct CheckoutSessionCreateBrandingSettingsLogo: StripeParams {
         self.file = file
         self.url = url
     }
+}
+
+public enum CheckoutSessionCreateBrandingSettingsLogoType: String, Codable, Sendable {
+    case file
+    case url
 }
 
 /// Configure fields for the Checkout Session to gather active consent from customers.
@@ -655,6 +769,21 @@ public struct CheckoutSessionCreateConsentCollectionPaymentMethodReuseAgreement:
     }
 }
 
+public enum CheckoutSessionCreateConsentCollectionPaymentMethodReuseAgreementPosition: String, Codable, Sendable {
+    case auto
+    case hidden
+}
+
+public enum CheckoutSessionCreateConsentCollectionPromotions: String, Codable, Sendable {
+    case auto
+    case none
+}
+
+public enum CheckoutSessionCreateConsentCollectionTermsOfService: String, Codable, Sendable {
+    case none
+    case required
+}
+
 public struct CheckoutSessionCreateCustomFields: StripeParams {
     /// String of your choice that your integration can use to reconcile this field. Must be unique to this
     /// field, alphanumeric, and up to 200 characters.
@@ -695,6 +824,16 @@ public struct CheckoutSessionCreateCustomFieldsLabel: StripeParams {
         self.custom = custom
         self.type = type
     }
+}
+
+public enum CheckoutSessionCreateCustomFieldsLabelType: String, Codable, Sendable {
+    case custom
+}
+
+public enum CheckoutSessionCreateCustomFieldsType: String, Codable, Sendable {
+    case dropdown
+    case numeric
+    case text
 }
 
 /// Configuration for `type=dropdown` fields.
@@ -836,6 +975,11 @@ public struct CheckoutSessionCreateCustomTextTermsOfServiceAcceptance: StripePar
     }
 }
 
+public enum CheckoutSessionCreateCustomerCreation: String, Codable, Sendable {
+    case always
+    case ifRequired = "if_required"
+}
+
 /// Controls what fields on Customer can be updated by the Checkout Session. Can only be provided when
 /// `customer` is provided.
 public struct CheckoutSessionCreateCustomerUpdate: StripeParams {
@@ -855,6 +999,21 @@ public struct CheckoutSessionCreateCustomerUpdate: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreateCustomerUpdateAddress: String, Codable, Sendable {
+    case auto
+    case never
+}
+
+public enum CheckoutSessionCreateCustomerUpdateName: String, Codable, Sendable {
+    case auto
+    case never
+}
+
+public enum CheckoutSessionCreateCustomerUpdateShipping: String, Codable, Sendable {
+    case auto
+    case never
+}
+
 public struct CheckoutSessionCreateDiscounts: StripeParams {
     /// The ID of the coupon to apply to this Session.
     public var coupon: String?
@@ -870,6 +1029,64 @@ public struct CheckoutSessionCreateDiscounts: StripeParams {
         case coupon
         case promotionCode = "promotion_code"
     }
+}
+
+public enum CheckoutSessionCreateExcludedPaymentMethodTypes: String, Codable, Sendable {
+    case acssDebit = "acss_debit"
+    case affirm
+    case afterpayClearpay = "afterpay_clearpay"
+    case alipay
+    case alma
+    case amazonPay = "amazon_pay"
+    case auBecsDebit = "au_becs_debit"
+    case bacsDebit = "bacs_debit"
+    case bancontact
+    case billie
+    case bizum
+    case blik
+    case boleto
+    case card
+    case cashapp
+    case crypto
+    case customerBalance = "customer_balance"
+    case eps
+    case fpx
+    case giropay
+    case grabpay
+    case ideal
+    case kakaoPay = "kakao_pay"
+    case klarna
+    case konbini
+    case krCard = "kr_card"
+    case mbWay = "mb_way"
+    case mobilepay
+    case multibanco
+    case naverPay = "naver_pay"
+    case nzBankAccount = "nz_bank_account"
+    case oxxo
+    case p24
+    case payByBank = "pay_by_bank"
+    case payco
+    case paynow
+    case paypal
+    case paypay
+    case payto
+    case pix
+    case promptpay
+    case revolutPay = "revolut_pay"
+    case samsungPay = "samsung_pay"
+    case satispay
+    case scalapay
+    case sepaDebit = "sepa_debit"
+    case sequra
+    case sofort
+    case sunbit
+    case swish
+    case twint
+    case upi
+    case usBankAccount = "us_bank_account"
+    case wechatPay = "wechat_pay"
+    case zip
 }
 
 /// Generate a post-purchase Invoice for one-time payments.
@@ -958,6 +1175,11 @@ public struct CheckoutSessionCreateInvoiceCreationInvoiceDataIssuer: StripeParam
     }
 }
 
+public enum CheckoutSessionCreateInvoiceCreationInvoiceDataIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
 public struct CheckoutSessionCreateInvoiceCreationInvoiceDataRenderingOptions: StripeParams {
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of
     /// `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and
@@ -976,6 +1198,11 @@ public struct CheckoutSessionCreateInvoiceCreationInvoiceDataRenderingOptions: S
         case amountTaxDisplay = "amount_tax_display"
         case template
     }
+}
+
+public enum CheckoutSessionCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
+    case excludeTax = "exclude_tax"
+    case includeInclusiveTax = "include_inclusive_tax"
 }
 
 public struct CheckoutSessionCreateLineItems: StripeParams {
@@ -1176,6 +1403,64 @@ public struct CheckoutSessionCreateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum CheckoutSessionCreateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum CheckoutSessionCreateLocale: String, Codable, Sendable {
+    case auto
+    case bg
+    case cs
+    case da
+    case de
+    case el
+    case en
+    case enGb = "en-GB"
+    case es
+    case es419 = "es-419"
+    case et
+    case fi
+    case fil
+    case fr
+    case frCa = "fr-CA"
+    case hiIn = "hi-IN"
+    case hr
+    case hu
+    case id
+    case it
+    case ja
+    case ko
+    case lt
+    case lv
+    case ms
+    case mt
+    case nb
+    case nl
+    case pl
+    case pt
+    case ptBr = "pt-BR"
+    case ro
+    case ru
+    case sk
+    case sl
+    case sv
+    case th
+    case tr
+    case vi
+    case zh
+    case zhHk = "zh-HK"
+    case zhTw = "zh-TW"
+}
+
 /// Settings for Managed Payments for this Checkout Session and resulting
 /// [PaymentIntents](/api/payment_intents/object), [Invoices](/api/invoices/object), and
 /// [Subscriptions](/api/subscriptions/object).
@@ -1187,6 +1472,12 @@ public struct CheckoutSessionCreateManagedPayments: StripeParams {
     public init(enabled: Bool? = nil) {
         self.enabled = enabled
     }
+}
+
+public enum CheckoutSessionCreateMode: String, Codable, Sendable {
+    case payment
+    case setup
+    case subscription
 }
 
 /// Controls name collection settings for the session. You can configure Checkout to collect your
@@ -1275,6 +1566,11 @@ public struct CheckoutSessionCreateOptionalItemsAdjustableQuantity: StripeParams
         self.maximum = maximum
         self.minimum = minimum
     }
+}
+
+public enum CheckoutSessionCreateOriginContext: String, Codable, Sendable {
+    case mobileApp = "mobile_app"
+    case web
 }
 
 /// A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment`
@@ -1366,6 +1662,17 @@ public struct CheckoutSessionCreatePaymentIntentData: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentIntentDataCaptureMethod: String, Codable, Sendable {
+    case automatic
+    case automaticAsync = "automatic_async"
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentIntentDataSetupFutureUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 /// Shipping information for this payment.
 public struct CheckoutSessionCreatePaymentIntentDataShipping: StripeParams {
     /// Shipping address.
@@ -1448,6 +1755,11 @@ public struct CheckoutSessionCreatePaymentIntentDataTransferData: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodCollection: String, Codable, Sendable {
+    case always
+    case ifRequired = "if_required"
+}
+
 /// This parameter allows you to set some attributes on the payment method created during a Checkout
 /// session.
 public struct CheckoutSessionCreatePaymentMethodData: StripeParams {
@@ -1463,6 +1775,12 @@ public struct CheckoutSessionCreatePaymentMethodData: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case allowRedisplay = "allow_redisplay"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodDataAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
 }
 
 /// Payment-method-specific configuration.
@@ -1725,6 +2043,11 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebit: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitCurrency: String, Codable, Sendable {
+    case cad
+    case usd
+}
+
 /// Additional fields for Mandate creation
 public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptions: StripeParams {
     /// A URL for custom mandate text to render during confirmation step. The URL will be rendered with
@@ -1759,6 +2082,34 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptions: 
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptionsDefaultFor: String, Codable, Sendable {
+    case invoice
+    case subscription
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case combined
+    case interval
+    case sporadic
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
+    case business
+    case personal
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+    case microdeposits
+}
+
 /// contains details about the Affirm payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsAffirm: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
@@ -1785,6 +2136,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAffirm: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAffirmCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAffirmSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the Afterpay Clearpay payment method options.
@@ -1815,6 +2174,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAfterpayClearpay: StripeP
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsAfterpayClearpayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAfterpayClearpaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// contains details about the Alipay payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsAlipay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -1839,6 +2206,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAlipay: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsAlipaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// contains details about the Alma payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsAlma: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
@@ -1851,6 +2222,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAlma: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAlmaCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 /// contains details about the AmazonPay payment method options.
@@ -1881,6 +2256,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAmazonPay: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsAmazonPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAmazonPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 /// contains details about the AU Becs Debit payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsAuBecsDebit: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -1909,6 +2293,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAuBecsDebit: StripeParams
         case setupFutureUsage = "setup_future_usage"
         case targetDate = "target_date"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsAuBecsDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the Bacs Debit payment method options.
@@ -1961,6 +2349,12 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBacsDebitMandateOptions: 
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsBacsDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 /// contains details about the Bancontact payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsBancontact: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -1985,6 +2379,11 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBancontact: StripeParams 
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsBancontactSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 /// contains details about the Billie payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsBillie: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
@@ -1997,6 +2396,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBillie: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsBillieCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 /// contains details about the BLIK payment method options.
@@ -2031,6 +2434,11 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBlikMandateOptions: Strip
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsBlikSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 /// contains details about the Boleto payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsBoleto: StripeParams {
     /// The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto
@@ -2059,6 +2467,12 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBoleto: StripeParams {
         case expiresAfterDays = "expires_after_days"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsBoletoSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 /// contains details about the Card payment method options.
@@ -2142,6 +2556,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCard: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsCardCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
 /// Installment options for card payments
 public struct CheckoutSessionCreatePaymentMethodOptionsCardInstallments: StripeParams {
     /// Setting to true enables installments for this Checkout Session. Setting to false will prevent any
@@ -2151,6 +2569,32 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCardInstallments: StripeP
     public init(enabled: Bool? = nil) {
         self.enabled = enabled
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestExtendedAuthorization: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestIncrementalAuthorization: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestMulticapture: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestOvercapture: String, Codable, Sendable {
+    case ifAvailable = "if_available"
+    case never
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
+    case any
+    case automatic
+    case challenge
 }
 
 /// Restrictions to apply to the card payment method. For example, you can block specific card brands.
@@ -2172,6 +2616,24 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCardRestrictions: StripeP
         case brandsBlocked = "brands_blocked"
         case fundingTypesBlocked = "funding_types_blocked"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked: String, Codable, Sendable {
+    case americanExpress = "american_express"
+    case discoverGlobalNetwork = "discover_global_network"
+    case mastercard
+    case visa
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCardRestrictionsFundingTypesBlocked: String, Codable, Sendable {
+    case credit
+    case debit
+    case prepaid
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCardSetupFutureUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 /// contains details about the Cashapp Pay payment method options.
@@ -2202,6 +2664,16 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCashapp: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsCashappCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCashappSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 /// contains details about the Crypto payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsCrypto: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -2224,6 +2696,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCrypto: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCryptoSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the Customer Balance payment method options.
@@ -2283,6 +2759,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransf
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransferType: String, Codable, Sendable {
+    case euBankTransfer = "eu_bank_transfer"
+    case gbBankTransfer = "gb_bank_transfer"
+    case jpBankTransfer = "jp_bank_transfer"
+    case mxBankTransfer = "mx_bank_transfer"
+    case usBankTransfer = "us_bank_transfer"
+}
+
 /// Configuration for eu_bank_transfer funding type.
 public struct CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer: StripeParams {
     /// The desired country code of the bank account information. Permitted values include: `DE`, `FR`,
@@ -2292,6 +2776,24 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransf
     public init(country: String) {
         self.country = country
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransferRequestedAddressTypes: String, Codable, Sendable {
+    case aba
+    case iban
+    case sepa
+    case sortCode = "sort_code"
+    case spei
+    case swift
+    case zengin
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceFundingType: String, Codable, Sendable {
+    case bankTransfer = "bank_transfer"
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the DemoPay payment method options.
@@ -2318,6 +2820,11 @@ public struct CheckoutSessionCreatePaymentMethodOptionsDemoPay: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsDemoPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 /// contains details about the EPS payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsEps: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -2340,6 +2847,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsEps: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsEpsSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the FPX payment method options.
@@ -2366,6 +2877,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsFpx: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsFpxSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// contains details about the Giropay payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsGiropay: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -2388,6 +2903,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsGiropay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsGiropaySetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the Grabpay payment method options.
@@ -2414,6 +2933,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsGrabpay: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsGrabpaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// contains details about the Ideal payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsIdeal: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -2436,6 +2959,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsIdeal: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsIdealSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the Kakao Pay payment method options.
@@ -2464,6 +2991,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKakaoPay: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsKakaoPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsKakaoPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 /// contains details about the Klarna payment method options.
@@ -2498,6 +3034,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKlarna: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsKlarnaCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsKlarnaSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 public struct CheckoutSessionCreatePaymentMethodOptionsKlarnaSubscriptions: StripeParams {
     /// Unit of time between subscription charges.
     public var interval: CheckoutSessionCreatePaymentMethodOptionsKlarnaSubscriptionsInterval
@@ -2527,6 +3071,13 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKlarnaSubscriptions: Stri
         case nextBilling = "next_billing"
         case reference
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsKlarnaSubscriptionsInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
 }
 
 /// Describes the upcoming charge for this subscription.
@@ -2572,6 +3123,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKonbini: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsKonbiniSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// contains details about the Korean card payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsKrCard: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
@@ -2598,6 +3153,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKrCard: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsKrCardCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsKrCardSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 /// contains details about the Link payment method options (Link is also known as Onelink in the UK).
@@ -2628,6 +3192,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsLink: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsLinkCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsLinkSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 /// contains details about the Mobilepay payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsMobilepay: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
@@ -2656,6 +3229,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsMobilepay: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsMobilepayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsMobilepaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// contains details about the Multibanco payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsMultibanco: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -2678,6 +3259,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsMultibanco: StripeParams 
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsMultibancoSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the Naver Pay payment method options.
@@ -2706,6 +3291,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsNaverPay: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsNaverPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsNaverPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 /// contains details about the OXXO payment method options.
@@ -2738,6 +3332,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsOxxo: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsOxxoSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// contains details about the P24 payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsP24: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -2764,6 +3362,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsP24: StripeParams {
         case setupFutureUsage = "setup_future_usage"
         case tosShownAndAccepted = "tos_shown_and_accepted"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsP24SetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the PAYCO payment method options.
@@ -2794,6 +3396,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPayco: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsPaycoCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPaycoSetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// contains details about the PayNow payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsPaynow: StripeParams {
     /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -2816,6 +3426,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPaynow: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPaynowSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the PayPal payment method options.
@@ -2861,6 +3475,39 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPaypal: StripeParams {
         case riskCorrelationId = "risk_correlation_id"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPaypalCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPaypalPreferredLocale: String, Codable, Sendable {
+    case csCz = "cs-CZ"
+    case daDk = "da-DK"
+    case deAt = "de-AT"
+    case deDe = "de-DE"
+    case deLu = "de-LU"
+    case elGr = "el-GR"
+    case enGb = "en-GB"
+    case enUs = "en-US"
+    case esEs = "es-ES"
+    case fiFi = "fi-FI"
+    case frBe = "fr-BE"
+    case frFr = "fr-FR"
+    case frLu = "fr-LU"
+    case huHu = "hu-HU"
+    case itIt = "it-IT"
+    case nlBe = "nl-BE"
+    case nlNl = "nl-NL"
+    case plPl = "pl-PL"
+    case ptPt = "pt-PT"
+    case skSk = "sk-SK"
+    case svSe = "sv-SE"
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPaypalSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 /// contains details about the PayTo payment method options.
@@ -2931,6 +3578,41 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptions: Stri
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case adhoc
+    case annual
+    case daily
+    case fortnightly
+    case monthly
+    case quarterly
+    case semiAnnual = "semi_annual"
+    case weekly
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
+    case dependantSupport = "dependant_support"
+    case government
+    case loan
+    case mortgage
+    case other
+    case pension
+    case personal
+    case retail
+    case salary
+    case tax
+    case utility
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPaytoSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 /// contains details about the Pix payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsPix: StripeParams {
     /// Determines if the amount includes the IOF tax. Defaults to `never`.
@@ -2966,6 +3648,11 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPix: StripeParams {
         case mandateOptions = "mandate_options"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
 }
 
 /// Additional fields for mandate creation.
@@ -3015,6 +3702,29 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPixMandateOptions: Stripe
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof: String, Codable, Sendable {
+    case always
+    case never
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPixMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPixMandateOptionsPaymentSchedule: String, Codable, Sendable {
+    case halfyearly
+    case monthly
+    case quarterly
+    case weekly
+    case yearly
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsPixSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+}
+
 /// contains details about the RevolutPay payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsRevolutPay: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
@@ -3041,6 +3751,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsRevolutPay: StripeParams 
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsRevolutPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsRevolutPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 /// contains details about the Samsung Pay payment method options.
@@ -3071,6 +3790,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSamsungPay: StripeParams 
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsSamsungPayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsSamsungPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// contains details about the Satispay payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsSatispay: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
@@ -3085,6 +3812,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSatispay: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsSatispayCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
 /// contains details about the Scalapay payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsScalapay: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
@@ -3097,6 +3828,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsScalapay: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsScalapayCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 /// contains details about the Sepa Debit payment method options.
@@ -3149,6 +3884,12 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSepaDebitMandateOptions: 
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsSepaDebitSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
 /// contains details about the SeQura payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsSequra: StripeParams {
     /// Controls when the funds will be captured from the customer's account.
@@ -3161,6 +3902,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSequra: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case captureMethod = "capture_method"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsSequraCaptureMethod: String, Codable, Sendable {
+    case manual
 }
 
 /// contains details about the Sofort payment method options.
@@ -3185,6 +3930,10 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSofort: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsSofortSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the Sunbit payment method options.
@@ -3213,6 +3962,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSunbit: StripeParams {
         case captureMethod = "capture_method"
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsSunbitCaptureMethod: String, Codable, Sendable {
+    case manual
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsSunbitSetupFutureUsage: String, Codable, Sendable {
+    case none
 }
 
 /// contains details about the Swish payment method options.
@@ -3248,6 +4005,11 @@ public struct CheckoutSessionCreatePaymentMethodOptionsTwint: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case setupFutureUsage = "setup_future_usage"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsTwintSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
 }
 
 /// contains details about the UPI payment method options.
@@ -3293,6 +4055,17 @@ public struct CheckoutSessionCreatePaymentMethodOptionsUpiMandateOptions: Stripe
         case description
         case endDate = "end_date"
     }
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
+    case fixed
+    case maximum
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsUpiSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 /// contains details about the Us Bank Account payment method options.
@@ -3348,6 +4121,30 @@ public struct CheckoutSessionCreatePaymentMethodOptionsUsBankAccountFinancialCon
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
+    case balances
+    case ownership
+    case paymentMethod = "payment_method"
+    case transactions
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
+    case balances
+    case ownership
+    case transactions
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsUsBankAccountSetupFutureUsage: String, Codable, Sendable {
+    case none
+    case offSession = "off_session"
+    case onSession = "on_session"
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
+    case automatic
+    case instant
+}
+
 /// contains details about the WeChat Pay payment method options.
 public struct CheckoutSessionCreatePaymentMethodOptionsWechatPay: StripeParams {
     /// The client type that the end customer will pay from
@@ -3380,6 +4177,16 @@ public struct CheckoutSessionCreatePaymentMethodOptionsWechatPay: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePaymentMethodOptionsWechatPayClient: String, Codable, Sendable {
+    case android
+    case ios
+    case web
+}
+
+public enum CheckoutSessionCreatePaymentMethodOptionsWechatPaySetupFutureUsage: String, Codable, Sendable {
+    case none
+}
+
 /// This property is used to set up permissions for various actions (for example, update) on the
 /// CheckoutSession object. Can only be set when creating `embedded_page` or `elements` sessions. For
 /// specific permissions, please refer to their dedicated subsections, such as
@@ -3400,6 +4207,11 @@ public struct CheckoutSessionCreatePermissions: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreatePermissionsUpdateShippingDetails: String, Codable, Sendable {
+    case clientOnly = "client_only"
+    case serverOnly = "server_only"
+}
+
 /// Controls phone number collection settings for the session. We recommend that you review your privacy
 /// policy and check with your legal contacts before using this feature. Learn more about [collecting
 /// phone numbers with Checkout](https://docs.stripe.com/payments/checkout/phone-numbers).
@@ -3411,6 +4223,12 @@ public struct CheckoutSessionCreatePhoneNumberCollection: StripeParams {
     public init(enabled: Bool) {
         self.enabled = enabled
     }
+}
+
+public enum CheckoutSessionCreateRedirectOnCompletion: String, Codable, Sendable {
+    case always
+    case ifRequired = "if_required"
+    case never
 }
 
 /// Controls saved payment method settings for the session. Only available in `payment` and
@@ -3437,6 +4255,22 @@ public struct CheckoutSessionCreateSavedPaymentMethodOptions: StripeParams {
         case paymentMethodRemove = "payment_method_remove"
         case paymentMethodSave = "payment_method_save"
     }
+}
+
+public enum CheckoutSessionCreateSavedPaymentMethodOptionsAllowRedisplayFilters: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
+}
+
+public enum CheckoutSessionCreateSavedPaymentMethodOptionsPaymentMethodRemove: String, Codable, Sendable {
+    case disabled
+    case enabled
+}
+
+public enum CheckoutSessionCreateSavedPaymentMethodOptionsPaymentMethodSave: String, Codable, Sendable {
+    case disabled
+    case enabled
 }
 
 /// A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
@@ -3477,6 +4311,247 @@ public struct CheckoutSessionCreateShippingAddressCollection: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case allowedCountries = "allowed_countries"
     }
+}
+
+public enum CheckoutSessionCreateShippingAddressCollectionAllowedCountries: String, Codable, Sendable {
+    case ac = "AC"
+    case ad = "AD"
+    case ae = "AE"
+    case af = "AF"
+    case ag = "AG"
+    case ai = "AI"
+    case al = "AL"
+    case am = "AM"
+    case ao = "AO"
+    case aq = "AQ"
+    case ar = "AR"
+    case at = "AT"
+    case au = "AU"
+    case aw = "AW"
+    case ax = "AX"
+    case az = "AZ"
+    case ba = "BA"
+    case bb = "BB"
+    case bd = "BD"
+    case be = "BE"
+    case bf = "BF"
+    case bg = "BG"
+    case bh = "BH"
+    case bi = "BI"
+    case bj = "BJ"
+    case bl = "BL"
+    case bm = "BM"
+    case bn = "BN"
+    case bo = "BO"
+    case bq = "BQ"
+    case br = "BR"
+    case bs = "BS"
+    case bt = "BT"
+    case bv = "BV"
+    case bw = "BW"
+    case by = "BY"
+    case bz = "BZ"
+    case ca = "CA"
+    case cd = "CD"
+    case cf = "CF"
+    case cg = "CG"
+    case ch = "CH"
+    case ci = "CI"
+    case ck = "CK"
+    case cl = "CL"
+    case cm = "CM"
+    case cn = "CN"
+    case co = "CO"
+    case cr = "CR"
+    case cv = "CV"
+    case cw = "CW"
+    case cy = "CY"
+    case cz = "CZ"
+    case de = "DE"
+    case dj = "DJ"
+    case dk = "DK"
+    case dm = "DM"
+    case `do` = "DO"
+    case dz = "DZ"
+    case ec = "EC"
+    case ee = "EE"
+    case eg = "EG"
+    case eh = "EH"
+    case er = "ER"
+    case es = "ES"
+    case et = "ET"
+    case fi = "FI"
+    case fj = "FJ"
+    case fk = "FK"
+    case fo = "FO"
+    case fr = "FR"
+    case ga = "GA"
+    case gb = "GB"
+    case gd = "GD"
+    case ge = "GE"
+    case gf = "GF"
+    case gg = "GG"
+    case gh = "GH"
+    case gi = "GI"
+    case gl = "GL"
+    case gm = "GM"
+    case gn = "GN"
+    case gp = "GP"
+    case gq = "GQ"
+    case gr = "GR"
+    case gs = "GS"
+    case gt = "GT"
+    case gu = "GU"
+    case gw = "GW"
+    case gy = "GY"
+    case hk = "HK"
+    case hn = "HN"
+    case hr = "HR"
+    case ht = "HT"
+    case hu = "HU"
+    case id = "ID"
+    case ie = "IE"
+    case il = "IL"
+    case im = "IM"
+    case `in` = "IN"
+    case io = "IO"
+    case iq = "IQ"
+    case `is` = "IS"
+    case it = "IT"
+    case je = "JE"
+    case jm = "JM"
+    case jo = "JO"
+    case jp = "JP"
+    case ke = "KE"
+    case kg = "KG"
+    case kh = "KH"
+    case ki = "KI"
+    case km = "KM"
+    case kn = "KN"
+    case kr = "KR"
+    case kw = "KW"
+    case ky = "KY"
+    case kz = "KZ"
+    case la = "LA"
+    case lb = "LB"
+    case lc = "LC"
+    case li = "LI"
+    case lk = "LK"
+    case lr = "LR"
+    case ls = "LS"
+    case lt = "LT"
+    case lu = "LU"
+    case lv = "LV"
+    case ly = "LY"
+    case ma = "MA"
+    case mc = "MC"
+    case md = "MD"
+    case me = "ME"
+    case mf = "MF"
+    case mg = "MG"
+    case mk = "MK"
+    case ml = "ML"
+    case mm = "MM"
+    case mn = "MN"
+    case mo = "MO"
+    case mq = "MQ"
+    case mr = "MR"
+    case ms = "MS"
+    case mt = "MT"
+    case mu = "MU"
+    case mv = "MV"
+    case mw = "MW"
+    case mx = "MX"
+    case my = "MY"
+    case mz = "MZ"
+    case na = "NA"
+    case nc = "NC"
+    case ne = "NE"
+    case ng = "NG"
+    case ni = "NI"
+    case nl = "NL"
+    case no = "NO"
+    case np = "NP"
+    case nr = "NR"
+    case nu = "NU"
+    case nz = "NZ"
+    case om = "OM"
+    case pa = "PA"
+    case pe = "PE"
+    case pf = "PF"
+    case pg = "PG"
+    case ph = "PH"
+    case pk = "PK"
+    case pl = "PL"
+    case pm = "PM"
+    case pn = "PN"
+    case pr = "PR"
+    case ps = "PS"
+    case pt = "PT"
+    case py = "PY"
+    case qa = "QA"
+    case re = "RE"
+    case ro = "RO"
+    case rs = "RS"
+    case ru = "RU"
+    case rw = "RW"
+    case sa = "SA"
+    case sb = "SB"
+    case sc = "SC"
+    case sd = "SD"
+    case se = "SE"
+    case sg = "SG"
+    case sh = "SH"
+    case si = "SI"
+    case sj = "SJ"
+    case sk = "SK"
+    case sl = "SL"
+    case sm = "SM"
+    case sn = "SN"
+    case so = "SO"
+    case sr = "SR"
+    case ss = "SS"
+    case st = "ST"
+    case sv = "SV"
+    case sx = "SX"
+    case sz = "SZ"
+    case ta = "TA"
+    case tc = "TC"
+    case td = "TD"
+    case tf = "TF"
+    case tg = "TG"
+    case th = "TH"
+    case tj = "TJ"
+    case tk = "TK"
+    case tl = "TL"
+    case tm = "TM"
+    case tn = "TN"
+    case to = "TO"
+    case tr = "TR"
+    case tt = "TT"
+    case tv = "TV"
+    case tw = "TW"
+    case tz = "TZ"
+    case ua = "UA"
+    case ug = "UG"
+    case us = "US"
+    case uy = "UY"
+    case uz = "UZ"
+    case va = "VA"
+    case vc = "VC"
+    case ve = "VE"
+    case vg = "VG"
+    case vn = "VN"
+    case vu = "VU"
+    case wf = "WF"
+    case ws = "WS"
+    case xk = "XK"
+    case ye = "YE"
+    case yt = "YT"
+    case za = "ZA"
+    case zm = "ZM"
+    case zw = "ZW"
+    case zz = "ZZ"
 }
 
 public struct CheckoutSessionCreateShippingOptions: StripeParams {
@@ -3568,6 +4643,14 @@ public struct CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstima
     }
 }
 
+public enum CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstimateMaximumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
+}
+
 /// The lower bound of the estimated range. If empty, represents no lower bound.
 public struct CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstimateMinimum: StripeParams {
     /// A unit of time.
@@ -3579,6 +4662,14 @@ public struct CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstima
         self.unit = unit
         self.value = value
     }
+}
+
+public enum CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstimateMinimumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -3622,6 +4713,30 @@ public struct CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCur
         case amount
         case taxBehavior = "tax_behavior"
     }
+}
+
+public enum CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum CheckoutSessionCreateShippingOptionsShippingRateDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum CheckoutSessionCreateShippingOptionsShippingRateDataType: String, Codable, Sendable {
+    case fixedAmount = "fixed_amount"
+}
+
+public enum CheckoutSessionCreateSubmitType: String, Codable, Sendable {
+    case auto
+    case book
+    case donate
+    case pay
+    case subscribe
 }
 
 /// A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription`
@@ -3758,6 +4873,11 @@ public struct CheckoutSessionCreateSubscriptionDataBillingMode: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreateSubscriptionDataBillingModeType: String, Codable, Sendable {
+    case classic
+    case flexible
+}
+
 /// Configure behavior for flexible billing mode.
 public struct CheckoutSessionCreateSubscriptionDataBillingModeFlexible: StripeParams {
     /// Controls how invoices and invoice items display proration amounts and discount amounts.
@@ -3770,6 +4890,11 @@ public struct CheckoutSessionCreateSubscriptionDataBillingModeFlexible: StripePa
     public enum CodingKeys: String, CodingKey {
         case prorationDiscounts = "proration_discounts"
     }
+}
+
+public enum CheckoutSessionCreateSubscriptionDataBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
+    case included
+    case itemized
 }
 
 /// All invoices will be billed using the specified settings.
@@ -3830,6 +4955,11 @@ public struct CheckoutSessionCreateSubscriptionDataInvoiceSettingsIssuer: Stripe
     }
 }
 
+public enum CheckoutSessionCreateSubscriptionDataInvoiceSettingsIssuerType: String, Codable, Sendable {
+    case account
+    case `self` = "self"
+}
+
 /// Specifies an interval for how often to bill for any pending invoice items. It is analogous to
 /// calling [Create an invoice](https://docs.stripe.com/api#create_invoice) for the given subscription
 /// at the specified interval.
@@ -3849,6 +4979,18 @@ public struct CheckoutSessionCreateSubscriptionDataPendingInvoiceItemInterval: S
         case interval
         case intervalCount = "interval_count"
     }
+}
+
+public enum CheckoutSessionCreateSubscriptionDataPendingInvoiceItemIntervalInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum CheckoutSessionCreateSubscriptionDataProrationBehavior: String, Codable, Sendable {
+    case createProrations = "create_prorations"
+    case none
 }
 
 /// If specified, the funds from the subscription's invoices will be transferred to the destination and
@@ -3901,6 +5043,12 @@ public struct CheckoutSessionCreateSubscriptionDataTrialSettingsEndBehavior: Str
     }
 }
 
+public enum CheckoutSessionCreateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
+    case cancel
+    case createInvoice = "create_invoice"
+    case pause
+}
+
 /// Controls tax ID collection during checkout.
 public struct CheckoutSessionCreateTaxIdCollection: StripeParams {
     /// Enable tax ID collection during checkout. Defaults to `false`.
@@ -3913,6 +5061,18 @@ public struct CheckoutSessionCreateTaxIdCollection: StripeParams {
         self.enabled = enabled
         self.required = required
     }
+}
+
+public enum CheckoutSessionCreateTaxIdCollectionRequired: String, Codable, Sendable {
+    case ifSupported = "if_supported"
+    case never
+}
+
+public enum CheckoutSessionCreateUiMode: String, Codable, Sendable {
+    case elements
+    case embeddedPage = "embedded_page"
+    case form
+    case hostedPage = "hosted_page"
 }
 
 /// Wallet-specific configuration.
@@ -3937,6 +5097,11 @@ public struct CheckoutSessionCreateWalletOptionsLink: StripeParams {
     }
 }
 
+public enum CheckoutSessionCreateWalletOptionsLinkDisplay: String, Codable, Sendable {
+    case auto
+    case never
+}
+
 /// Only return the Checkout Sessions for the Customer details specified.
 public struct CheckoutSessionListCustomerDetails: StripeParams {
     /// Customer's email address.
@@ -3945,6 +5110,12 @@ public struct CheckoutSessionListCustomerDetails: StripeParams {
     public init(email: String) {
         self.email = email
     }
+}
+
+public enum CheckoutSessionListStatus: String, Codable, Sendable {
+    case complete
+    case expired
+    case `open` = "open"
 }
 
 /// Information about the customer collected within the Checkout Session. Can only be set when updating
@@ -4212,6 +5383,19 @@ public struct CheckoutSessionUpdateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
+public enum CheckoutSessionUpdateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
+    case day
+    case month
+    case week
+    case year
+}
+
+public enum CheckoutSessionUpdateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
 /// A subset of parameters to apply to the PaymentIntent for Checkout Sessions in `payment` mode. You
 /// can only update these parameters when `ui_mode` is `elements` and while the session is active. If
 /// the PaymentIntent requires customer action or confirmation, updating these parameters abandons the
@@ -4271,6 +5455,11 @@ public struct CheckoutSessionUpdatePaymentIntentData: StripeParams {
         case statementDescriptor = "statement_descriptor"
         case statementDescriptorSuffix = "statement_descriptor_suffix"
     }
+}
+
+public enum CheckoutSessionUpdatePaymentIntentDataSetupFutureUsage: String, Codable, Sendable {
+    case offSession = "off_session"
+    case onSession = "on_session"
 }
 
 public struct CheckoutSessionUpdateShippingOptions: StripeParams {
@@ -4362,6 +5551,14 @@ public struct CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstima
     }
 }
 
+public enum CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstimateMaximumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
+}
+
 /// The lower bound of the estimated range. If empty, represents no lower bound.
 public struct CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstimateMinimum: StripeParams {
     /// A unit of time.
@@ -4373,6 +5570,14 @@ public struct CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstima
         self.unit = unit
         self.value = value
     }
+}
+
+public enum CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstimateMinimumUnit: String, Codable, Sendable {
+    case businessDay = "business_day"
+    case day
+    case hour
+    case month
+    case week
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -4416,4 +5621,20 @@ public struct CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCur
         case amount
         case taxBehavior = "tax_behavior"
     }
+}
+
+public enum CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum CheckoutSessionUpdateShippingOptionsShippingRateDataTaxBehavior: String, Codable, Sendable {
+    case exclusive
+    case inclusive
+    case unspecified
+}
+
+public enum CheckoutSessionUpdateShippingOptionsShippingRateDataType: String, Codable, Sendable {
+    case fixedAmount = "fixed_amount"
 }

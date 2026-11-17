@@ -895,6 +895,12 @@ public struct PaymentMethodConfigurationCreateAcssDebitDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationCreateAcssDebitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// [Affirm](https://www.affirm.com/) gives your customers a way to split purchases over a series of
 /// payments. Depending on the purchase, they can pay with four interest-free payments (Split Pay) or
 /// pay over a longer term (Installments), which might include interest. Check this
@@ -920,6 +926,12 @@ public struct PaymentMethodConfigurationCreateAffirmDisplayPreference: StripePar
     public init(preference: PaymentMethodConfigurationCreateAffirmDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateAffirmDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Afterpay gives your customers a way to pay for purchases in installments, check this
@@ -949,6 +961,12 @@ public struct PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreference:
     }
 }
 
+public enum PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Alipay is a digital wallet in China that has more than a billion active users worldwide. Alipay
 /// users can pay on the web or on a mobile device using login credentials or their Alipay app. Alipay
 /// has a low dispute rate and reduces fraud by authenticating payments using the customer's login
@@ -976,6 +994,12 @@ public struct PaymentMethodConfigurationCreateAlipayDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationCreateAlipayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4
 /// installments.
 public struct PaymentMethodConfigurationCreateAlma: StripeParams {
@@ -1001,6 +1025,12 @@ public struct PaymentMethodConfigurationCreateAlmaDisplayPreference: StripeParam
     }
 }
 
+public enum PaymentMethodConfigurationCreateAlmaDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
 public struct PaymentMethodConfigurationCreateAmazonPay: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -1023,6 +1053,12 @@ public struct PaymentMethodConfigurationCreateAmazonPayDisplayPreference: Stripe
     public init(preference: PaymentMethodConfigurationCreateAmazonPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateAmazonPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in
@@ -1053,6 +1089,12 @@ public struct PaymentMethodConfigurationCreateApplePayDisplayPreference: StripeP
     }
 }
 
+public enum PaymentMethodConfigurationCreateApplePayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Apple Pay Later, a payment method for customers to buy now and pay later, gives your customers a way
 /// to split purchases into four installments across six weeks.
 public struct PaymentMethodConfigurationCreateApplePayLater: StripeParams {
@@ -1076,6 +1118,12 @@ public struct PaymentMethodConfigurationCreateApplePayLaterDisplayPreference: St
     public init(preference: PaymentMethodConfigurationCreateApplePayLaterDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateApplePayLaterDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments
@@ -1104,6 +1152,12 @@ public struct PaymentMethodConfigurationCreateAuBecsDebitDisplayPreference: Stri
     }
 }
 
+public enum PaymentMethodConfigurationCreateAuBecsDebitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account,
 /// check this [page](https://docs.stripe.com/payments/payment-methods/bacs-debit) for more details.
 public struct PaymentMethodConfigurationCreateBacsDebit: StripeParams {
@@ -1127,6 +1181,12 @@ public struct PaymentMethodConfigurationCreateBacsDebitDisplayPreference: Stripe
     public init(preference: PaymentMethodConfigurationCreateBacsDebitDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateBacsDebitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Bancontact is the most popular online payment method in Belgium, with over 15 million cards in
@@ -1154,6 +1214,12 @@ public struct PaymentMethodConfigurationCreateBancontactDisplayPreference: Strip
     public init(preference: PaymentMethodConfigurationCreateBancontactDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateBancontactDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -1184,6 +1250,12 @@ public struct PaymentMethodConfigurationCreateBillieDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationCreateBillieDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking
 /// app, they can enable Bizum and link their mobile number to their IBAN.
 public struct PaymentMethodConfigurationCreateBizum: StripeParams {
@@ -1207,6 +1279,12 @@ public struct PaymentMethodConfigurationCreateBizumDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationCreateBizumDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateBizumDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -1236,6 +1314,12 @@ public struct PaymentMethodConfigurationCreateBlikDisplayPreference: StripeParam
     }
 }
 
+public enum PaymentMethodConfigurationCreateBlikDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Boleto is an official (regulated by the Central Bank of Brazil) payment method in Brazil. Check this
 /// [page](https://docs.stripe.com/payments/boleto) for more details.
 public struct PaymentMethodConfigurationCreateBoleto: StripeParams {
@@ -1261,6 +1345,12 @@ public struct PaymentMethodConfigurationCreateBoletoDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationCreateBoletoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Cards are a popular way for consumers and businesses to pay online or in person. Stripe supports
 /// global and local card networks.
 public struct PaymentMethodConfigurationCreateCard: StripeParams {
@@ -1284,6 +1374,12 @@ public struct PaymentMethodConfigurationCreateCardDisplayPreference: StripeParam
     public init(preference: PaymentMethodConfigurationCreateCardDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateCardDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Cartes Bancaires is France's local card network. More than 95% of these cards are co-branded with
@@ -1313,6 +1409,12 @@ public struct PaymentMethodConfigurationCreateCartesBancairesDisplayPreference: 
     }
 }
 
+public enum PaymentMethodConfigurationCreateCartesBancairesDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Cash App is a popular consumer app in the US that allows customers to bank, invest, send, and
 /// receive money using their digital wallet. Check this
 /// [page](https://docs.stripe.com/payments/cash-app-pay) for more details.
@@ -1339,6 +1441,12 @@ public struct PaymentMethodConfigurationCreateCashappDisplayPreference: StripePa
     }
 }
 
+public enum PaymentMethodConfigurationCreateCashappDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// [Stablecoin payments](https://docs.stripe.com/payments/stablecoin-payments) enable customers to pay
 /// in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
 public struct PaymentMethodConfigurationCreateCrypto: StripeParams {
@@ -1362,6 +1470,12 @@ public struct PaymentMethodConfigurationCreateCryptoDisplayPreference: StripePar
     public init(preference: PaymentMethodConfigurationCreateCryptoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateCryptoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Uses a customer’s [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment.
@@ -1390,6 +1504,12 @@ public struct PaymentMethodConfigurationCreateCustomerBalanceDisplayPreference: 
     }
 }
 
+public enum PaymentMethodConfigurationCreateCustomerBalanceDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// EPS is an Austria-based payment method that allows customers to complete transactions online using
 /// their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of
 /// Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
@@ -1414,6 +1534,12 @@ public struct PaymentMethodConfigurationCreateEpsDisplayPreference: StripeParams
     public init(preference: PaymentMethodConfigurationCreateEpsDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateEpsDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Financial Process Exchange (FPX) is a Malaysia-based payment method that allows customers to
@@ -1445,6 +1571,12 @@ public struct PaymentMethodConfigurationCreateFpxDisplayPreference: StripeParams
     }
 }
 
+public enum PaymentMethodConfigurationCreateFpxDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by
 /// employers for their employees to purchase prepared food and beverages on working days. Check this
 /// [page](https://docs.stripe.com/payments/meal-vouchers/fr-meal-vouchers) for more details.
@@ -1469,6 +1601,12 @@ public struct PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferen
     public init(preference: PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// giropay is a German payment method based on online banking, introduced in 2006. It allows customers
@@ -1499,6 +1637,12 @@ public struct PaymentMethodConfigurationCreateGiropayDisplayPreference: StripePa
     }
 }
 
+public enum PaymentMethodConfigurationCreateGiropayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Google Pay allows customers to make payments in your app or website using any credit or debit card
 /// saved to their Google Account, including those from Google Play, YouTube, Chrome, or an Android
 /// device. Use the Google Pay API to request any credit or debit card stored in your customer's Google
@@ -1524,6 +1668,12 @@ public struct PaymentMethodConfigurationCreateGooglePayDisplayPreference: Stripe
     public init(preference: PaymentMethodConfigurationCreateGooglePayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateGooglePayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/).
@@ -1552,6 +1702,12 @@ public struct PaymentMethodConfigurationCreateGrabpayDisplayPreference: StripePa
     }
 }
 
+public enum PaymentMethodConfigurationCreateGrabpayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// iDEAL is a Netherlands-based payment method that allows customers to complete transactions online
 /// using their bank credentials. All major Dutch banks are members of Currence, the scheme that
 /// operates iDEAL, making it the most popular online payment method in the Netherlands with a share of
@@ -1578,6 +1734,12 @@ public struct PaymentMethodConfigurationCreateIdealDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationCreateIdealDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateIdealDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses
@@ -1609,6 +1771,12 @@ public struct PaymentMethodConfigurationCreateJcbDisplayPreference: StripeParams
     }
 }
 
+public enum PaymentMethodConfigurationCreateJcbDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Kakao Pay is a popular local wallet available in South Korea.
 public struct PaymentMethodConfigurationCreateKakaoPay: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -1631,6 +1799,12 @@ public struct PaymentMethodConfigurationCreateKakaoPayDisplayPreference: StripeP
     public init(preference: PaymentMethodConfigurationCreateKakaoPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateKakaoPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Klarna gives customers a range of [payment
@@ -1661,6 +1835,12 @@ public struct PaymentMethodConfigurationCreateKlarnaDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationCreateKlarnaDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Konbini allows customers in Japan to pay for bills and online purchases at convenience stores with
 /// cash. Check this [page](https://docs.stripe.com/payments/konbini) for more details.
 public struct PaymentMethodConfigurationCreateKonbini: StripeParams {
@@ -1686,6 +1866,12 @@ public struct PaymentMethodConfigurationCreateKonbiniDisplayPreference: StripePa
     }
 }
 
+public enum PaymentMethodConfigurationCreateKonbiniDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Korean cards let users pay using locally issued cards from South Korea.
 public struct PaymentMethodConfigurationCreateKrCard: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -1708,6 +1894,12 @@ public struct PaymentMethodConfigurationCreateKrCardDisplayPreference: StripePar
     public init(preference: PaymentMethodConfigurationCreateKrCardDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateKrCardDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// [Link](https://docs.stripe.com/payments/link) is a payment method network. With Link, users save
@@ -1736,6 +1928,12 @@ public struct PaymentMethodConfigurationCreateLinkDisplayPreference: StripeParam
     }
 }
 
+public enum PaymentMethodConfigurationCreateLinkDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout,
 /// customers approve the payment directly in their MB WAY app. Check this
 /// [page](https://docs.stripe.com/payments/mb-way) for more details.
@@ -1760,6 +1958,12 @@ public struct PaymentMethodConfigurationCreateMbWayDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationCreateMbWayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateMbWayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// MobilePay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet
@@ -1789,6 +1993,12 @@ public struct PaymentMethodConfigurationCreateMobilepayDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationCreateMobilepayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Stripe users in Europe and the United States can accept Multibanco payments from customers in
 /// Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating
 /// payments using any supported method.
@@ -1815,6 +2025,12 @@ public struct PaymentMethodConfigurationCreateMultibancoDisplayPreference: Strip
     }
 }
 
+public enum PaymentMethodConfigurationCreateMultibancoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Naver Pay is a popular local wallet available in South Korea.
 public struct PaymentMethodConfigurationCreateNaverPay: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -1837,6 +2053,12 @@ public struct PaymentMethodConfigurationCreateNaverPayDisplayPreference: StripeP
     public init(preference: PaymentMethodConfigurationCreateNaverPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateNaverPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments
@@ -1863,6 +2085,12 @@ public struct PaymentMethodConfigurationCreateNzBankAccountDisplayPreference: St
     public init(preference: PaymentMethodConfigurationCreateNzBankAccountDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateNzBankAccountDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and
@@ -1892,6 +2120,12 @@ public struct PaymentMethodConfigurationCreateOxxoDisplayPreference: StripeParam
     }
 }
 
+public enum PaymentMethodConfigurationCreateOxxoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Przelewy24 is a Poland-based payment method aggregator that allows customers to complete
 /// transactions online using bank transfers and other methods. Bank transfers account for 30% of online
 /// payments in Poland and Przelewy24 provides a way for customers to pay with over 165 banks. Check
@@ -1917,6 +2151,12 @@ public struct PaymentMethodConfigurationCreateP24DisplayPreference: StripeParams
     public init(preference: PaymentMethodConfigurationCreateP24DisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateP24DisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their
@@ -1946,6 +2186,12 @@ public struct PaymentMethodConfigurationCreatePayByBankDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationCreatePayByBankDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// PAYCO is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
 /// available in South Korea.
 public struct PaymentMethodConfigurationCreatePayco: StripeParams {
@@ -1969,6 +2215,12 @@ public struct PaymentMethodConfigurationCreatePaycoDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationCreatePaycoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreatePaycoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// PayNow is a Singapore-based payment method that allows customers to make a payment using their
@@ -1997,6 +2249,12 @@ public struct PaymentMethodConfigurationCreatePaynowDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationCreatePaynowDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay
 /// using their PayPal account. Check this [page](https://docs.stripe.com/payments/paypal) for more
 /// details.
@@ -2023,6 +2281,12 @@ public struct PaymentMethodConfigurationCreatePaypalDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationCreatePaypalDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Customers can pay with PayPay online or using the PayPay app.
 public struct PaymentMethodConfigurationCreatePaypay: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -2045,6 +2309,12 @@ public struct PaymentMethodConfigurationCreatePaypayDisplayPreference: StripePar
     public init(preference: PaymentMethodConfigurationCreatePaypayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreatePaypayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables
@@ -2074,6 +2344,12 @@ public struct PaymentMethodConfigurationCreatePaytoDisplayPreference: StripePara
     }
 }
 
+public enum PaymentMethodConfigurationCreatePaytoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve
 /// payments by scanning a QR code in their preferred banking app. Check this
 /// [page](https://docs.stripe.com/payments/pix) for more details.
@@ -2098,6 +2374,12 @@ public struct PaymentMethodConfigurationCreatePixDisplayPreference: StripeParams
     public init(preference: PaymentMethodConfigurationCreatePixDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreatePixDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// PromptPay is a Thailand-based payment method that allows customers to make a payment using their
@@ -2126,6 +2408,12 @@ public struct PaymentMethodConfigurationCreatePromptpayDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationCreatePromptpayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut
 /// Pay uses the customer’s stored balance or cards to fund the payment, and offers the option for
 /// non-Revolut customers to save their details after their first purchase.
@@ -2152,6 +2440,12 @@ public struct PaymentMethodConfigurationCreateRevolutPayDisplayPreference: Strip
     }
 }
 
+public enum PaymentMethodConfigurationCreateRevolutPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Samsung Pay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
 /// available in South Korea.
 public struct PaymentMethodConfigurationCreateSamsungPay: StripeParams {
@@ -2175,6 +2469,12 @@ public struct PaymentMethodConfigurationCreateSamsungPayDisplayPreference: Strip
     public init(preference: PaymentMethodConfigurationCreateSamsungPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateSamsungPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Satispay is a [single-use](/payments/payment-methods#usage) payment method where customers are
@@ -2206,6 +2506,12 @@ public struct PaymentMethodConfigurationCreateSatispayDisplayPreference: StripeP
     }
 }
 
+public enum PaymentMethodConfigurationCreateSatispayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Scalapay is a [single-use](/payments/payment-methods#usage) payment method that lets customers pay
 /// in 3 or 4 installments. Customers are redirected from your website or app, authorize the payment
 /// with Scalapay, then return to your website or app. You get [immediate
@@ -2232,6 +2538,12 @@ public struct PaymentMethodConfigurationCreateScalapayDisplayPreference: StripeP
     public init(preference: PaymentMethodConfigurationCreateScalapayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateScalapayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is
@@ -2262,6 +2574,12 @@ public struct PaymentMethodConfigurationCreateSepaDebitDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationCreateSepaDebitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
 /// offers customers payment terms ranging from 7-120 days. Customers are redirected from your website
 /// or app, authorize the payment with SeQura, then return to your website or app. You get [immediate
@@ -2290,6 +2608,12 @@ public struct PaymentMethodConfigurationCreateSequraDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationCreateSequraDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Stripe users in Europe and the United States can use the [Payment Intents
 /// API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating
 /// payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from
@@ -2315,6 +2639,12 @@ public struct PaymentMethodConfigurationCreateSofortDisplayPreference: StripePar
     public init(preference: PaymentMethodConfigurationCreateSofortDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateSofortDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Sunbit is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method
@@ -2345,6 +2675,12 @@ public struct PaymentMethodConfigurationCreateSunbitDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationCreateSunbitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden.
 /// It allows customers to [authenticate and
 /// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Swish
@@ -2373,6 +2709,12 @@ public struct PaymentMethodConfigurationCreateSwishDisplayPreference: StripePara
     }
 }
 
+public enum PaymentMethodConfigurationCreateSwishDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile
 /// phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
 public struct PaymentMethodConfigurationCreateTwint: StripeParams {
@@ -2396,6 +2738,12 @@ public struct PaymentMethodConfigurationCreateTwintDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationCreateTwintDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateTwintDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it
@@ -2423,6 +2771,12 @@ public struct PaymentMethodConfigurationCreateUpiDisplayPreference: StripeParams
     }
 }
 
+public enum PaymentMethodConfigurationCreateUpiDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Stripe users in the United States can accept ACH direct debit payments from customers with a US bank
 /// account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this
 /// [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
@@ -2447,6 +2801,12 @@ public struct PaymentMethodConfigurationCreateUsBankAccountDisplayPreference: St
     public init(preference: PaymentMethodConfigurationCreateUsBankAccountDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationCreateUsBankAccountDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users.
@@ -2476,6 +2836,12 @@ public struct PaymentMethodConfigurationCreateWechatPayDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationCreateWechatPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Zip gives your customers a way to split purchases over a series of payments. Check this
 /// [page](https://docs.stripe.com/payments/zip) for more details like country availability.
 public struct PaymentMethodConfigurationCreateZip: StripeParams {
@@ -2501,6 +2867,12 @@ public struct PaymentMethodConfigurationCreateZipDisplayPreference: StripeParams
     }
 }
 
+public enum PaymentMethodConfigurationCreateZipDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Canadian pre-authorized debit payments, check this
 /// [page](https://docs.stripe.com/payments/acss-debit) for more details like country availability.
 public struct PaymentMethodConfigurationUpdateAcssDebit: StripeParams {
@@ -2524,6 +2896,12 @@ public struct PaymentMethodConfigurationUpdateAcssDebitDisplayPreference: Stripe
     public init(preference: PaymentMethodConfigurationUpdateAcssDebitDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateAcssDebitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// [Affirm](https://www.affirm.com/) gives your customers a way to split purchases over a series of
@@ -2553,6 +2931,12 @@ public struct PaymentMethodConfigurationUpdateAffirmDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationUpdateAffirmDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Afterpay gives your customers a way to pay for purchases in installments, check this
 /// [page](https://docs.stripe.com/payments/afterpay-clearpay) for more details like country
 /// availability. Afterpay is particularly popular among businesses selling fashion, beauty, and sports
@@ -2578,6 +2962,12 @@ public struct PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreference:
     public init(preference: PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Alipay is a digital wallet in China that has more than a billion active users worldwide. Alipay
@@ -2607,6 +2997,12 @@ public struct PaymentMethodConfigurationUpdateAlipayDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationUpdateAlipayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4
 /// installments.
 public struct PaymentMethodConfigurationUpdateAlma: StripeParams {
@@ -2632,6 +3028,12 @@ public struct PaymentMethodConfigurationUpdateAlmaDisplayPreference: StripeParam
     }
 }
 
+public enum PaymentMethodConfigurationUpdateAlmaDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
 public struct PaymentMethodConfigurationUpdateAmazonPay: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -2654,6 +3056,12 @@ public struct PaymentMethodConfigurationUpdateAmazonPayDisplayPreference: Stripe
     public init(preference: PaymentMethodConfigurationUpdateAmazonPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateAmazonPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in
@@ -2684,6 +3092,12 @@ public struct PaymentMethodConfigurationUpdateApplePayDisplayPreference: StripeP
     }
 }
 
+public enum PaymentMethodConfigurationUpdateApplePayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Apple Pay Later, a payment method for customers to buy now and pay later, gives your customers a way
 /// to split purchases into four installments across six weeks.
 public struct PaymentMethodConfigurationUpdateApplePayLater: StripeParams {
@@ -2707,6 +3121,12 @@ public struct PaymentMethodConfigurationUpdateApplePayLaterDisplayPreference: St
     public init(preference: PaymentMethodConfigurationUpdateApplePayLaterDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateApplePayLaterDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments
@@ -2735,6 +3155,12 @@ public struct PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreference: Stri
     }
 }
 
+public enum PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account,
 /// check this [page](https://docs.stripe.com/payments/payment-methods/bacs-debit) for more details.
 public struct PaymentMethodConfigurationUpdateBacsDebit: StripeParams {
@@ -2758,6 +3184,12 @@ public struct PaymentMethodConfigurationUpdateBacsDebitDisplayPreference: Stripe
     public init(preference: PaymentMethodConfigurationUpdateBacsDebitDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateBacsDebitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Bancontact is the most popular online payment method in Belgium, with over 15 million cards in
@@ -2785,6 +3217,12 @@ public struct PaymentMethodConfigurationUpdateBancontactDisplayPreference: Strip
     public init(preference: PaymentMethodConfigurationUpdateBancontactDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateBancontactDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -2815,6 +3253,12 @@ public struct PaymentMethodConfigurationUpdateBillieDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationUpdateBillieDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking
 /// app, they can enable Bizum and link their mobile number to their IBAN.
 public struct PaymentMethodConfigurationUpdateBizum: StripeParams {
@@ -2838,6 +3282,12 @@ public struct PaymentMethodConfigurationUpdateBizumDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationUpdateBizumDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateBizumDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -2867,6 +3317,12 @@ public struct PaymentMethodConfigurationUpdateBlikDisplayPreference: StripeParam
     }
 }
 
+public enum PaymentMethodConfigurationUpdateBlikDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Boleto is an official (regulated by the Central Bank of Brazil) payment method in Brazil. Check this
 /// [page](https://docs.stripe.com/payments/boleto) for more details.
 public struct PaymentMethodConfigurationUpdateBoleto: StripeParams {
@@ -2892,6 +3348,12 @@ public struct PaymentMethodConfigurationUpdateBoletoDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationUpdateBoletoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Cards are a popular way for consumers and businesses to pay online or in person. Stripe supports
 /// global and local card networks.
 public struct PaymentMethodConfigurationUpdateCard: StripeParams {
@@ -2915,6 +3377,12 @@ public struct PaymentMethodConfigurationUpdateCardDisplayPreference: StripeParam
     public init(preference: PaymentMethodConfigurationUpdateCardDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateCardDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Cartes Bancaires is France's local card network. More than 95% of these cards are co-branded with
@@ -2944,6 +3412,12 @@ public struct PaymentMethodConfigurationUpdateCartesBancairesDisplayPreference: 
     }
 }
 
+public enum PaymentMethodConfigurationUpdateCartesBancairesDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Cash App is a popular consumer app in the US that allows customers to bank, invest, send, and
 /// receive money using their digital wallet. Check this
 /// [page](https://docs.stripe.com/payments/cash-app-pay) for more details.
@@ -2970,6 +3444,12 @@ public struct PaymentMethodConfigurationUpdateCashappDisplayPreference: StripePa
     }
 }
 
+public enum PaymentMethodConfigurationUpdateCashappDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// [Stablecoin payments](https://docs.stripe.com/payments/stablecoin-payments) enable customers to pay
 /// in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
 public struct PaymentMethodConfigurationUpdateCrypto: StripeParams {
@@ -2993,6 +3473,12 @@ public struct PaymentMethodConfigurationUpdateCryptoDisplayPreference: StripePar
     public init(preference: PaymentMethodConfigurationUpdateCryptoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateCryptoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Uses a customer’s [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment.
@@ -3021,6 +3507,12 @@ public struct PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreference: 
     }
 }
 
+public enum PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// EPS is an Austria-based payment method that allows customers to complete transactions online using
 /// their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of
 /// Austrian online retailers. Check this [page](https://docs.stripe.com/payments/eps) for more details.
@@ -3045,6 +3537,12 @@ public struct PaymentMethodConfigurationUpdateEpsDisplayPreference: StripeParams
     public init(preference: PaymentMethodConfigurationUpdateEpsDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateEpsDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Financial Process Exchange (FPX) is a Malaysia-based payment method that allows customers to
@@ -3076,6 +3574,12 @@ public struct PaymentMethodConfigurationUpdateFpxDisplayPreference: StripeParams
     }
 }
 
+public enum PaymentMethodConfigurationUpdateFpxDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by
 /// employers for their employees to purchase prepared food and beverages on working days. Check this
 /// [page](https://docs.stripe.com/payments/meal-vouchers/fr-meal-vouchers) for more details.
@@ -3100,6 +3604,12 @@ public struct PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreferen
     public init(preference: PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// giropay is a German payment method based on online banking, introduced in 2006. It allows customers
@@ -3130,6 +3640,12 @@ public struct PaymentMethodConfigurationUpdateGiropayDisplayPreference: StripePa
     }
 }
 
+public enum PaymentMethodConfigurationUpdateGiropayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Google Pay allows customers to make payments in your app or website using any credit or debit card
 /// saved to their Google Account, including those from Google Play, YouTube, Chrome, or an Android
 /// device. Use the Google Pay API to request any credit or debit card stored in your customer's Google
@@ -3155,6 +3671,12 @@ public struct PaymentMethodConfigurationUpdateGooglePayDisplayPreference: Stripe
     public init(preference: PaymentMethodConfigurationUpdateGooglePayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateGooglePayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/).
@@ -3183,6 +3705,12 @@ public struct PaymentMethodConfigurationUpdateGrabpayDisplayPreference: StripePa
     }
 }
 
+public enum PaymentMethodConfigurationUpdateGrabpayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// iDEAL is a Netherlands-based payment method that allows customers to complete transactions online
 /// using their bank credentials. All major Dutch banks are members of Currence, the scheme that
 /// operates iDEAL, making it the most popular online payment method in the Netherlands with a share of
@@ -3209,6 +3737,12 @@ public struct PaymentMethodConfigurationUpdateIdealDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationUpdateIdealDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateIdealDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses
@@ -3240,6 +3774,12 @@ public struct PaymentMethodConfigurationUpdateJcbDisplayPreference: StripeParams
     }
 }
 
+public enum PaymentMethodConfigurationUpdateJcbDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Kakao Pay is a popular local wallet available in South Korea.
 public struct PaymentMethodConfigurationUpdateKakaoPay: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -3262,6 +3802,12 @@ public struct PaymentMethodConfigurationUpdateKakaoPayDisplayPreference: StripeP
     public init(preference: PaymentMethodConfigurationUpdateKakaoPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateKakaoPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Klarna gives customers a range of [payment
@@ -3292,6 +3838,12 @@ public struct PaymentMethodConfigurationUpdateKlarnaDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationUpdateKlarnaDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Konbini allows customers in Japan to pay for bills and online purchases at convenience stores with
 /// cash. Check this [page](https://docs.stripe.com/payments/konbini) for more details.
 public struct PaymentMethodConfigurationUpdateKonbini: StripeParams {
@@ -3317,6 +3869,12 @@ public struct PaymentMethodConfigurationUpdateKonbiniDisplayPreference: StripePa
     }
 }
 
+public enum PaymentMethodConfigurationUpdateKonbiniDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Korean cards let users pay using locally issued cards from South Korea.
 public struct PaymentMethodConfigurationUpdateKrCard: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -3339,6 +3897,12 @@ public struct PaymentMethodConfigurationUpdateKrCardDisplayPreference: StripePar
     public init(preference: PaymentMethodConfigurationUpdateKrCardDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateKrCardDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// [Link](https://docs.stripe.com/payments/link) is a payment method network. With Link, users save
@@ -3367,6 +3931,12 @@ public struct PaymentMethodConfigurationUpdateLinkDisplayPreference: StripeParam
     }
 }
 
+public enum PaymentMethodConfigurationUpdateLinkDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout,
 /// customers approve the payment directly in their MB WAY app. Check this
 /// [page](https://docs.stripe.com/payments/mb-way) for more details.
@@ -3391,6 +3961,12 @@ public struct PaymentMethodConfigurationUpdateMbWayDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationUpdateMbWayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateMbWayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// MobilePay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet
@@ -3420,6 +3996,12 @@ public struct PaymentMethodConfigurationUpdateMobilepayDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationUpdateMobilepayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Stripe users in Europe and the United States can accept Multibanco payments from customers in
 /// Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating
 /// payments using any supported method.
@@ -3446,6 +4028,12 @@ public struct PaymentMethodConfigurationUpdateMultibancoDisplayPreference: Strip
     }
 }
 
+public enum PaymentMethodConfigurationUpdateMultibancoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Naver Pay is a popular local wallet available in South Korea.
 public struct PaymentMethodConfigurationUpdateNaverPay: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -3468,6 +4056,12 @@ public struct PaymentMethodConfigurationUpdateNaverPayDisplayPreference: StripeP
     public init(preference: PaymentMethodConfigurationUpdateNaverPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateNaverPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments
@@ -3494,6 +4088,12 @@ public struct PaymentMethodConfigurationUpdateNzBankAccountDisplayPreference: St
     public init(preference: PaymentMethodConfigurationUpdateNzBankAccountDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateNzBankAccountDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and
@@ -3523,6 +4123,12 @@ public struct PaymentMethodConfigurationUpdateOxxoDisplayPreference: StripeParam
     }
 }
 
+public enum PaymentMethodConfigurationUpdateOxxoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Przelewy24 is a Poland-based payment method aggregator that allows customers to complete
 /// transactions online using bank transfers and other methods. Bank transfers account for 30% of online
 /// payments in Poland and Przelewy24 provides a way for customers to pay with over 165 banks. Check
@@ -3548,6 +4154,12 @@ public struct PaymentMethodConfigurationUpdateP24DisplayPreference: StripeParams
     public init(preference: PaymentMethodConfigurationUpdateP24DisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateP24DisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their
@@ -3577,6 +4189,12 @@ public struct PaymentMethodConfigurationUpdatePayByBankDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationUpdatePayByBankDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// PAYCO is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
 /// available in South Korea.
 public struct PaymentMethodConfigurationUpdatePayco: StripeParams {
@@ -3600,6 +4218,12 @@ public struct PaymentMethodConfigurationUpdatePaycoDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationUpdatePaycoDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdatePaycoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// PayNow is a Singapore-based payment method that allows customers to make a payment using their
@@ -3628,6 +4252,12 @@ public struct PaymentMethodConfigurationUpdatePaynowDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationUpdatePaynowDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay
 /// using their PayPal account. Check this [page](https://docs.stripe.com/payments/paypal) for more
 /// details.
@@ -3654,6 +4284,12 @@ public struct PaymentMethodConfigurationUpdatePaypalDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationUpdatePaypalDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Customers can pay with PayPay online or using the PayPay app.
 public struct PaymentMethodConfigurationUpdatePaypay: StripeParams {
     /// Whether or not the payment method should be displayed.
@@ -3676,6 +4312,12 @@ public struct PaymentMethodConfigurationUpdatePaypayDisplayPreference: StripePar
     public init(preference: PaymentMethodConfigurationUpdatePaypayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdatePaypayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables
@@ -3705,6 +4347,12 @@ public struct PaymentMethodConfigurationUpdatePaytoDisplayPreference: StripePara
     }
 }
 
+public enum PaymentMethodConfigurationUpdatePaytoDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve
 /// payments by scanning a QR code in their preferred banking app. Check this
 /// [page](https://docs.stripe.com/payments/pix) for more details.
@@ -3729,6 +4377,12 @@ public struct PaymentMethodConfigurationUpdatePixDisplayPreference: StripeParams
     public init(preference: PaymentMethodConfigurationUpdatePixDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdatePixDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// PromptPay is a Thailand-based payment method that allows customers to make a payment using their
@@ -3757,6 +4411,12 @@ public struct PaymentMethodConfigurationUpdatePromptpayDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationUpdatePromptpayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut
 /// Pay uses the customer’s stored balance or cards to fund the payment, and offers the option for
 /// non-Revolut customers to save their details after their first purchase.
@@ -3783,6 +4443,12 @@ public struct PaymentMethodConfigurationUpdateRevolutPayDisplayPreference: Strip
     }
 }
 
+public enum PaymentMethodConfigurationUpdateRevolutPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Samsung Pay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
 /// available in South Korea.
 public struct PaymentMethodConfigurationUpdateSamsungPay: StripeParams {
@@ -3806,6 +4472,12 @@ public struct PaymentMethodConfigurationUpdateSamsungPayDisplayPreference: Strip
     public init(preference: PaymentMethodConfigurationUpdateSamsungPayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateSamsungPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Satispay is a [single-use](/payments/payment-methods#usage) payment method where customers are
@@ -3837,6 +4509,12 @@ public struct PaymentMethodConfigurationUpdateSatispayDisplayPreference: StripeP
     }
 }
 
+public enum PaymentMethodConfigurationUpdateSatispayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Scalapay is a [single-use](/payments/payment-methods#usage) payment method that lets customers pay
 /// in 3 or 4 installments. Customers are redirected from your website or app, authorize the payment
 /// with Scalapay, then return to your website or app. You get [immediate
@@ -3863,6 +4541,12 @@ public struct PaymentMethodConfigurationUpdateScalapayDisplayPreference: StripeP
     public init(preference: PaymentMethodConfigurationUpdateScalapayDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateScalapayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is
@@ -3893,6 +4577,12 @@ public struct PaymentMethodConfigurationUpdateSepaDebitDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationUpdateSepaDebitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
 /// offers customers payment terms ranging from 7-120 days. Customers are redirected from your website
 /// or app, authorize the payment with SeQura, then return to your website or app. You get [immediate
@@ -3921,6 +4611,12 @@ public struct PaymentMethodConfigurationUpdateSequraDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationUpdateSequraDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Stripe users in Europe and the United States can use the [Payment Intents
 /// API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating
 /// payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from
@@ -3946,6 +4642,12 @@ public struct PaymentMethodConfigurationUpdateSofortDisplayPreference: StripePar
     public init(preference: PaymentMethodConfigurationUpdateSofortDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateSofortDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Sunbit is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method
@@ -3976,6 +4678,12 @@ public struct PaymentMethodConfigurationUpdateSunbitDisplayPreference: StripePar
     }
 }
 
+public enum PaymentMethodConfigurationUpdateSunbitDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden.
 /// It allows customers to [authenticate and
 /// approve](https://docs.stripe.com/payments/payment-methods#customer-actions) payments using the Swish
@@ -4004,6 +4712,12 @@ public struct PaymentMethodConfigurationUpdateSwishDisplayPreference: StripePara
     }
 }
 
+public enum PaymentMethodConfigurationUpdateSwishDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile
 /// phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
 public struct PaymentMethodConfigurationUpdateTwint: StripeParams {
@@ -4027,6 +4741,12 @@ public struct PaymentMethodConfigurationUpdateTwintDisplayPreference: StripePara
     public init(preference: PaymentMethodConfigurationUpdateTwintDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateTwintDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it
@@ -4054,6 +4774,12 @@ public struct PaymentMethodConfigurationUpdateUpiDisplayPreference: StripeParams
     }
 }
 
+public enum PaymentMethodConfigurationUpdateUpiDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Stripe users in the United States can accept ACH direct debit payments from customers with a US bank
 /// account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this
 /// [page](https://docs.stripe.com/payments/ach-direct-debit) for more details.
@@ -4078,6 +4804,12 @@ public struct PaymentMethodConfigurationUpdateUsBankAccountDisplayPreference: St
     public init(preference: PaymentMethodConfigurationUpdateUsBankAccountDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateUsBankAccountDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }
 
 /// WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users.
@@ -4107,6 +4839,12 @@ public struct PaymentMethodConfigurationUpdateWechatPayDisplayPreference: Stripe
     }
 }
 
+public enum PaymentMethodConfigurationUpdateWechatPayDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
+}
+
 /// Zip gives your customers a way to split purchases over a series of payments. Check this
 /// [page](https://docs.stripe.com/payments/zip) for more details like country availability.
 public struct PaymentMethodConfigurationUpdateZip: StripeParams {
@@ -4130,4 +4868,10 @@ public struct PaymentMethodConfigurationUpdateZipDisplayPreference: StripeParams
     public init(preference: PaymentMethodConfigurationUpdateZipDisplayPreferencePreference? = nil) {
         self.preference = preference
     }
+}
+
+public enum PaymentMethodConfigurationUpdateZipDisplayPreferencePreference: String, Codable, Sendable {
+    case none
+    case off
+    case on
 }

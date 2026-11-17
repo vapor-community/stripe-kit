@@ -401,6 +401,15 @@ public struct ReaderCollectInputsInputsCustomText: StripeParams {
     }
 }
 
+public enum ReaderCollectInputsInputsType: String, Codable, Sendable {
+    case email
+    case numeric
+    case phone
+    case selection
+    case signature
+    case text
+}
+
 /// Options for the `selection` input
 public struct ReaderCollectInputsInputsSelection: StripeParams {
     /// List of choices for the `selection` input
@@ -426,6 +435,11 @@ public struct ReaderCollectInputsInputsSelectionChoices: StripeParams {
     }
 }
 
+public enum ReaderCollectInputsInputsSelectionChoicesStyle: String, Codable, Sendable {
+    case primary
+    case secondary
+}
+
 public struct ReaderCollectInputsInputsToggles: StripeParams {
     /// The default value of the toggle. Can be `enabled` or `disabled`.
     public var defaultValue: ReaderCollectInputsInputsTogglesDefaultValue?
@@ -447,6 +461,11 @@ public struct ReaderCollectInputsInputsToggles: StripeParams {
         case description
         case title
     }
+}
+
+public enum ReaderCollectInputsInputsTogglesDefaultValue: String, Codable, Sendable {
+    case disabled
+    case enabled
 }
 
 /// Configuration overrides for this collection, such as tipping, surcharging, and customer cancellation
@@ -476,6 +495,12 @@ public struct ReaderCollectPaymentMethodCollectConfig: StripeParams {
         case skipTipping = "skip_tipping"
         case tipping
     }
+}
+
+public enum ReaderCollectPaymentMethodCollectConfigAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
 }
 
 /// Tipping configuration for this transaction.
@@ -508,6 +533,35 @@ public struct ReaderConfirmPaymentIntentConfirmConfig: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case returnUrl = "return_url"
     }
+}
+
+public enum ReaderListDeviceType: String, Codable, Sendable {
+    case bbposChipper2X = "bbpos_chipper2x"
+    case bbposWisepad3 = "bbpos_wisepad3"
+    case bbposWiseposE = "bbpos_wisepos_e"
+    case mobilePhoneReader = "mobile_phone_reader"
+    case simulatedStripeS700 = "simulated_stripe_s700"
+    case simulatedStripeS710 = "simulated_stripe_s710"
+    case simulatedStripeT600 = "simulated_stripe_t600"
+    case simulatedVerifoneM425 = "simulated_verifone_m425"
+    case simulatedVerifoneP630 = "simulated_verifone_p630"
+    case simulatedVerifoneUx700 = "simulated_verifone_ux700"
+    case simulatedVerifoneV660P = "simulated_verifone_v660p"
+    case simulatedWiseposE = "simulated_wisepos_e"
+    case stripeM2 = "stripe_m2"
+    case stripeS700 = "stripe_s700"
+    case stripeS710 = "stripe_s710"
+    case stripeT600 = "stripe_t600"
+    case verifoneP400 = "verifone_P400"
+    case verifoneM425 = "verifone_m425"
+    case verifoneP630 = "verifone_p630"
+    case verifoneUx700 = "verifone_ux700"
+    case verifoneV660P = "verifone_v660p"
+}
+
+public enum ReaderListStatus: String, Codable, Sendable {
+    case offline
+    case online
 }
 
 /// Simulated data for the card payment method.
@@ -556,6 +610,12 @@ public struct ReaderPresentPaymentMethodInteracPresent: StripeParams {
     }
 }
 
+public enum ReaderPresentPaymentMethodType: String, Codable, Sendable {
+    case card
+    case cardPresent = "card_present"
+    case interacPresent = "interac_present"
+}
+
 /// Configuration overrides for this transaction, such as tipping and customer cancellation settings.
 public struct ReaderProcessPaymentIntentProcessConfig: StripeParams {
     /// This field indicates whether this payment method can be shown again to its customer in a checkout
@@ -590,6 +650,12 @@ public struct ReaderProcessPaymentIntentProcessConfig: StripeParams {
     }
 }
 
+public enum ReaderProcessPaymentIntentProcessConfigAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
+}
+
 /// Tipping configuration for this transaction.
 public struct ReaderProcessPaymentIntentProcessConfigTipping: StripeParams {
     /// Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a
@@ -604,6 +670,12 @@ public struct ReaderProcessPaymentIntentProcessConfigTipping: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case amountEligible = "amount_eligible"
     }
+}
+
+public enum ReaderProcessSetupIntentAllowRedisplay: String, Codable, Sendable {
+    case always
+    case limited
+    case unspecified
 }
 
 /// Configuration overrides for this setup, such as MOTO and customer cancellation settings.
@@ -632,6 +704,10 @@ public struct ReaderRefundPaymentRefundPaymentConfig: StripeParams {
     public enum CodingKeys: String, CodingKey {
         case enableCustomerCancellation = "enable_customer_cancellation"
     }
+}
+
+public enum ReaderSetReaderDisplayType: String, Codable, Sendable {
+    case cart
 }
 
 /// Cart details to display on the reader screen, including line items, amounts, and currency.
@@ -676,4 +752,9 @@ public struct ReaderSetReaderDisplayCartLineItems: StripeParams {
         self.description = description
         self.quantity = quantity
     }
+}
+
+public enum ReaderSucceedInputCollectionSkipNonRequiredInputs: String, Codable, Sendable {
+    case all
+    case none
 }

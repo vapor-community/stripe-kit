@@ -75,3 +75,14 @@ public struct InvoicePaymentListPayment: StripeParams {
         case type
     }
 }
+
+public enum InvoicePaymentListPaymentType: String, Codable, Sendable {
+    case paymentIntent = "payment_intent"
+    case paymentRecord = "payment_record"
+}
+
+public enum InvoicePaymentListStatus: String, Codable, Sendable {
+    case canceled
+    case `open` = "open"
+    case paid
+}

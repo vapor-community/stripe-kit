@@ -81,6 +81,13 @@ public struct TokenCreateAccount: StripeParams {
     }
 }
 
+public enum TokenCreateAccountBusinessType: String, Codable, Sendable {
+    case company
+    case governmentEntity = "government_entity"
+    case individual
+    case nonProfit = "non_profit"
+}
+
 /// Information about the company or business.
 public struct TokenCreateAccountCompany: StripeParams {
     /// The company's primary address.
@@ -411,6 +418,11 @@ public struct TokenCreateAccountCompanyOwnershipDeclaration: StripeParams {
     }
 }
 
+public enum TokenCreateAccountCompanyOwnershipExemptionReason: String, Codable, Sendable {
+    case qualifiedEntityExceedsOwnershipThreshold = "qualified_entity_exceeds_ownership_threshold"
+    case qualifiesAsFinancialInstitution = "qualifies_as_financial_institution"
+}
+
 /// A location where the business has a meaningful physical operating presence.
 public struct TokenCreateAccountCompanyPhysicalAddress: StripeParams {
     /// City, district, suburb, town, or village.
@@ -515,6 +527,32 @@ public struct TokenCreateAccountCompanyRepresentativeDeclaration: StripeParams {
         case ip
         case userAgent = "user_agent"
     }
+}
+
+public enum TokenCreateAccountCompanyStructure: String, Codable, Sendable {
+    case freeZoneEstablishment = "free_zone_establishment"
+    case freeZoneLlc = "free_zone_llc"
+    case governmentInstrumentality = "government_instrumentality"
+    case governmentalUnit = "governmental_unit"
+    case incorporatedNonProfit = "incorporated_non_profit"
+    case incorporatedPartnership = "incorporated_partnership"
+    case limitedLiabilityPartnership = "limited_liability_partnership"
+    case llc
+    case multiMemberLlc = "multi_member_llc"
+    case privateCompany = "private_company"
+    case privateCorporation = "private_corporation"
+    case privatePartnership = "private_partnership"
+    case publicCompany = "public_company"
+    case publicCorporation = "public_corporation"
+    case publicPartnership = "public_partnership"
+    case registeredCharity = "registered_charity"
+    case singleMemberLlc = "single_member_llc"
+    case soleEstablishment = "sole_establishment"
+    case soleProprietorship = "sole_proprietorship"
+    case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
+    case unincorporatedAssociation = "unincorporated_association"
+    case unincorporatedNonProfit = "unincorporated_non_profit"
+    case unincorporatedPartnership = "unincorporated_partnership"
 }
 
 /// Information on the verification state of the company.
@@ -782,6 +820,11 @@ public struct TokenCreateAccountIndividualDob: StripeParams {
     }
 }
 
+public enum TokenCreateAccountIndividualPoliticalExposure: String, Codable, Sendable {
+    case existing
+    case none
+}
+
 /// The individual's registered address.
 public struct TokenCreateAccountIndividualRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
@@ -955,6 +998,18 @@ public struct TokenCreateBankAccount: StripeParams {
     }
 }
 
+public enum TokenCreateBankAccountAccountHolderType: String, Codable, Sendable {
+    case company
+    case individual
+}
+
+public enum TokenCreateBankAccountAccountType: String, Codable, Sendable {
+    case checking
+    case futsu
+    case savings
+    case toza
+}
+
 public struct TokenCreateCardCreditCardSpecs: StripeParams {
     /// Two-digit number representing the card's expiration month.
     public var expMonth: String
@@ -1028,6 +1083,12 @@ public struct TokenCreateCardCreditCardSpecsNetworks: StripeParams {
     public init(preferred: TokenCreateCardCreditCardSpecsNetworksPreferred? = nil) {
         self.preferred = preferred
     }
+}
+
+public enum TokenCreateCardCreditCardSpecsNetworksPreferred: String, Codable, Sendable {
+    case cartesBancaires = "cartes_bancaires"
+    case mastercard
+    case visa
 }
 
 /// One of the forms `card` accepts.
@@ -1416,6 +1477,11 @@ public struct TokenCreatePersonDocumentsVisa: StripeParams {
     }
 }
 
+public enum TokenCreatePersonPoliticalExposure: String, Codable, Sendable {
+    case existing
+    case none
+}
+
 /// The person's registered address.
 public struct TokenCreatePersonRegisteredAddress: StripeParams {
     /// City, district, suburb, town, or village.
@@ -1537,6 +1603,16 @@ public struct TokenCreatePersonUsCfpbDataEthnicityDetails: StripeParams {
     }
 }
 
+public enum TokenCreatePersonUsCfpbDataEthnicityDetailsEthnicity: String, Codable, Sendable {
+    case cuban
+    case hispanicOrLatino = "hispanic_or_latino"
+    case mexican
+    case notHispanicOrLatino = "not_hispanic_or_latino"
+    case otherHispanicOrLatino = "other_hispanic_or_latino"
+    case preferNotToAnswer = "prefer_not_to_answer"
+    case puertoRican = "puerto_rican"
+}
+
 /// The persons race details
 public struct TokenCreatePersonUsCfpbDataRaceDetails: StripeParams {
     /// The persons race.
@@ -1553,6 +1629,33 @@ public struct TokenCreatePersonUsCfpbDataRaceDetails: StripeParams {
         case race
         case raceOther = "race_other"
     }
+}
+
+public enum TokenCreatePersonUsCfpbDataRaceDetailsRace: String, Codable, Sendable {
+    case africanAmerican = "african_american"
+    case americanIndianOrAlaskaNative = "american_indian_or_alaska_native"
+    case asian
+    case asianIndian = "asian_indian"
+    case blackOrAfricanAmerican = "black_or_african_american"
+    case chinese
+    case ethiopian
+    case filipino
+    case guamanianOrChamorro = "guamanian_or_chamorro"
+    case haitian
+    case jamaican
+    case japanese
+    case korean
+    case nativeHawaiian = "native_hawaiian"
+    case nativeHawaiianOrOtherPacificIslander = "native_hawaiian_or_other_pacific_islander"
+    case nigerian
+    case otherAsian = "other_asian"
+    case otherBlackOrAfricanAmerican = "other_black_or_african_american"
+    case otherPacificIslander = "other_pacific_islander"
+    case preferNotToAnswer = "prefer_not_to_answer"
+    case samoan
+    case somali
+    case vietnamese
+    case white
 }
 
 /// The person's verification status.

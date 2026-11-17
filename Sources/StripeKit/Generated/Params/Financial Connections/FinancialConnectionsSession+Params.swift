@@ -79,6 +79,18 @@ public struct FinancialConnectionsSessionCreateAccountHolder: StripeParams {
     }
 }
 
+public enum FinancialConnectionsSessionCreateAccountHolderType: String, Codable, Sendable {
+    case account
+    case customer
+}
+
+public enum FinancialConnectionsSessionCreatePermissions: String, Codable, Sendable {
+    case balances
+    case ownership
+    case paymentMethod = "payment_method"
+    case transactions
+}
+
 /// Filters to restrict the kinds of accounts to collect.
 public struct FinancialConnectionsSessionCreateFilters: StripeParams {
     /// Restricts the Session to subcategories of accounts that can be linked. Valid subcategories are:
@@ -103,6 +115,20 @@ public struct FinancialConnectionsSessionCreateFilters: StripeParams {
     }
 }
 
+public enum FinancialConnectionsSessionCreateFiltersAccountSubcategories: String, Codable, Sendable {
+    case checking
+    case creditCard = "credit_card"
+    case lineOfCredit = "line_of_credit"
+    case mortgage
+    case savings
+}
+
+public enum FinancialConnectionsSessionCreateFiltersRequirePaymentMethodSupport: String, Codable, Sendable {
+    case all
+    case atLeastOne = "at_least_one"
+    case none
+}
+
 /// Settings for configuring Session-specific limits.
 public struct FinancialConnectionsSessionCreateLimits: StripeParams {
     /// The number of accounts that can be linked in this Session. Pass an empty value to allow any number
@@ -122,4 +148,15 @@ public struct FinancialConnectionsSessionCreateManualEntry: StripeParams {
     public init(mode: FinancialConnectionsSessionCreateManualEntryMode? = nil) {
         self.mode = mode
     }
+}
+
+public enum FinancialConnectionsSessionCreateManualEntryMode: String, Codable, Sendable {
+    case automatic
+    case disabled
+}
+
+public enum FinancialConnectionsSessionCreatePrefetch: String, Codable, Sendable {
+    case balances
+    case ownership
+    case transactions
 }
