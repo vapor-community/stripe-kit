@@ -45,6 +45,37 @@ class SignatureVerificationTests: XCTestCase {
             XCTAssertEqual(error as? StripeSignatureError, StripeSignatureError.timestampNotTolerated)
         }
     }
+
+    /// The signature Stripe would send for `payload` at `timestamp`, signed over its raw bytes
+    private func sign(_ payload: Data, timestamp: String) -> String {
+        var signed = Data("\(timestamp).".utf8)
+        signed.append(payload)
+        return Data(HMAC<SHA256>.authenticationCode(for: signed, using: SymmetricKey(data: Data(secret.utf8)))).hexString
+    }
+
+    func testVerificationSignsThePayloadsExactBytes() throws {
+        // Not valid UTF-8, so a String round trip would change what's signed
+        let payload = Data([0x7b, 0xff, 0xfe, 0x7d])
+        let timestamp = String(Int(Date().timeIntervalSince1970))
+        let header = "t=\(timestamp),v1=\(sign(payload, timestamp: timestamp))"
+        XCTAssertNoThrow(try StripeEvent.verifySignature(payload: payload, header: header, secret: secret))
+    }
+
+    func testVerificationWithUnparsableTimestampThrows() throws {
+        // Correctly signed, but the tolerance can't be checked without a timestamp
+        let header = "t=soon,v1=\(sign(jsonData, timestamp: "soon"))"
+        XCTAssertThrowsError(try StripeEvent.verifySignature(payload: jsonData, header: header, secret: secret)) { error in
+            XCTAssertEqual(error as? StripeSignatureError, StripeSignatureError.unableToParseHeader)
+        }
+    }
+
+    func testVerificationRejectsASignatureOfTheWrongLength() throws {
+        let timestamp = String(Int(Date().timeIntervalSince1970))
+        let header = "t=\(timestamp),v1=\(sign(jsonData, timestamp: timestamp).dropLast())"
+        XCTAssertThrowsError(try StripeEvent.verifySignature(payload: jsonData, header: header, secret: secret)) { error in
+            XCTAssertEqual(error as? StripeSignatureError, StripeSignatureError.noMatchingSignatureFound)
+        }
+    }
 }
 
 extension Data {

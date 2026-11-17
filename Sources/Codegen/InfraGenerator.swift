@@ -340,44 +340,54 @@ struct InfraGenerator {
         lines.append("        return try decoder.decode(StripeEvent.self, from: payload)")
         lines.append("    }")
         lines.append("")
-        lines.append("    /// Verify a webhook signature without decoding the event.")
-        lines.append("    /// Throws if the signature is invalid, the header is malformed, or the timestamp is too old.")
-        lines.append("    public static func verifySignature(")
-        lines.append("        payload: Data,")
-        lines.append("        header: String,")
-        lines.append("        secret: String,")
-        lines.append("        tolerance: Double = 300")
-        lines.append("    ) throws {")
-        lines.append("        // Parse header: t=timestamp,v1=sig1,v1=sig2,...")
-        lines.append("        let pairs = header.split(separator: \",\").reduce(into: [String: [String]]()) { result, pair in")
-        lines.append("            let kv = pair.split(separator: \"=\", maxSplits: 1)")
-        lines.append("            guard kv.count == 2 else { return }")
-        lines.append("            result[String(kv[0]), default: []].append(String(kv[1]))")
-        lines.append("        }")
-        lines.append("")
-        lines.append("        guard let timestamps = pairs[\"t\"], let timestamp = timestamps.first,")
-        lines.append("              let signatures = pairs[\"v1\"], !signatures.isEmpty")
-        lines.append("        else { throw StripeSignatureError.unableToParseHeader }")
-        lines.append("")
-        lines.append("        // Compute expected signature")
-        lines.append("        let signedPayload = \"\\(timestamp).\\(String(data: payload, encoding: .utf8) ?? \"\")\"")
-        lines.append("        let secretKey = SymmetricKey(data: Data(secret.utf8))")
-        lines.append("        let signature = HMAC<SHA256>.authenticationCode(for: Data(signedPayload.utf8), using: secretKey)")
-        lines.append("        let expected = signature.map { String(format: \"%02x\", $0) }.joined()")
-        lines.append("")
-        lines.append("        // Check for a matching signature")
-        lines.append("        guard signatures.contains(where: { $0 == expected }) else {")
-        lines.append("            throw StripeSignatureError.noMatchingSignatureFound")
-        lines.append("        }")
-        lines.append("")
-        lines.append("        // Verify timestamp tolerance")
-        lines.append("        if let ts = Double(timestamp) {")
-        lines.append("            let age = Date().timeIntervalSince1970 - ts")
-        lines.append("            guard abs(age) <= tolerance else {")
-        lines.append("                throw StripeSignatureError.timestampNotTolerated")
-        lines.append("            }")
-        lines.append("        }")
-        lines.append("    }")
+        // Static code (nothing from the spec), so written as a literal rather than line by line
+        lines.append(contentsOf: #"""
+            /// Verify a webhook signature without decoding the event.
+            /// Throws if the header is malformed, no signature matches, or the timestamp is more
+            /// than `tolerance` seconds from now.
+            public static func verifySignature(
+                payload: Data,
+                header: String,
+                secret: String,
+                tolerance: Double = 300
+            ) throws {
+                // Parse header: t=timestamp,v1=sig1,v1=sig2,...
+                let pairs = header.split(separator: ",").reduce(into: [String: [String]]()) { result, pair in
+                    let kv = pair.split(separator: "=", maxSplits: 1)
+                    guard kv.count == 2 else { return }
+                    result[String(kv[0]), default: []].append(String(kv[1]))
+                }
+
+                guard let timestamp = pairs["t"]?.first, let time = TimeInterval(timestamp),
+                      let signatures = pairs["v1"], !signatures.isEmpty
+                else { throw StripeSignatureError.unableToParseHeader }
+
+                // Stripe signs "{timestamp}.{payload}" with the payload's exact bytes
+                var signedPayload = Data("\(timestamp).".utf8)
+                signedPayload.append(payload)
+                let signature = HMAC<SHA256>.authenticationCode(for: signedPayload, using: SymmetricKey(data: Data(secret.utf8)))
+                let expected = Array(signature.map { String(format: "%02x", $0) }.joined().utf8)
+
+                guard signatures.contains(where: { constantTimeEquals(Array($0.utf8), expected) }) else {
+                    throw StripeSignatureError.noMatchingSignatureFound
+                }
+
+                guard abs(Date().timeIntervalSince1970 - time) <= tolerance else {
+                    throw StripeSignatureError.timestampNotTolerated
+                }
+            }
+
+            /// Whether `a` and `b` are equal, taking the same time wherever they differ, so the
+            /// comparison doesn't reveal how much of a forged signature was right.
+            private static func constantTimeEquals(_ a: [UInt8], _ b: [UInt8]) -> Bool {
+                guard a.count == b.count else { return false }
+                var difference: UInt8 = 0
+                for index in a.indices {
+                    difference |= a[index] ^ b[index]
+                }
+                return difference == 0
+            }
+            """#.split(separator: "\n", omittingEmptySubsequences: false).map { $0.isEmpty ? "" : "    " + $0 })
         lines.append("}")
         lines.append("")
         

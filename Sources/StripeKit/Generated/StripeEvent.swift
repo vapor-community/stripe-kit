@@ -105,7 +105,8 @@ extension StripeEvent {
     }
 
     /// Verify a webhook signature without decoding the event.
-    /// Throws if the signature is invalid, the header is malformed, or the timestamp is too old.
+    /// Throws if the header is malformed, no signature matches, or the timestamp is more
+    /// than `tolerance` seconds from now.
     public static func verifySignature(
         payload: Data,
         header: String,
@@ -119,28 +120,34 @@ extension StripeEvent {
             result[String(kv[0]), default: []].append(String(kv[1]))
         }
 
-        guard let timestamps = pairs["t"], let timestamp = timestamps.first,
+        guard let timestamp = pairs["t"]?.first, let time = TimeInterval(timestamp),
               let signatures = pairs["v1"], !signatures.isEmpty
         else { throw StripeSignatureError.unableToParseHeader }
 
-        // Compute expected signature
-        let signedPayload = "\(timestamp).\(String(data: payload, encoding: .utf8) ?? "")"
-        let secretKey = SymmetricKey(data: Data(secret.utf8))
-        let signature = HMAC<SHA256>.authenticationCode(for: Data(signedPayload.utf8), using: secretKey)
-        let expected = signature.map { String(format: "%02x", $0) }.joined()
+        // Stripe signs "{timestamp}.{payload}" with the payload's exact bytes
+        var signedPayload = Data("\(timestamp).".utf8)
+        signedPayload.append(payload)
+        let signature = HMAC<SHA256>.authenticationCode(for: signedPayload, using: SymmetricKey(data: Data(secret.utf8)))
+        let expected = Array(signature.map { String(format: "%02x", $0) }.joined().utf8)
 
-        // Check for a matching signature
-        guard signatures.contains(where: { $0 == expected }) else {
+        guard signatures.contains(where: { constantTimeEquals(Array($0.utf8), expected) }) else {
             throw StripeSignatureError.noMatchingSignatureFound
         }
 
-        // Verify timestamp tolerance
-        if let ts = Double(timestamp) {
-            let age = Date().timeIntervalSince1970 - ts
-            guard abs(age) <= tolerance else {
-                throw StripeSignatureError.timestampNotTolerated
-            }
+        guard abs(Date().timeIntervalSince1970 - time) <= tolerance else {
+            throw StripeSignatureError.timestampNotTolerated
         }
+    }
+
+    /// Whether `a` and `b` are equal, taking the same time wherever they differ, so the
+    /// comparison doesn't reveal how much of a forged signature was right.
+    private static func constantTimeEquals(_ a: [UInt8], _ b: [UInt8]) -> Bool {
+        guard a.count == b.count else { return false }
+        var difference: UInt8 = 0
+        for index in a.indices {
+            difference |= a[index] ^ b[index]
+        }
+        return difference == 0
     }
 }
 
