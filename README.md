@@ -18,16 +18,19 @@ Sources/StripeKit/
 │   ├── Models/           
 │   ├── Routes/           
 │   ├── Params/           
-│   ├── Types/            
-│   └── StripeClient.swift  
+│   ├── Types/
+│   ├── StripeClient.swift
+│   ├── StripeEventType.swift
+│   └── StripeEvent.swift
 └── Infrastructure/
-    ├── StripeAPIHandler.swift    
-    ├── StripeClient.swift        
-    ├── StripeError.swift          
-    ├── StripeEvent.swift          
-    ├── StripeExpandable.swift     
-    ├── StripeParams.swift         
-    └── Helpers.swift              
+    ├── StripeAPIHandler.swift
+    ├── StripeClient+Scoping.swift
+    ├── StripeError.swift
+    ├── StripeExpandable.swift
+    ├── StripeParams.swift
+    ├── StripeRangeQuery.swift
+    ├── StripeSearchResult.swift
+    └── ObjectOrDeleted.swift
 ```
 
 ## Installation
@@ -176,19 +179,6 @@ let discounts: [DiscountsResourceDiscountAmount]? = invoice.$discounts
 let taxRates: [TaxRate]? = invoice.$defaultTaxRates
 ```
 
-#### `@DynamicExpandable<A, B>` — Polymorphic Expansion
-
-For fields that can expand to one of multiple concrete types (e.g., a source that could be a `BankAccount` or `Card`):
-
-```swift
-// wrappedValue → the ID
-let externalAccountId: String? = account.externalAccount
-
-// projectedValue ($) → use callAsFunction to cast
-let bankAccount: BankAccount? = account.$externalAccount(as: BankAccount.self)
-let card: Card? = account.$externalAccount(as: Card.self)
-```
-
 ### Idempotency
 
 Stripe supports [idempotency keys](https://docs.stripe.com/api/idempotent_requests) to safely retry requests:
@@ -199,7 +189,7 @@ let customer = try await stripe.idempotent("unique-key-\(UUID())").customers.cre
 
 ### Stripe Connect (`onBehalfOf`)
 
-Scope requests to a connected account:
+Make requests as a connected account (sends the `Stripe-Account` header; unrelated to the `on_behalf_of` param):
 
 ```swift
 let payout = try await stripe.onBehalfOf("acct_connected_123").payouts.create(payoutParams)

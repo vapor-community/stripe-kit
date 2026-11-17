@@ -8,7 +8,7 @@
 import Foundation
 
 struct ModelGenerator {
-    let allSchemas: [String: SchemaObject]
+    let parser: SpecParser
     
     /// Generate the full Swift source for a resource's model file
     func generate(resource: StripeResource) -> String {
@@ -30,14 +30,7 @@ struct ModelGenerator {
         lines.append("import Foundation")
         lines.append("")
         
-        // Doc comment
-        if !resource.description.isEmpty {
-            let cleaned = cleanDescription(resource.description)
-            let wrapped = wordWrap(cleaned, lineLength: 100)
-            for line in wrapped {
-                lines.append("/// \(line)")
-            }
-        }
+        lines.append(contentsOf: docComment(resource.description))
         
         // Struct declaration
         lines.append("public struct \(resource.swiftTypeName): Codable, Sendable {")
@@ -67,17 +60,15 @@ struct ModelGenerator {
         
         // Generate standalone enum types for enum-typed properties
         for property in resource.properties {
-            if case .enum(let cases) = property.type, !cases.isEmpty {
-                let filtered = cases.filter { !$0.isEmpty }
-                guard !filtered.isEmpty else { continue }
-                let enumName = "\(resource.swiftTypeName)\(capitalize(property.swiftName))"
-                lines.append(contentsOf: generateEnum(
-                    name: enumName,
-                    cases: filtered,
-                    description: property.description
-                ))
-                lines.append("")
-            }
+            guard case .enum(let cases) = property.type else { continue }
+            let enumLines = generateStringEnum(
+                name: "\(resource.swiftTypeName)\(capitalize(property.swiftName))",
+                cases: cases,
+                description: property.description
+            )
+            guard !enumLines.isEmpty else { continue }
+            lines.append(contentsOf: enumLines)
+            lines.append("")
         }
         
         // Generate List type
@@ -92,14 +83,7 @@ struct ModelGenerator {
     private func generateProperty(_ property: StripeProperty, resource: StripeResource) -> [String] {
         var lines: [String] = []
         
-        // Doc comment for the property
-        if !property.description.isEmpty {
-            let cleaned = cleanDescription(property.description)
-            let wrapped = wordWrap(cleaned, lineLength: 100)
-            for line in wrapped {
-                lines.append("    /// \(line)")
-            }
-        }
+        lines.append(contentsOf: docComment(property.description, indent: "    "))
         
         // Spec-driven optionality (matching TypeScript SDK):
         //   required + non-nullable → non-optional
@@ -109,29 +93,19 @@ struct ModelGenerator {
         // Expandable properties are always optional — the wrapper's wrappedValue is String?/[String]?
         let isExpandableType: Bool
         switch property.type {
-        case .expandable, .dynamicExpandable, .expandableCollection: isExpandableType = true
+        case .expandable, .expandableCollection: isExpandableType = true
         default: isExpandableType = false
         }
         let optionalMark = (isNonOptional && !isExpandableType) ? "" : "?"
         
-        // Expandable property wrapper annotations
-        // Filter out Deleted* types and cap DynamicExpandable at 2 type params.
-        // Deleted* types are generated (for route responses), but expandable fields deliberately
-        // expand to the live object only, like async-stripe and the official typed Stripe SDKs.
+        // Expandable property wrapper annotations. SpecParser already leaves deleted variants
+        // out of an expandable field's type; one that can only expand to a deleted object
+        // stays a plain ID.
         switch property.type {
         case .expandable(let wrappedType):
             if !wrappedType.starts(with: "Deleted") {
                 lines.append("    @Expandable<\(wrappedType)>")
             }
-        case .dynamicExpandable(let types):
-            let validTypes = types.filter { !$0.starts(with: "Deleted") }
-            if let first = validTypes.first, validTypes.count == 1 {
-                lines.append("    @Expandable<\(first)>")
-            } else if validTypes.count == 2 {
-                let typeList = validTypes.joined(separator: ", ")
-                lines.append("    @DynamicExpandable<\(typeList)>")
-            }
-            // 0 or 3+ types: fall back to plain String (no annotation)
         case .expandableCollection(let wrappedType):
             if !wrappedType.starts(with: "Deleted") {
                 lines.append("    @ExpandableCollection<\(wrappedType)>")
@@ -158,12 +132,10 @@ struct ModelGenerator {
         case .integer: return "Int"
         case .number: return "Double"
         case .boolean: return "Bool"
-        case .date: return "Date"
         case .object(let name): return name
         case .array(let element): return "[\(typeToSwift(element))]"
         case .dictionary(let value): return "[String: \(typeToSwift(value))]"
         case .expandable: return "String"
-        case .dynamicExpandable: return "String"
         case .expandableCollection: return "[String]"
         case .enum:
             // Wire enum type: ResourceNamePropertyName
@@ -177,34 +149,6 @@ struct ModelGenerator {
         case .any: return "String"
         }
     }
-    
-    // MARK: - Enum Generation
-    
-    private func generateEnum(name: String, cases: [String], description: String) -> [String] {
-        var lines: [String] = []
-        
-        if !description.isEmpty {
-            let cleaned = cleanDescription(description)
-            let wrapped = wordWrap(cleaned, lineLength: 100)
-            for line in wrapped {
-                lines.append("/// \(line)")
-            }
-        }
-        lines.append("public enum \(name): String, Codable, Sendable {")
-        for enumCase in cases {
-            let swiftCase = enumCaseToSwift(enumCase)
-            if swiftCase != enumCase {
-                lines.append("    case \(swiftCase) = \"\(enumCase)\"")
-            } else {
-                lines.append("    case \(swiftCase)")
-            }
-        }
-        lines.append("}")
-        
-        return lines
-    }
-    
-    // MARK: - List Type Generation
     
     // MARK: - Polymorphic Enum Generation
     
@@ -225,7 +169,7 @@ struct ModelGenerator {
         
         // Build variant info: (resourceId, swiftType, objectValue)
         let variantInfos = variants.map { resourceId -> (id: String, swiftType: String, caseName: String) in
-            let swiftType = schemaIdToSwiftType(resourceId)
+            let swiftType = parser.schemaNameToSwiftType(resourceId)
             let caseName = enumCaseToSwift(resourceId)
             return (id: resourceId, swiftType: swiftType, caseName: caseName)
         }
@@ -419,6 +363,8 @@ struct ModelGenerator {
         return caseName + "s"
     }
     
+    // MARK: - List Type Generation
+
     private func generateListType(resource: StripeResource) -> [String] {
         return [
             "public struct \(resource.swiftTypeName)List: Codable, Sendable {",
@@ -435,20 +381,5 @@ struct ModelGenerator {
             "    }",
             "}",
         ]
-    }
-    
-    // MARK: - Helpers
-    
-    private func schemaIdToSwiftType(_ resourceId: String) -> String {
-        let baseName: String
-        if resourceId.contains(".") {
-            baseName = String(resourceId.split(separator: ".").last ?? Substring(resourceId))
-        } else {
-            baseName = resourceId
-        }
-        return baseName
-            .split(separator: "_")
-            .map { $0.capitalized }
-            .joined()
     }
 }

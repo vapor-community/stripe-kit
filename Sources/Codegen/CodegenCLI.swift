@@ -5,19 +5,25 @@
 // What gets regenerated:
 //   Sources/StripeKit/Generated/
 //     ├── Models/           — Codable structs per resource (Account.swift, Customer.swift, ...)
-//     ├── Routes/           — @Sendable closure-based route structs + .live() + .test stubs
+//     ├── Routes/           — @Sendable closure-based route structs + .live(handler:) factories
 //     ├── Params/           — Typed param structs for create/update operations
 //     ├── Types/            — Inline schemas (shared sub-types referenced by resources)
-//     └── StripeClient.swift — Auto-wired client with all route properties
+//     ├── StripeClient.swift — Auto-wired client with all route properties
+//     ├── StripeEventType.swift — Enum of the spec's event types
+//     └── StripeEvent.swift  — Webhook event, signature verification, AnyCodableValue
 //   Tests/StripeKitTests/Generated/
-//     └── FixtureTypes.swift — Schema name → Swift type map for fixture decoding tests
+//     ├── FixtureTypes.swift — Schema name → Swift type map for fixture decoding tests
+//     └── GeneratedOperations.swift — Operation manifest checked by SpecCoverageTests
 //
 // What stays hand-written (Infrastructure/):
-//     ├── StripeAPIHandler.swift   — HTTP transport, request encoding
-//     ├── StripeExpandable.swift   — @Expandable / @DynamicExpandable property wrappers
+//     ├── StripeAPIHandler.swift   — HTTP transport
+//     ├── StripeClient+Scoping.swift — Connected-account and idempotency scoping
+//     ├── StripeExpandable.swift   — @Expandable / @ExpandableCollection property wrappers
 //     ├── StripeError.swift        — Error types
-//     ├── StripeParams.swift       — StripeParams protocol
-//     └── Helpers.swift            — Query encoding utilities
+//     ├── StripeParams.swift       — StripeParams protocol and form encoding
+//     ├── StripeRangeQuery.swift   — Range filters for list params (`created`, …)
+//     ├── StripeSearchResult.swift — Search endpoint responses
+//     └── ObjectOrDeleted.swift    — Object-or-deleted-object responses
 //
 // The codegen always processes the full spec — no domain filtering.
 // Idempotent: running twice with the same spec produces identical output.
@@ -59,19 +65,18 @@ struct CodegenCLI: AsyncParsableCommand {
         let resources = parser.parseResources()
         let inlineSchemas = parser.parseInlineSchemas()
         
-        // Build resource type name set for collision detection
-        let resourceTypeNames = Set(resources.map(\.swiftTypeName))
-        _ = resourceTypeNames  // used by inline schema generation
-        
         print("📊 Parsed \(resources.count) resources, \(inlineSchemas.count) inline types")
         print()
         
         // ── 3. Initialize generators ─────────────────────────────
         let pathMapping = parser.buildPathMapping()
         print("🗺️  Path mapping: \(pathMapping.count) schemas → API paths")
-        let modelGen = ModelGenerator(allSchemas: openAPISpec.components.schemas)
+        let modelGen = ModelGenerator(parser: parser)
         let routeGen = RouteGenerator(spec: openAPISpec, parser: parser, pathMapping: pathMapping)
-        let paramGen = ParamGenerator(spec: openAPISpec, parser: parser, pathMapping: pathMapping)
+        let paramGen = ParamGenerator(spec: openAPISpec, parser: parser)
+
+        // Each resource's operations, computed once and shared by every generator below
+        let operations = Dictionary(uniqueKeysWithValues: resources.map { ($0.schemaName, routeGen.findOperations(for: $0)) })
         
         let outputURL = URL(filePath: output)
         
@@ -93,6 +98,8 @@ struct CodegenCLI: AsyncParsableCommand {
         
         for resource in resources {
             let domain = resource.domain.directoryName
+            let routeOperations = operations[resource.schemaName] ?? []
+            let paramOperations = paramGen.paramOperations(for: resource, routes: routeOperations)
             
             // Model
             let modelDir = generatedURL
@@ -106,7 +113,7 @@ struct CodegenCLI: AsyncParsableCommand {
             modelCount += 1
             
             // Routes
-            if let routeSource = routeGen.generate(resource: resource) {
+            if let routeSource = routeGen.generate(resource: resource, operations: routeOperations) {
                 let routeDir = generatedURL
                     .appending(path: "Routes")
                     .appending(path: domain)
@@ -118,7 +125,7 @@ struct CodegenCLI: AsyncParsableCommand {
             }
             
             // Params
-            if let paramSource = paramGen.generate(resource: resource) {
+            if let paramSource = paramGen.generate(resource: resource, operations: paramOperations) {
                 let paramDir = generatedURL
                     .appending(path: "Params")
                     .appending(path: domain)
@@ -129,7 +136,7 @@ struct CodegenCLI: AsyncParsableCommand {
                 paramCount += 1
                 
                 // Param enums (if any)
-                let enumLines = paramGen.generateParamEnums(resource: resource)
+                let enumLines = paramGen.generateParamEnums(resource: resource, operations: paramOperations)
                 if !enumLines.isEmpty {
                     let enumSource = [
                         "//",
@@ -160,7 +167,11 @@ struct CodegenCLI: AsyncParsableCommand {
         }
         
         // ── 6. Generate StripeClient (route wiring) ───────────────
-        let infraGen = InfraGenerator(spec: openAPISpec, parser: parser, resources: resources, pathMapping: pathMapping)
+        let infraGen = InfraGenerator(
+            spec: openAPISpec,
+            resources: resources,
+            routedResources: resources.filter { operations[$0.schemaName]?.isEmpty == false }
+        )
         let clientSource = infraGen.generateStripeClient()
         try clientSource.write(
             to: generatedURL.appending(path: "StripeClient.swift"),
@@ -197,8 +208,8 @@ struct CodegenCLI: AsyncParsableCommand {
         let coverage = CoverageCheck(
             spec: openAPISpec,
             parser: parser,
-            routeGen: routeGen,
             resources: resources,
+            operations: operations,
             paramFallbacks: paramGen.fallbacks.entries,
             exceptions: coverageExceptions
         ).run()

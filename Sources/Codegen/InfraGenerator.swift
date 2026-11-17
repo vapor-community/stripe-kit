@@ -1,25 +1,23 @@
 // MARK: - Infrastructure Generator
-// Generates StripeClient.swift — the auto-wired client that connects all route structs.
-// All other infrastructure files (StripeError, StripeEvent, StripeAPIHandler, etc.)
-// are hand-written in Sources/StripeKit/Infrastructure/ and are never regenerated.
+// Generates the spec-wide files: StripeClient.swift (the client wiring every route struct),
+// StripeEventType.swift, StripeEvent.swift, and the test target's fixture type registry.
+// The rest of the runtime (StripeAPIHandler, StripeError, …) is hand-written in
+// Sources/StripeKit/Infrastructure/ and never regenerated.
 
 import Foundation
 
 struct InfraGenerator {
     let spec: OpenAPISpec
-    let parser: SpecParser
+    /// Every resource (for the fixture registry)
     let resources: [StripeResource]
-    let pathMapping: [String: [(method: String, path: String)]]
+    /// The resources that have at least one route (for the client)
+    let routedResources: [StripeResource]
     
     // MARK: - StripeClient
     
     /// Generate the StripeClient struct that wires all route structs
     func generateStripeClient() -> String {
         var lines: [String] = []
-        
-        // Collect resources that have routes
-        let routeGen = RouteGenerator(spec: spec, parser: parser, pathMapping: pathMapping)
-        let routedResources = resources.filter { routeGen.generate(resource: $0) != nil }
         
         lines.append("//")
         lines.append("//  StripeClient.swift")

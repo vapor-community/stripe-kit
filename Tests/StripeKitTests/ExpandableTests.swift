@@ -3,34 +3,6 @@ import XCTest
 
 class ExpandableTests: XCTestCase {
     
-    func testDynamicExpandable_decodesProperly() throws {
-        
-        // Self-contained test: DynamicExpandable works independently of generated models
-        struct TypeA: Codable { var id: String; var name: String }
-        struct TypeB: Codable { var id: String; var code: Int }
-        struct TestFee: Codable {
-            @DynamicExpandable<TypeA, TypeB> var item: String?
-        }
-        
-        let expandedJSON = """
-        {
-            "item": {
-              "id": "item_123",
-              "name": "Test Item"
-            }
-        }
-        """.data(using: .utf8)!
-        
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        let fee = try decoder.decode(TestFee.self, from: expandedJSON)
-        
-        XCTAssertNotNil(fee.$item(as: TypeA.self))
-        XCTAssertNil(fee.$item(as: TypeB.self))
-        XCTAssertEqual(fee.$item(as: TypeA.self)?.name, "Test Item")
-    }
-    
     func testExpandable_decodesProperly_whenTopLevelField_isMissing() throws {
         
         let objectMissingExpandableTransferFieldOnCharge = """

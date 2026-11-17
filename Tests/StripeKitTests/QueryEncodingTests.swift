@@ -1,46 +1,6 @@
 import XCTest
 @testable import StripeKit
 
-class QueryEncodingTests: XCTestCase {
-    
-    func testSimpleQueryEncodedProperly() throws {
-        let query: [String: Any] = [
-            "email": "accounting+furnitures@hmm.test"
-        ]
-        XCTAssertEqual(query.queryParameters, "email=accounting%2Bfurnitures@hmm.test")
-    }
-    
-    func testNestedDictionaryQueryEncodedProperly() throws {
-        let query: [String: Any] = [
-            "shipping": ["name": "Hamlin, Hamlin & McGill"]
-        ]
-        XCTAssertEqual(query.queryParameters, "shipping[name]=Hamlin,%20Hamlin%20%26%20McGill")
-    }
-    
-    func testNestedArrayQueryEncodedProperly() throws {
-        let query: [String: Any] = [
-            "items": [["plan": "plan_b"], ["plan": "plan_nine"]]
-        ]
-        XCTAssertEqual(query.queryParameters, "items[0][plan]=plan_b&items[1][plan]=plan_nine")
-    }
-    
-    func testBoolEncodedAsTrueOrFalse() throws {
-        let query: [String: Any] = ["confirm": true]
-        XCTAssertEqual(query.queryParameters, "confirm=true")
-        
-        let query2: [String: Any] = ["confirm": false]
-        XCTAssertEqual(query2.queryParameters, "confirm=false")
-    }
-    
-    func testBoolMixedWithOtherTypes() throws {
-        let query: [String: Any] = ["amount": 900, "confirm": true, "currency": "usd"]
-        let result = query.queryParameters
-        XCTAssertTrue(result.contains("confirm=true"), "Expected confirm=true but got: \(result)")
-        XCTAssertTrue(result.contains("amount=900"), "Expected amount=900 but got: \(result)")
-        XCTAssertTrue(result.contains("currency=usd"), "Expected currency=usd but got: \(result)")
-    }
-}
-
 // MARK: - StripeParams toFormBody tests
 
 struct TestParams: StripeParams {
@@ -165,8 +125,9 @@ class StripeParamsTests: XCTestCase {
         XCTAssertEqual(params.toFormBody(), "ssn_last_4=1234")
     }
 
-    func testEnumInQueryDictionaryEncodesRawValue() throws {
-        let query: [String: Any] = ["setup_future_usage": PaymentIntentCreateSetupFutureUsage.offSession]
-        XCTAssertEqual(query.queryParameters, "setup_future_usage=off_session")
+    func testFormBodyEscapesReservedCharacters() throws {
+        // `+`, `&` and `=` would otherwise be read as a space and as separators.
+        let params = TestParams(amount: 1, currency: "usd", customer: "Hamlin, Hamlin & McGill+a=b")
+        XCTAssertTrue(params.toFormBody().contains("customer=Hamlin,%20Hamlin%20%26%20McGill%2Ba%3Db"), params.toFormBody())
     }
 }

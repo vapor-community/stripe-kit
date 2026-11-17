@@ -1,7 +1,7 @@
-// MARK: - Route Generator (Modern)
+// MARK: - Route Generator
 // Generates closure-based route structs from spec paths.
-// Each resource gets a single struct with closure-stored operations.
-// Includes .live(handler:) factory and .test stub.
+// Each resource gets a single struct with closure-stored operations, plus a
+// `.live(handler:)` factory that wires each closure to `StripeAPIHandler`.
 
 import Foundation
 
@@ -11,10 +11,9 @@ struct RouteGenerator {
     /// Deterministic mapping of schema name → API paths, built by SpecParser.buildPathMapping()
     let pathMapping: [String: [(method: String, path: String)]]
     
-    /// Generate the closure-based route struct for a resource.
-    /// Returns nil if the resource has no matching paths.
-    func generate(resource: StripeResource) -> String? {
-        let operations = findOperations(for: resource)
+    /// Generate the closure-based route struct for a resource from its `findOperations` result.
+    /// Returns nil if the resource has no operations.
+    func generate(resource: StripeResource, operations: [RouteOperation]) -> String? {
         guard !operations.isEmpty else { return nil }
         
         var lines: [String] = []
@@ -39,14 +38,7 @@ struct RouteGenerator {
         
         for op in operations {
             lines.append("")
-            // Doc comment
-            if let desc = op.description {
-                let cleaned = cleanDescription(desc)
-                let wrapped = wordWrap(cleaned, lineLength: 100)
-                for line in wrapped {
-                    lines.append("    /// \(line)")
-                }
-            }
+            lines.append(contentsOf: docComment(op.description, indent: "    "))
             if op.isDeprecated {
                 lines.append("    @available(*, deprecated, message: \"This API is deprecated by Stripe.\")")
             }
@@ -240,7 +232,6 @@ struct RouteGenerator {
         let isDeprecated: Bool
         let hasBody: Bool
         let hasRequiredBodyFields: Bool
-        let isListOrSearch: Bool
         let isMultipart: Bool
         /// GET with query params beyond `expand`: takes a `{Resource}{Action}Params` struct
         let hasQueryParams: Bool
@@ -260,7 +251,7 @@ struct RouteGenerator {
                 funcName: name, action: capitalize(name), httpMethod: httpMethod, path: path,
                 pathParams: pathParams, description: description, isDeprecated: isDeprecated,
                 hasBody: hasBody, hasRequiredBodyFields: hasRequiredBodyFields,
-                isListOrSearch: isListOrSearch, isMultipart: isMultipart,
+                isMultipart: isMultipart,
                 hasQueryParams: hasQueryParams, hasRequiredQueryParams: hasRequiredQueryParams,
                 returnType: returnType, returnTypeFromSpec: returnTypeFromSpec,
                 serverURL: serverURL, returnsFile: returnsFile
@@ -275,14 +266,12 @@ struct RouteGenerator {
     /// Same approach as the async-stripe Rust SDK, which also follows the spec's response types.
     private func deletedResponseType(_ op: OperationObject) -> String? {
         guard let schema = op.responses?["200"]?.content?["application/json"]?.schema else { return nil }
-        let refName = { (ref: String) in String(ref.split(separator: "/").last ?? Substring(ref)) }
-
         if let ref = schema.ref {
-            let name = refName(ref)
+            let name = refToSchemaName(ref)
             return name.starts(with: SpecParser.deletedPrefix) ? parser.schemaNameToSwiftType(name) : nil
         }
 
-        let names = (schema.anyOf ?? []).compactMap { $0.ref.map(refName) }
+        let names = (schema.anyOf ?? []).compactMap { $0.ref.map(refToSchemaName) }
         let deleted = names.filter { $0.starts(with: SpecParser.deletedPrefix) }
         let objects = names.filter { !$0.starts(with: SpecParser.deletedPrefix) }
         guard names.count == 2, deleted.count == 1, objects.count == 1 else { return nil }
@@ -293,14 +282,14 @@ struct RouteGenerator {
     private func listItemType(_ op: OperationObject) -> String? {
         guard let ref = op.responses?["200"]?.content?["application/json"]?.schema?.properties?["data"]?.items?.ref
         else { return nil }
-        return parser.schemaNameToSwiftType(String(ref.split(separator: "/").last ?? Substring(ref)))
+        return parser.schemaNameToSwiftType(refToSchemaName(ref))
     }
 
     /// Swift type of a response that is `anyOf` several object types (none deleted), as the
     /// polymorphic schema covering them all.
     private func polymorphicResponseType(_ op: OperationObject) -> String? {
         guard let anyOf = op.responses?["200"]?.content?["application/json"]?.schema?.anyOf, anyOf.count > 1 else { return nil }
-        let refs = anyOf.compactMap { $0.ref.map { String($0.split(separator: "/").last ?? Substring($0)) } }
+        let refs = anyOf.compactMap { $0.ref.map(refToSchemaName) }
         guard refs.count == anyOf.count, !refs.contains(where: { $0.starts(with: SpecParser.deletedPrefix) }),
               let schema = parser.polymorphicSchema(covering: Set(refs))
         else { return nil }
@@ -310,7 +299,7 @@ struct RouteGenerator {
     /// Swift type of a response that is a plain `$ref`.
     private func referencedResponseType(_ op: OperationObject) -> String? {
         guard let ref = op.responses?["200"]?.content?["application/json"]?.schema?.ref else { return nil }
-        return parser.schemaNameToSwiftType(String(ref.split(separator: "/").last ?? Substring(ref)))
+        return parser.schemaNameToSwiftType(refToSchemaName(ref))
     }
 
     /// The 200 response's wrapper kind, read from its `object` enum.
@@ -320,8 +309,9 @@ struct RouteGenerator {
         return values[0]
     }
 
-    /// The operations generated for a resource. `ParamGenerator` uses this too, so query
-    /// params structs get the same names the routes refer to.
+    /// The operations generated for a resource. The CLI computes these once per resource and
+    /// passes them to every generator (routes, params, client, coverage check), so params
+    /// structs get the same names the routes refer to.
     func findOperations(for resource: StripeResource) -> [RouteOperation] {
         var results: [RouteOperation] = []
         
@@ -337,8 +327,9 @@ struct RouteGenerator {
             .filter { parser.reassignedOwner(method: $0.method, path: $0.path) == nil }
             .map(\.path))
         
-        // Derive basePath: shortest path that is a segment-aligned prefix of at least
-        // one other path.  Deterministic — no scoring, no tie-breaking ambiguity.
+        // basePath: shortest path that is a segment-aligned prefix of at least one other path
+        // (e.g. /v1/customers). An operation under it is in the resource's own namespace,
+        // which decides who keeps a name when several share one (see below).
         let basePath: String = {
             let sorted = uniquePaths.sorted { $0.count < $1.count }
             for candidate in sorted {
@@ -368,33 +359,17 @@ struct RouteGenerator {
                 }
                 
                 let pathParams = extractPathParams(path)
-                // Name from the spec's x-stripeOperations (what Stripe's own SDKs use),
-                // falling back to deriving one from the path.
-                let (funcName, action): (String, String) = {
-                    if let specName = parser.stripeMethodName(method: method, path: path, schemaName: resource.schemaName) {
-                        let name = snakeToCamel(specName)
-                        return (name, capitalize(name))
-                    }
-                    return deriveFuncAndAction(
-                        method: method,
-                        path: path,
-                        pathPrefix: basePath,
-                        pathParams: pathParams,
-                        operationId: op.operationId
-                    )
-                }()
+                // Named from the spec's x-stripeOperations, as Stripe's own SDKs are. Every
+                // operation has one today; without it the coverage check fails generation, so
+                // the operationId fallback only needs to be unique enough to report.
+                let funcName = parser.stripeMethodName(method: method, path: path, schemaName: resource.schemaName).map(snakeToCamel)
+                    ?? (op.operationId.map { $0.prefix(1).lowercased() + $0.dropFirst() } ?? "unnamed")
+                let action = capitalize(funcName)
                 
                 // Check if POST has a requestBody with properties
                 let isMultipart = method == "POST" && op.requestBody?.content?["multipart/form-data"] != nil
                 let hasBody = method == "POST" && !isMultipart && op.requestBody?.content?["application/x-www-form-urlencoded"]?.schema?.properties?.isEmpty == false
                 let requiredFields = op.requestBody?.content?["application/x-www-form-urlencoded"]?.schema?.required ?? []
-                
-                // Check for list/search patterns
-                let isListOrSearch = method == "GET" && (
-                    funcName == "list" ||
-                    funcName == "search" ||
-                    path == basePath  // GET /v1/resources (no path param)
-                )
                 
                 // Query params (GET only; no other method has any besides `expand`)
                 let queryParams = method == "GET" ? op.queryParameters : []
@@ -435,7 +410,6 @@ struct RouteGenerator {
                     isDeprecated: op.deprecated == true,
                     hasBody: hasBody,
                     hasRequiredBodyFields: !requiredFields.isEmpty,
-                    isListOrSearch: isListOrSearch,
                     isMultipart: isMultipart,
                     hasQueryParams: !queryParams.isEmpty,
                     hasRequiredQueryParams: queryParams.contains { $0.required == true },
@@ -481,99 +455,6 @@ struct RouteGenerator {
             let bOrder = order[b.funcName] ?? 10
             if aOrder != bOrder { return aOrder < bOrder }
             return a.funcName < b.funcName
-        }
-    }
-    
-    private func deriveFuncAndAction(
-        method: String,
-        path: String,
-        pathPrefix: String,
-        pathParams: [String],
-        operationId: String?
-    ) -> (funcName: String, action: String) {
-        // Use operationId from the spec — it's the canonical source of truth.
-        // Pattern: {Method}{PascalSegments}
-        //   GetRefunds           → list
-        //   PostRefunds          → create
-        //   GetRefundsRefund     → retrieve
-        //   PostRefundsRefund    → update
-        //   DeleteRefundsRefund  → delete
-        //   GetCustomersSearch   → search
-        //   PostRefundsRefundCancel → cancel
-        //   PostAccountsAccountReject → reject
-        
-        guard let _ = operationId else {
-            return ("unknown", "Unknown")
-        }
-        
-        // Use the path structure relative to basePath to classify the operation.
-        // The basePath is scored as the path that is a segment-aligned prefix of the most other paths.
-        let pathSegments = path.split(separator: "/")
-            .filter { $0 != "v1" }
-            .map { String($0) }
-        
-        switch method {
-        case "DELETE":
-            return ("delete", "Delete")
-            
-        case "GET":
-            // GET with no path params beyond basePath → list
-            // GET {basePath}/{id} → retrieve  
-            // GET {basePath}/search → search
-            
-            // Check if this is a search endpoint
-            if path.hasSuffix("/search") {
-                return ("search", "Search")
-            }
-            
-            // If path has more segments than basePath params, check for sub-actions
-            let nonParamSegments = pathSegments.filter { !$0.starts(with: "{") }
-            let basePrefixSegments = pathPrefix.split(separator: "/").filter { $0 != "v1" }.map(String.init).filter { !$0.starts(with: "{") }
-            let extraNonParams = nonParamSegments.count - basePrefixSegments.count
-            
-            if extraNonParams > 0 {
-                // Has extra non-param segments beyond basePath — named sub-resource or action
-                if let lastSeg = nonParamSegments.last, !basePrefixSegments.contains(lastSeg) {
-                    let camelAction = snakeToCamel(lastSeg)
-                    return ("list\(capitalize(camelAction))", "List\(capitalize(camelAction))")
-                }
-            }
-            
-            // GET with path param after basePath → retrieve
-            // GET basePath (no extra segments) → list
-            if pathParams.count > pathPrefix.split(separator: "/").filter({ $0.starts(with: "{") }).count {
-                return ("retrieve", "Retrieve")
-            }
-            
-            return ("list", "List")
-            
-        case "POST":
-            let basePrefixParamCount = pathPrefix.split(separator: "/").filter { $0.starts(with: "{") }.count
-            let totalPathParams = pathParams.count
-            
-            // POST basePath (no path params beyond prefix) → create
-            if totalPathParams == basePrefixParamCount && path == pathPrefix {
-                return ("create", "Create")
-            }
-            
-            // POST basePath/{id} (one extra path param, no trailing action) → update
-            let trailingParts = path.starts(with: pathPrefix) ? String(path.dropFirst(pathPrefix.count)) : ""
-            let trailingNonParams = trailingParts.split(separator: "/").filter { !$0.starts(with: "{") }
-            
-            if trailingNonParams.isEmpty && totalPathParams == basePrefixParamCount + 1 {
-                return ("update", "Update")
-            }
-            
-            // POST with trailing action segment → named action
-            if let actionSlug = trailingNonParams.last {
-                let camelAction = snakeToCamel(String(actionSlug))
-                return (camelAction, capitalize(camelAction))
-            }
-            
-            return ("create", "Create")
-            
-        default:
-            return (snakeToCamel(operationId ?? "unknown"), capitalize(snakeToCamel(operationId ?? "Unknown")))
         }
     }
     

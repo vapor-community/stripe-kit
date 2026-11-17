@@ -40,12 +40,10 @@ indirect enum StripePropertyType: Sendable {
     case array(element: StripePropertyType)
     case dictionary(value: StripePropertyType)
     case expandable(wrappedType: String)   // @Expandable<T>
-    case dynamicExpandable(types: [String]) // @DynamicExpandable<T1, T2...>
     case expandableCollection(wrappedType: String) // @ExpandableCollection<T>
     case `enum`(cases: [String])
-    case hash                               // [String: Any] escape hatch
-    case any                                // fallback
-    case date                               // epoch seconds
+    case hash                               // [String: AnyCodableValue]: free-form JSON object
+    case any                                // fallback for a schema with no type
 }
 
 /// Domain groupings for Stripe resources — derived from schema naming
@@ -55,13 +53,11 @@ enum StripeDomain: String, CaseIterable, Sendable {
     case billingPortal  // billing_portal.*
     case checkout       // checkout.*
     case climate        // climate.*
-    case connect        // accounts, transfers, etc. (special case)
     case entitlements   // entitlements.*
     case financialConnections // financial_connections.*
     case forwarding     // forwarding.*
     case identity       // identity.*
     case issuing        // issuing.*
-    case paymentLinks   // payment links (from paths)
     case radar          // radar.*
     case reporting      // reporting.*
     case sigma          // sigma.*
@@ -105,13 +101,11 @@ enum StripeDomain: String, CaseIterable, Sendable {
         case .billingPortal: return "Billing/Customer Portal"
         case .checkout: return "Checkout"
         case .climate: return "Climate"
-        case .connect: return "Connect"
         case .entitlements: return "Entitlements"
         case .financialConnections: return "Financial Connections"
         case .forwarding: return "Forwarding"
         case .identity: return "Identity"
         case .issuing: return "Issuing"
-        case .paymentLinks: return "Payment Links"
         case .radar: return "Fraud"
         case .reporting: return "Reporting"
         case .sigma: return "Sigma"

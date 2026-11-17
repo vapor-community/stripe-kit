@@ -184,10 +184,6 @@ struct SpecParser {
         return mapping
     }
     
-    private func refToSchemaName(_ ref: String) -> String {
-        ref.split(separator: "/").last.map(String.init) ?? ref
-    }
-    
     /// Parse all resources from the spec
     func parseResources() -> [StripeResource] {
         var resources: [StripeResource] = []
@@ -205,13 +201,12 @@ struct SpecParser {
                     name: name,
                     property: prop,
                     isRequired: required.contains(name),
-                    isExpandable: expandable.contains(name),
-                    allSchemas: spec.components.schemas
+                    isExpandable: expandable.contains(name)
                 )
             }.sorted { $0.name < $1.name }
             
             let anyOfVariants: [String]? = schema.anyOf.map { refs in
-                refs.compactMap { $0.ref?.split(separator: "/").last.map(String.init) }
+                refs.compactMap { $0.ref.map(refToSchemaName) }
             }
             
             resources.append(StripeResource(
@@ -232,7 +227,7 @@ struct SpecParser {
     
     /// Parse all inline schemas (those without x-resourceId) into StripeResources,
     /// so they can be generated as standalone types referenced by the main models.
-    /// Filtering is handled externally by SchemaClassifier's transitive closure.
+    /// Every such schema is generated (plus deleted objects); none are filtered out.
     func parseInlineSchemas() -> [StripeResource] {
         var resources: [StripeResource] = []
 
@@ -256,8 +251,7 @@ struct SpecParser {
                     name: name,
                     property: prop,
                     isRequired: required.contains(name),
-                    isExpandable: expandable.contains(name),
-                    allSchemas: spec.components.schemas
+                    isExpandable: expandable.contains(name)
                 )
             }.sorted { $0.name < $1.name }
             
@@ -286,14 +280,12 @@ struct SpecParser {
         name: String,
         property: PropertyObject,
         isRequired: Bool,
-        isExpandable: Bool,
-        allSchemas: [String: SchemaObject]
+        isExpandable: Bool
     ) -> StripeProperty {
         let type = resolveType(
             property: property, 
             fieldName: name,
-            isExpandable: isExpandable,
-            allSchemas: allSchemas
+            isExpandable: isExpandable
         )
         
         return StripeProperty(
@@ -313,8 +305,7 @@ struct SpecParser {
     private func resolveType(
         property: PropertyObject,
         fieldName: String,
-        isExpandable: Bool,
-        allSchemas: [String: SchemaObject]
+        isExpandable: Bool
     ) -> StripePropertyType {
         
         // Handle anyOf — common pattern for expandable fields
@@ -322,8 +313,7 @@ struct SpecParser {
             return resolveAnyOf(
                 anyOf, 
                 fieldName: fieldName, 
-                isExpandable: isExpandable,
-                allSchemas: allSchemas
+                isExpandable: isExpandable
             )
         }
         
@@ -332,14 +322,13 @@ struct SpecParser {
             return resolveAnyOf(
                 oneOf,
                 fieldName: fieldName, 
-                isExpandable: isExpandable,
-                allSchemas: allSchemas
+                isExpandable: isExpandable
             )
         }
         
         // Handle $ref
         if let ref = property.ref {
-            let typeName = refToTypeName(ref)
+            let typeName = refToSchemaName(ref)
             if isExpandable {
                 return .expandable(wrappedType: schemaNameToSwiftType(typeName))
             }
@@ -364,8 +353,7 @@ struct SpecParser {
                 let elementType = resolveType(
                     property: items,
                     fieldName: fieldName,
-                    isExpandable: false,
-                    allSchemas: allSchemas
+                    isExpandable: false
                 )
                 if isExpandable {
                     // Array of expandable references
@@ -381,8 +369,7 @@ struct SpecParser {
                 let valueType = resolveType(
                     property: additionalProperties,
                     fieldName: fieldName,
-                    isExpandable: false,
-                    allSchemas: allSchemas
+                    isExpandable: false
                 )
                 return .dictionary(value: valueType)
             }
@@ -397,7 +384,7 @@ struct SpecParser {
                let items = dataProp.items {
                 // Single $ref → use the referenced type for List naming
                 if let ref = items.ref {
-                    let elementTypeName = refToTypeName(ref)
+                    let elementTypeName = refToSchemaName(ref)
                     let swiftElementType = schemaNameToSwiftType(elementTypeName)
                     return .object(name: "\(swiftElementType)List")
                 }
@@ -410,10 +397,7 @@ struct SpecParser {
                     return .object(name: "\(swiftType)List")
                 }
             }
-            // Inline object with properties — this is a hash/metadata
-            if property.properties != nil {
-                return .hash
-            }
+            // Any other object (inline fields or none) is a free-form hash
             return .hash
         default:
             return .any
@@ -423,22 +407,20 @@ struct SpecParser {
     private func resolveAnyOf(
         _ variants: [PropertyObject],
         fieldName: String,
-        isExpandable: Bool,
-        allSchemas: [String: SchemaObject]
+        isExpandable: Bool
     ) -> StripePropertyType {
         // Filter out string-only variants (typically the ID string for expandables)
         let nonStringVariants = variants.filter { $0.type != "string" }
-        let refVariants = variants.compactMap { $0.ref }.map(refToTypeName)
+        let refVariants = variants.compactMap { $0.ref }.map(refToSchemaName)
         
-        if isExpandable {
-            let objectRefs = refVariants.map(schemaNameToSwiftType)
-            
-            if let first = objectRefs.first, objectRefs.count == 1 {
-                return .expandable(wrappedType: first)
-            } else if objectRefs.count > 1 {
-                // Multiple possible types → DynamicExpandable
-                return .dynamicExpandable(types: objectRefs)
-            }
+        if isExpandable, !refVariants.isEmpty {
+            // Expandable fields expand to the live object only (`customer`, not `deleted_customer`)
+            let live = refVariants.filter { !$0.starts(with: SpecParser.deletedPrefix) }
+            precondition(
+                live.count <= 1,
+                "Expandable field `\(fieldName)` can expand to several types (\(live.joined(separator: ", "))), which isn't supported"
+            )
+            return .expandable(wrappedType: schemaNameToSwiftType(live.first ?? refVariants[0]))
         }
         
         // Non-expandable anyOf — try to pick the most specific type
@@ -446,8 +428,7 @@ struct SpecParser {
             return resolveType(
                 property: single,
                 fieldName: fieldName,
-                isExpandable: false,
-                allSchemas: allSchemas
+                isExpandable: false
             )
         }
         
@@ -467,16 +448,11 @@ struct SpecParser {
     }
     
     // MARK: - Naming Helpers
-    
-    private func refToTypeName(_ ref: String) -> String {
-        // "#/components/schemas/foo" → "foo"
-        ref.split(separator: "/").last.map(String.init) ?? ref
-    }
-    
-    /// Compute the base Swift type from just the last segment
+
     /// Prefix of the spec's deleted-object schemas (e.g. "deleted_customer"), returned by DELETE endpoints.
     static let deletedPrefix = "deleted_"
 
+    /// The PascalCase Swift type for just the last segment of a schema name
     private static func baseSwiftType(_ name: String) -> String {
         let baseName: String
         if name.contains(".") {

@@ -17,8 +17,9 @@ import Foundation
 struct CoverageCheck {
     let spec: OpenAPISpec
     let parser: SpecParser
-    let routeGen: RouteGenerator
     let resources: [StripeResource]
+    /// Each resource's route operations, keyed by schema name
+    let operations: [String: [RouteGenerator.RouteOperation]]
     let paramFallbacks: [String: String]
     let exceptions: [String: String]
 
@@ -54,7 +55,7 @@ struct CoverageCheck {
 
         for resource in resources.sorted(by: { $0.swiftTypeName < $1.swiftTypeName }) {
             let routes = "\(resource.swiftTypeName)Routes"
-            for op in routeGen.findOperations(for: resource) {
+            for op in self.operations[resource.schemaName] ?? [] {
                 let returnType = op.returnType ?? resource.swiftTypeName
                 operations.append(Operation(method: op.httpMethod, path: op.path, routes: routes, name: op.funcName, returnType: returnType))
                 let endpoint = "\(op.httpMethod) \(op.path)"

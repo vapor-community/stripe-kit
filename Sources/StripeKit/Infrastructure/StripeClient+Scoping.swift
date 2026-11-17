@@ -10,8 +10,12 @@ import Foundation
 import AsyncHTTPClient
 
 extension StripeClient {
-    /// Returns a scoped client that sends all requests on behalf of a connected account.
-    /// Uses the `Stripe-Account` header per Stripe Connect docs.
+    /// Returns a scoped client that makes every request as the given connected account, by
+    /// sending the `Stripe-Account` header (what Stripe's SDKs call `stripeAccount`).
+    ///
+    /// Not to be confused with the `on_behalf_of` param some endpoints take (`onBehalfOf` on
+    /// their params structs), which keeps the request on your platform account but settles
+    /// funds for the connected account.
     ///
     /// ```swift
     /// let payout = try await stripe.onBehalfOf("acct_xxx").payouts.create(params)

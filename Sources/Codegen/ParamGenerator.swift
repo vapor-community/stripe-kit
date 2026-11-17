@@ -3,17 +3,16 @@
 // Each POST operation gets a {Resource}{Action}Params struct with all fields typed.
 // Each GET operation with query params beyond `expand` (list, search, …) gets one too,
 // e.g. CustomerListParams, CustomerSearchParams.
-// Nested objects become sub-structs up to 4 levels deep, then fall back to [String: String]?.
+// Nested objects become sub-structs (up to `maxDepth` levels, then [String: String]), and
+// `anyOf` unions become enums with a case per form.
 //
-// Every params struct includes an optional `expand: [String]?` field.
+// Every top-level params struct includes an optional `expand: [String]?` field.
 
 import Foundation
 
 struct ParamGenerator {
     let spec: OpenAPISpec
     let parser: SpecParser
-    /// Deterministic mapping of schema name → API paths, built by SpecParser.buildPathMapping()
-    let pathMapping: [String: [(method: String, path: String)]]
     /// Records every place a param falls back to a looser type than the spec describes
     var fallbacks = ParamFallbacks()
     
@@ -22,10 +21,9 @@ struct ParamGenerator {
     
     // MARK: - Per-Resource Generation
     
-    /// Generate param structs for a resource as an extension file.
+    /// Generate param structs for a resource's `paramOperations` as an extension file.
     /// Returns nil if the resource has no POST bodies or GET query params.
-    func generate(resource: StripeResource) -> String? {
-        let operations = findOperations(for: resource)
+    func generate(resource: StripeResource, operations: [ParamOperation]) -> String? {
         guard !operations.isEmpty else { return nil }
         
         var lines: [String] = []
@@ -94,41 +92,24 @@ struct ParamGenerator {
         let properties = schema.properties ?? [:]
         let sorted = properties.sorted { $0.key < $1.key }
         
-        // Doc comment from schema description
-        if let desc = schema.description, !desc.isEmpty {
-            let cleaned = cleanDescription(desc)
-            let wrapped = wordWrap(cleaned, lineLength: 100)
-            for line in wrapped {
-                lines.append("/// \(line)")
-            }
-        }
-        
+        lines.append(contentsOf: docComment(schema.description))
         lines.append("public struct \(structName): StripeParams {")
         
-        // Required fields first, then optional, sorted alphabetically within each group
-        let requiredProps = sorted.filter { requiredFields.contains($0.key) }
-        let optionalProps = sorted.filter { !requiredFields.contains($0.key) }
-        
-        for (propName, prop) in requiredProps {
-            lines.append(contentsOf: generateParamProperty(
-                name: propName,
-                prop: prop,
-                isRequired: true,
-                parentStem: stem,
-                depth: depth,
-                subStructs: &subStructs
-            ))
+        // Required fields first, then optional, sorted alphabetically within each group.
+        // Each type is resolved once, which also generates the nested types it needs.
+        let ordered = sorted.filter { requiredFields.contains($0.key) } + sorted.filter { !requiredFields.contains($0.key) }
+        let fields = ordered.map { propName, prop in
+            (
+                name: escapedSwiftName(snakeToCamel(propName)),
+                type: resolveType(prop, parentStem: stem, propName: propName, depth: depth, subStructs: &subStructs),
+                isRequired: requiredFields.contains(propName),
+                description: prop.description
+            )
         }
         
-        for (propName, prop) in optionalProps {
-            lines.append(contentsOf: generateParamProperty(
-                name: propName,
-                prop: prop,
-                isRequired: false,
-                parentStem: stem,
-                depth: depth,
-                subStructs: &subStructs
-            ))
+        for field in fields {
+            lines.append(contentsOf: docComment(field.description, indent: "    "))
+            lines.append("    public var \(field.name): \(field.type)\(field.isRequired ? "" : "?")")
         }
         
         // Only top-level params have expand (sub-types don't make separate API calls)
@@ -137,54 +118,17 @@ struct ParamGenerator {
             lines.append("    public var expand: [String]?")
         }
         
-        // Memberwise initializer with only required params
+        // Memberwise initializer: required params first, optional ones defaulting to nil
         lines.append("")
-        if !requiredProps.isEmpty {
-            let initParams = requiredProps.map { (propName, prop) -> String in
-                let swiftName = snakeToCamel(propName)
-                // Same resolution as the property; nested types are already generated there
-                var dummySubStructs: [(name: String, lines: [String])] = []
-                let swiftType = resolveType(prop, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
-                return "\(escapedSwiftName(swiftName)): \(swiftType)"
-            }.joined(separator: ", ")
-            
-            // Add optional params with defaults
-            let optionalInitParams = optionalProps.map { (propName, prop) -> String in
-                let swiftName = snakeToCamel(propName)
-                var dummySubStructs: [(name: String, lines: [String])] = []
-                let swiftType = resolveType(prop, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
-                return "\(escapedSwiftName(swiftName)): \(swiftType)? = nil"
-            }.joined(separator: ", ")
-            
-            let allParams = optionalInitParams.isEmpty ? initParams : "\(initParams), \(optionalInitParams)"
-            
-            lines.append("    public init(\(allParams)) {")
-            for (propName, _) in requiredProps {
-                let swiftName = snakeToCamel(propName)
-                lines.append("        self.\(escapedSwiftName(swiftName)) = \(escapedSwiftName(swiftName))")
-            }
-            for (propName, _) in optionalProps {
-                let swiftName = snakeToCamel(propName)
-                lines.append("        self.\(escapedSwiftName(swiftName)) = \(escapedSwiftName(swiftName))")
-            }
-            lines.append("    }")
-        } else if !optionalProps.isEmpty {
-            // All-optional: memberwise init with nil defaults
-            let initParams = optionalProps.map { (propName, prop) -> String in
-                let swiftName = snakeToCamel(propName)
-                var dummySubStructs: [(name: String, lines: [String])] = []
-                let swiftType = resolveType(prop, parentStem: stem, propName: propName, depth: depth, subStructs: &dummySubStructs)
-                return "\(escapedSwiftName(swiftName)): \(swiftType)? = nil"
-            }.joined(separator: ", ")
-            
-            lines.append("    public init(\(initParams)) {")
-            for (propName, _) in optionalProps {
-                let swiftName = snakeToCamel(propName)
-                lines.append("        self.\(escapedSwiftName(swiftName)) = \(escapedSwiftName(swiftName))")
-            }
-            lines.append("    }")
-        } else {
+        if fields.isEmpty {
             lines.append("    public init() {}")
+        } else {
+            let initParams = fields.map { "\($0.name): \($0.type)\($0.isRequired ? "" : "? = nil")" }
+            lines.append("    public init(\(initParams.joined(separator: ", "))) {")
+            for field in fields {
+                lines.append("        self.\(field.name) = \(field.name)")
+            }
+            lines.append("    }")
         }
         
         // CodingKeys
@@ -211,34 +155,6 @@ struct ParamGenerator {
         return (lines, subStructs)
     }
     
-    // MARK: - Property Generation
-    
-    private func generateParamProperty(
-        name: String,
-        prop: PropertyObject,
-        isRequired: Bool,
-        parentStem: String,
-        depth: Int,
-        subStructs: inout [(name: String, lines: [String])]
-    ) -> [String] {
-        var lines: [String] = []
-        let swiftName = snakeToCamel(name)
-        
-        // Doc comment
-        if let desc = prop.description, !desc.isEmpty {
-            let cleaned = cleanDescription(desc)
-            let wrapped = wordWrap(cleaned, lineLength: 100)
-            for line in wrapped {
-                lines.append("    /// \(line)")
-            }
-        }
-        
-        let optionalMark = isRequired ? "" : "?"
-        let swiftType = resolveType(prop, parentStem: parentStem, propName: name, depth: depth, subStructs: &subStructs)
-        lines.append("    public var \(escapedSwiftName(swiftName)): \(swiftType)\(optionalMark)")
-        return lines
-    }
-    
     // MARK: - Type Resolution
     
     /// The Swift type for a param schema. Generates the nested types it needs (structs for
@@ -258,7 +174,7 @@ struct ParamGenerator {
         }
         
         if let ref = prop.ref {
-            return parser.schemaNameToSwiftType(refToTypeName(ref))
+            return parser.schemaNameToSwiftType(refToSchemaName(ref))
         }
         
         // Enum. A "clear-only" enum whose sole value is "" gets no generated type
@@ -346,7 +262,7 @@ struct ParamGenerator {
         let kinds = nonEmpty.map { variant -> String in
             if let title = variant.title { return title }
             if variant.enum != nil { return "\(variant.type ?? "?") enum" }
-            return variant.type ?? variant.ref.map { String($0.split(separator: "/").last ?? "") } ?? "?"
+            return variant.type ?? variant.ref.map(refToSchemaName) ?? "?"
         }
         fallbacks.record(parentStem, propName, "anyOf \(kinds.joined(separator: " | ")) → String")
         return "String"
@@ -499,8 +415,7 @@ struct ParamGenerator {
     // MARK: - Enum Generation for Params
     
     /// Generate enums that appear in param properties (e.g., capture_method: automatic|manual)
-    func generateParamEnums(resource: StripeResource) -> [String] {
-        let operations = findOperations(for: resource)
+    func generateParamEnums(resource: StripeResource, operations: [ParamOperation]) -> [String] {
         var lines: [String] = []
         var seenEnumNames = Set<String>()
         
@@ -513,7 +428,7 @@ struct ParamGenerator {
                     let enumName = "\(stem)\(capitalize(snakeToCamel(propName)))"
                     guard !seenEnumNames.contains(enumName) else { continue }
                     seenEnumNames.insert(enumName)
-                    lines.append(contentsOf: generateEnum(name: enumName, cases: enumCases))
+                    lines.append(contentsOf: generateStringEnum(name: enumName, cases: enumCases))
                     lines.append("")
                 }
                 // Also check anyOf for nested enum cases
@@ -548,7 +463,7 @@ struct ParamGenerator {
                     let enumName = "\(subParent)\(capitalize(snakeToCamel(subName)))"
                     if !seenEnumNames.contains(enumName) {
                         seenEnumNames.insert(enumName)
-                        lines.append(contentsOf: generateEnum(name: enumName, cases: enumCases))
+                        lines.append(contentsOf: generateStringEnum(name: enumName, cases: enumCases))
                         lines.append("")
                     }
                 }
@@ -570,7 +485,7 @@ struct ParamGenerator {
                 let enumName = "\(parentName)\(capitalize(snakeToCamel(propName)))"
                 if !seenEnumNames.contains(enumName) {
                     seenEnumNames.insert(enumName)
-                    lines.append(contentsOf: generateEnum(name: enumName, cases: enumCases))
+                    lines.append(contentsOf: generateStringEnum(name: enumName, cases: enumCases))
                     lines.append("")
                 }
             }
@@ -582,7 +497,7 @@ struct ParamGenerator {
                         let enumName = "\(subParent)\(capitalize(snakeToCamel(subName)))"
                         if !seenEnumNames.contains(enumName) {
                             seenEnumNames.insert(enumName)
-                            lines.append(contentsOf: generateEnum(name: enumName, cases: enumCases))
+                            lines.append(contentsOf: generateStringEnum(name: enumName, cases: enumCases))
                             lines.append("")
                         }
                     }
@@ -632,40 +547,18 @@ struct ParamGenerator {
         }
     }
     
-    private func generateEnum(name: String, cases: [String]) -> [String] {
-        // Filter out empty string ("" means unset)
-        let filtered = cases.filter { !$0.isEmpty }
-        guard !filtered.isEmpty else { return [] }
-        
-        var lines: [String] = []
-        var seenCases = Set<String>()
-        lines.append("public enum \(name): String, Codable, Sendable {")
-        for rawCase in filtered {
-            let swiftCase = enumCaseToSwift(rawCase)
-            guard !seenCases.contains(swiftCase) else { continue }
-            seenCases.insert(swiftCase)
-            if swiftCase != rawCase {
-                lines.append("    case \(swiftCase) = \"\(rawCase)\"")
-            } else {
-                lines.append("    case \(swiftCase)")
-            }
-        }
-        lines.append("}")
-        return lines
-    }
-    
     // MARK: - Operation Discovery
     
-    /// Find all POST operations with a body and GET operations with query params for a resource,
-    /// returning (action, schema, requiredFields).
-    ///
-    /// Uses the route generator's operations, so each struct is named exactly as the route
-    /// that takes it refers to it: `{Resource}{Action}Params`.
-    func findOperations(for resource: StripeResource) -> [(action: String, schema: PropertyObject, required: Set<String>)] {
-        let routeGen = RouteGenerator(spec: spec, parser: parser, pathMapping: pathMapping)
-        var results: [(action: String, schema: PropertyObject, required: Set<String>)] = []
+    /// A params struct to generate: `{Resource}{action}Params` from a request body or query schema.
+    typealias ParamOperation = (action: String, schema: PropertyObject, required: Set<String>)
 
-        for op in routeGen.findOperations(for: resource) {
+    /// The POST operations with a body and GET operations with query params among a resource's
+    /// route operations (`RouteGenerator.findOperations`), so each struct is named exactly as
+    /// the route that takes it refers to it: `{Resource}{Action}Params`.
+    func paramOperations(for resource: StripeResource, routes: [RouteGenerator.RouteOperation]) -> [ParamOperation] {
+        var results: [ParamOperation] = []
+
+        for op in routes {
             let schema: PropertyObject?
             if op.httpMethod == "POST" && op.hasBody {
                 schema = spec.paths[op.path]?.post?.requestBody?.content?["application/x-www-form-urlencoded"]?.schema
@@ -684,15 +577,7 @@ struct ParamGenerator {
 
         return results.sorted { $0.action < $1.action }
     }
-
-    
-    // MARK: - Helpers
-    
-    private func refToTypeName(_ ref: String) -> String {
-        ref.split(separator: "/").last.map(String.init) ?? ref
-    }
 }
-
 /// Params whose Swift type is looser than the spec's (a `String` for an `anyOf`, a
 /// `[String: String]` for a free-form object, …). Collected so the coverage check can
 /// require each one to be fixed or explicitly accepted.

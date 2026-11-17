@@ -74,7 +74,33 @@ func capitalize(_ s: String) -> String {
     s.prefix(1).uppercased() + s.dropFirst()
 }
 
+/// The schema name a `$ref` points to: "#/components/schemas/customer" → "customer"
+func refToSchemaName(_ ref: String) -> String {
+    ref.split(separator: "/").last.map(String.init) ?? ref
+}
 
+/// `///` doc comment lines for a spec description (HTML stripped, wrapped at 100 columns).
+/// Empty when there's no description.
+func docComment(_ description: String?, indent: String = "") -> [String] {
+    guard let description, !description.isEmpty else { return [] }
+    return wordWrap(cleanDescription(description), lineLength: 100).map { "\(indent)/// \($0)" }
+}
+
+/// A `String`-backed enum for a spec enum. "" is dropped (Stripe uses it to mean "unset"), and
+/// values that map to the same Swift case are emitted once. Empty when no cases are left.
+func generateStringEnum(name: String, cases: [String], description: String? = nil) -> [String] {
+    var lines = docComment(description)
+    lines.append("public enum \(name): String, Codable, Sendable {")
+    var seenCases = Set<String>()
+    for rawCase in cases where !rawCase.isEmpty {
+        let swiftCase = enumCaseToSwift(rawCase)
+        guard seenCases.insert(swiftCase).inserted else { continue }
+        lines.append(swiftCase == rawCase ? "    case \(swiftCase)" : "    case \(swiftCase) = \"\(rawCase)\"")
+    }
+    guard !seenCases.isEmpty else { return [] }
+    lines.append("}")
+    return lines
+}
 
 /// Word-wrap text to a given line length
 func wordWrap(_ text: String, lineLength: Int) -> [String] {
