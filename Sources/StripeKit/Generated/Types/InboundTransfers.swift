@@ -21,8 +21,14 @@ public struct InboundTransfers: Codable, Sendable {
 }
 
 /// The type of the payment method used in the InboundTransfer.
-public enum InboundTransfersType: String, Codable, Sendable {
-    case usBankAccount = "us_bank_account"
+public struct InboundTransfersType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
 }
 
 public struct InboundTransfersList: Codable, Sendable {

@@ -13,9 +13,15 @@ public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceMulticaptur
 }
 
 /// Indicates whether or not multiple captures are supported.
-public enum PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceMulticaptureStatus: String, Codable, Sendable {
-    case available
-    case unavailable
+public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceMulticaptureStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var available: Self { .init(rawValue: "available") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
 }
 
 public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceMulticaptureList: Codable, Sendable {

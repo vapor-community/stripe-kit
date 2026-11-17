@@ -25,8 +25,14 @@ public struct SchedulesPhaseAutomaticTax: Codable, Sendable {
 }
 
 /// If Stripe disabled automatic tax, this enum describes why.
-public enum SchedulesPhaseAutomaticTaxDisabledReason: String, Codable, Sendable {
-    case requiresLocationInputs = "requires_location_inputs"
+public struct SchedulesPhaseAutomaticTaxDisabledReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var requiresLocationInputs: Self { .init(rawValue: "requires_location_inputs") }
 }
 
 public struct SchedulesPhaseAutomaticTaxList: Codable, Sendable {

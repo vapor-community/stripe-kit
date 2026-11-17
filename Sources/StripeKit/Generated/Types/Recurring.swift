@@ -33,19 +33,31 @@ public struct Recurring: Codable, Sendable {
 }
 
 /// The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
-public enum RecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct RecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 /// Configures how the quantity per period should be determined. Can be either `metered` or `licensed`.
 /// `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered`
 /// aggregates the total usage based on usage records. Defaults to `licensed`.
-public enum RecurringUsageType: String, Codable, Sendable {
-    case licensed
-    case metered
+public struct RecurringUsageType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var licensed: Self { .init(rawValue: "licensed") }
+    public static var metered: Self { .init(rawValue: "metered") }
 }
 
 public struct RecurringList: Codable, Sendable {

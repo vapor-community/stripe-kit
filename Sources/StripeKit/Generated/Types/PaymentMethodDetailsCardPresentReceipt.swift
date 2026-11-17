@@ -49,11 +49,17 @@ public struct PaymentMethodDetailsCardPresentReceipt: Codable, Sendable {
 }
 
 /// The type of account being debited or credited
-public enum PaymentMethodDetailsCardPresentReceiptAccountType: String, Codable, Sendable {
-    case checking
-    case credit
-    case prepaid
-    case unknown
+public struct PaymentMethodDetailsCardPresentReceiptAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var credit: Self { .init(rawValue: "credit") }
+    public static var prepaid: Self { .init(rawValue: "prepaid") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
 }
 
 public struct PaymentMethodDetailsCardPresentReceiptList: Codable, Sendable {

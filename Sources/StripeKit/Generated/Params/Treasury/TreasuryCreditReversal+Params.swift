@@ -74,8 +74,14 @@ public struct TreasuryCreditReversalListParams: StripeParams {
     }
 }
 
-public enum TreasuryCreditReversalListStatus: String, Codable, Sendable {
-    case canceled
-    case posted
-    case processing
+public struct TreasuryCreditReversalListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var posted: Self { .init(rawValue: "posted") }
+    public static var processing: Self { .init(rawValue: "processing") }
 }

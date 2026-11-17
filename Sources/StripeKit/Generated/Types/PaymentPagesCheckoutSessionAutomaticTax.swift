@@ -21,10 +21,16 @@ public struct PaymentPagesCheckoutSessionAutomaticTax: Codable, Sendable {
 }
 
 /// The status of the most recent automated tax calculation for this session.
-public enum PaymentPagesCheckoutSessionAutomaticTaxStatus: String, Codable, Sendable {
-    case complete
-    case failed
-    case requiresLocationInputs = "requires_location_inputs"
+public struct PaymentPagesCheckoutSessionAutomaticTaxStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var complete: Self { .init(rawValue: "complete") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var requiresLocationInputs: Self { .init(rawValue: "requires_location_inputs") }
 }
 
 public struct PaymentPagesCheckoutSessionAutomaticTaxList: Codable, Sendable {

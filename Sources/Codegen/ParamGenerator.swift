@@ -184,7 +184,7 @@ struct ParamGenerator {
         // Enum. A "clear-only" enum whose sole value is "" gets no generated type
         // (generateStringEnum drops ""), so fall through to the base type instead.
         if let enumCases = prop.enum, enumCases.contains(where: { !$0.isEmpty }) {
-            subStructs.append((stem, generateStringEnum(name: stem, cases: enumCases)))
+            subStructs.append((stem, generateStringEnum(name: stem, cases: enumCases, valueDescriptions: prop.enumDescriptions ?? [:])))
             return stem
         }
         

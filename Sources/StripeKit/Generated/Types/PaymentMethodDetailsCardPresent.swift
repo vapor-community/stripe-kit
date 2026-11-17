@@ -119,12 +119,18 @@ public struct PaymentMethodDetailsCardPresent: Codable, Sendable {
 }
 
 /// How card details were read in this transaction.
-public enum PaymentMethodDetailsCardPresentReadMethod: String, Codable, Sendable {
-    case contactEmv = "contact_emv"
-    case contactlessEmv = "contactless_emv"
-    case contactlessMagstripeMode = "contactless_magstripe_mode"
-    case magneticStripeFallback = "magnetic_stripe_fallback"
-    case magneticStripeTrack2 = "magnetic_stripe_track2"
+public struct PaymentMethodDetailsCardPresentReadMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var contactEmv: Self { .init(rawValue: "contact_emv") }
+    public static var contactlessEmv: Self { .init(rawValue: "contactless_emv") }
+    public static var contactlessMagstripeMode: Self { .init(rawValue: "contactless_magstripe_mode") }
+    public static var magneticStripeFallback: Self { .init(rawValue: "magnetic_stripe_fallback") }
+    public static var magneticStripeTrack2: Self { .init(rawValue: "magnetic_stripe_track2") }
 }
 
 public struct PaymentMethodDetailsCardPresentList: Codable, Sendable {

@@ -26,16 +26,28 @@ public struct PaymentPagesCheckoutSessionSavedPaymentMethodOptions: Codable, Sen
 }
 
 /// Enable customers to choose if they wish to remove their saved payment methods. Disabled by default.
-public enum PaymentPagesCheckoutSessionSavedPaymentMethodOptionsPaymentMethodRemove: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct PaymentPagesCheckoutSessionSavedPaymentMethodOptionsPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// Enable customers to choose if they wish to save their payment method for future use. Disabled by
 /// default.
-public enum PaymentPagesCheckoutSessionSavedPaymentMethodOptionsPaymentMethodSave: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct PaymentPagesCheckoutSessionSavedPaymentMethodOptionsPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 public struct PaymentPagesCheckoutSessionSavedPaymentMethodOptionsList: Codable, Sendable {

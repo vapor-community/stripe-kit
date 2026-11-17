@@ -14,11 +14,17 @@ public struct InsightsResourcesPaymentEvaluationMerchantBlocked: Codable, Sendab
 }
 
 /// The reason the payment was blocked by the merchant.
-public enum InsightsResourcesPaymentEvaluationMerchantBlockedReason: String, Codable, Sendable {
-    case authenticationRequired = "authentication_required"
-    case blockedForFraud = "blocked_for_fraud"
-    case invalidPayment = "invalid_payment"
-    case other
+public struct InsightsResourcesPaymentEvaluationMerchantBlockedReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var authenticationRequired: Self { .init(rawValue: "authentication_required") }
+    public static var blockedForFraud: Self { .init(rawValue: "blocked_for_fraud") }
+    public static var invalidPayment: Self { .init(rawValue: "invalid_payment") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 public struct InsightsResourcesPaymentEvaluationMerchantBlockedList: Codable, Sendable {

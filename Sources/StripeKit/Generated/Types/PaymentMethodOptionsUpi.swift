@@ -37,9 +37,15 @@ public struct PaymentMethodOptionsUpi: Codable, Sendable {
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum PaymentMethodOptionsUpiSetupFutureUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct PaymentMethodOptionsUpiSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 public struct PaymentMethodOptionsUpiList: Codable, Sendable {

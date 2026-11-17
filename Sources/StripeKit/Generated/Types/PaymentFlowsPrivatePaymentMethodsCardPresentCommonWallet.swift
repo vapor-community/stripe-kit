@@ -13,11 +13,17 @@ public struct PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet: Codable,
 }
 
 /// The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
-public enum PaymentFlowsPrivatePaymentMethodsCardPresentCommonWalletType: String, Codable, Sendable {
-    case applePay = "apple_pay"
-    case googlePay = "google_pay"
-    case samsungPay = "samsung_pay"
-    case unknown
+public struct PaymentFlowsPrivatePaymentMethodsCardPresentCommonWalletType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var applePay: Self { .init(rawValue: "apple_pay") }
+    public static var googlePay: Self { .init(rawValue: "google_pay") }
+    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
 }
 
 public struct PaymentFlowsPrivatePaymentMethodsCardPresentCommonWalletList: Codable, Sendable {

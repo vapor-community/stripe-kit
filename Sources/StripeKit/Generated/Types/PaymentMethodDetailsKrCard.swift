@@ -26,29 +26,35 @@ public struct PaymentMethodDetailsKrCard: Codable, Sendable {
 }
 
 /// The local credit or debit card brand.
-public enum PaymentMethodDetailsKrCardBrand: String, Codable, Sendable {
-    case bc
-    case citi
-    case hana
-    case hyundai
-    case jeju
-    case jeonbuk
-    case kakaobank
-    case kbank
-    case kdbbank
-    case kookmin
-    case kwangju
-    case lotte
-    case mg
-    case nh
-    case post
-    case samsung
-    case savingsbank
-    case shinhan
-    case shinhyup
-    case suhyup
-    case tossbank
-    case woori
+public struct PaymentMethodDetailsKrCardBrand: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bc: Self { .init(rawValue: "bc") }
+    public static var citi: Self { .init(rawValue: "citi") }
+    public static var hana: Self { .init(rawValue: "hana") }
+    public static var hyundai: Self { .init(rawValue: "hyundai") }
+    public static var jeju: Self { .init(rawValue: "jeju") }
+    public static var jeonbuk: Self { .init(rawValue: "jeonbuk") }
+    public static var kakaobank: Self { .init(rawValue: "kakaobank") }
+    public static var kbank: Self { .init(rawValue: "kbank") }
+    public static var kdbbank: Self { .init(rawValue: "kdbbank") }
+    public static var kookmin: Self { .init(rawValue: "kookmin") }
+    public static var kwangju: Self { .init(rawValue: "kwangju") }
+    public static var lotte: Self { .init(rawValue: "lotte") }
+    public static var mg: Self { .init(rawValue: "mg") }
+    public static var nh: Self { .init(rawValue: "nh") }
+    public static var post: Self { .init(rawValue: "post") }
+    public static var samsung: Self { .init(rawValue: "samsung") }
+    public static var savingsbank: Self { .init(rawValue: "savingsbank") }
+    public static var shinhan: Self { .init(rawValue: "shinhan") }
+    public static var shinhyup: Self { .init(rawValue: "shinhyup") }
+    public static var suhyup: Self { .init(rawValue: "suhyup") }
+    public static var tossbank: Self { .init(rawValue: "tossbank") }
+    public static var woori: Self { .init(rawValue: "woori") }
 }
 
 public struct PaymentMethodDetailsKrCardList: Codable, Sendable {

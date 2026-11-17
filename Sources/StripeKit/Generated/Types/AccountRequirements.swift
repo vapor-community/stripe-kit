@@ -51,22 +51,43 @@ public struct AccountRequirements: Codable, Sendable {
 
 /// If the account is disabled, this enum describes why. [Learn more about handling verification
 /// issues](https://docs.stripe.com/connect/handling-api-verification).
-public enum AccountRequirementsDisabledReason: String, Codable, Sendable {
-    case actionRequiredRequestedCapabilities = "action_required.requested_capabilities"
-    case listed
-    case other
-    case platformPaused = "platform_paused"
-    case rejectedFraud = "rejected.fraud"
-    case rejectedIncompleteVerification = "rejected.incomplete_verification"
-    case rejectedListed = "rejected.listed"
-    case rejectedOther = "rejected.other"
-    case rejectedPlatformFraud = "rejected.platform_fraud"
-    case rejectedPlatformOther = "rejected.platform_other"
-    case rejectedPlatformTermsOfService = "rejected.platform_terms_of_service"
-    case rejectedTermsOfService = "rejected.terms_of_service"
-    case requirementsPastDue = "requirements.past_due"
-    case requirementsPendingVerification = "requirements.pending_verification"
-    case underReview = "under_review"
+public struct AccountRequirementsDisabledReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The account has been disabled because its requested capabilities require action.
+    public static var actionRequiredRequestedCapabilities: Self { .init(rawValue: "action_required.requested_capabilities") }
+    /// The account has been listed.
+    public static var listed: Self { .init(rawValue: "listed") }
+    /// The account has been disabled for another reason.
+    public static var other: Self { .init(rawValue: "other") }
+    /// The account has been paused by the platform.
+    public static var platformPaused: Self { .init(rawValue: "platform_paused") }
+    /// The account has been rejected for fraud.
+    public static var rejectedFraud: Self { .init(rawValue: "rejected.fraud") }
+    /// The account has been rejected for incomplete verification.
+    public static var rejectedIncompleteVerification: Self { .init(rawValue: "rejected.incomplete_verification") }
+    /// The account has been rejected because it is listed.
+    public static var rejectedListed: Self { .init(rawValue: "rejected.listed") }
+    /// The account has been rejected for another reason.
+    public static var rejectedOther: Self { .init(rawValue: "rejected.other") }
+    /// The account has been rejected by the platform for fraud.
+    public static var rejectedPlatformFraud: Self { .init(rawValue: "rejected.platform_fraud") }
+    /// The account has been rejected by the platform.
+    public static var rejectedPlatformOther: Self { .init(rawValue: "rejected.platform_other") }
+    /// The account has been rejected by the platform for violating the Stripe services agreement.
+    public static var rejectedPlatformTermsOfService: Self { .init(rawValue: "rejected.platform_terms_of_service") }
+    /// The account has been rejected because it does not meet Stripe's terms of service.
+    public static var rejectedTermsOfService: Self { .init(rawValue: "rejected.terms_of_service") }
+    /// The account has been disabled because requirements are past_due.
+    public static var requirementsPastDue: Self { .init(rawValue: "requirements.past_due") }
+    /// The account has been disabled because requirements are pending verification.
+    public static var requirementsPendingVerification: Self { .init(rawValue: "requirements.pending_verification") }
+    /// The account has been disabled because it is under review.
+    public static var underReview: Self { .init(rawValue: "under_review") }
 }
 
 public struct AccountRequirementsList: Codable, Sendable {

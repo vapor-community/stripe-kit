@@ -38,35 +38,41 @@ public struct PaymentMethodDetailsEps: Codable, Sendable {
 /// `hypo_bank_burgenland_aktiengesellschaft`, `marchfelder_bank`, `oberbank_ag`,
 /// `raiffeisen_bankengruppe_osterreich`, `schoellerbank_ag`, `sparda_bank_wien`, `volksbank_gruppe`,
 /// `volkskreditbank_ag`, or `vr_bank_braunau`.
-public enum PaymentMethodDetailsEpsBank: String, Codable, Sendable {
-    case arzteUndApothekerBank = "arzte_und_apotheker_bank"
-    case austrianAnadiBankAg = "austrian_anadi_bank_ag"
-    case bankAustria = "bank_austria"
-    case bankhausCarlSpangler = "bankhaus_carl_spangler"
-    case bankhausSchelhammerUndSchatteraAg = "bankhaus_schelhammer_und_schattera_ag"
-    case bawagPskAg = "bawag_psk_ag"
-    case bksBankAg = "bks_bank_ag"
-    case brullKallmusBankAg = "brull_kallmus_bank_ag"
-    case btvVierLanderBank = "btv_vier_lander_bank"
-    case capitalBankGraweGruppeAg = "capital_bank_grawe_gruppe_ag"
-    case deutscheBankAg = "deutsche_bank_ag"
-    case dolomitenbank
-    case easybankAg = "easybank_ag"
-    case ersteBankUndSparkassen = "erste_bank_und_sparkassen"
-    case hypoAlpeadriabankInternationalAg = "hypo_alpeadriabank_international_ag"
-    case hypoBankBurgenlandAktiengesellschaft = "hypo_bank_burgenland_aktiengesellschaft"
-    case hypoNoeLbFurNiederosterreichUWien = "hypo_noe_lb_fur_niederosterreich_u_wien"
-    case hypoOberosterreichSalzburgSteiermark = "hypo_oberosterreich_salzburg_steiermark"
-    case hypoTirolBankAg = "hypo_tirol_bank_ag"
-    case hypoVorarlbergBankAg = "hypo_vorarlberg_bank_ag"
-    case marchfelderBank = "marchfelder_bank"
-    case oberbankAg = "oberbank_ag"
-    case raiffeisenBankengruppeOsterreich = "raiffeisen_bankengruppe_osterreich"
-    case schoellerbankAg = "schoellerbank_ag"
-    case spardaBankWien = "sparda_bank_wien"
-    case volksbankGruppe = "volksbank_gruppe"
-    case volkskreditbankAg = "volkskreditbank_ag"
-    case vrBankBraunau = "vr_bank_braunau"
+public struct PaymentMethodDetailsEpsBank: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var arzteUndApothekerBank: Self { .init(rawValue: "arzte_und_apotheker_bank") }
+    public static var austrianAnadiBankAg: Self { .init(rawValue: "austrian_anadi_bank_ag") }
+    public static var bankAustria: Self { .init(rawValue: "bank_austria") }
+    public static var bankhausCarlSpangler: Self { .init(rawValue: "bankhaus_carl_spangler") }
+    public static var bankhausSchelhammerUndSchatteraAg: Self { .init(rawValue: "bankhaus_schelhammer_und_schattera_ag") }
+    public static var bawagPskAg: Self { .init(rawValue: "bawag_psk_ag") }
+    public static var bksBankAg: Self { .init(rawValue: "bks_bank_ag") }
+    public static var brullKallmusBankAg: Self { .init(rawValue: "brull_kallmus_bank_ag") }
+    public static var btvVierLanderBank: Self { .init(rawValue: "btv_vier_lander_bank") }
+    public static var capitalBankGraweGruppeAg: Self { .init(rawValue: "capital_bank_grawe_gruppe_ag") }
+    public static var deutscheBankAg: Self { .init(rawValue: "deutsche_bank_ag") }
+    public static var dolomitenbank: Self { .init(rawValue: "dolomitenbank") }
+    public static var easybankAg: Self { .init(rawValue: "easybank_ag") }
+    public static var ersteBankUndSparkassen: Self { .init(rawValue: "erste_bank_und_sparkassen") }
+    public static var hypoAlpeadriabankInternationalAg: Self { .init(rawValue: "hypo_alpeadriabank_international_ag") }
+    public static var hypoBankBurgenlandAktiengesellschaft: Self { .init(rawValue: "hypo_bank_burgenland_aktiengesellschaft") }
+    public static var hypoNoeLbFurNiederosterreichUWien: Self { .init(rawValue: "hypo_noe_lb_fur_niederosterreich_u_wien") }
+    public static var hypoOberosterreichSalzburgSteiermark: Self { .init(rawValue: "hypo_oberosterreich_salzburg_steiermark") }
+    public static var hypoTirolBankAg: Self { .init(rawValue: "hypo_tirol_bank_ag") }
+    public static var hypoVorarlbergBankAg: Self { .init(rawValue: "hypo_vorarlberg_bank_ag") }
+    public static var marchfelderBank: Self { .init(rawValue: "marchfelder_bank") }
+    public static var oberbankAg: Self { .init(rawValue: "oberbank_ag") }
+    public static var raiffeisenBankengruppeOsterreich: Self { .init(rawValue: "raiffeisen_bankengruppe_osterreich") }
+    public static var schoellerbankAg: Self { .init(rawValue: "schoellerbank_ag") }
+    public static var spardaBankWien: Self { .init(rawValue: "sparda_bank_wien") }
+    public static var volksbankGruppe: Self { .init(rawValue: "volksbank_gruppe") }
+    public static var volkskreditbankAg: Self { .init(rawValue: "volkskreditbank_ag") }
+    public static var vrBankBraunau: Self { .init(rawValue: "vr_bank_braunau") }
 }
 
 public struct PaymentMethodDetailsEpsList: Codable, Sendable {

@@ -935,10 +935,16 @@ public struct InvoiceAddLinesLinesPriceDataProductDataTaxDetails: StripeParams {
     }
 }
 
-public enum InvoiceAddLinesLinesPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceAddLinesLinesPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// The pricing information for the invoice item.
@@ -1035,62 +1041,126 @@ public struct InvoiceAddLinesLinesTaxAmountsTaxRateData: StripeParams {
     }
 }
 
-public enum InvoiceAddLinesLinesTaxAmountsTaxRateDataJurisdictionLevel: String, Codable, Sendable {
-    case city
-    case country
-    case county
-    case district
-    case multiple
-    case state
+public struct InvoiceAddLinesLinesTaxAmountsTaxRateDataJurisdictionLevel: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var city: Self { .init(rawValue: "city") }
+    public static var country: Self { .init(rawValue: "country") }
+    public static var county: Self { .init(rawValue: "county") }
+    public static var district: Self { .init(rawValue: "district") }
+    public static var multiple: Self { .init(rawValue: "multiple") }
+    public static var state: Self { .init(rawValue: "state") }
 }
 
-public enum InvoiceAddLinesLinesTaxAmountsTaxRateDataTaxType: String, Codable, Sendable {
-    case admissionsTax = "admissions_tax"
-    case amusementTax = "amusement_tax"
-    case attendanceTax = "attendance_tax"
-    case communicationsTax = "communications_tax"
-    case digitalExciseTax = "digital_excise_tax"
-    case entertainmentTax = "entertainment_tax"
-    case getFund = "get_fund"
-    case grossReceiptsTax = "gross_receipts_tax"
-    case gst
-    case hospitalityTax = "hospitality_tax"
-    case hst
-    case igst
-    case jct
-    case leaseTax = "lease_tax"
-    case luxuryTax = "luxury_tax"
-    case massTransitParkingTax = "mass_transit_parking_tax"
-    case nhil
-    case parkingTax = "parking_tax"
-    case pst
-    case qst
-    case resortTax = "resort_tax"
-    case retailDeliveryFee = "retail_delivery_fee"
-    case rst
-    case salesTax = "sales_tax"
-    case serviceTax = "service_tax"
-    case tourismTax = "tourism_tax"
-    case utilityUsersTax = "utility_users_tax"
-    case vat
+public struct InvoiceAddLinesLinesTaxAmountsTaxRateDataTaxType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Admissions Tax
+    public static var admissionsTax: Self { .init(rawValue: "admissions_tax") }
+    /// Amusement Tax
+    public static var amusementTax: Self { .init(rawValue: "amusement_tax") }
+    /// Attendance Tax
+    public static var attendanceTax: Self { .init(rawValue: "attendance_tax") }
+    /// Communications Tax
+    public static var communicationsTax: Self { .init(rawValue: "communications_tax") }
+    /// Digital Excise Tax
+    public static var digitalExciseTax: Self { .init(rawValue: "digital_excise_tax") }
+    /// Entertainment Tax
+    public static var entertainmentTax: Self { .init(rawValue: "entertainment_tax") }
+    /// Ghana Education Trust Fund Levy
+    public static var getFund: Self { .init(rawValue: "get_fund") }
+    /// Gross Receipts Tax
+    public static var grossReceiptsTax: Self { .init(rawValue: "gross_receipts_tax") }
+    /// Goods and Services Tax
+    public static var gst: Self { .init(rawValue: "gst") }
+    /// Hospitality Tax
+    public static var hospitalityTax: Self { .init(rawValue: "hospitality_tax") }
+    /// Harmonized Sales Tax
+    public static var hst: Self { .init(rawValue: "hst") }
+    /// Integrated Goods and Services Tax
+    public static var igst: Self { .init(rawValue: "igst") }
+    /// Japanese Consumption Tax
+    public static var jct: Self { .init(rawValue: "jct") }
+    /// Chicago Lease Tax
+    public static var leaseTax: Self { .init(rawValue: "lease_tax") }
+    /// Luxury Tax
+    public static var luxuryTax: Self { .init(rawValue: "luxury_tax") }
+    /// Mass Transit Parking Tax
+    public static var massTransitParkingTax: Self { .init(rawValue: "mass_transit_parking_tax") }
+    /// National Health Insurance Levy
+    public static var nhil: Self { .init(rawValue: "nhil") }
+    /// Parking Tax
+    public static var parkingTax: Self { .init(rawValue: "parking_tax") }
+    /// Provincial Sales Tax
+    public static var pst: Self { .init(rawValue: "pst") }
+    /// Quebec Sales Tax
+    public static var qst: Self { .init(rawValue: "qst") }
+    /// Resort Tax
+    public static var resortTax: Self { .init(rawValue: "resort_tax") }
+    /// Retail Delivery Fee
+    public static var retailDeliveryFee: Self { .init(rawValue: "retail_delivery_fee") }
+    /// Retail Sales Tax
+    public static var rst: Self { .init(rawValue: "rst") }
+    /// Sales Tax
+    public static var salesTax: Self { .init(rawValue: "sales_tax") }
+    /// Service Tax
+    public static var serviceTax: Self { .init(rawValue: "service_tax") }
+    /// Tourism Tax
+    public static var tourismTax: Self { .init(rawValue: "tourism_tax") }
+    /// Utility Users Tax
+    public static var utilityUsersTax: Self { .init(rawValue: "utility_users_tax") }
+    /// Value-Added Tax
+    public static var vat: Self { .init(rawValue: "vat") }
 }
 
-public enum InvoiceAddLinesLinesTaxAmountsTaxabilityReason: String, Codable, Sendable {
-    case customerExempt = "customer_exempt"
-    case notCollecting = "not_collecting"
-    case notSubjectToTax = "not_subject_to_tax"
-    case notSupported = "not_supported"
-    case portionProductExempt = "portion_product_exempt"
-    case portionReducedRated = "portion_reduced_rated"
-    case portionStandardRated = "portion_standard_rated"
-    case productExempt = "product_exempt"
-    case productExemptHoliday = "product_exempt_holiday"
-    case proportionallyRated = "proportionally_rated"
-    case reducedRated = "reduced_rated"
-    case reverseCharge = "reverse_charge"
-    case standardRated = "standard_rated"
-    case taxableBasisReduced = "taxable_basis_reduced"
-    case zeroRated = "zero_rated"
+public struct InvoiceAddLinesLinesTaxAmountsTaxabilityReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// No tax is applied as the customer is exempt from tax.
+    public static var customerExempt: Self { .init(rawValue: "customer_exempt") }
+    /// No tax is collected either because you are not registered to collect tax in this jurisdiction, or
+    /// because the non-taxable product tax code (`txcd_00000000`) was used.
+    public static var notCollecting: Self { .init(rawValue: "not_collecting") }
+    /// No tax is imposed on this transaction.
+    public static var notSubjectToTax: Self { .init(rawValue: "not_subject_to_tax") }
+    /// No tax applied. Stripe doesn’t support this jurisdiction, territory, or product.
+    public static var notSupported: Self { .init(rawValue: "not_supported") }
+    /// A portion of the price is exempt from tax.
+    public static var portionProductExempt: Self { .init(rawValue: "portion_product_exempt") }
+    /// A portion of the price is taxed at a reduced rate.
+    public static var portionReducedRated: Self { .init(rawValue: "portion_reduced_rated") }
+    /// A portion of the price is taxed at the standard rate.
+    public static var portionStandardRated: Self { .init(rawValue: "portion_standard_rated") }
+    /// The product or service is nontaxable or exempt from tax.
+    public static var productExempt: Self { .init(rawValue: "product_exempt") }
+    /// The product or service is not taxed due to a sales tax holiday.
+    public static var productExemptHoliday: Self { .init(rawValue: "product_exempt_holiday") }
+    /// The shipping cost tax rate is calculated as a weighted average of the other line items' rates,
+    /// weighted by their amounts.
+    public static var proportionallyRated: Self { .init(rawValue: "proportionally_rated") }
+    /// Taxed at a reduced rate.
+    public static var reducedRated: Self { .init(rawValue: "reduced_rated") }
+    /// No tax is applied as it is the responsibility of the buyer to account for tax in this case.
+    public static var reverseCharge: Self { .init(rawValue: "reverse_charge") }
+    /// Taxed at the standard rate.
+    public static var standardRated: Self { .init(rawValue: "standard_rated") }
+    /// A reduced amount of the price is subject to tax.
+    public static var taxableBasisReduced: Self { .init(rawValue: "taxable_basis_reduced") }
+    /// The transaction is taxed at a special rate of 0% or the transaction is exempt (but these exempt
+    /// transactions still let you deduct the "input VAT" paid on your business purchases).
+    public static var zeroRated: Self { .init(rawValue: "zero_rated") }
 }
 
 /// Settings for automatic tax lookup for this invoice.
@@ -1125,14 +1195,26 @@ public struct InvoiceCreateAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum InvoiceCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct InvoiceCreateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum InvoiceCreateCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct InvoiceCreateCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 public struct InvoiceCreateCustomFields: StripeParams {
@@ -1183,8 +1265,14 @@ public struct InvoiceCreateFromInvoice: StripeParams {
     }
 }
 
-public enum InvoiceCreateFromInvoiceAction: String, Codable, Sendable {
-    case revision
+public struct InvoiceCreateFromInvoiceAction: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var revision: Self { .init(rawValue: "revision") }
 }
 
 /// The connected account that issues the invoice. The invoice is presented with the branding and
@@ -1201,9 +1289,15 @@ public struct InvoiceCreateIssuer: StripeParams {
     }
 }
 
-public enum InvoiceCreateIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct InvoiceCreateIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 /// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
@@ -1333,15 +1427,27 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOp
     }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
-    case business
-    case personal
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var business: Self { .init(rawValue: "business") }
+    public static var personal: Self { .init(rawValue: "personal") }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBancontact: StripeParams {
@@ -1357,11 +1463,17 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBancontact: Stripe
     }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
-    case de
-    case en
-    case fr
-    case nl
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var de: Self { .init(rawValue: "de") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var nl: Self { .init(rawValue: "nl") }
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBillie: StripeParams {
@@ -1443,21 +1555,27 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBillieCompanyDetai
     }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
-    case chEin = "ch_ein"
-    case deHrb = "de_hrb"
-    case dkCvr = "dk_cvr"
-    case esCif = "es_cif"
-    case fiTunnus = "fi_tunnus"
-    case frSiren = "fr_siren"
-    case frSiret = "fr_siret"
-    case itRea = "it_rea"
-    case nlKvk = "nl_kvk"
-    case noOrgNumber = "no_org_number"
-    case noPno = "no_pno"
-    case seOrgNumber = "se_org_number"
-    case sePno = "se_pno"
-    case ukCrn = "uk_crn"
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chEin: Self { .init(rawValue: "ch_ein") }
+    public static var deHrb: Self { .init(rawValue: "de_hrb") }
+    public static var dkCvr: Self { .init(rawValue: "dk_cvr") }
+    public static var esCif: Self { .init(rawValue: "es_cif") }
+    public static var fiTunnus: Self { .init(rawValue: "fi_tunnus") }
+    public static var frSiren: Self { .init(rawValue: "fr_siren") }
+    public static var frSiret: Self { .init(rawValue: "fr_siret") }
+    public static var itRea: Self { .init(rawValue: "it_rea") }
+    public static var nlKvk: Self { .init(rawValue: "nl_kvk") }
+    public static var noOrgNumber: Self { .init(rawValue: "no_org_number") }
+    public static var noPno: Self { .init(rawValue: "no_pno") }
+    public static var seOrgNumber: Self { .init(rawValue: "se_org_number") }
+    public static var sePno: Self { .init(rawValue: "se_pno") }
+    public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsCard: StripeParams {
@@ -1516,20 +1634,38 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsCardInstallmentsPl
     }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType: String, Codable, Sendable {
-    case bonus
-    case fixedCount = "fixed_count"
-    case revolving
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bonus: Self { .init(rawValue: "bonus") }
+    public static var fixedCount: Self { .init(rawValue: "fixed_count") }
+    public static var revolving: Self { .init(rawValue: "revolving") }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval: String, Codable, Sendable {
-    case month
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var month: Self { .init(rawValue: "month") }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
-    case any
-    case automatic
-    case challenge
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var any: Self { .init(rawValue: "any") }
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var challenge: Self { .init(rawValue: "challenge") }
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsCustomerBalance: StripeParams {
@@ -1607,18 +1743,24 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsPaytoMandateOption
     }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
-    case dependantSupport = "dependant_support"
-    case government
-    case loan
-    case mortgage
-    case other
-    case pension
-    case personal
-    case retail
-    case salary
-    case tax
-    case utility
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dependantSupport: Self { .init(rawValue: "dependant_support") }
+    public static var government: Self { .init(rawValue: "government") }
+    public static var loan: Self { .init(rawValue: "loan") }
+    public static var mortgage: Self { .init(rawValue: "mortgage") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var pension: Self { .init(rawValue: "pension") }
+    public static var personal: Self { .init(rawValue: "personal") }
+    public static var retail: Self { .init(rawValue: "retail") }
+    public static var salary: Self { .init(rawValue: "salary") }
+    public static var tax: Self { .init(rawValue: "tax") }
+    public static var utility: Self { .init(rawValue: "utility") }
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsPix: StripeParams {
@@ -1639,9 +1781,15 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsPix: StripeParams 
     }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
-    case always
-    case never
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsPixAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUpi: StripeParams {
@@ -1685,9 +1833,15 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptions:
     }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccount: StripeParams {
@@ -1740,87 +1894,123 @@ public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinan
     }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
-    case checking
-    case savings
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
-    case balances
-    case ownership
-    case paymentMethod = "payment_method"
-    case transactions
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
-    case balances
-    case ownership
-    case transactions
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct InvoiceCreatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
-public enum InvoiceCreatePaymentSettingsPaymentMethodTypes: String, Codable, Sendable {
-    case achCreditTransfer = "ach_credit_transfer"
-    case achDebit = "ach_debit"
-    case acssDebit = "acss_debit"
-    case affirm
-    case alipay
-    case amazonPay = "amazon_pay"
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case crypto
-    case custom
-    case customerBalance = "customer_balance"
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case jpCreditTransfer = "jp_credit_transfer"
-    case kakaoPay = "kakao_pay"
-    case klarna
-    case konbini
-    case krCard = "kr_card"
-    case link
-    case mbWay = "mb_way"
-    case multibanco
-    case naverPay = "naver_pay"
-    case nzBankAccount = "nz_bank_account"
-    case p24
-    case payByBank = "pay_by_bank"
-    case payco
-    case paynow
-    case paypal
-    case payto
-    case pix
-    case promptpay
-    case revolutPay = "revolut_pay"
-    case satispay
-    case sepaCreditTransfer = "sepa_credit_transfer"
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
+public struct InvoiceCreatePaymentSettingsPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var achCreditTransfer: Self { .init(rawValue: "ach_credit_transfer") }
+    public static var achDebit: Self { .init(rawValue: "ach_debit") }
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var crypto: Self { .init(rawValue: "crypto") }
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var jpCreditTransfer: Self { .init(rawValue: "jp_credit_transfer") }
+    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var krCard: Self { .init(rawValue: "kr_card") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var naverPay: Self { .init(rawValue: "naver_pay") }
+    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var payco: Self { .init(rawValue: "payco") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var sepaCreditTransfer: Self { .init(rawValue: "sepa_credit_transfer") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
 }
 
-public enum InvoiceCreatePendingInvoiceItemsBehavior: String, Codable, Sendable {
-    case exclude
-    case include
+public struct InvoiceCreatePendingInvoiceItemsBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclude: Self { .init(rawValue: "exclude") }
+    public static var include: Self { .init(rawValue: "include") }
 }
 
 /// The rendering-related settings that control how invoices render in customer-facing interfaces such
@@ -1853,9 +2043,15 @@ public struct InvoiceCreateRendering: StripeParams {
     }
 }
 
-public enum InvoiceCreateRenderingAmountTaxDisplay: String, Codable, Sendable {
-    case excludeTax = "exclude_tax"
-    case includeInclusiveTax = "include_inclusive_tax"
+public struct InvoiceCreateRenderingAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var excludeTax: Self { .init(rawValue: "exclude_tax") }
+    public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
 }
 
 /// Invoice pdf rendering options
@@ -1874,10 +2070,16 @@ public struct InvoiceCreateRenderingPdf: StripeParams {
     }
 }
 
-public enum InvoiceCreateRenderingPdfPageSize: String, Codable, Sendable {
-    case a4
-    case auto
-    case letter
+public struct InvoiceCreateRenderingPdfPageSize: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var a4: Self { .init(rawValue: "a4") }
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var letter: Self { .init(rawValue: "letter") }
 }
 
 /// Settings for the cost of shipping for this invoice.
@@ -1970,12 +2172,18 @@ public struct InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMaximum: 
     }
 }
 
-public enum InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMaximumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMaximumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// The lower bound of the estimated range. If empty, represents no lower bound.
@@ -1991,12 +2199,18 @@ public struct InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMinimum: 
     }
 }
 
-public enum InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMinimumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct InvoiceCreateShippingCostShippingRateDataDeliveryEstimateMinimumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -2042,20 +2256,38 @@ public struct InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOption
     }
 }
 
-public enum InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceCreateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum InvoiceCreateShippingCostShippingRateDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceCreateShippingCostShippingRateDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum InvoiceCreateShippingCostShippingRateDataType: String, Codable, Sendable {
-    case fixedAmount = "fixed_amount"
+public struct InvoiceCreateShippingCostShippingRateDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixedAmount: Self { .init(rawValue: "fixed_amount") }
 }
 
 /// Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is
@@ -2156,9 +2388,15 @@ public struct InvoiceCreatePreviewAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum InvoiceCreatePreviewAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct InvoiceCreatePreviewAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 /// Details about the customer you want to invoice or overrides for an existing customer. If
@@ -2295,10 +2533,16 @@ public struct InvoiceCreatePreviewCustomerDetailsTax: StripeParams {
     }
 }
 
-public enum InvoiceCreatePreviewCustomerDetailsTaxExempt: String, Codable, Sendable {
-    case exempt
-    case none
-    case reverse
+public struct InvoiceCreatePreviewCustomerDetailsTaxExempt: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exempt: Self { .init(rawValue: "exempt") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var reverse: Self { .init(rawValue: "reverse") }
 }
 
 public struct InvoiceCreatePreviewCustomerDetailsTaxIds: StripeParams {
@@ -2327,142 +2571,148 @@ public struct InvoiceCreatePreviewCustomerDetailsTaxIds: StripeParams {
     }
 }
 
-public enum InvoiceCreatePreviewCustomerDetailsTaxIdsType: String, Codable, Sendable {
-    case adNrt = "ad_nrt"
-    case aeTrn = "ae_trn"
-    case alTin = "al_tin"
-    case amTin = "am_tin"
-    case aoTin = "ao_tin"
-    case arCuit = "ar_cuit"
-    case auAbn = "au_abn"
-    case auAcn = "au_acn"
-    case auArn = "au_arn"
-    case auWpn = "au_wpn"
-    case awTin = "aw_tin"
-    case azTin = "az_tin"
-    case baTin = "ba_tin"
-    case bbTin = "bb_tin"
-    case bdBin = "bd_bin"
-    case bfIfu = "bf_ifu"
-    case bgUic = "bg_uic"
-    case bhVat = "bh_vat"
-    case bjIfu = "bj_ifu"
-    case boTin = "bo_tin"
-    case brCnpj = "br_cnpj"
-    case brCpf = "br_cpf"
-    case bsTin = "bs_tin"
-    case bwVat = "bw_vat"
-    case byTin = "by_tin"
-    case caBn = "ca_bn"
-    case caGstHst = "ca_gst_hst"
-    case caPstBc = "ca_pst_bc"
-    case caPstMb = "ca_pst_mb"
-    case caPstSk = "ca_pst_sk"
-    case caQst = "ca_qst"
-    case cdNif = "cd_nif"
-    case chUid = "ch_uid"
-    case chVat = "ch_vat"
-    case ciVat = "ci_vat"
-    case clTin = "cl_tin"
-    case cmNiu = "cm_niu"
-    case cnTin = "cn_tin"
-    case coNit = "co_nit"
-    case crTin = "cr_tin"
-    case cvNif = "cv_nif"
-    case czDic = "cz_dic"
-    case deStn = "de_stn"
-    case doRcn = "do_rcn"
-    case ecRuc = "ec_ruc"
-    case egTin = "eg_tin"
-    case esCif = "es_cif"
-    case etTin = "et_tin"
-    case euOssVat = "eu_oss_vat"
-    case euVat = "eu_vat"
-    case foVat = "fo_vat"
-    case frSiren = "fr_siren"
-    case frSiret = "fr_siret"
-    case frSpi = "fr_spi"
-    case gbVat = "gb_vat"
-    case geVat = "ge_vat"
-    case ghTin = "gh_tin"
-    case giTin = "gi_tin"
-    case gnNif = "gn_nif"
-    case hkBr = "hk_br"
-    case hrOib = "hr_oib"
-    case huTin = "hu_tin"
-    case icNif = "ic_nif"
-    case idNpwp = "id_npwp"
-    case ilVat = "il_vat"
-    case inGst = "in_gst"
-    case isKt = "is_kt"
-    case isVat = "is_vat"
-    case itCf = "it_cf"
-    case jpCn = "jp_cn"
-    case jpRn = "jp_rn"
-    case jpTrn = "jp_trn"
-    case kePin = "ke_pin"
-    case kgTin = "kg_tin"
-    case khTin = "kh_tin"
-    case krBrn = "kr_brn"
-    case kzBin = "kz_bin"
-    case laTin = "la_tin"
-    case liUid = "li_uid"
-    case liVat = "li_vat"
-    case lkVat = "lk_vat"
-    case maVat = "ma_vat"
-    case mdCf = "md_cf"
-    case mdVat = "md_vat"
-    case mePib = "me_pib"
-    case mkVat = "mk_vat"
-    case mrNif = "mr_nif"
-    case muVat = "mu_vat"
-    case mxRfc = "mx_rfc"
-    case myFrp = "my_frp"
-    case myItn = "my_itn"
-    case mySst = "my_sst"
-    case mzNuit = "mz_nuit"
-    case ngTin = "ng_tin"
-    case noVat = "no_vat"
-    case noVoec = "no_voec"
-    case npPan = "np_pan"
-    case nzBn = "nz_bn"
-    case nzGst = "nz_gst"
-    case omVat = "om_vat"
-    case peRuc = "pe_ruc"
-    case phTin = "ph_tin"
-    case plNip = "pl_nip"
-    case ptNif = "pt_nif"
-    case pyRuc = "py_ruc"
-    case roTin = "ro_tin"
-    case rsPib = "rs_pib"
-    case ruInn = "ru_inn"
-    case ruKpp = "ru_kpp"
-    case saVat = "sa_vat"
-    case sgGst = "sg_gst"
-    case sgUen = "sg_uen"
-    case siTin = "si_tin"
-    case smCoe = "sm_coe"
-    case snNinea = "sn_ninea"
-    case srFin = "sr_fin"
-    case svNit = "sv_nit"
-    case thVat = "th_vat"
-    case tjTin = "tj_tin"
-    case trTin = "tr_tin"
-    case ttBir = "tt_bir"
-    case ttVat = "tt_vat"
-    case twVat = "tw_vat"
-    case tzVat = "tz_vat"
-    case uaVat = "ua_vat"
-    case ugTin = "ug_tin"
-    case usEin = "us_ein"
-    case uyRuc = "uy_ruc"
-    case uzTin = "uz_tin"
-    case uzVat = "uz_vat"
-    case veRif = "ve_rif"
-    case vnTin = "vn_tin"
-    case zaVat = "za_vat"
-    case zmTin = "zm_tin"
-    case zwTin = "zw_tin"
+public struct InvoiceCreatePreviewCustomerDetailsTaxIdsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var adNrt: Self { .init(rawValue: "ad_nrt") }
+    public static var aeTrn: Self { .init(rawValue: "ae_trn") }
+    public static var alTin: Self { .init(rawValue: "al_tin") }
+    public static var amTin: Self { .init(rawValue: "am_tin") }
+    public static var aoTin: Self { .init(rawValue: "ao_tin") }
+    public static var arCuit: Self { .init(rawValue: "ar_cuit") }
+    public static var auAbn: Self { .init(rawValue: "au_abn") }
+    public static var auAcn: Self { .init(rawValue: "au_acn") }
+    public static var auArn: Self { .init(rawValue: "au_arn") }
+    public static var auWpn: Self { .init(rawValue: "au_wpn") }
+    public static var awTin: Self { .init(rawValue: "aw_tin") }
+    public static var azTin: Self { .init(rawValue: "az_tin") }
+    public static var baTin: Self { .init(rawValue: "ba_tin") }
+    public static var bbTin: Self { .init(rawValue: "bb_tin") }
+    public static var bdBin: Self { .init(rawValue: "bd_bin") }
+    public static var bfIfu: Self { .init(rawValue: "bf_ifu") }
+    public static var bgUic: Self { .init(rawValue: "bg_uic") }
+    public static var bhVat: Self { .init(rawValue: "bh_vat") }
+    public static var bjIfu: Self { .init(rawValue: "bj_ifu") }
+    public static var boTin: Self { .init(rawValue: "bo_tin") }
+    public static var brCnpj: Self { .init(rawValue: "br_cnpj") }
+    public static var brCpf: Self { .init(rawValue: "br_cpf") }
+    public static var bsTin: Self { .init(rawValue: "bs_tin") }
+    public static var bwVat: Self { .init(rawValue: "bw_vat") }
+    public static var byTin: Self { .init(rawValue: "by_tin") }
+    public static var caBn: Self { .init(rawValue: "ca_bn") }
+    public static var caGstHst: Self { .init(rawValue: "ca_gst_hst") }
+    public static var caPstBc: Self { .init(rawValue: "ca_pst_bc") }
+    public static var caPstMb: Self { .init(rawValue: "ca_pst_mb") }
+    public static var caPstSk: Self { .init(rawValue: "ca_pst_sk") }
+    public static var caQst: Self { .init(rawValue: "ca_qst") }
+    public static var cdNif: Self { .init(rawValue: "cd_nif") }
+    public static var chUid: Self { .init(rawValue: "ch_uid") }
+    public static var chVat: Self { .init(rawValue: "ch_vat") }
+    public static var ciVat: Self { .init(rawValue: "ci_vat") }
+    public static var clTin: Self { .init(rawValue: "cl_tin") }
+    public static var cmNiu: Self { .init(rawValue: "cm_niu") }
+    public static var cnTin: Self { .init(rawValue: "cn_tin") }
+    public static var coNit: Self { .init(rawValue: "co_nit") }
+    public static var crTin: Self { .init(rawValue: "cr_tin") }
+    public static var cvNif: Self { .init(rawValue: "cv_nif") }
+    public static var czDic: Self { .init(rawValue: "cz_dic") }
+    public static var deStn: Self { .init(rawValue: "de_stn") }
+    public static var doRcn: Self { .init(rawValue: "do_rcn") }
+    public static var ecRuc: Self { .init(rawValue: "ec_ruc") }
+    public static var egTin: Self { .init(rawValue: "eg_tin") }
+    public static var esCif: Self { .init(rawValue: "es_cif") }
+    public static var etTin: Self { .init(rawValue: "et_tin") }
+    public static var euOssVat: Self { .init(rawValue: "eu_oss_vat") }
+    public static var euVat: Self { .init(rawValue: "eu_vat") }
+    public static var foVat: Self { .init(rawValue: "fo_vat") }
+    public static var frSiren: Self { .init(rawValue: "fr_siren") }
+    public static var frSiret: Self { .init(rawValue: "fr_siret") }
+    public static var frSpi: Self { .init(rawValue: "fr_spi") }
+    public static var gbVat: Self { .init(rawValue: "gb_vat") }
+    public static var geVat: Self { .init(rawValue: "ge_vat") }
+    public static var ghTin: Self { .init(rawValue: "gh_tin") }
+    public static var giTin: Self { .init(rawValue: "gi_tin") }
+    public static var gnNif: Self { .init(rawValue: "gn_nif") }
+    public static var hkBr: Self { .init(rawValue: "hk_br") }
+    public static var hrOib: Self { .init(rawValue: "hr_oib") }
+    public static var huTin: Self { .init(rawValue: "hu_tin") }
+    public static var icNif: Self { .init(rawValue: "ic_nif") }
+    public static var idNpwp: Self { .init(rawValue: "id_npwp") }
+    public static var ilVat: Self { .init(rawValue: "il_vat") }
+    public static var inGst: Self { .init(rawValue: "in_gst") }
+    public static var isKt: Self { .init(rawValue: "is_kt") }
+    public static var isVat: Self { .init(rawValue: "is_vat") }
+    public static var itCf: Self { .init(rawValue: "it_cf") }
+    public static var jpCn: Self { .init(rawValue: "jp_cn") }
+    public static var jpRn: Self { .init(rawValue: "jp_rn") }
+    public static var jpTrn: Self { .init(rawValue: "jp_trn") }
+    public static var kePin: Self { .init(rawValue: "ke_pin") }
+    public static var kgTin: Self { .init(rawValue: "kg_tin") }
+    public static var khTin: Self { .init(rawValue: "kh_tin") }
+    public static var krBrn: Self { .init(rawValue: "kr_brn") }
+    public static var kzBin: Self { .init(rawValue: "kz_bin") }
+    public static var laTin: Self { .init(rawValue: "la_tin") }
+    public static var liUid: Self { .init(rawValue: "li_uid") }
+    public static var liVat: Self { .init(rawValue: "li_vat") }
+    public static var lkVat: Self { .init(rawValue: "lk_vat") }
+    public static var maVat: Self { .init(rawValue: "ma_vat") }
+    public static var mdCf: Self { .init(rawValue: "md_cf") }
+    public static var mdVat: Self { .init(rawValue: "md_vat") }
+    public static var mePib: Self { .init(rawValue: "me_pib") }
+    public static var mkVat: Self { .init(rawValue: "mk_vat") }
+    public static var mrNif: Self { .init(rawValue: "mr_nif") }
+    public static var muVat: Self { .init(rawValue: "mu_vat") }
+    public static var mxRfc: Self { .init(rawValue: "mx_rfc") }
+    public static var myFrp: Self { .init(rawValue: "my_frp") }
+    public static var myItn: Self { .init(rawValue: "my_itn") }
+    public static var mySst: Self { .init(rawValue: "my_sst") }
+    public static var mzNuit: Self { .init(rawValue: "mz_nuit") }
+    public static var ngTin: Self { .init(rawValue: "ng_tin") }
+    public static var noVat: Self { .init(rawValue: "no_vat") }
+    public static var noVoec: Self { .init(rawValue: "no_voec") }
+    public static var npPan: Self { .init(rawValue: "np_pan") }
+    public static var nzBn: Self { .init(rawValue: "nz_bn") }
+    public static var nzGst: Self { .init(rawValue: "nz_gst") }
+    public static var omVat: Self { .init(rawValue: "om_vat") }
+    public static var peRuc: Self { .init(rawValue: "pe_ruc") }
+    public static var phTin: Self { .init(rawValue: "ph_tin") }
+    public static var plNip: Self { .init(rawValue: "pl_nip") }
+    public static var ptNif: Self { .init(rawValue: "pt_nif") }
+    public static var pyRuc: Self { .init(rawValue: "py_ruc") }
+    public static var roTin: Self { .init(rawValue: "ro_tin") }
+    public static var rsPib: Self { .init(rawValue: "rs_pib") }
+    public static var ruInn: Self { .init(rawValue: "ru_inn") }
+    public static var ruKpp: Self { .init(rawValue: "ru_kpp") }
+    public static var saVat: Self { .init(rawValue: "sa_vat") }
+    public static var sgGst: Self { .init(rawValue: "sg_gst") }
+    public static var sgUen: Self { .init(rawValue: "sg_uen") }
+    public static var siTin: Self { .init(rawValue: "si_tin") }
+    public static var smCoe: Self { .init(rawValue: "sm_coe") }
+    public static var snNinea: Self { .init(rawValue: "sn_ninea") }
+    public static var srFin: Self { .init(rawValue: "sr_fin") }
+    public static var svNit: Self { .init(rawValue: "sv_nit") }
+    public static var thVat: Self { .init(rawValue: "th_vat") }
+    public static var tjTin: Self { .init(rawValue: "tj_tin") }
+    public static var trTin: Self { .init(rawValue: "tr_tin") }
+    public static var ttBir: Self { .init(rawValue: "tt_bir") }
+    public static var ttVat: Self { .init(rawValue: "tt_vat") }
+    public static var twVat: Self { .init(rawValue: "tw_vat") }
+    public static var tzVat: Self { .init(rawValue: "tz_vat") }
+    public static var uaVat: Self { .init(rawValue: "ua_vat") }
+    public static var ugTin: Self { .init(rawValue: "ug_tin") }
+    public static var usEin: Self { .init(rawValue: "us_ein") }
+    public static var uyRuc: Self { .init(rawValue: "uy_ruc") }
+    public static var uzTin: Self { .init(rawValue: "uz_tin") }
+    public static var uzVat: Self { .init(rawValue: "uz_vat") }
+    public static var veRif: Self { .init(rawValue: "ve_rif") }
+    public static var vnTin: Self { .init(rawValue: "vn_tin") }
+    public static var zaVat: Self { .init(rawValue: "za_vat") }
+    public static var zmTin: Self { .init(rawValue: "zm_tin") }
+    public static var zwTin: Self { .init(rawValue: "zw_tin") }
 }
 
 public struct InvoiceCreatePreviewDiscounts: StripeParams {
@@ -2662,16 +2912,28 @@ public struct InvoiceCreatePreviewInvoiceItemsPriceData: StripeParams {
     }
 }
 
-public enum InvoiceCreatePreviewInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceCreatePreviewInvoiceItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum InvoiceCreatePreviewInvoiceItemsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceCreatePreviewInvoiceItemsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// The connected account that issues the invoice. The invoice is presented with the branding and
@@ -2688,14 +2950,26 @@ public struct InvoiceCreatePreviewIssuer: StripeParams {
     }
 }
 
-public enum InvoiceCreatePreviewIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct InvoiceCreatePreviewIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum InvoiceCreatePreviewPreviewMode: String, Codable, Sendable {
-    case next
-    case recurring
+public struct InvoiceCreatePreviewPreviewMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var next: Self { .init(rawValue: "next") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
 }
 
 /// The schedule creation or modification params to apply as a preview. Cannot be used with
@@ -2751,9 +3025,15 @@ public struct InvoiceCreatePreviewScheduleDetailsBillingMode: StripeParams {
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsBillingModeType: String, Codable, Sendable {
-    case classic
-    case flexible
+public struct InvoiceCreatePreviewScheduleDetailsBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var classic: Self { .init(rawValue: "classic") }
+    public static var flexible: Self { .init(rawValue: "flexible") }
 }
 
 /// Configure behavior for flexible billing mode.
@@ -2770,14 +3050,28 @@ public struct InvoiceCreatePreviewScheduleDetailsBillingModeFlexible: StripePara
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
-    case included
-    case itemized
+public struct InvoiceCreatePreviewScheduleDetailsBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Amounts are net of discounts, and discount amounts are zero.
+    public static var included: Self { .init(rawValue: "included") }
+    /// Amounts are gross of discounts, and discount amounts are accurate.
+    public static var itemized: Self { .init(rawValue: "itemized") }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsEndBehavior: String, Codable, Sendable {
-    case cancel
-    case release
+public struct InvoiceCreatePreviewScheduleDetailsEndBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
+    public static var release: Self { .init(rawValue: "release") }
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPauseSchedules: StripeParams {
@@ -2827,9 +3121,15 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPausePauseAt: Str
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPausePauseAtType: String, Codable, Sendable {
-    case now
-    case timestamp
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPausePauseAtType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var now: Self { .init(rawValue: "now") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Settings controlling billing behavior during the pause.
@@ -2885,9 +3185,17 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBill
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBillForOutstandingUsageThroughType: String, Codable, Sendable {
-    case none
-    case pauseAt = "pause_at"
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBillForOutstandingUsageThroughType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Do not collect outstanding metered usage.
+    public static var none: Self { .init(rawValue: "none") }
+    /// Collect metered usage accrued through the pause date.
+    public static var pauseAt: Self { .init(rawValue: "pause_at") }
 }
 
 /// Controls how unused time on subscription items is credited when pausing.
@@ -2901,19 +3209,44 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBill
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBillForUnusedTimeFromType: String, Codable, Sendable {
-    case itemCurrentPeriodStart = "item_current_period_start"
-    case none
-    case pauseAt = "pause_at"
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsBillForUnusedTimeFromType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Credit unused time from the start of each item's current billing period.
+    public static var itemCurrentPeriodStart: Self { .init(rawValue: "item_current_period_start") }
+    /// Do not credit unused time.
+    public static var none: Self { .init(rawValue: "none") }
+    /// Credit unused time from the pause date.
+    public static var pauseAt: Self { .init(rawValue: "pause_at") }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsInvoicingBehavior: String, Codable, Sendable {
-    case invoice
-    case pendingInvoiceItem = "pending_invoice_item"
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsInvoicingBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Invoices immediately for debits and credits in the current period. If pausing doesn't create any
+    /// invoice items, Stripe doesn't generate an invoice.
+    public static var invoice: Self { .init(rawValue: "invoice") }
+    /// Creates pending invoice items for debits and credits in the current period.
+    public static var pendingInvoiceItem: Self { .init(rawValue: "pending_invoice_item") }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsType: String, Codable, Sendable {
-    case subscription
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesPauseSettingsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Pauses collection, billing, and servicing.
+    public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResume: StripeParams {
@@ -2950,10 +3283,16 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAt: S
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtType: String, Codable, Sendable {
-    case duration
-    case now
-    case timestamp
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duration: Self { .init(rawValue: "duration") }
+    public static var now: Self { .init(rawValue: "now") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// The duration after which to resume the subscription. Required when `type` is `duration`.
@@ -2974,11 +3313,17 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtDur
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtDurationInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeResumeAtDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 /// Settings controlling how the subscription resumes.
@@ -3007,20 +3352,50 @@ public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettings: S
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettingsBillingCycleAnchor: String, Codable, Sendable {
-    case resumeAt = "resume_at"
-    case unchanged
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettingsBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Set the billing cycle anchor to the date the subscription resumes.
+    public static var resumeAt: Self { .init(rawValue: "resume_at") }
+    /// Keep the existing billing cycle anchor.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettingsPaymentBehavior: String, Codable, Sendable {
-    case resumeOnPaymentAttempt = "resume_on_payment_attempt"
-    case resumeOnPaymentSuccess = "resume_on_payment_success"
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettingsPaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// If you create a resumption invoice, Stripe finalizes the invoice immediately but doesn't attempt
+    /// payment. You can then manually attempt payment on the invoice using the [Pay invoice
+    /// endpoint](/api/invoices/pay). If the payment attempt succeeds, the subscription becomes `active`. If
+    /// the payment attempt fails, the subscription becomes `past_due`. If the invoice has no payment
+    /// attempts after 23 hours, Stripe voids the invoice and the subscription remains `paused`.
+    public static var resumeOnPaymentAttempt: Self { .init(rawValue: "resume_on_payment_attempt") }
+    /// If you create a resumption invoice, Stripe finalizes and attempts payment on the invoice
+    /// immediately. If that payment attempt succeeds, the subscription becomes `active`. If that payment
+    /// attempt fails, the subscription remains `paused`. You can then manually attempt payment on the
+    /// invoice using the [Pay invoice endpoint](/api/invoices/pay). If the invoice isn't paid successfully
+    /// within 1 year of its creation, Stripe voids the invoice and the subscription remains `paused`.
+    public static var resumeOnPaymentSuccess: Self { .init(rawValue: "resume_on_payment_success") }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettingsProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct InvoiceCreatePreviewScheduleDetailsPauseSchedulesResumeSettingsProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPhases: StripeParams {
@@ -3309,17 +3684,29 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesItemsPriceDataRecurring: 
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesItemsPriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct InvoiceCreatePreviewScheduleDetailsPhasesItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceCreatePreviewScheduleDetailsPhasesItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItems: StripeParams {
@@ -3417,10 +3804,16 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodEnd:
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodEndType: String, Codable, Sendable {
-    case minItemPeriodEnd = "min_item_period_end"
-    case phaseEnd = "phase_end"
-    case timestamp
+public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodEndType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var minItemPeriodEnd: Self { .init(rawValue: "min_item_period_end") }
+    public static var phaseEnd: Self { .init(rawValue: "phase_end") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Start of the invoice item period.
@@ -3437,10 +3830,16 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStar
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStartType: String, Codable, Sendable {
-    case maxItemPeriodStart = "max_item_period_start"
-    case phaseStart = "phase_start"
-    case timestamp
+public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPeriodStartType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var maxItemPeriodStart: Self { .init(rawValue: "max_item_period_start") }
+    public static var phaseStart: Self { .init(rawValue: "phase_start") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
@@ -3482,10 +3881,16 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPriceData:
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceCreatePreviewScheduleDetailsPhasesAddInvoiceItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Automatic tax settings for this phase.
@@ -3519,14 +3924,26 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesAutomaticTaxLiability: St
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct InvoiceCreatePreviewScheduleDetailsPhasesAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesBillingCycleAnchor: String, Codable, Sendable {
-    case automatic
-    case phaseStart = "phase_start"
+public struct InvoiceCreatePreviewScheduleDetailsPhasesBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var phaseStart: Self { .init(rawValue: "phase_start") }
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPhasesBillingThresholds: StripeParams {
@@ -3548,9 +3965,15 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesBillingThresholds: Stripe
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct InvoiceCreatePreviewScheduleDetailsPhasesCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 public struct InvoiceCreatePreviewScheduleDetailsPhasesDiscounts: StripeParams {
@@ -3592,11 +4015,17 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesDuration: StripeParams {
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesDurationInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct InvoiceCreatePreviewScheduleDetailsPhasesDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 /// One of the forms `end_date` accepts.
@@ -3670,15 +4099,27 @@ public struct InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettingsIssuer: St
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettingsIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct InvoiceCreatePreviewScheduleDetailsPhasesInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsPhasesProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct InvoiceCreatePreviewScheduleDetailsPhasesProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// One of the forms `start_date` accepts.
@@ -3766,10 +4207,16 @@ public enum InvoiceCreatePreviewScheduleDetailsPhasesTrialEnd: Codable, Sendable
     }
 }
 
-public enum InvoiceCreatePreviewScheduleDetailsProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct InvoiceCreatePreviewScheduleDetailsProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// The subscription creation or modification params to apply as a preview. Cannot be used with
@@ -3884,10 +4331,20 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchor: StripeP
     }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchorType: String, Codable, Sendable {
-    case now
-    case timestamp
-    case unchanged
+public struct InvoiceCreatePreviewSubscriptionDetailsBillingCycleAnchorType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Set the subscription's billing cycle anchor to the current time (in UTC) and start a new billing
+    /// period.
+    public static var now: Self { .init(rawValue: "now") }
+    /// Set the subscription's billing cycle anchor to the time specified in `timestamp`.
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
+    /// Keep the subscription's existing billing cycle anchor unchanged.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
 /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
@@ -3904,9 +4361,15 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingMode: StripeParams {
     }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsBillingModeType: String, Codable, Sendable {
-    case classic
-    case flexible
+public struct InvoiceCreatePreviewSubscriptionDetailsBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var classic: Self { .init(rawValue: "classic") }
+    public static var flexible: Self { .init(rawValue: "flexible") }
 }
 
 /// Configure behavior for flexible billing mode.
@@ -3923,9 +4386,17 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingModeFlexible: Stripe
     }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
-    case included
-    case itemized
+public struct InvoiceCreatePreviewSubscriptionDetailsBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Amounts are net of discounts, and discount amounts are zero.
+    public static var included: Self { .init(rawValue: "included") }
+    /// Amounts are gross of discounts, and discount amounts are accurate.
+    public static var itemized: Self { .init(rawValue: "itemized") }
 }
 
 public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedules: StripeParams {
@@ -3963,8 +4434,14 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesAppliesTo: 
     }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesAppliesToType: String, Codable, Sendable {
-    case price
+public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesAppliesToType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var price: Self { .init(rawValue: "price") }
 }
 
 /// The end date for the billing schedule. You must not set this earlier than current period end for
@@ -3984,9 +4461,15 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntil: 
     }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilType: String, Codable, Sendable {
-    case duration
-    case timestamp
+public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duration: Self { .init(rawValue: "duration") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Specifies the billing period.
@@ -4007,11 +4490,17 @@ public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilDu
     }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilDurationInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct InvoiceCreatePreviewSubscriptionDetailsBillingSchedulesBillUntilDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 /// One of the forms `cancel_at` accepts.
@@ -4243,17 +4732,29 @@ public struct InvoiceCreatePreviewSubscriptionDetailsItemsPriceDataRecurring: St
     }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsItemsPriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct InvoiceCreatePreviewSubscriptionDetailsItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceCreatePreviewSubscriptionDetailsItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Previews the invoice that would be generated when pausing the subscription. Passing an empty hash
@@ -4310,9 +4811,17 @@ public struct InvoiceCreatePreviewSubscriptionDetailsPauseBillForOutstandingUsag
     }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsPauseBillForOutstandingUsageThroughType: String, Codable, Sendable {
-    case none
-    case now
+public struct InvoiceCreatePreviewSubscriptionDetailsPauseBillForOutstandingUsageThroughType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Don't bill for metered usage in the current period.
+    public static var none: Self { .init(rawValue: "none") }
+    /// Bill for metered usage in the current period, from current period start to pause time (default).
+    public static var now: Self { .init(rawValue: "now") }
 }
 
 /// Controls when to credit for unused time on licensed items. Defaults to `{ type: "now" }`.
@@ -4325,29 +4834,66 @@ public struct InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFrom:
     }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFromType: String, Codable, Sendable {
-    case itemCurrentPeriodStart = "item_current_period_start"
-    case none
-    case now
+public struct InvoiceCreatePreviewSubscriptionDetailsPauseBillForUnusedTimeFromType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Credit unused time from each item's current period start to period end.
+    public static var itemCurrentPeriodStart: Self { .init(rawValue: "item_current_period_start") }
+    /// Don't credit for unused time.
+    public static var none: Self { .init(rawValue: "none") }
+    /// Credit unused time from pause time to period end (default).
+    public static var now: Self { .init(rawValue: "now") }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsPauseInvoicingBehavior: String, Codable, Sendable {
-    case invoice
-    case pendingInvoiceItem = "pending_invoice_item"
+public struct InvoiceCreatePreviewSubscriptionDetailsPauseInvoicingBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Invoices immediately for debits and credits in the current period. If pausing doesn't create any
+    /// invoice items, Stripe doesn't generate an invoice.
+    public static var invoice: Self { .init(rawValue: "invoice") }
+    /// Creates pending invoice items for debits and credits in the current period.
+    public static var pendingInvoiceItem: Self { .init(rawValue: "pending_invoice_item") }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsPauseType: String, Codable, Sendable {
-    case subscription
+public struct InvoiceCreatePreviewSubscriptionDetailsPauseType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Pauses collection, billing, and servicing.
+    public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct InvoiceCreatePreviewSubscriptionDetailsProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
-public enum InvoiceCreatePreviewSubscriptionDetailsResumeAt: String, Codable, Sendable {
-    case now
+public struct InvoiceCreatePreviewSubscriptionDetailsResumeAt: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var now: Self { .init(rawValue: "now") }
 }
 
 /// One of the forms `trial_end` accepts.
@@ -4382,17 +4928,29 @@ public enum InvoiceCreatePreviewSubscriptionDetailsTrialEnd: Codable, Sendable, 
     }
 }
 
-public enum InvoiceListCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct InvoiceListCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
-public enum InvoiceListStatus: String, Codable, Sendable {
-    case draft
-    case `open` = "open"
-    case paid
-    case uncollectible
-    case void
+public struct InvoiceListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var draft: Self { .init(rawValue: "draft") }
+    public static var `open`: Self { .init(rawValue: "open") }
+    public static var paid: Self { .init(rawValue: "paid") }
+    public static var uncollectible: Self { .init(rawValue: "uncollectible") }
+    public static var void: Self { .init(rawValue: "void") }
 }
 
 public struct InvoiceRemoveLinesLines: StripeParams {
@@ -4408,9 +4966,15 @@ public struct InvoiceRemoveLinesLines: StripeParams {
     }
 }
 
-public enum InvoiceRemoveLinesLinesBehavior: String, Codable, Sendable {
-    case delete
-    case unassign
+public struct InvoiceRemoveLinesLinesBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var delete: Self { .init(rawValue: "delete") }
+    public static var unassign: Self { .init(rawValue: "unassign") }
 }
 
 /// Settings for automatic tax lookup for this invoice.
@@ -4445,14 +5009,26 @@ public struct InvoiceUpdateAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum InvoiceUpdateAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct InvoiceUpdateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum InvoiceUpdateCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct InvoiceUpdateCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 public struct InvoiceUpdateCustomFields: StripeParams {
@@ -4502,9 +5078,15 @@ public struct InvoiceUpdateIssuer: StripeParams {
     }
 }
 
-public enum InvoiceUpdateIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct InvoiceUpdateIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 /// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
@@ -4634,15 +5216,27 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOp
     }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
-    case business
-    case personal
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var business: Self { .init(rawValue: "business") }
+    public static var personal: Self { .init(rawValue: "personal") }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBancontact: StripeParams {
@@ -4658,11 +5252,17 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBancontact: Stripe
     }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
-    case de
-    case en
-    case fr
-    case nl
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var de: Self { .init(rawValue: "de") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var nl: Self { .init(rawValue: "nl") }
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBillie: StripeParams {
@@ -4744,21 +5344,27 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBillieCompanyDetai
     }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
-    case chEin = "ch_ein"
-    case deHrb = "de_hrb"
-    case dkCvr = "dk_cvr"
-    case esCif = "es_cif"
-    case fiTunnus = "fi_tunnus"
-    case frSiren = "fr_siren"
-    case frSiret = "fr_siret"
-    case itRea = "it_rea"
-    case nlKvk = "nl_kvk"
-    case noOrgNumber = "no_org_number"
-    case noPno = "no_pno"
-    case seOrgNumber = "se_org_number"
-    case sePno = "se_pno"
-    case ukCrn = "uk_crn"
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chEin: Self { .init(rawValue: "ch_ein") }
+    public static var deHrb: Self { .init(rawValue: "de_hrb") }
+    public static var dkCvr: Self { .init(rawValue: "dk_cvr") }
+    public static var esCif: Self { .init(rawValue: "es_cif") }
+    public static var fiTunnus: Self { .init(rawValue: "fi_tunnus") }
+    public static var frSiren: Self { .init(rawValue: "fr_siren") }
+    public static var frSiret: Self { .init(rawValue: "fr_siret") }
+    public static var itRea: Self { .init(rawValue: "it_rea") }
+    public static var nlKvk: Self { .init(rawValue: "nl_kvk") }
+    public static var noOrgNumber: Self { .init(rawValue: "no_org_number") }
+    public static var noPno: Self { .init(rawValue: "no_pno") }
+    public static var seOrgNumber: Self { .init(rawValue: "se_org_number") }
+    public static var sePno: Self { .init(rawValue: "se_pno") }
+    public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsCard: StripeParams {
@@ -4817,20 +5423,38 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardInstallmentsPl
     }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType: String, Codable, Sendable {
-    case bonus
-    case fixedCount = "fixed_count"
-    case revolving
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bonus: Self { .init(rawValue: "bonus") }
+    public static var fixedCount: Self { .init(rawValue: "fixed_count") }
+    public static var revolving: Self { .init(rawValue: "revolving") }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval: String, Codable, Sendable {
-    case month
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var month: Self { .init(rawValue: "month") }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
-    case any
-    case automatic
-    case challenge
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var any: Self { .init(rawValue: "any") }
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var challenge: Self { .init(rawValue: "challenge") }
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsCustomerBalance: StripeParams {
@@ -4908,18 +5532,24 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateOption
     }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
-    case dependantSupport = "dependant_support"
-    case government
-    case loan
-    case mortgage
-    case other
-    case pension
-    case personal
-    case retail
-    case salary
-    case tax
-    case utility
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dependantSupport: Self { .init(rawValue: "dependant_support") }
+    public static var government: Self { .init(rawValue: "government") }
+    public static var loan: Self { .init(rawValue: "loan") }
+    public static var mortgage: Self { .init(rawValue: "mortgage") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var pension: Self { .init(rawValue: "pension") }
+    public static var personal: Self { .init(rawValue: "personal") }
+    public static var retail: Self { .init(rawValue: "retail") }
+    public static var salary: Self { .init(rawValue: "salary") }
+    public static var tax: Self { .init(rawValue: "tax") }
+    public static var utility: Self { .init(rawValue: "utility") }
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsPix: StripeParams {
@@ -4940,9 +5570,15 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsPix: StripeParams 
     }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
-    case always
-    case never
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsPixAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpi: StripeParams {
@@ -4986,9 +5622,15 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptions:
     }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccount: StripeParams {
@@ -5041,82 +5683,112 @@ public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinan
     }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
-    case checking
-    case savings
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
-    case balances
-    case ownership
-    case paymentMethod = "payment_method"
-    case transactions
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
-    case balances
-    case ownership
-    case transactions
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct InvoiceUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
-public enum InvoiceUpdatePaymentSettingsPaymentMethodTypes: String, Codable, Sendable {
-    case achCreditTransfer = "ach_credit_transfer"
-    case achDebit = "ach_debit"
-    case acssDebit = "acss_debit"
-    case affirm
-    case alipay
-    case amazonPay = "amazon_pay"
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case crypto
-    case custom
-    case customerBalance = "customer_balance"
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case jpCreditTransfer = "jp_credit_transfer"
-    case kakaoPay = "kakao_pay"
-    case klarna
-    case konbini
-    case krCard = "kr_card"
-    case link
-    case mbWay = "mb_way"
-    case multibanco
-    case naverPay = "naver_pay"
-    case nzBankAccount = "nz_bank_account"
-    case p24
-    case payByBank = "pay_by_bank"
-    case payco
-    case paynow
-    case paypal
-    case payto
-    case pix
-    case promptpay
-    case revolutPay = "revolut_pay"
-    case satispay
-    case sepaCreditTransfer = "sepa_credit_transfer"
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
+public struct InvoiceUpdatePaymentSettingsPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var achCreditTransfer: Self { .init(rawValue: "ach_credit_transfer") }
+    public static var achDebit: Self { .init(rawValue: "ach_debit") }
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var crypto: Self { .init(rawValue: "crypto") }
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var jpCreditTransfer: Self { .init(rawValue: "jp_credit_transfer") }
+    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var krCard: Self { .init(rawValue: "kr_card") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var naverPay: Self { .init(rawValue: "naver_pay") }
+    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var payco: Self { .init(rawValue: "payco") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var sepaCreditTransfer: Self { .init(rawValue: "sepa_credit_transfer") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
 }
 
 /// The rendering-related settings that control how invoices render in customer-facing interfaces such
@@ -5149,9 +5821,15 @@ public struct InvoiceUpdateRendering: StripeParams {
     }
 }
 
-public enum InvoiceUpdateRenderingAmountTaxDisplay: String, Codable, Sendable {
-    case excludeTax = "exclude_tax"
-    case includeInclusiveTax = "include_inclusive_tax"
+public struct InvoiceUpdateRenderingAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var excludeTax: Self { .init(rawValue: "exclude_tax") }
+    public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
 }
 
 /// Invoice pdf rendering options
@@ -5170,10 +5848,16 @@ public struct InvoiceUpdateRenderingPdf: StripeParams {
     }
 }
 
-public enum InvoiceUpdateRenderingPdfPageSize: String, Codable, Sendable {
-    case a4
-    case auto
-    case letter
+public struct InvoiceUpdateRenderingPdfPageSize: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var a4: Self { .init(rawValue: "a4") }
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var letter: Self { .init(rawValue: "letter") }
 }
 
 public struct InvoiceUpdateShippingCost: StripeParams {
@@ -5265,12 +5949,18 @@ public struct InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMaximum: 
     }
 }
 
-public enum InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMaximumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMaximumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// The lower bound of the estimated range. If empty, represents no lower bound.
@@ -5286,12 +5976,18 @@ public struct InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMinimum: 
     }
 }
 
-public enum InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMinimumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct InvoiceUpdateShippingCostShippingRateDataDeliveryEstimateMinimumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -5337,20 +6033,38 @@ public struct InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOption
     }
 }
 
-public enum InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceUpdateShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum InvoiceUpdateShippingCostShippingRateDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceUpdateShippingCostShippingRateDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum InvoiceUpdateShippingCostShippingRateDataType: String, Codable, Sendable {
-    case fixedAmount = "fixed_amount"
+public struct InvoiceUpdateShippingCostShippingRateDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixedAmount: Self { .init(rawValue: "fixed_amount") }
 }
 
 public struct InvoiceUpdateShippingDetails: StripeParams {
@@ -5650,10 +6364,16 @@ public struct InvoiceUpdateLinesLinesPriceDataProductDataTaxDetails: StripeParam
     }
 }
 
-public enum InvoiceUpdateLinesLinesPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct InvoiceUpdateLinesLinesPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// The pricing information for the invoice item.
@@ -5750,60 +6470,124 @@ public struct InvoiceUpdateLinesLinesTaxAmountsTaxRateData: StripeParams {
     }
 }
 
-public enum InvoiceUpdateLinesLinesTaxAmountsTaxRateDataJurisdictionLevel: String, Codable, Sendable {
-    case city
-    case country
-    case county
-    case district
-    case multiple
-    case state
+public struct InvoiceUpdateLinesLinesTaxAmountsTaxRateDataJurisdictionLevel: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var city: Self { .init(rawValue: "city") }
+    public static var country: Self { .init(rawValue: "country") }
+    public static var county: Self { .init(rawValue: "county") }
+    public static var district: Self { .init(rawValue: "district") }
+    public static var multiple: Self { .init(rawValue: "multiple") }
+    public static var state: Self { .init(rawValue: "state") }
 }
 
-public enum InvoiceUpdateLinesLinesTaxAmountsTaxRateDataTaxType: String, Codable, Sendable {
-    case admissionsTax = "admissions_tax"
-    case amusementTax = "amusement_tax"
-    case attendanceTax = "attendance_tax"
-    case communicationsTax = "communications_tax"
-    case digitalExciseTax = "digital_excise_tax"
-    case entertainmentTax = "entertainment_tax"
-    case getFund = "get_fund"
-    case grossReceiptsTax = "gross_receipts_tax"
-    case gst
-    case hospitalityTax = "hospitality_tax"
-    case hst
-    case igst
-    case jct
-    case leaseTax = "lease_tax"
-    case luxuryTax = "luxury_tax"
-    case massTransitParkingTax = "mass_transit_parking_tax"
-    case nhil
-    case parkingTax = "parking_tax"
-    case pst
-    case qst
-    case resortTax = "resort_tax"
-    case retailDeliveryFee = "retail_delivery_fee"
-    case rst
-    case salesTax = "sales_tax"
-    case serviceTax = "service_tax"
-    case tourismTax = "tourism_tax"
-    case utilityUsersTax = "utility_users_tax"
-    case vat
+public struct InvoiceUpdateLinesLinesTaxAmountsTaxRateDataTaxType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Admissions Tax
+    public static var admissionsTax: Self { .init(rawValue: "admissions_tax") }
+    /// Amusement Tax
+    public static var amusementTax: Self { .init(rawValue: "amusement_tax") }
+    /// Attendance Tax
+    public static var attendanceTax: Self { .init(rawValue: "attendance_tax") }
+    /// Communications Tax
+    public static var communicationsTax: Self { .init(rawValue: "communications_tax") }
+    /// Digital Excise Tax
+    public static var digitalExciseTax: Self { .init(rawValue: "digital_excise_tax") }
+    /// Entertainment Tax
+    public static var entertainmentTax: Self { .init(rawValue: "entertainment_tax") }
+    /// Ghana Education Trust Fund Levy
+    public static var getFund: Self { .init(rawValue: "get_fund") }
+    /// Gross Receipts Tax
+    public static var grossReceiptsTax: Self { .init(rawValue: "gross_receipts_tax") }
+    /// Goods and Services Tax
+    public static var gst: Self { .init(rawValue: "gst") }
+    /// Hospitality Tax
+    public static var hospitalityTax: Self { .init(rawValue: "hospitality_tax") }
+    /// Harmonized Sales Tax
+    public static var hst: Self { .init(rawValue: "hst") }
+    /// Integrated Goods and Services Tax
+    public static var igst: Self { .init(rawValue: "igst") }
+    /// Japanese Consumption Tax
+    public static var jct: Self { .init(rawValue: "jct") }
+    /// Chicago Lease Tax
+    public static var leaseTax: Self { .init(rawValue: "lease_tax") }
+    /// Luxury Tax
+    public static var luxuryTax: Self { .init(rawValue: "luxury_tax") }
+    /// Mass Transit Parking Tax
+    public static var massTransitParkingTax: Self { .init(rawValue: "mass_transit_parking_tax") }
+    /// National Health Insurance Levy
+    public static var nhil: Self { .init(rawValue: "nhil") }
+    /// Parking Tax
+    public static var parkingTax: Self { .init(rawValue: "parking_tax") }
+    /// Provincial Sales Tax
+    public static var pst: Self { .init(rawValue: "pst") }
+    /// Quebec Sales Tax
+    public static var qst: Self { .init(rawValue: "qst") }
+    /// Resort Tax
+    public static var resortTax: Self { .init(rawValue: "resort_tax") }
+    /// Retail Delivery Fee
+    public static var retailDeliveryFee: Self { .init(rawValue: "retail_delivery_fee") }
+    /// Retail Sales Tax
+    public static var rst: Self { .init(rawValue: "rst") }
+    /// Sales Tax
+    public static var salesTax: Self { .init(rawValue: "sales_tax") }
+    /// Service Tax
+    public static var serviceTax: Self { .init(rawValue: "service_tax") }
+    /// Tourism Tax
+    public static var tourismTax: Self { .init(rawValue: "tourism_tax") }
+    /// Utility Users Tax
+    public static var utilityUsersTax: Self { .init(rawValue: "utility_users_tax") }
+    /// Value-Added Tax
+    public static var vat: Self { .init(rawValue: "vat") }
 }
 
-public enum InvoiceUpdateLinesLinesTaxAmountsTaxabilityReason: String, Codable, Sendable {
-    case customerExempt = "customer_exempt"
-    case notCollecting = "not_collecting"
-    case notSubjectToTax = "not_subject_to_tax"
-    case notSupported = "not_supported"
-    case portionProductExempt = "portion_product_exempt"
-    case portionReducedRated = "portion_reduced_rated"
-    case portionStandardRated = "portion_standard_rated"
-    case productExempt = "product_exempt"
-    case productExemptHoliday = "product_exempt_holiday"
-    case proportionallyRated = "proportionally_rated"
-    case reducedRated = "reduced_rated"
-    case reverseCharge = "reverse_charge"
-    case standardRated = "standard_rated"
-    case taxableBasisReduced = "taxable_basis_reduced"
-    case zeroRated = "zero_rated"
+public struct InvoiceUpdateLinesLinesTaxAmountsTaxabilityReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// No tax is applied as the customer is exempt from tax.
+    public static var customerExempt: Self { .init(rawValue: "customer_exempt") }
+    /// No tax is collected either because you are not registered to collect tax in this jurisdiction, or
+    /// because the non-taxable product tax code (`txcd_00000000`) was used.
+    public static var notCollecting: Self { .init(rawValue: "not_collecting") }
+    /// No tax is imposed on this transaction.
+    public static var notSubjectToTax: Self { .init(rawValue: "not_subject_to_tax") }
+    /// No tax applied. Stripe doesn’t support this jurisdiction, territory, or product.
+    public static var notSupported: Self { .init(rawValue: "not_supported") }
+    /// A portion of the price is exempt from tax.
+    public static var portionProductExempt: Self { .init(rawValue: "portion_product_exempt") }
+    /// A portion of the price is taxed at a reduced rate.
+    public static var portionReducedRated: Self { .init(rawValue: "portion_reduced_rated") }
+    /// A portion of the price is taxed at the standard rate.
+    public static var portionStandardRated: Self { .init(rawValue: "portion_standard_rated") }
+    /// The product or service is nontaxable or exempt from tax.
+    public static var productExempt: Self { .init(rawValue: "product_exempt") }
+    /// The product or service is not taxed due to a sales tax holiday.
+    public static var productExemptHoliday: Self { .init(rawValue: "product_exempt_holiday") }
+    /// The shipping cost tax rate is calculated as a weighted average of the other line items' rates,
+    /// weighted by their amounts.
+    public static var proportionallyRated: Self { .init(rawValue: "proportionally_rated") }
+    /// Taxed at a reduced rate.
+    public static var reducedRated: Self { .init(rawValue: "reduced_rated") }
+    /// No tax is applied as it is the responsibility of the buyer to account for tax in this case.
+    public static var reverseCharge: Self { .init(rawValue: "reverse_charge") }
+    /// Taxed at the standard rate.
+    public static var standardRated: Self { .init(rawValue: "standard_rated") }
+    /// A reduced amount of the price is subject to tax.
+    public static var taxableBasisReduced: Self { .init(rawValue: "taxable_basis_reduced") }
+    /// The transaction is taxed at a special rate of 0% or the transaction is exempt (but these exempt
+    /// transactions still let you deduct the "input VAT" paid on your business purchases).
+    public static var zeroRated: Self { .init(rawValue: "zero_rated") }
 }

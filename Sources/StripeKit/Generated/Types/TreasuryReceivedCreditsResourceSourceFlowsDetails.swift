@@ -29,12 +29,18 @@ public struct TreasuryReceivedCreditsResourceSourceFlowsDetails: Codable, Sendab
 }
 
 /// The type of the source flow that originated the ReceivedCredit.
-public enum TreasuryReceivedCreditsResourceSourceFlowsDetailsType: String, Codable, Sendable {
-    case creditReversal = "credit_reversal"
-    case other
-    case outboundPayment = "outbound_payment"
-    case outboundTransfer = "outbound_transfer"
-    case payout
+public struct TreasuryReceivedCreditsResourceSourceFlowsDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditReversal: Self { .init(rawValue: "credit_reversal") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var outboundPayment: Self { .init(rawValue: "outbound_payment") }
+    public static var outboundTransfer: Self { .init(rawValue: "outbound_transfer") }
+    public static var payout: Self { .init(rawValue: "payout") }
 }
 
 public struct TreasuryReceivedCreditsResourceSourceFlowsDetailsList: Codable, Sendable {

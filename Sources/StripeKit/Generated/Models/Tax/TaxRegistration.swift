@@ -49,16 +49,28 @@ public struct TaxRegistration: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TaxRegistrationObject: String, Codable, Sendable {
-    case taxRegistration = "tax.registration"
+public struct TaxRegistrationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxRegistration: Self { .init(rawValue: "tax.registration") }
 }
 
 /// The status of the registration. This field is present for convenience and can be deduced from
 /// `active_from` and `expires_at`.
-public enum TaxRegistrationStatus: String, Codable, Sendable {
-    case active
-    case expired
-    case scheduled
+public struct TaxRegistrationStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var scheduled: Self { .init(rawValue: "scheduled") }
 }
 
 public struct TaxRegistrationList: Codable, Sendable {

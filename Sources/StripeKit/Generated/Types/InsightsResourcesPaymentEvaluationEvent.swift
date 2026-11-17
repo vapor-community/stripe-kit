@@ -31,12 +31,18 @@ public struct InsightsResourcesPaymentEvaluationEvent: Codable, Sendable {
 }
 
 /// Indicates the type of event attached to the payment evaluation.
-public enum InsightsResourcesPaymentEvaluationEventType: String, Codable, Sendable {
-    case disputeOpened = "dispute_opened"
-    case earlyFraudWarningReceived = "early_fraud_warning_received"
-    case refunded
-    case userInterventionRaised = "user_intervention_raised"
-    case userInterventionResolved = "user_intervention_resolved"
+public struct InsightsResourcesPaymentEvaluationEventType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disputeOpened: Self { .init(rawValue: "dispute_opened") }
+    public static var earlyFraudWarningReceived: Self { .init(rawValue: "early_fraud_warning_received") }
+    public static var refunded: Self { .init(rawValue: "refunded") }
+    public static var userInterventionRaised: Self { .init(rawValue: "user_intervention_raised") }
+    public static var userInterventionResolved: Self { .init(rawValue: "user_intervention_resolved") }
 }
 
 public struct InsightsResourcesPaymentEvaluationEventList: Codable, Sendable {

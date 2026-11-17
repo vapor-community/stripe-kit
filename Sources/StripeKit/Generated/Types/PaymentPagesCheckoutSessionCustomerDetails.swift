@@ -43,10 +43,16 @@ public struct PaymentPagesCheckoutSessionCustomerDetails: Codable, Sendable {
 }
 
 /// The customer’s tax exempt status after a completed Checkout Session.
-public enum PaymentPagesCheckoutSessionCustomerDetailsTaxExempt: String, Codable, Sendable {
-    case exempt
-    case none
-    case reverse
+public struct PaymentPagesCheckoutSessionCustomerDetailsTaxExempt: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exempt: Self { .init(rawValue: "exempt") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var reverse: Self { .init(rawValue: "reverse") }
 }
 
 public struct PaymentPagesCheckoutSessionCustomerDetailsList: Codable, Sendable {

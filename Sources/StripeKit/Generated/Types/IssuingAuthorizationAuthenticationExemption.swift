@@ -20,16 +20,28 @@ public struct IssuingAuthorizationAuthenticationExemption: Codable, Sendable {
 }
 
 /// The entity that requested the exemption, either the acquiring merchant or the Issuing user.
-public enum IssuingAuthorizationAuthenticationExemptionClaimedBy: String, Codable, Sendable {
-    case acquirer
-    case issuer
+public struct IssuingAuthorizationAuthenticationExemptionClaimedBy: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acquirer: Self { .init(rawValue: "acquirer") }
+    public static var issuer: Self { .init(rawValue: "issuer") }
 }
 
 /// The specific exemption claimed for this authorization.
-public enum IssuingAuthorizationAuthenticationExemptionType: String, Codable, Sendable {
-    case lowValueTransaction = "low_value_transaction"
-    case transactionRiskAnalysis = "transaction_risk_analysis"
-    case unknown
+public struct IssuingAuthorizationAuthenticationExemptionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var lowValueTransaction: Self { .init(rawValue: "low_value_transaction") }
+    public static var transactionRiskAnalysis: Self { .init(rawValue: "transaction_risk_analysis") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
 }
 
 public struct IssuingAuthorizationAuthenticationExemptionList: Codable, Sendable {

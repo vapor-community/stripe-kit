@@ -13,9 +13,15 @@ public struct ThreeDSecureStandaloneResourceFrictionlessDetails: Codable, Sendab
 }
 
 /// Type of frictionless flow you requested for this 3DS Authentication.
-public enum ThreeDSecureStandaloneResourceFrictionlessDetailsType: String, Codable, Sendable {
-    case lowRisk = "low_risk"
-    case none
+public struct ThreeDSecureStandaloneResourceFrictionlessDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var lowRisk: Self { .init(rawValue: "low_risk") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct ThreeDSecureStandaloneResourceFrictionlessDetailsList: Codable, Sendable {

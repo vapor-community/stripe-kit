@@ -17,8 +17,14 @@ public struct PaymentMethodOptionsAlma: Codable, Sendable {
 }
 
 /// Controls when the funds will be captured from the customer's account.
-public enum PaymentMethodOptionsAlmaCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct PaymentMethodOptionsAlmaCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 public struct PaymentMethodOptionsAlmaList: Codable, Sendable {

@@ -46,13 +46,25 @@ public struct IssuingPhysicalBundleListParams: StripeParams {
     }
 }
 
-public enum IssuingPhysicalBundleListStatus: String, Codable, Sendable {
-    case active
-    case inactive
-    case review
+public struct IssuingPhysicalBundleListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var review: Self { .init(rawValue: "review") }
 }
 
-public enum IssuingPhysicalBundleListType: String, Codable, Sendable {
-    case custom
-    case standard
+public struct IssuingPhysicalBundleListType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }

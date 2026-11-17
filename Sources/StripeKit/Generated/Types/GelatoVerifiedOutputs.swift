@@ -47,18 +47,30 @@ public struct GelatoVerifiedOutputs: Codable, Sendable {
 }
 
 /// The user's verified id number type.
-public enum GelatoVerifiedOutputsIdNumberType: String, Codable, Sendable {
-    case brCpf = "br_cpf"
-    case sgNric = "sg_nric"
-    case usSsn = "us_ssn"
+public struct GelatoVerifiedOutputsIdNumberType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var brCpf: Self { .init(rawValue: "br_cpf") }
+    public static var sgNric: Self { .init(rawValue: "sg_nric") }
+    public static var usSsn: Self { .init(rawValue: "us_ssn") }
 }
 
 /// The user's verified sex.
-public enum GelatoVerifiedOutputsSex: String, Codable, Sendable {
-    case redacted = "[redacted]"
-    case female
-    case male
-    case unknown
+public struct GelatoVerifiedOutputsSex: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var redacted: Self { .init(rawValue: "[redacted]") }
+    public static var female: Self { .init(rawValue: "female") }
+    public static var male: Self { .init(rawValue: "male") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
 }
 
 public struct GelatoVerifiedOutputsList: Codable, Sendable {

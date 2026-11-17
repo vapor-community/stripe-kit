@@ -23,9 +23,15 @@ public struct OutboundPaymentsPaymentMethodDetails: Codable, Sendable {
 }
 
 /// The type of the payment method used in the OutboundPayment.
-public enum OutboundPaymentsPaymentMethodDetailsType: String, Codable, Sendable {
-    case financialAccount = "financial_account"
-    case usBankAccount = "us_bank_account"
+public struct OutboundPaymentsPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var financialAccount: Self { .init(rawValue: "financial_account") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
 }
 
 public struct OutboundPaymentsPaymentMethodDetailsList: Codable, Sendable {

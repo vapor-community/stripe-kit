@@ -34,9 +34,15 @@ public struct BankConnectionsResourceBalance: Codable, Sendable {
 
 /// The `type` of the balance. An additional hash is included on the balance with a name matching this
 /// value.
-public enum BankConnectionsResourceBalanceType: String, Codable, Sendable {
-    case cash
-    case credit
+public struct BankConnectionsResourceBalanceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cash: Self { .init(rawValue: "cash") }
+    public static var credit: Self { .init(rawValue: "credit") }
 }
 
 public struct BankConnectionsResourceBalanceList: Codable, Sendable {

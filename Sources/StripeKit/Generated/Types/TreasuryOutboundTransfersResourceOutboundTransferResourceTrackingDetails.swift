@@ -21,9 +21,15 @@ public struct TreasuryOutboundTransfersResourceOutboundTransferResourceTrackingD
 }
 
 /// The US bank account network used to send funds.
-public enum TreasuryOutboundTransfersResourceOutboundTransferResourceTrackingDetailsType: String, Codable, Sendable {
-    case ach
-    case usDomesticWire = "us_domestic_wire"
+public struct TreasuryOutboundTransfersResourceOutboundTransferResourceTrackingDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
+    public static var usDomesticWire: Self { .init(rawValue: "us_domestic_wire") }
 }
 
 public struct TreasuryOutboundTransfersResourceOutboundTransferResourceTrackingDetailsList: Codable, Sendable {

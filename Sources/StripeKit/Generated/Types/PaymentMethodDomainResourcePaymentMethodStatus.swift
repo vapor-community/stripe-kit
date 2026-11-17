@@ -20,9 +20,15 @@ public struct PaymentMethodDomainResourcePaymentMethodStatus: Codable, Sendable 
 }
 
 /// The status of the payment method on the domain.
-public enum PaymentMethodDomainResourcePaymentMethodStatusStatus: String, Codable, Sendable {
-    case active
-    case inactive
+public struct PaymentMethodDomainResourcePaymentMethodStatusStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
 public struct PaymentMethodDomainResourcePaymentMethodStatusList: Codable, Sendable {

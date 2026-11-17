@@ -136,16 +136,28 @@ public struct Person: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PersonObject: String, Codable, Sendable {
-    case person
+public struct PersonObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var person: Self { .init(rawValue: "person") }
 }
 
 /// Indicates if the person or any of their representatives, family members, or other closely related
 /// persons, declares that they hold or have held an important public job or function, in any
 /// jurisdiction.
-public enum PersonPoliticalExposure: String, Codable, Sendable {
-    case existing
-    case none
+public struct PersonPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var existing: Self { .init(rawValue: "existing") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct PersonList: Codable, Sendable {

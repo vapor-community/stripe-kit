@@ -90,10 +90,16 @@ public struct TreasuryReceivedCreditListParams: StripeParams {
     }
 }
 
-public enum TreasuryReceivedCreditCreateNetwork: String, Codable, Sendable {
-    case ach
-    case rtp
-    case usDomesticWire = "us_domestic_wire"
+public struct TreasuryReceivedCreditCreateNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
+    public static var rtp: Self { .init(rawValue: "rtp") }
+    public static var usDomesticWire: Self { .init(rawValue: "us_domestic_wire") }
 }
 
 /// Initiating payment method details for the object.
@@ -114,8 +120,14 @@ public struct TreasuryReceivedCreditCreateInitiatingPaymentMethodDetails: Stripe
     }
 }
 
-public enum TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsType: String, Codable, Sendable {
-    case usBankAccount = "us_bank_account"
+public struct TreasuryReceivedCreditCreateInitiatingPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
 }
 
 /// Optional fields for `us_bank_account`.
@@ -154,15 +166,27 @@ public struct TreasuryReceivedCreditListLinkedFlows: StripeParams {
     }
 }
 
-public enum TreasuryReceivedCreditListLinkedFlowsSourceFlowType: String, Codable, Sendable {
-    case creditReversal = "credit_reversal"
-    case other
-    case outboundPayment = "outbound_payment"
-    case outboundTransfer = "outbound_transfer"
-    case payout
+public struct TreasuryReceivedCreditListLinkedFlowsSourceFlowType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditReversal: Self { .init(rawValue: "credit_reversal") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var outboundPayment: Self { .init(rawValue: "outbound_payment") }
+    public static var outboundTransfer: Self { .init(rawValue: "outbound_transfer") }
+    public static var payout: Self { .init(rawValue: "payout") }
 }
 
-public enum TreasuryReceivedCreditListStatus: String, Codable, Sendable {
-    case failed
-    case succeeded
+public struct TreasuryReceivedCreditListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }

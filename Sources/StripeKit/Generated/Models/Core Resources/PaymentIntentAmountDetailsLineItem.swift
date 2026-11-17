@@ -52,8 +52,14 @@ public struct PaymentIntentAmountDetailsLineItem: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PaymentIntentAmountDetailsLineItemObject: String, Codable, Sendable {
-    case paymentIntentAmountDetailsLineItem = "payment_intent_amount_details_line_item"
+public struct PaymentIntentAmountDetailsLineItemObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentIntentAmountDetailsLineItem: Self { .init(rawValue: "payment_intent_amount_details_line_item") }
 }
 
 public struct PaymentIntentAmountDetailsLineItemList: Codable, Sendable {

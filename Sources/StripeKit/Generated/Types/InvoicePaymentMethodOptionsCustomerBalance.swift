@@ -21,8 +21,14 @@ public struct InvoicePaymentMethodOptionsCustomerBalance: Codable, Sendable {
 
 /// The funding method type to be used when there are not enough funds in the customer balance.
 /// Permitted values include: `bank_transfer`.
-public enum InvoicePaymentMethodOptionsCustomerBalanceFundingType: String, Codable, Sendable {
-    case bankTransfer = "bank_transfer"
+public struct InvoicePaymentMethodOptionsCustomerBalanceFundingType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankTransfer: Self { .init(rawValue: "bank_transfer") }
 }
 
 public struct InvoicePaymentMethodOptionsCustomerBalanceList: Codable, Sendable {

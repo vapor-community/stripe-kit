@@ -24,17 +24,32 @@ public struct SubscriptionsResourceTrialSettingsEndBehavior: Codable, Sendable {
 
 /// Indicates how the subscription's billing cycle anchor is reset when a trial ends. If not set, the
 /// default is `now`.
-public enum SubscriptionsResourceTrialSettingsEndBehaviorBillingCycleAnchor: String, Codable, Sendable {
-    case now
-    case unchanged
+public struct SubscriptionsResourceTrialSettingsEndBehaviorBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Reset the subscription's billing cycle anchor to the end of the trial.
+    public static var now: Self { .init(rawValue: "now") }
+    /// Keep the subscription's existing billing cycle anchor unchanged. This value is unsupported for
+    /// trials initiated through `trial_end`, `trial_period_days`, or a plan trial.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
 /// Indicates how the subscription should change when the trial ends if the user did not provide a
 /// payment method.
-public enum SubscriptionsResourceTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
-    case cancel
-    case createInvoice = "create_invoice"
-    case pause
+public struct SubscriptionsResourceTrialSettingsEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
+    public static var createInvoice: Self { .init(rawValue: "create_invoice") }
+    public static var pause: Self { .init(rawValue: "pause") }
 }
 
 public struct SubscriptionsResourceTrialSettingsEndBehaviorList: Codable, Sendable {

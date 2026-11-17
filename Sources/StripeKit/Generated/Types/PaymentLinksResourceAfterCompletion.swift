@@ -21,9 +21,15 @@ public struct PaymentLinksResourceAfterCompletion: Codable, Sendable {
 }
 
 /// The specified behavior after the purchase is complete.
-public enum PaymentLinksResourceAfterCompletionType: String, Codable, Sendable {
-    case hostedConfirmation = "hosted_confirmation"
-    case redirect
+public struct PaymentLinksResourceAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var hostedConfirmation: Self { .init(rawValue: "hosted_confirmation") }
+    public static var redirect: Self { .init(rawValue: "redirect") }
 }
 
 public struct PaymentLinksResourceAfterCompletionList: Codable, Sendable {

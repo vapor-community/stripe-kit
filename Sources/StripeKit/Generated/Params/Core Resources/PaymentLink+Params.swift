@@ -594,17 +594,29 @@ public struct PaymentLinkCreateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
-public enum PaymentLinkCreateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct PaymentLinkCreateLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum PaymentLinkCreateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct PaymentLinkCreateLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Behavior after the purchase is complete.
@@ -629,9 +641,15 @@ public struct PaymentLinkCreateAfterCompletion: StripeParams {
     }
 }
 
-public enum PaymentLinkCreateAfterCompletionType: String, Codable, Sendable {
-    case hostedConfirmation = "hosted_confirmation"
-    case redirect
+public struct PaymentLinkCreateAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var hostedConfirmation: Self { .init(rawValue: "hosted_confirmation") }
+    public static var redirect: Self { .init(rawValue: "redirect") }
 }
 
 /// Configuration when `type=hosted_confirmation`.
@@ -692,14 +710,26 @@ public struct PaymentLinkCreateAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum PaymentLinkCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct PaymentLinkCreateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum PaymentLinkCreateBillingAddressCollection: String, Codable, Sendable {
-    case auto
-    case required
+public struct PaymentLinkCreateBillingAddressCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 /// Configure fields to gather active consent from customers.
@@ -743,19 +773,37 @@ public struct PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreement: Str
     }
 }
 
-public enum PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreementPosition: String, Codable, Sendable {
-    case auto
-    case hidden
+public struct PaymentLinkCreateConsentCollectionPaymentMethodReuseAgreementPosition: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var hidden: Self { .init(rawValue: "hidden") }
 }
 
-public enum PaymentLinkCreateConsentCollectionPromotions: String, Codable, Sendable {
-    case auto
-    case none
+public struct PaymentLinkCreateConsentCollectionPromotions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
-public enum PaymentLinkCreateConsentCollectionTermsOfService: String, Codable, Sendable {
-    case none
-    case required
+public struct PaymentLinkCreateConsentCollectionTermsOfService: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 public struct PaymentLinkCreateCustomFields: StripeParams {
@@ -800,14 +848,26 @@ public struct PaymentLinkCreateCustomFieldsLabel: StripeParams {
     }
 }
 
-public enum PaymentLinkCreateCustomFieldsLabelType: String, Codable, Sendable {
-    case custom
+public struct PaymentLinkCreateCustomFieldsLabelType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
-public enum PaymentLinkCreateCustomFieldsType: String, Codable, Sendable {
-    case dropdown
-    case numeric
-    case text
+public struct PaymentLinkCreateCustomFieldsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dropdown: Self { .init(rawValue: "dropdown") }
+    public static var numeric: Self { .init(rawValue: "numeric") }
+    public static var text: Self { .init(rawValue: "text") }
 }
 
 /// Configuration for `type=dropdown` fields.
@@ -949,9 +1009,15 @@ public struct PaymentLinkCreateCustomTextTermsOfServiceAcceptance: StripeParams 
     }
 }
 
-public enum PaymentLinkCreateCustomerCreation: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct PaymentLinkCreateCustomerCreation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 /// Generate a post-purchase Invoice for one-time payments.
@@ -1040,9 +1106,15 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataIssuer: StripeParams {
     }
 }
 
-public enum PaymentLinkCreateInvoiceCreationInvoiceDataIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct PaymentLinkCreateInvoiceCreationInvoiceDataIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: StripeParams {
@@ -1065,9 +1137,15 @@ public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptions: Strip
     }
 }
 
-public enum PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
-    case excludeTax = "exclude_tax"
-    case includeInclusiveTax = "include_inclusive_tax"
+public struct PaymentLinkCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var excludeTax: Self { .init(rawValue: "exclude_tax") }
+    public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
 }
 
 /// Settings for Managed Payments for this Payment Link and resulting
@@ -1227,20 +1305,38 @@ public struct PaymentLinkCreatePaymentIntentData: StripeParams {
     }
 }
 
-public enum PaymentLinkCreatePaymentIntentDataCaptureMethod: String, Codable, Sendable {
-    case automatic
-    case automaticAsync = "automatic_async"
-    case manual
+public struct PaymentLinkCreatePaymentIntentDataCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var automaticAsync: Self { .init(rawValue: "automatic_async") }
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum PaymentLinkCreatePaymentIntentDataSetupFutureUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct PaymentLinkCreatePaymentIntentDataSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public enum PaymentLinkCreatePaymentMethodCollection: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct PaymentLinkCreatePaymentMethodCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 /// Payment-method-specific configuration.
@@ -1278,59 +1374,71 @@ public struct PaymentLinkCreatePaymentMethodOptionsCardRestrictions: StripeParam
     }
 }
 
-public enum PaymentLinkCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked: String, Codable, Sendable {
-    case americanExpress = "american_express"
-    case discoverGlobalNetwork = "discover_global_network"
-    case mastercard
-    case visa
+public struct PaymentLinkCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var americanExpress: Self { .init(rawValue: "american_express") }
+    public static var discoverGlobalNetwork: Self { .init(rawValue: "discover_global_network") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
-public enum PaymentLinkCreatePaymentMethodTypes: String, Codable, Sendable {
-    case affirm
-    case afterpayClearpay = "afterpay_clearpay"
-    case alipay
-    case alma
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case bizum
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case klarna
-    case konbini
-    case link
-    case mbWay = "mb_way"
-    case mobilepay
-    case multibanco
-    case oxxo
-    case p24
-    case payByBank = "pay_by_bank"
-    case paynow
-    case paypal
-    case paypay
-    case payto
-    case pix
-    case promptpay
-    case satispay
-    case scalapay
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case sunbit
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
-    case zip
+public struct PaymentLinkCreatePaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var alma: Self { .init(rawValue: "alma") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var bizum: Self { .init(rawValue: "bizum") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var oxxo: Self { .init(rawValue: "oxxo") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var paypay: Self { .init(rawValue: "paypay") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var scalapay: Self { .init(rawValue: "scalapay") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var sunbit: Self { .init(rawValue: "sunbit") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
+    public static var zip: Self { .init(rawValue: "zip") }
 }
 
 /// Controls phone number collection settings during checkout. We recommend that you review your privacy
@@ -1384,245 +1492,251 @@ public struct PaymentLinkCreateShippingAddressCollection: StripeParams {
     }
 }
 
-public enum PaymentLinkCreateShippingAddressCollectionAllowedCountries: String, Codable, Sendable {
-    case ac = "AC"
-    case ad = "AD"
-    case ae = "AE"
-    case af = "AF"
-    case ag = "AG"
-    case ai = "AI"
-    case al = "AL"
-    case am = "AM"
-    case ao = "AO"
-    case aq = "AQ"
-    case ar = "AR"
-    case at = "AT"
-    case au = "AU"
-    case aw = "AW"
-    case ax = "AX"
-    case az = "AZ"
-    case ba = "BA"
-    case bb = "BB"
-    case bd = "BD"
-    case be = "BE"
-    case bf = "BF"
-    case bg = "BG"
-    case bh = "BH"
-    case bi = "BI"
-    case bj = "BJ"
-    case bl = "BL"
-    case bm = "BM"
-    case bn = "BN"
-    case bo = "BO"
-    case bq = "BQ"
-    case br = "BR"
-    case bs = "BS"
-    case bt = "BT"
-    case bv = "BV"
-    case bw = "BW"
-    case by = "BY"
-    case bz = "BZ"
-    case ca = "CA"
-    case cd = "CD"
-    case cf = "CF"
-    case cg = "CG"
-    case ch = "CH"
-    case ci = "CI"
-    case ck = "CK"
-    case cl = "CL"
-    case cm = "CM"
-    case cn = "CN"
-    case co = "CO"
-    case cr = "CR"
-    case cv = "CV"
-    case cw = "CW"
-    case cy = "CY"
-    case cz = "CZ"
-    case de = "DE"
-    case dj = "DJ"
-    case dk = "DK"
-    case dm = "DM"
-    case `do` = "DO"
-    case dz = "DZ"
-    case ec = "EC"
-    case ee = "EE"
-    case eg = "EG"
-    case eh = "EH"
-    case er = "ER"
-    case es = "ES"
-    case et = "ET"
-    case fi = "FI"
-    case fj = "FJ"
-    case fk = "FK"
-    case fo = "FO"
-    case fr = "FR"
-    case ga = "GA"
-    case gb = "GB"
-    case gd = "GD"
-    case ge = "GE"
-    case gf = "GF"
-    case gg = "GG"
-    case gh = "GH"
-    case gi = "GI"
-    case gl = "GL"
-    case gm = "GM"
-    case gn = "GN"
-    case gp = "GP"
-    case gq = "GQ"
-    case gr = "GR"
-    case gs = "GS"
-    case gt = "GT"
-    case gu = "GU"
-    case gw = "GW"
-    case gy = "GY"
-    case hk = "HK"
-    case hn = "HN"
-    case hr = "HR"
-    case ht = "HT"
-    case hu = "HU"
-    case id = "ID"
-    case ie = "IE"
-    case il = "IL"
-    case im = "IM"
-    case `in` = "IN"
-    case io = "IO"
-    case iq = "IQ"
-    case `is` = "IS"
-    case it = "IT"
-    case je = "JE"
-    case jm = "JM"
-    case jo = "JO"
-    case jp = "JP"
-    case ke = "KE"
-    case kg = "KG"
-    case kh = "KH"
-    case ki = "KI"
-    case km = "KM"
-    case kn = "KN"
-    case kr = "KR"
-    case kw = "KW"
-    case ky = "KY"
-    case kz = "KZ"
-    case la = "LA"
-    case lb = "LB"
-    case lc = "LC"
-    case li = "LI"
-    case lk = "LK"
-    case lr = "LR"
-    case ls = "LS"
-    case lt = "LT"
-    case lu = "LU"
-    case lv = "LV"
-    case ly = "LY"
-    case ma = "MA"
-    case mc = "MC"
-    case md = "MD"
-    case me = "ME"
-    case mf = "MF"
-    case mg = "MG"
-    case mk = "MK"
-    case ml = "ML"
-    case mm = "MM"
-    case mn = "MN"
-    case mo = "MO"
-    case mq = "MQ"
-    case mr = "MR"
-    case ms = "MS"
-    case mt = "MT"
-    case mu = "MU"
-    case mv = "MV"
-    case mw = "MW"
-    case mx = "MX"
-    case my = "MY"
-    case mz = "MZ"
-    case na = "NA"
-    case nc = "NC"
-    case ne = "NE"
-    case ng = "NG"
-    case ni = "NI"
-    case nl = "NL"
-    case no = "NO"
-    case np = "NP"
-    case nr = "NR"
-    case nu = "NU"
-    case nz = "NZ"
-    case om = "OM"
-    case pa = "PA"
-    case pe = "PE"
-    case pf = "PF"
-    case pg = "PG"
-    case ph = "PH"
-    case pk = "PK"
-    case pl = "PL"
-    case pm = "PM"
-    case pn = "PN"
-    case pr = "PR"
-    case ps = "PS"
-    case pt = "PT"
-    case py = "PY"
-    case qa = "QA"
-    case re = "RE"
-    case ro = "RO"
-    case rs = "RS"
-    case ru = "RU"
-    case rw = "RW"
-    case sa = "SA"
-    case sb = "SB"
-    case sc = "SC"
-    case sd = "SD"
-    case se = "SE"
-    case sg = "SG"
-    case sh = "SH"
-    case si = "SI"
-    case sj = "SJ"
-    case sk = "SK"
-    case sl = "SL"
-    case sm = "SM"
-    case sn = "SN"
-    case so = "SO"
-    case sr = "SR"
-    case ss = "SS"
-    case st = "ST"
-    case sv = "SV"
-    case sx = "SX"
-    case sz = "SZ"
-    case ta = "TA"
-    case tc = "TC"
-    case td = "TD"
-    case tf = "TF"
-    case tg = "TG"
-    case th = "TH"
-    case tj = "TJ"
-    case tk = "TK"
-    case tl = "TL"
-    case tm = "TM"
-    case tn = "TN"
-    case to = "TO"
-    case tr = "TR"
-    case tt = "TT"
-    case tv = "TV"
-    case tw = "TW"
-    case tz = "TZ"
-    case ua = "UA"
-    case ug = "UG"
-    case us = "US"
-    case uy = "UY"
-    case uz = "UZ"
-    case va = "VA"
-    case vc = "VC"
-    case ve = "VE"
-    case vg = "VG"
-    case vn = "VN"
-    case vu = "VU"
-    case wf = "WF"
-    case ws = "WS"
-    case xk = "XK"
-    case ye = "YE"
-    case yt = "YT"
-    case za = "ZA"
-    case zm = "ZM"
-    case zw = "ZW"
-    case zz = "ZZ"
+public struct PaymentLinkCreateShippingAddressCollectionAllowedCountries: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ac: Self { .init(rawValue: "AC") }
+    public static var ad: Self { .init(rawValue: "AD") }
+    public static var ae: Self { .init(rawValue: "AE") }
+    public static var af: Self { .init(rawValue: "AF") }
+    public static var ag: Self { .init(rawValue: "AG") }
+    public static var ai: Self { .init(rawValue: "AI") }
+    public static var al: Self { .init(rawValue: "AL") }
+    public static var am: Self { .init(rawValue: "AM") }
+    public static var ao: Self { .init(rawValue: "AO") }
+    public static var aq: Self { .init(rawValue: "AQ") }
+    public static var ar: Self { .init(rawValue: "AR") }
+    public static var at: Self { .init(rawValue: "AT") }
+    public static var au: Self { .init(rawValue: "AU") }
+    public static var aw: Self { .init(rawValue: "AW") }
+    public static var ax: Self { .init(rawValue: "AX") }
+    public static var az: Self { .init(rawValue: "AZ") }
+    public static var ba: Self { .init(rawValue: "BA") }
+    public static var bb: Self { .init(rawValue: "BB") }
+    public static var bd: Self { .init(rawValue: "BD") }
+    public static var be: Self { .init(rawValue: "BE") }
+    public static var bf: Self { .init(rawValue: "BF") }
+    public static var bg: Self { .init(rawValue: "BG") }
+    public static var bh: Self { .init(rawValue: "BH") }
+    public static var bi: Self { .init(rawValue: "BI") }
+    public static var bj: Self { .init(rawValue: "BJ") }
+    public static var bl: Self { .init(rawValue: "BL") }
+    public static var bm: Self { .init(rawValue: "BM") }
+    public static var bn: Self { .init(rawValue: "BN") }
+    public static var bo: Self { .init(rawValue: "BO") }
+    public static var bq: Self { .init(rawValue: "BQ") }
+    public static var br: Self { .init(rawValue: "BR") }
+    public static var bs: Self { .init(rawValue: "BS") }
+    public static var bt: Self { .init(rawValue: "BT") }
+    public static var bv: Self { .init(rawValue: "BV") }
+    public static var bw: Self { .init(rawValue: "BW") }
+    public static var by: Self { .init(rawValue: "BY") }
+    public static var bz: Self { .init(rawValue: "BZ") }
+    public static var ca: Self { .init(rawValue: "CA") }
+    public static var cd: Self { .init(rawValue: "CD") }
+    public static var cf: Self { .init(rawValue: "CF") }
+    public static var cg: Self { .init(rawValue: "CG") }
+    public static var ch: Self { .init(rawValue: "CH") }
+    public static var ci: Self { .init(rawValue: "CI") }
+    public static var ck: Self { .init(rawValue: "CK") }
+    public static var cl: Self { .init(rawValue: "CL") }
+    public static var cm: Self { .init(rawValue: "CM") }
+    public static var cn: Self { .init(rawValue: "CN") }
+    public static var co: Self { .init(rawValue: "CO") }
+    public static var cr: Self { .init(rawValue: "CR") }
+    public static var cv: Self { .init(rawValue: "CV") }
+    public static var cw: Self { .init(rawValue: "CW") }
+    public static var cy: Self { .init(rawValue: "CY") }
+    public static var cz: Self { .init(rawValue: "CZ") }
+    public static var de: Self { .init(rawValue: "DE") }
+    public static var dj: Self { .init(rawValue: "DJ") }
+    public static var dk: Self { .init(rawValue: "DK") }
+    public static var dm: Self { .init(rawValue: "DM") }
+    public static var `do`: Self { .init(rawValue: "DO") }
+    public static var dz: Self { .init(rawValue: "DZ") }
+    public static var ec: Self { .init(rawValue: "EC") }
+    public static var ee: Self { .init(rawValue: "EE") }
+    public static var eg: Self { .init(rawValue: "EG") }
+    public static var eh: Self { .init(rawValue: "EH") }
+    public static var er: Self { .init(rawValue: "ER") }
+    public static var es: Self { .init(rawValue: "ES") }
+    public static var et: Self { .init(rawValue: "ET") }
+    public static var fi: Self { .init(rawValue: "FI") }
+    public static var fj: Self { .init(rawValue: "FJ") }
+    public static var fk: Self { .init(rawValue: "FK") }
+    public static var fo: Self { .init(rawValue: "FO") }
+    public static var fr: Self { .init(rawValue: "FR") }
+    public static var ga: Self { .init(rawValue: "GA") }
+    public static var gb: Self { .init(rawValue: "GB") }
+    public static var gd: Self { .init(rawValue: "GD") }
+    public static var ge: Self { .init(rawValue: "GE") }
+    public static var gf: Self { .init(rawValue: "GF") }
+    public static var gg: Self { .init(rawValue: "GG") }
+    public static var gh: Self { .init(rawValue: "GH") }
+    public static var gi: Self { .init(rawValue: "GI") }
+    public static var gl: Self { .init(rawValue: "GL") }
+    public static var gm: Self { .init(rawValue: "GM") }
+    public static var gn: Self { .init(rawValue: "GN") }
+    public static var gp: Self { .init(rawValue: "GP") }
+    public static var gq: Self { .init(rawValue: "GQ") }
+    public static var gr: Self { .init(rawValue: "GR") }
+    public static var gs: Self { .init(rawValue: "GS") }
+    public static var gt: Self { .init(rawValue: "GT") }
+    public static var gu: Self { .init(rawValue: "GU") }
+    public static var gw: Self { .init(rawValue: "GW") }
+    public static var gy: Self { .init(rawValue: "GY") }
+    public static var hk: Self { .init(rawValue: "HK") }
+    public static var hn: Self { .init(rawValue: "HN") }
+    public static var hr: Self { .init(rawValue: "HR") }
+    public static var ht: Self { .init(rawValue: "HT") }
+    public static var hu: Self { .init(rawValue: "HU") }
+    public static var id: Self { .init(rawValue: "ID") }
+    public static var ie: Self { .init(rawValue: "IE") }
+    public static var il: Self { .init(rawValue: "IL") }
+    public static var im: Self { .init(rawValue: "IM") }
+    public static var `in`: Self { .init(rawValue: "IN") }
+    public static var io: Self { .init(rawValue: "IO") }
+    public static var iq: Self { .init(rawValue: "IQ") }
+    public static var `is`: Self { .init(rawValue: "IS") }
+    public static var it: Self { .init(rawValue: "IT") }
+    public static var je: Self { .init(rawValue: "JE") }
+    public static var jm: Self { .init(rawValue: "JM") }
+    public static var jo: Self { .init(rawValue: "JO") }
+    public static var jp: Self { .init(rawValue: "JP") }
+    public static var ke: Self { .init(rawValue: "KE") }
+    public static var kg: Self { .init(rawValue: "KG") }
+    public static var kh: Self { .init(rawValue: "KH") }
+    public static var ki: Self { .init(rawValue: "KI") }
+    public static var km: Self { .init(rawValue: "KM") }
+    public static var kn: Self { .init(rawValue: "KN") }
+    public static var kr: Self { .init(rawValue: "KR") }
+    public static var kw: Self { .init(rawValue: "KW") }
+    public static var ky: Self { .init(rawValue: "KY") }
+    public static var kz: Self { .init(rawValue: "KZ") }
+    public static var la: Self { .init(rawValue: "LA") }
+    public static var lb: Self { .init(rawValue: "LB") }
+    public static var lc: Self { .init(rawValue: "LC") }
+    public static var li: Self { .init(rawValue: "LI") }
+    public static var lk: Self { .init(rawValue: "LK") }
+    public static var lr: Self { .init(rawValue: "LR") }
+    public static var ls: Self { .init(rawValue: "LS") }
+    public static var lt: Self { .init(rawValue: "LT") }
+    public static var lu: Self { .init(rawValue: "LU") }
+    public static var lv: Self { .init(rawValue: "LV") }
+    public static var ly: Self { .init(rawValue: "LY") }
+    public static var ma: Self { .init(rawValue: "MA") }
+    public static var mc: Self { .init(rawValue: "MC") }
+    public static var md: Self { .init(rawValue: "MD") }
+    public static var me: Self { .init(rawValue: "ME") }
+    public static var mf: Self { .init(rawValue: "MF") }
+    public static var mg: Self { .init(rawValue: "MG") }
+    public static var mk: Self { .init(rawValue: "MK") }
+    public static var ml: Self { .init(rawValue: "ML") }
+    public static var mm: Self { .init(rawValue: "MM") }
+    public static var mn: Self { .init(rawValue: "MN") }
+    public static var mo: Self { .init(rawValue: "MO") }
+    public static var mq: Self { .init(rawValue: "MQ") }
+    public static var mr: Self { .init(rawValue: "MR") }
+    public static var ms: Self { .init(rawValue: "MS") }
+    public static var mt: Self { .init(rawValue: "MT") }
+    public static var mu: Self { .init(rawValue: "MU") }
+    public static var mv: Self { .init(rawValue: "MV") }
+    public static var mw: Self { .init(rawValue: "MW") }
+    public static var mx: Self { .init(rawValue: "MX") }
+    public static var my: Self { .init(rawValue: "MY") }
+    public static var mz: Self { .init(rawValue: "MZ") }
+    public static var na: Self { .init(rawValue: "NA") }
+    public static var nc: Self { .init(rawValue: "NC") }
+    public static var ne: Self { .init(rawValue: "NE") }
+    public static var ng: Self { .init(rawValue: "NG") }
+    public static var ni: Self { .init(rawValue: "NI") }
+    public static var nl: Self { .init(rawValue: "NL") }
+    public static var no: Self { .init(rawValue: "NO") }
+    public static var np: Self { .init(rawValue: "NP") }
+    public static var nr: Self { .init(rawValue: "NR") }
+    public static var nu: Self { .init(rawValue: "NU") }
+    public static var nz: Self { .init(rawValue: "NZ") }
+    public static var om: Self { .init(rawValue: "OM") }
+    public static var pa: Self { .init(rawValue: "PA") }
+    public static var pe: Self { .init(rawValue: "PE") }
+    public static var pf: Self { .init(rawValue: "PF") }
+    public static var pg: Self { .init(rawValue: "PG") }
+    public static var ph: Self { .init(rawValue: "PH") }
+    public static var pk: Self { .init(rawValue: "PK") }
+    public static var pl: Self { .init(rawValue: "PL") }
+    public static var pm: Self { .init(rawValue: "PM") }
+    public static var pn: Self { .init(rawValue: "PN") }
+    public static var pr: Self { .init(rawValue: "PR") }
+    public static var ps: Self { .init(rawValue: "PS") }
+    public static var pt: Self { .init(rawValue: "PT") }
+    public static var py: Self { .init(rawValue: "PY") }
+    public static var qa: Self { .init(rawValue: "QA") }
+    public static var re: Self { .init(rawValue: "RE") }
+    public static var ro: Self { .init(rawValue: "RO") }
+    public static var rs: Self { .init(rawValue: "RS") }
+    public static var ru: Self { .init(rawValue: "RU") }
+    public static var rw: Self { .init(rawValue: "RW") }
+    public static var sa: Self { .init(rawValue: "SA") }
+    public static var sb: Self { .init(rawValue: "SB") }
+    public static var sc: Self { .init(rawValue: "SC") }
+    public static var sd: Self { .init(rawValue: "SD") }
+    public static var se: Self { .init(rawValue: "SE") }
+    public static var sg: Self { .init(rawValue: "SG") }
+    public static var sh: Self { .init(rawValue: "SH") }
+    public static var si: Self { .init(rawValue: "SI") }
+    public static var sj: Self { .init(rawValue: "SJ") }
+    public static var sk: Self { .init(rawValue: "SK") }
+    public static var sl: Self { .init(rawValue: "SL") }
+    public static var sm: Self { .init(rawValue: "SM") }
+    public static var sn: Self { .init(rawValue: "SN") }
+    public static var so: Self { .init(rawValue: "SO") }
+    public static var sr: Self { .init(rawValue: "SR") }
+    public static var ss: Self { .init(rawValue: "SS") }
+    public static var st: Self { .init(rawValue: "ST") }
+    public static var sv: Self { .init(rawValue: "SV") }
+    public static var sx: Self { .init(rawValue: "SX") }
+    public static var sz: Self { .init(rawValue: "SZ") }
+    public static var ta: Self { .init(rawValue: "TA") }
+    public static var tc: Self { .init(rawValue: "TC") }
+    public static var td: Self { .init(rawValue: "TD") }
+    public static var tf: Self { .init(rawValue: "TF") }
+    public static var tg: Self { .init(rawValue: "TG") }
+    public static var th: Self { .init(rawValue: "TH") }
+    public static var tj: Self { .init(rawValue: "TJ") }
+    public static var tk: Self { .init(rawValue: "TK") }
+    public static var tl: Self { .init(rawValue: "TL") }
+    public static var tm: Self { .init(rawValue: "TM") }
+    public static var tn: Self { .init(rawValue: "TN") }
+    public static var to: Self { .init(rawValue: "TO") }
+    public static var tr: Self { .init(rawValue: "TR") }
+    public static var tt: Self { .init(rawValue: "TT") }
+    public static var tv: Self { .init(rawValue: "TV") }
+    public static var tw: Self { .init(rawValue: "TW") }
+    public static var tz: Self { .init(rawValue: "TZ") }
+    public static var ua: Self { .init(rawValue: "UA") }
+    public static var ug: Self { .init(rawValue: "UG") }
+    public static var us: Self { .init(rawValue: "US") }
+    public static var uy: Self { .init(rawValue: "UY") }
+    public static var uz: Self { .init(rawValue: "UZ") }
+    public static var va: Self { .init(rawValue: "VA") }
+    public static var vc: Self { .init(rawValue: "VC") }
+    public static var ve: Self { .init(rawValue: "VE") }
+    public static var vg: Self { .init(rawValue: "VG") }
+    public static var vn: Self { .init(rawValue: "VN") }
+    public static var vu: Self { .init(rawValue: "VU") }
+    public static var wf: Self { .init(rawValue: "WF") }
+    public static var ws: Self { .init(rawValue: "WS") }
+    public static var xk: Self { .init(rawValue: "XK") }
+    public static var ye: Self { .init(rawValue: "YE") }
+    public static var yt: Self { .init(rawValue: "YT") }
+    public static var za: Self { .init(rawValue: "ZA") }
+    public static var zm: Self { .init(rawValue: "ZM") }
+    public static var zw: Self { .init(rawValue: "ZW") }
+    public static var zz: Self { .init(rawValue: "ZZ") }
 }
 
 public struct PaymentLinkCreateShippingOptions: StripeParams {
@@ -1638,12 +1752,18 @@ public struct PaymentLinkCreateShippingOptions: StripeParams {
     }
 }
 
-public enum PaymentLinkCreateSubmitType: String, Codable, Sendable {
-    case auto
-    case book
-    case donate
-    case pay
-    case subscribe
+public struct PaymentLinkCreateSubmitType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var book: Self { .init(rawValue: "book") }
+    public static var donate: Self { .init(rawValue: "donate") }
+    public static var pay: Self { .init(rawValue: "pay") }
+    public static var subscribe: Self { .init(rawValue: "subscribe") }
 }
 
 /// When creating a subscription, the specified configuration data will be used. There must be at least
@@ -1740,9 +1860,15 @@ public struct PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuer: StripePara
     }
 }
 
-public enum PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct PaymentLinkCreateSubscriptionDataInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 /// Settings related to subscription trials.
@@ -1774,10 +1900,16 @@ public struct PaymentLinkCreateSubscriptionDataTrialSettingsEndBehavior: StripeP
     }
 }
 
-public enum PaymentLinkCreateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
-    case cancel
-    case createInvoice = "create_invoice"
-    case pause
+public struct PaymentLinkCreateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
+    public static var createInvoice: Self { .init(rawValue: "create_invoice") }
+    public static var pause: Self { .init(rawValue: "pause") }
 }
 
 /// Controls tax ID collection during checkout.
@@ -1794,9 +1926,15 @@ public struct PaymentLinkCreateTaxIdCollection: StripeParams {
     }
 }
 
-public enum PaymentLinkCreateTaxIdCollectionRequired: String, Codable, Sendable {
-    case ifSupported = "if_supported"
-    case never
+public struct PaymentLinkCreateTaxIdCollectionRequired: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifSupported: Self { .init(rawValue: "if_supported") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// The account (if any) the payments will be attributed to for tax reporting, and where funds from each
@@ -1837,9 +1975,15 @@ public struct PaymentLinkUpdateAfterCompletion: StripeParams {
     }
 }
 
-public enum PaymentLinkUpdateAfterCompletionType: String, Codable, Sendable {
-    case hostedConfirmation = "hosted_confirmation"
-    case redirect
+public struct PaymentLinkUpdateAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var hostedConfirmation: Self { .init(rawValue: "hosted_confirmation") }
+    public static var redirect: Self { .init(rawValue: "redirect") }
 }
 
 /// Configuration when `type=hosted_confirmation`.
@@ -1900,14 +2044,26 @@ public struct PaymentLinkUpdateAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum PaymentLinkUpdateAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct PaymentLinkUpdateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum PaymentLinkUpdateBillingAddressCollection: String, Codable, Sendable {
-    case auto
-    case required
+public struct PaymentLinkUpdateBillingAddressCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 /// Configure fields to gather active consent from customers.
@@ -1951,19 +2107,37 @@ public struct PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreement: Str
     }
 }
 
-public enum PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreementPosition: String, Codable, Sendable {
-    case auto
-    case hidden
+public struct PaymentLinkUpdateConsentCollectionPaymentMethodReuseAgreementPosition: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var hidden: Self { .init(rawValue: "hidden") }
 }
 
-public enum PaymentLinkUpdateConsentCollectionPromotions: String, Codable, Sendable {
-    case auto
-    case none
+public struct PaymentLinkUpdateConsentCollectionPromotions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
-public enum PaymentLinkUpdateConsentCollectionTermsOfService: String, Codable, Sendable {
-    case none
-    case required
+public struct PaymentLinkUpdateConsentCollectionTermsOfService: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 public struct PaymentLinkUpdateCustomFields: StripeParams {
@@ -2008,14 +2182,26 @@ public struct PaymentLinkUpdateCustomFieldsLabel: StripeParams {
     }
 }
 
-public enum PaymentLinkUpdateCustomFieldsLabelType: String, Codable, Sendable {
-    case custom
+public struct PaymentLinkUpdateCustomFieldsLabelType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
-public enum PaymentLinkUpdateCustomFieldsType: String, Codable, Sendable {
-    case dropdown
-    case numeric
-    case text
+public struct PaymentLinkUpdateCustomFieldsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dropdown: Self { .init(rawValue: "dropdown") }
+    public static var numeric: Self { .init(rawValue: "numeric") }
+    public static var text: Self { .init(rawValue: "text") }
 }
 
 /// Configuration for `type=dropdown` fields.
@@ -2157,9 +2343,15 @@ public struct PaymentLinkUpdateCustomTextTermsOfServiceAcceptance: StripeParams 
     }
 }
 
-public enum PaymentLinkUpdateCustomerCreation: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct PaymentLinkUpdateCustomerCreation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 /// Generate a post-purchase Invoice for one-time payments.
@@ -2248,9 +2440,15 @@ public struct PaymentLinkUpdateInvoiceCreationInvoiceDataIssuer: StripeParams {
     }
 }
 
-public enum PaymentLinkUpdateInvoiceCreationInvoiceDataIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct PaymentLinkUpdateInvoiceCreationInvoiceDataIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions: StripeParams {
@@ -2273,9 +2471,15 @@ public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptions: Strip
     }
 }
 
-public enum PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
-    case excludeTax = "exclude_tax"
-    case includeInclusiveTax = "include_inclusive_tax"
+public struct PaymentLinkUpdateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var excludeTax: Self { .init(rawValue: "exclude_tax") }
+    public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
 }
 
 public struct PaymentLinkUpdateLineItems: StripeParams {
@@ -2458,14 +2662,26 @@ public struct PaymentLinkUpdatePaymentIntentData: StripeParams {
     }
 }
 
-public enum PaymentLinkUpdatePaymentIntentDataSetupFutureUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct PaymentLinkUpdatePaymentIntentDataSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public enum PaymentLinkUpdatePaymentMethodCollection: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct PaymentLinkUpdatePaymentMethodCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 public struct PaymentLinkUpdatePaymentMethodOptions: StripeParams {
@@ -2500,59 +2716,71 @@ public struct PaymentLinkUpdatePaymentMethodOptionsCardRestrictions: StripeParam
     }
 }
 
-public enum PaymentLinkUpdatePaymentMethodOptionsCardRestrictionsBrandsBlocked: String, Codable, Sendable {
-    case americanExpress = "american_express"
-    case discoverGlobalNetwork = "discover_global_network"
-    case mastercard
-    case visa
+public struct PaymentLinkUpdatePaymentMethodOptionsCardRestrictionsBrandsBlocked: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var americanExpress: Self { .init(rawValue: "american_express") }
+    public static var discoverGlobalNetwork: Self { .init(rawValue: "discover_global_network") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
-public enum PaymentLinkUpdatePaymentMethodTypes: String, Codable, Sendable {
-    case affirm
-    case afterpayClearpay = "afterpay_clearpay"
-    case alipay
-    case alma
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case bizum
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case klarna
-    case konbini
-    case link
-    case mbWay = "mb_way"
-    case mobilepay
-    case multibanco
-    case oxxo
-    case p24
-    case payByBank = "pay_by_bank"
-    case paynow
-    case paypal
-    case paypay
-    case payto
-    case pix
-    case promptpay
-    case satispay
-    case scalapay
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case sunbit
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
-    case zip
+public struct PaymentLinkUpdatePaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var alma: Self { .init(rawValue: "alma") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var bizum: Self { .init(rawValue: "bizum") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var oxxo: Self { .init(rawValue: "oxxo") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var paypay: Self { .init(rawValue: "paypay") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var scalapay: Self { .init(rawValue: "scalapay") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var sunbit: Self { .init(rawValue: "sunbit") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
+    public static var zip: Self { .init(rawValue: "zip") }
 }
 
 /// Controls phone number collection settings during checkout. We recommend that you review your privacy
@@ -2604,245 +2832,251 @@ public struct PaymentLinkUpdateShippingAddressCollection: StripeParams {
     }
 }
 
-public enum PaymentLinkUpdateShippingAddressCollectionAllowedCountries: String, Codable, Sendable {
-    case ac = "AC"
-    case ad = "AD"
-    case ae = "AE"
-    case af = "AF"
-    case ag = "AG"
-    case ai = "AI"
-    case al = "AL"
-    case am = "AM"
-    case ao = "AO"
-    case aq = "AQ"
-    case ar = "AR"
-    case at = "AT"
-    case au = "AU"
-    case aw = "AW"
-    case ax = "AX"
-    case az = "AZ"
-    case ba = "BA"
-    case bb = "BB"
-    case bd = "BD"
-    case be = "BE"
-    case bf = "BF"
-    case bg = "BG"
-    case bh = "BH"
-    case bi = "BI"
-    case bj = "BJ"
-    case bl = "BL"
-    case bm = "BM"
-    case bn = "BN"
-    case bo = "BO"
-    case bq = "BQ"
-    case br = "BR"
-    case bs = "BS"
-    case bt = "BT"
-    case bv = "BV"
-    case bw = "BW"
-    case by = "BY"
-    case bz = "BZ"
-    case ca = "CA"
-    case cd = "CD"
-    case cf = "CF"
-    case cg = "CG"
-    case ch = "CH"
-    case ci = "CI"
-    case ck = "CK"
-    case cl = "CL"
-    case cm = "CM"
-    case cn = "CN"
-    case co = "CO"
-    case cr = "CR"
-    case cv = "CV"
-    case cw = "CW"
-    case cy = "CY"
-    case cz = "CZ"
-    case de = "DE"
-    case dj = "DJ"
-    case dk = "DK"
-    case dm = "DM"
-    case `do` = "DO"
-    case dz = "DZ"
-    case ec = "EC"
-    case ee = "EE"
-    case eg = "EG"
-    case eh = "EH"
-    case er = "ER"
-    case es = "ES"
-    case et = "ET"
-    case fi = "FI"
-    case fj = "FJ"
-    case fk = "FK"
-    case fo = "FO"
-    case fr = "FR"
-    case ga = "GA"
-    case gb = "GB"
-    case gd = "GD"
-    case ge = "GE"
-    case gf = "GF"
-    case gg = "GG"
-    case gh = "GH"
-    case gi = "GI"
-    case gl = "GL"
-    case gm = "GM"
-    case gn = "GN"
-    case gp = "GP"
-    case gq = "GQ"
-    case gr = "GR"
-    case gs = "GS"
-    case gt = "GT"
-    case gu = "GU"
-    case gw = "GW"
-    case gy = "GY"
-    case hk = "HK"
-    case hn = "HN"
-    case hr = "HR"
-    case ht = "HT"
-    case hu = "HU"
-    case id = "ID"
-    case ie = "IE"
-    case il = "IL"
-    case im = "IM"
-    case `in` = "IN"
-    case io = "IO"
-    case iq = "IQ"
-    case `is` = "IS"
-    case it = "IT"
-    case je = "JE"
-    case jm = "JM"
-    case jo = "JO"
-    case jp = "JP"
-    case ke = "KE"
-    case kg = "KG"
-    case kh = "KH"
-    case ki = "KI"
-    case km = "KM"
-    case kn = "KN"
-    case kr = "KR"
-    case kw = "KW"
-    case ky = "KY"
-    case kz = "KZ"
-    case la = "LA"
-    case lb = "LB"
-    case lc = "LC"
-    case li = "LI"
-    case lk = "LK"
-    case lr = "LR"
-    case ls = "LS"
-    case lt = "LT"
-    case lu = "LU"
-    case lv = "LV"
-    case ly = "LY"
-    case ma = "MA"
-    case mc = "MC"
-    case md = "MD"
-    case me = "ME"
-    case mf = "MF"
-    case mg = "MG"
-    case mk = "MK"
-    case ml = "ML"
-    case mm = "MM"
-    case mn = "MN"
-    case mo = "MO"
-    case mq = "MQ"
-    case mr = "MR"
-    case ms = "MS"
-    case mt = "MT"
-    case mu = "MU"
-    case mv = "MV"
-    case mw = "MW"
-    case mx = "MX"
-    case my = "MY"
-    case mz = "MZ"
-    case na = "NA"
-    case nc = "NC"
-    case ne = "NE"
-    case ng = "NG"
-    case ni = "NI"
-    case nl = "NL"
-    case no = "NO"
-    case np = "NP"
-    case nr = "NR"
-    case nu = "NU"
-    case nz = "NZ"
-    case om = "OM"
-    case pa = "PA"
-    case pe = "PE"
-    case pf = "PF"
-    case pg = "PG"
-    case ph = "PH"
-    case pk = "PK"
-    case pl = "PL"
-    case pm = "PM"
-    case pn = "PN"
-    case pr = "PR"
-    case ps = "PS"
-    case pt = "PT"
-    case py = "PY"
-    case qa = "QA"
-    case re = "RE"
-    case ro = "RO"
-    case rs = "RS"
-    case ru = "RU"
-    case rw = "RW"
-    case sa = "SA"
-    case sb = "SB"
-    case sc = "SC"
-    case sd = "SD"
-    case se = "SE"
-    case sg = "SG"
-    case sh = "SH"
-    case si = "SI"
-    case sj = "SJ"
-    case sk = "SK"
-    case sl = "SL"
-    case sm = "SM"
-    case sn = "SN"
-    case so = "SO"
-    case sr = "SR"
-    case ss = "SS"
-    case st = "ST"
-    case sv = "SV"
-    case sx = "SX"
-    case sz = "SZ"
-    case ta = "TA"
-    case tc = "TC"
-    case td = "TD"
-    case tf = "TF"
-    case tg = "TG"
-    case th = "TH"
-    case tj = "TJ"
-    case tk = "TK"
-    case tl = "TL"
-    case tm = "TM"
-    case tn = "TN"
-    case to = "TO"
-    case tr = "TR"
-    case tt = "TT"
-    case tv = "TV"
-    case tw = "TW"
-    case tz = "TZ"
-    case ua = "UA"
-    case ug = "UG"
-    case us = "US"
-    case uy = "UY"
-    case uz = "UZ"
-    case va = "VA"
-    case vc = "VC"
-    case ve = "VE"
-    case vg = "VG"
-    case vn = "VN"
-    case vu = "VU"
-    case wf = "WF"
-    case ws = "WS"
-    case xk = "XK"
-    case ye = "YE"
-    case yt = "YT"
-    case za = "ZA"
-    case zm = "ZM"
-    case zw = "ZW"
-    case zz = "ZZ"
+public struct PaymentLinkUpdateShippingAddressCollectionAllowedCountries: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ac: Self { .init(rawValue: "AC") }
+    public static var ad: Self { .init(rawValue: "AD") }
+    public static var ae: Self { .init(rawValue: "AE") }
+    public static var af: Self { .init(rawValue: "AF") }
+    public static var ag: Self { .init(rawValue: "AG") }
+    public static var ai: Self { .init(rawValue: "AI") }
+    public static var al: Self { .init(rawValue: "AL") }
+    public static var am: Self { .init(rawValue: "AM") }
+    public static var ao: Self { .init(rawValue: "AO") }
+    public static var aq: Self { .init(rawValue: "AQ") }
+    public static var ar: Self { .init(rawValue: "AR") }
+    public static var at: Self { .init(rawValue: "AT") }
+    public static var au: Self { .init(rawValue: "AU") }
+    public static var aw: Self { .init(rawValue: "AW") }
+    public static var ax: Self { .init(rawValue: "AX") }
+    public static var az: Self { .init(rawValue: "AZ") }
+    public static var ba: Self { .init(rawValue: "BA") }
+    public static var bb: Self { .init(rawValue: "BB") }
+    public static var bd: Self { .init(rawValue: "BD") }
+    public static var be: Self { .init(rawValue: "BE") }
+    public static var bf: Self { .init(rawValue: "BF") }
+    public static var bg: Self { .init(rawValue: "BG") }
+    public static var bh: Self { .init(rawValue: "BH") }
+    public static var bi: Self { .init(rawValue: "BI") }
+    public static var bj: Self { .init(rawValue: "BJ") }
+    public static var bl: Self { .init(rawValue: "BL") }
+    public static var bm: Self { .init(rawValue: "BM") }
+    public static var bn: Self { .init(rawValue: "BN") }
+    public static var bo: Self { .init(rawValue: "BO") }
+    public static var bq: Self { .init(rawValue: "BQ") }
+    public static var br: Self { .init(rawValue: "BR") }
+    public static var bs: Self { .init(rawValue: "BS") }
+    public static var bt: Self { .init(rawValue: "BT") }
+    public static var bv: Self { .init(rawValue: "BV") }
+    public static var bw: Self { .init(rawValue: "BW") }
+    public static var by: Self { .init(rawValue: "BY") }
+    public static var bz: Self { .init(rawValue: "BZ") }
+    public static var ca: Self { .init(rawValue: "CA") }
+    public static var cd: Self { .init(rawValue: "CD") }
+    public static var cf: Self { .init(rawValue: "CF") }
+    public static var cg: Self { .init(rawValue: "CG") }
+    public static var ch: Self { .init(rawValue: "CH") }
+    public static var ci: Self { .init(rawValue: "CI") }
+    public static var ck: Self { .init(rawValue: "CK") }
+    public static var cl: Self { .init(rawValue: "CL") }
+    public static var cm: Self { .init(rawValue: "CM") }
+    public static var cn: Self { .init(rawValue: "CN") }
+    public static var co: Self { .init(rawValue: "CO") }
+    public static var cr: Self { .init(rawValue: "CR") }
+    public static var cv: Self { .init(rawValue: "CV") }
+    public static var cw: Self { .init(rawValue: "CW") }
+    public static var cy: Self { .init(rawValue: "CY") }
+    public static var cz: Self { .init(rawValue: "CZ") }
+    public static var de: Self { .init(rawValue: "DE") }
+    public static var dj: Self { .init(rawValue: "DJ") }
+    public static var dk: Self { .init(rawValue: "DK") }
+    public static var dm: Self { .init(rawValue: "DM") }
+    public static var `do`: Self { .init(rawValue: "DO") }
+    public static var dz: Self { .init(rawValue: "DZ") }
+    public static var ec: Self { .init(rawValue: "EC") }
+    public static var ee: Self { .init(rawValue: "EE") }
+    public static var eg: Self { .init(rawValue: "EG") }
+    public static var eh: Self { .init(rawValue: "EH") }
+    public static var er: Self { .init(rawValue: "ER") }
+    public static var es: Self { .init(rawValue: "ES") }
+    public static var et: Self { .init(rawValue: "ET") }
+    public static var fi: Self { .init(rawValue: "FI") }
+    public static var fj: Self { .init(rawValue: "FJ") }
+    public static var fk: Self { .init(rawValue: "FK") }
+    public static var fo: Self { .init(rawValue: "FO") }
+    public static var fr: Self { .init(rawValue: "FR") }
+    public static var ga: Self { .init(rawValue: "GA") }
+    public static var gb: Self { .init(rawValue: "GB") }
+    public static var gd: Self { .init(rawValue: "GD") }
+    public static var ge: Self { .init(rawValue: "GE") }
+    public static var gf: Self { .init(rawValue: "GF") }
+    public static var gg: Self { .init(rawValue: "GG") }
+    public static var gh: Self { .init(rawValue: "GH") }
+    public static var gi: Self { .init(rawValue: "GI") }
+    public static var gl: Self { .init(rawValue: "GL") }
+    public static var gm: Self { .init(rawValue: "GM") }
+    public static var gn: Self { .init(rawValue: "GN") }
+    public static var gp: Self { .init(rawValue: "GP") }
+    public static var gq: Self { .init(rawValue: "GQ") }
+    public static var gr: Self { .init(rawValue: "GR") }
+    public static var gs: Self { .init(rawValue: "GS") }
+    public static var gt: Self { .init(rawValue: "GT") }
+    public static var gu: Self { .init(rawValue: "GU") }
+    public static var gw: Self { .init(rawValue: "GW") }
+    public static var gy: Self { .init(rawValue: "GY") }
+    public static var hk: Self { .init(rawValue: "HK") }
+    public static var hn: Self { .init(rawValue: "HN") }
+    public static var hr: Self { .init(rawValue: "HR") }
+    public static var ht: Self { .init(rawValue: "HT") }
+    public static var hu: Self { .init(rawValue: "HU") }
+    public static var id: Self { .init(rawValue: "ID") }
+    public static var ie: Self { .init(rawValue: "IE") }
+    public static var il: Self { .init(rawValue: "IL") }
+    public static var im: Self { .init(rawValue: "IM") }
+    public static var `in`: Self { .init(rawValue: "IN") }
+    public static var io: Self { .init(rawValue: "IO") }
+    public static var iq: Self { .init(rawValue: "IQ") }
+    public static var `is`: Self { .init(rawValue: "IS") }
+    public static var it: Self { .init(rawValue: "IT") }
+    public static var je: Self { .init(rawValue: "JE") }
+    public static var jm: Self { .init(rawValue: "JM") }
+    public static var jo: Self { .init(rawValue: "JO") }
+    public static var jp: Self { .init(rawValue: "JP") }
+    public static var ke: Self { .init(rawValue: "KE") }
+    public static var kg: Self { .init(rawValue: "KG") }
+    public static var kh: Self { .init(rawValue: "KH") }
+    public static var ki: Self { .init(rawValue: "KI") }
+    public static var km: Self { .init(rawValue: "KM") }
+    public static var kn: Self { .init(rawValue: "KN") }
+    public static var kr: Self { .init(rawValue: "KR") }
+    public static var kw: Self { .init(rawValue: "KW") }
+    public static var ky: Self { .init(rawValue: "KY") }
+    public static var kz: Self { .init(rawValue: "KZ") }
+    public static var la: Self { .init(rawValue: "LA") }
+    public static var lb: Self { .init(rawValue: "LB") }
+    public static var lc: Self { .init(rawValue: "LC") }
+    public static var li: Self { .init(rawValue: "LI") }
+    public static var lk: Self { .init(rawValue: "LK") }
+    public static var lr: Self { .init(rawValue: "LR") }
+    public static var ls: Self { .init(rawValue: "LS") }
+    public static var lt: Self { .init(rawValue: "LT") }
+    public static var lu: Self { .init(rawValue: "LU") }
+    public static var lv: Self { .init(rawValue: "LV") }
+    public static var ly: Self { .init(rawValue: "LY") }
+    public static var ma: Self { .init(rawValue: "MA") }
+    public static var mc: Self { .init(rawValue: "MC") }
+    public static var md: Self { .init(rawValue: "MD") }
+    public static var me: Self { .init(rawValue: "ME") }
+    public static var mf: Self { .init(rawValue: "MF") }
+    public static var mg: Self { .init(rawValue: "MG") }
+    public static var mk: Self { .init(rawValue: "MK") }
+    public static var ml: Self { .init(rawValue: "ML") }
+    public static var mm: Self { .init(rawValue: "MM") }
+    public static var mn: Self { .init(rawValue: "MN") }
+    public static var mo: Self { .init(rawValue: "MO") }
+    public static var mq: Self { .init(rawValue: "MQ") }
+    public static var mr: Self { .init(rawValue: "MR") }
+    public static var ms: Self { .init(rawValue: "MS") }
+    public static var mt: Self { .init(rawValue: "MT") }
+    public static var mu: Self { .init(rawValue: "MU") }
+    public static var mv: Self { .init(rawValue: "MV") }
+    public static var mw: Self { .init(rawValue: "MW") }
+    public static var mx: Self { .init(rawValue: "MX") }
+    public static var my: Self { .init(rawValue: "MY") }
+    public static var mz: Self { .init(rawValue: "MZ") }
+    public static var na: Self { .init(rawValue: "NA") }
+    public static var nc: Self { .init(rawValue: "NC") }
+    public static var ne: Self { .init(rawValue: "NE") }
+    public static var ng: Self { .init(rawValue: "NG") }
+    public static var ni: Self { .init(rawValue: "NI") }
+    public static var nl: Self { .init(rawValue: "NL") }
+    public static var no: Self { .init(rawValue: "NO") }
+    public static var np: Self { .init(rawValue: "NP") }
+    public static var nr: Self { .init(rawValue: "NR") }
+    public static var nu: Self { .init(rawValue: "NU") }
+    public static var nz: Self { .init(rawValue: "NZ") }
+    public static var om: Self { .init(rawValue: "OM") }
+    public static var pa: Self { .init(rawValue: "PA") }
+    public static var pe: Self { .init(rawValue: "PE") }
+    public static var pf: Self { .init(rawValue: "PF") }
+    public static var pg: Self { .init(rawValue: "PG") }
+    public static var ph: Self { .init(rawValue: "PH") }
+    public static var pk: Self { .init(rawValue: "PK") }
+    public static var pl: Self { .init(rawValue: "PL") }
+    public static var pm: Self { .init(rawValue: "PM") }
+    public static var pn: Self { .init(rawValue: "PN") }
+    public static var pr: Self { .init(rawValue: "PR") }
+    public static var ps: Self { .init(rawValue: "PS") }
+    public static var pt: Self { .init(rawValue: "PT") }
+    public static var py: Self { .init(rawValue: "PY") }
+    public static var qa: Self { .init(rawValue: "QA") }
+    public static var re: Self { .init(rawValue: "RE") }
+    public static var ro: Self { .init(rawValue: "RO") }
+    public static var rs: Self { .init(rawValue: "RS") }
+    public static var ru: Self { .init(rawValue: "RU") }
+    public static var rw: Self { .init(rawValue: "RW") }
+    public static var sa: Self { .init(rawValue: "SA") }
+    public static var sb: Self { .init(rawValue: "SB") }
+    public static var sc: Self { .init(rawValue: "SC") }
+    public static var sd: Self { .init(rawValue: "SD") }
+    public static var se: Self { .init(rawValue: "SE") }
+    public static var sg: Self { .init(rawValue: "SG") }
+    public static var sh: Self { .init(rawValue: "SH") }
+    public static var si: Self { .init(rawValue: "SI") }
+    public static var sj: Self { .init(rawValue: "SJ") }
+    public static var sk: Self { .init(rawValue: "SK") }
+    public static var sl: Self { .init(rawValue: "SL") }
+    public static var sm: Self { .init(rawValue: "SM") }
+    public static var sn: Self { .init(rawValue: "SN") }
+    public static var so: Self { .init(rawValue: "SO") }
+    public static var sr: Self { .init(rawValue: "SR") }
+    public static var ss: Self { .init(rawValue: "SS") }
+    public static var st: Self { .init(rawValue: "ST") }
+    public static var sv: Self { .init(rawValue: "SV") }
+    public static var sx: Self { .init(rawValue: "SX") }
+    public static var sz: Self { .init(rawValue: "SZ") }
+    public static var ta: Self { .init(rawValue: "TA") }
+    public static var tc: Self { .init(rawValue: "TC") }
+    public static var td: Self { .init(rawValue: "TD") }
+    public static var tf: Self { .init(rawValue: "TF") }
+    public static var tg: Self { .init(rawValue: "TG") }
+    public static var th: Self { .init(rawValue: "TH") }
+    public static var tj: Self { .init(rawValue: "TJ") }
+    public static var tk: Self { .init(rawValue: "TK") }
+    public static var tl: Self { .init(rawValue: "TL") }
+    public static var tm: Self { .init(rawValue: "TM") }
+    public static var tn: Self { .init(rawValue: "TN") }
+    public static var to: Self { .init(rawValue: "TO") }
+    public static var tr: Self { .init(rawValue: "TR") }
+    public static var tt: Self { .init(rawValue: "TT") }
+    public static var tv: Self { .init(rawValue: "TV") }
+    public static var tw: Self { .init(rawValue: "TW") }
+    public static var tz: Self { .init(rawValue: "TZ") }
+    public static var ua: Self { .init(rawValue: "UA") }
+    public static var ug: Self { .init(rawValue: "UG") }
+    public static var us: Self { .init(rawValue: "US") }
+    public static var uy: Self { .init(rawValue: "UY") }
+    public static var uz: Self { .init(rawValue: "UZ") }
+    public static var va: Self { .init(rawValue: "VA") }
+    public static var vc: Self { .init(rawValue: "VC") }
+    public static var ve: Self { .init(rawValue: "VE") }
+    public static var vg: Self { .init(rawValue: "VG") }
+    public static var vn: Self { .init(rawValue: "VN") }
+    public static var vu: Self { .init(rawValue: "VU") }
+    public static var wf: Self { .init(rawValue: "WF") }
+    public static var ws: Self { .init(rawValue: "WS") }
+    public static var xk: Self { .init(rawValue: "XK") }
+    public static var ye: Self { .init(rawValue: "YE") }
+    public static var yt: Self { .init(rawValue: "YT") }
+    public static var za: Self { .init(rawValue: "ZA") }
+    public static var zm: Self { .init(rawValue: "ZM") }
+    public static var zw: Self { .init(rawValue: "ZW") }
+    public static var zz: Self { .init(rawValue: "ZZ") }
 }
 
 public struct PaymentLinkUpdateShippingOptions: StripeParams {
@@ -2858,12 +3092,18 @@ public struct PaymentLinkUpdateShippingOptions: StripeParams {
     }
 }
 
-public enum PaymentLinkUpdateSubmitType: String, Codable, Sendable {
-    case auto
-    case book
-    case donate
-    case pay
-    case subscribe
+public struct PaymentLinkUpdateSubmitType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var book: Self { .init(rawValue: "book") }
+    public static var donate: Self { .init(rawValue: "donate") }
+    public static var pay: Self { .init(rawValue: "pay") }
+    public static var subscribe: Self { .init(rawValue: "subscribe") }
 }
 
 /// When creating a subscription, the specified configuration data will be used. There must be at least
@@ -2954,9 +3194,15 @@ public struct PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuer: StripePara
     }
 }
 
-public enum PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct PaymentLinkUpdateSubscriptionDataInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct PaymentLinkUpdateSubscriptionDataTrialSettings: StripeParams {
@@ -2987,10 +3233,16 @@ public struct PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehavior: StripeP
     }
 }
 
-public enum PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
-    case cancel
-    case createInvoice = "create_invoice"
-    case pause
+public struct PaymentLinkUpdateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
+    public static var createInvoice: Self { .init(rawValue: "create_invoice") }
+    public static var pause: Self { .init(rawValue: "pause") }
 }
 
 /// Controls tax ID collection during checkout.
@@ -3007,9 +3259,15 @@ public struct PaymentLinkUpdateTaxIdCollection: StripeParams {
     }
 }
 
-public enum PaymentLinkUpdateTaxIdCollectionRequired: String, Codable, Sendable {
-    case ifSupported = "if_supported"
-    case never
+public struct PaymentLinkUpdateTaxIdCollectionRequired: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifSupported: Self { .init(rawValue: "if_supported") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct PaymentLinkUpdateTransferData: StripeParams {

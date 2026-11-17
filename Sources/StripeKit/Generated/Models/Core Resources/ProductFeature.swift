@@ -30,8 +30,14 @@ public struct ProductFeature: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ProductFeatureObject: String, Codable, Sendable {
-    case productFeature = "product_feature"
+public struct ProductFeatureObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var productFeature: Self { .init(rawValue: "product_feature") }
 }
 
 public struct ProductFeatureList: Codable, Sendable {

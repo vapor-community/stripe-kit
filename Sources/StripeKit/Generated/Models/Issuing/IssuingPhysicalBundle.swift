@@ -27,21 +27,39 @@ public struct IssuingPhysicalBundle: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum IssuingPhysicalBundleObject: String, Codable, Sendable {
-    case issuingPhysicalBundle = "issuing.physical_bundle"
+public struct IssuingPhysicalBundleObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var issuingPhysicalBundle: Self { .init(rawValue: "issuing.physical_bundle") }
 }
 
 /// Whether this physical bundle can be used to create cards.
-public enum IssuingPhysicalBundleStatus: String, Codable, Sendable {
-    case active
-    case inactive
-    case review
+public struct IssuingPhysicalBundleStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var review: Self { .init(rawValue: "review") }
 }
 
 /// Whether this physical bundle is a standard Stripe offering or custom-made for you.
-public enum IssuingPhysicalBundleType: String, Codable, Sendable {
-    case custom
-    case standard
+public struct IssuingPhysicalBundleType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 public struct IssuingPhysicalBundleList: Codable, Sendable {

@@ -46,9 +46,15 @@ public struct CustomerSessionResourceComponentsResourceMobilePaymentElementResou
 }
 
 /// Controls whether or not the mobile payment element shows saved payment methods.
-public enum CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeaturesPaymentMethodRedisplay: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeaturesPaymentMethodRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// Controls whether the mobile payment element displays the option to remove a saved payment method."
@@ -56,9 +62,15 @@ public enum CustomerSessionResourceComponentsResourceMobilePaymentElementResourc
 /// payment method. Removing the payment method detaches the [`customer`
 /// object](https://docs.stripe.com/api/payment_methods/object#payment_method_object-customer) from that
 /// [PaymentMethod](https://docs.stripe.com/api/payment_methods).
-public enum CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeaturesPaymentMethodRemove: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// Controls whether the mobile payment element displays a checkbox offering to save a new payment
@@ -67,18 +79,30 @@ public enum CustomerSessionResourceComponentsResourceMobilePaymentElementResourc
 /// value on the PaymentMethod is set to `'always'` at confirmation time. For PaymentIntents, the
 /// [`setup_future_usage`](https://docs.stripe.com/api/payment_intents/object#payment_intent_object-setup_future_usage)
 /// value is also set to the value defined in `payment_method_save_usage`.
-public enum CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeaturesPaymentMethodSave: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeaturesPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// Allows overriding the value of allow_override when saving a new payment method when
 /// payment_method_save is set to disabled. Use values: "always", "limited", or "unspecified". If not
 /// specified, defaults to `nil` (no override value).
-public enum CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeaturesPaymentMethodSaveAllowRedisplayOverride: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeaturesPaymentMethodSaveAllowRedisplayOverride: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 public struct CustomerSessionResourceComponentsResourceMobilePaymentElementResourceFeaturesList: Codable, Sendable {

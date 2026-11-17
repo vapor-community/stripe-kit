@@ -67,8 +67,14 @@ public struct SubscriptionItem: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum SubscriptionItemObject: String, Codable, Sendable {
-    case subscriptionItem = "subscription_item"
+public struct SubscriptionItemObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var subscriptionItem: Self { .init(rawValue: "subscription_item") }
 }
 
 public struct SubscriptionItemList: Codable, Sendable {

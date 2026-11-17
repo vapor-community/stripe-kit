@@ -34,9 +34,15 @@ public struct IssuingDisputeMerchandiseNotAsDescribedEvidence: Codable, Sendable
 }
 
 /// Result of cardholder's attempt to return the product.
-public enum IssuingDisputeMerchandiseNotAsDescribedEvidenceReturnStatus: String, Codable, Sendable {
-    case merchantRejected = "merchant_rejected"
-    case successful
+public struct IssuingDisputeMerchandiseNotAsDescribedEvidenceReturnStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchantRejected: Self { .init(rawValue: "merchant_rejected") }
+    public static var successful: Self { .init(rawValue: "successful") }
 }
 
 public struct IssuingDisputeMerchandiseNotAsDescribedEvidenceList: Codable, Sendable {

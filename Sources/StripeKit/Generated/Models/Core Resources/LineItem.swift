@@ -88,8 +88,14 @@ public struct LineItem: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum LineItemObject: String, Codable, Sendable {
-    case lineItem = "line_item"
+public struct LineItemObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var lineItem: Self { .init(rawValue: "line_item") }
 }
 
 public struct LineItemList: Codable, Sendable {

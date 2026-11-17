@@ -21,8 +21,14 @@ public struct TerminalConnectionToken: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TerminalConnectionTokenObject: String, Codable, Sendable {
-    case terminalConnectionToken = "terminal.connection_token"
+public struct TerminalConnectionTokenObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var terminalConnectionToken: Self { .init(rawValue: "terminal.connection_token") }
 }
 
 public struct TerminalConnectionTokenList: Codable, Sendable {

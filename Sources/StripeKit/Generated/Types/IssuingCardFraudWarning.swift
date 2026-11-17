@@ -22,11 +22,23 @@ public struct IssuingCardFraudWarning: Codable, Sendable {
 
 /// The type of fraud warning that most recently took place on this card. This field updates with every
 /// new fraud warning, so the value changes over time. If populated, cancel and reissue the card.
-public enum IssuingCardFraudWarningType: String, Codable, Sendable {
-    case cardTestingExposure = "card_testing_exposure"
-    case fraudDisputeFiled = "fraud_dispute_filed"
-    case thirdPartyReported = "third_party_reported"
-    case userIndicatedFraud = "user_indicated_fraud"
+public struct IssuingCardFraudWarningType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The card's credentials were used successfully in a card testing attempt. Requires [Advanced Fraud
+    /// Tools](https://docs.stripe.com/issuing/controls/advanced-fraud-tools).
+    public static var cardTestingExposure: Self { .init(rawValue: "card_testing_exposure") }
+    /// The cardholder filed a fraud dispute for a transaction
+    public static var fraudDisputeFiled: Self { .init(rawValue: "fraud_dispute_filed") }
+    /// The card was reported compromised by a third party
+    public static var thirdPartyReported: Self { .init(rawValue: "third_party_reported") }
+    /// The cardholder indicated that a fraudulent transaction occurred. Requires [Advanced Fraud
+    /// Tools](https://docs.stripe.com/issuing/controls/advanced-fraud-tools).
+    public static var userIndicatedFraud: Self { .init(rawValue: "user_indicated_fraud") }
 }
 
 public struct IssuingCardFraudWarningList: Codable, Sendable {

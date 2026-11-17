@@ -33,10 +33,16 @@ public struct PaymentMethodOptionsWechatPay: Codable, Sendable {
 }
 
 /// The client type that the end customer will pay from
-public enum PaymentMethodOptionsWechatPayClient: String, Codable, Sendable {
-    case android
-    case ios
-    case web
+public struct PaymentMethodOptionsWechatPayClient: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var android: Self { .init(rawValue: "android") }
+    public static var ios: Self { .init(rawValue: "ios") }
+    public static var web: Self { .init(rawValue: "web") }
 }
 
 /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -50,8 +56,16 @@ public enum PaymentMethodOptionsWechatPayClient: String, Codable, Sendable {
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum PaymentMethodOptionsWechatPaySetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct PaymentMethodOptionsWechatPaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Use `none` if you do not intend to reuse this payment method and want to override the top-level
+    /// `setup_future_usage` value for this payment method.
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct PaymentMethodOptionsWechatPayList: Codable, Sendable {

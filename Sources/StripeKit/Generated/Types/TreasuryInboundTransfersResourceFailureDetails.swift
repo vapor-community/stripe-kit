@@ -13,20 +13,26 @@ public struct TreasuryInboundTransfersResourceFailureDetails: Codable, Sendable 
 }
 
 /// Reason for the failure.
-public enum TreasuryInboundTransfersResourceFailureDetailsCode: String, Codable, Sendable {
-    case accountClosed = "account_closed"
-    case accountFrozen = "account_frozen"
-    case bankAccountRestricted = "bank_account_restricted"
-    case bankOwnershipChanged = "bank_ownership_changed"
-    case debitNotAuthorized = "debit_not_authorized"
-    case incorrectAccountHolderAddress = "incorrect_account_holder_address"
-    case incorrectAccountHolderName = "incorrect_account_holder_name"
-    case incorrectAccountHolderTaxId = "incorrect_account_holder_tax_id"
-    case insufficientFunds = "insufficient_funds"
-    case invalidAccountNumber = "invalid_account_number"
-    case invalidCurrency = "invalid_currency"
-    case noAccount = "no_account"
-    case other
+public struct TreasuryInboundTransfersResourceFailureDetailsCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountClosed: Self { .init(rawValue: "account_closed") }
+    public static var accountFrozen: Self { .init(rawValue: "account_frozen") }
+    public static var bankAccountRestricted: Self { .init(rawValue: "bank_account_restricted") }
+    public static var bankOwnershipChanged: Self { .init(rawValue: "bank_ownership_changed") }
+    public static var debitNotAuthorized: Self { .init(rawValue: "debit_not_authorized") }
+    public static var incorrectAccountHolderAddress: Self { .init(rawValue: "incorrect_account_holder_address") }
+    public static var incorrectAccountHolderName: Self { .init(rawValue: "incorrect_account_holder_name") }
+    public static var incorrectAccountHolderTaxId: Self { .init(rawValue: "incorrect_account_holder_tax_id") }
+    public static var insufficientFunds: Self { .init(rawValue: "insufficient_funds") }
+    public static var invalidAccountNumber: Self { .init(rawValue: "invalid_account_number") }
+    public static var invalidCurrency: Self { .init(rawValue: "invalid_currency") }
+    public static var noAccount: Self { .init(rawValue: "no_account") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 public struct TreasuryInboundTransfersResourceFailureDetailsList: Codable, Sendable {

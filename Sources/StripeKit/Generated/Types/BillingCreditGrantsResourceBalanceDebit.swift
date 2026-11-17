@@ -23,10 +23,16 @@ public struct BillingCreditGrantsResourceBalanceDebit: Codable, Sendable {
 }
 
 /// The type of debit transaction.
-public enum BillingCreditGrantsResourceBalanceDebitType: String, Codable, Sendable {
-    case creditsApplied = "credits_applied"
-    case creditsExpired = "credits_expired"
-    case creditsVoided = "credits_voided"
+public struct BillingCreditGrantsResourceBalanceDebitType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditsApplied: Self { .init(rawValue: "credits_applied") }
+    public static var creditsExpired: Self { .init(rawValue: "credits_expired") }
+    public static var creditsVoided: Self { .init(rawValue: "credits_voided") }
 }
 
 public struct BillingCreditGrantsResourceBalanceDebitList: Codable, Sendable {

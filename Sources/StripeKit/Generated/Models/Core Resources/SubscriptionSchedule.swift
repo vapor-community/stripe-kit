@@ -93,27 +93,45 @@ public struct SubscriptionSchedule: Codable, Sendable {
 /// `release` or `cancel` with the default being `release`. `release` will end the subscription schedule
 /// and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel
 /// the underlying subscription.
-public enum SubscriptionScheduleEndBehavior: String, Codable, Sendable {
-    case cancel
-    case none
-    case release
-    case renew
+public struct SubscriptionScheduleEndBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var release: Self { .init(rawValue: "release") }
+    public static var renew: Self { .init(rawValue: "renew") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum SubscriptionScheduleObject: String, Codable, Sendable {
-    case subscriptionSchedule = "subscription_schedule"
+public struct SubscriptionScheduleObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var subscriptionSchedule: Self { .init(rawValue: "subscription_schedule") }
 }
 
 /// The present status of the subscription schedule. Possible values are `not_started`, `active`,
 /// `completed`, `released`, and `canceled`. You can read more about the different states in our
 /// [behavior guide](https://docs.stripe.com/billing/subscriptions/subscription-schedules).
-public enum SubscriptionScheduleStatus: String, Codable, Sendable {
-    case active
-    case canceled
-    case completed
-    case notStarted = "not_started"
-    case released
+public struct SubscriptionScheduleStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var completed: Self { .init(rawValue: "completed") }
+    public static var notStarted: Self { .init(rawValue: "not_started") }
+    public static var released: Self { .init(rawValue: "released") }
 }
 
 public struct SubscriptionScheduleList: Codable, Sendable {

@@ -23,24 +23,42 @@ public struct IssuingPhysicalBundleFeatures: Codable, Sendable {
 }
 
 /// The policy for how to use card logo images in a card design with this physical bundle.
-public enum IssuingPhysicalBundleFeaturesCardLogo: String, Codable, Sendable {
-    case optional
-    case required
-    case unsupported
+public struct IssuingPhysicalBundleFeaturesCardLogo: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var optional: Self { .init(rawValue: "optional") }
+    public static var required: Self { .init(rawValue: "required") }
+    public static var unsupported: Self { .init(rawValue: "unsupported") }
 }
 
 /// The policy for how to use carrier letter text in a card design with this physical bundle.
-public enum IssuingPhysicalBundleFeaturesCarrierText: String, Codable, Sendable {
-    case optional
-    case required
-    case unsupported
+public struct IssuingPhysicalBundleFeaturesCarrierText: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var optional: Self { .init(rawValue: "optional") }
+    public static var required: Self { .init(rawValue: "required") }
+    public static var unsupported: Self { .init(rawValue: "unsupported") }
 }
 
 /// The policy for how to use a second line on a card with this physical bundle.
-public enum IssuingPhysicalBundleFeaturesSecondLine: String, Codable, Sendable {
-    case optional
-    case required
-    case unsupported
+public struct IssuingPhysicalBundleFeaturesSecondLine: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var optional: Self { .init(rawValue: "optional") }
+    public static var required: Self { .init(rawValue: "required") }
+    public static var unsupported: Self { .init(rawValue: "unsupported") }
 }
 
 public struct IssuingPhysicalBundleFeaturesList: Codable, Sendable {

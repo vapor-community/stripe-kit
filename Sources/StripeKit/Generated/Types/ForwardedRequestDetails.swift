@@ -25,8 +25,14 @@ public struct ForwardedRequestDetails: Codable, Sendable {
 }
 
 /// The HTTP method used to call the destination endpoint.
-public enum ForwardedRequestDetailsHttpMethod: String, Codable, Sendable {
-    case post = "POST"
+public struct ForwardedRequestDetailsHttpMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var post: Self { .init(rawValue: "POST") }
 }
 
 public struct ForwardedRequestDetailsList: Codable, Sendable {

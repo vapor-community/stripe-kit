@@ -13,9 +13,15 @@ public struct ThreeDSecureStandaloneResourceDataShareDetails: Codable, Sendable 
 }
 
 /// Type of data share flow you requested for this 3DS Authentication.
-public enum ThreeDSecureStandaloneResourceDataShareDetailsType: String, Codable, Sendable {
-    case dsSpecific = "ds_specific"
-    case emvStandard = "emv_standard"
+public struct ThreeDSecureStandaloneResourceDataShareDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dsSpecific: Self { .init(rawValue: "ds_specific") }
+    public static var emvStandard: Self { .init(rawValue: "emv_standard") }
 }
 
 public struct ThreeDSecureStandaloneResourceDataShareDetailsList: Codable, Sendable {

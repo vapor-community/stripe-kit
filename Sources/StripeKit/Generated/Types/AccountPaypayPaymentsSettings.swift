@@ -24,9 +24,15 @@ public struct AccountPaypayPaymentsSettings: Codable, Sendable {
 
 /// The type of goods your business sells. Use `digital_content` if you sell digital content. Use
 /// `other` for all other types of goods or services.
-public enum AccountPaypayPaymentsSettingsGoodsType: String, Codable, Sendable {
-    case digitalContent = "digital_content"
-    case other
+public struct AccountPaypayPaymentsSettingsGoodsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var digitalContent: Self { .init(rawValue: "digital_content") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 public struct AccountPaypayPaymentsSettingsList: Codable, Sendable {

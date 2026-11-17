@@ -15,9 +15,15 @@ public struct PaymentPagesCheckoutSessionTaxIdCollection: Codable, Sendable {
 }
 
 /// Indicates whether a tax ID is required on the payment page
-public enum PaymentPagesCheckoutSessionTaxIdCollectionRequired: String, Codable, Sendable {
-    case ifSupported = "if_supported"
-    case never
+public struct PaymentPagesCheckoutSessionTaxIdCollectionRequired: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifSupported: Self { .init(rawValue: "if_supported") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct PaymentPagesCheckoutSessionTaxIdCollectionList: Codable, Sendable {

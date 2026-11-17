@@ -18,9 +18,15 @@ public struct GelatoPhoneReport: Codable, Sendable {
 }
 
 /// Status of this `phone` check.
-public enum GelatoPhoneReportStatus: String, Codable, Sendable {
-    case unverified
-    case verified
+public struct GelatoPhoneReportStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var unverified: Self { .init(rawValue: "unverified") }
+    public static var verified: Self { .init(rawValue: "verified") }
 }
 
 public struct GelatoPhoneReportList: Codable, Sendable {

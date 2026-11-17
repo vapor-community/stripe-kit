@@ -426,8 +426,14 @@ public struct PaymentRecordReportPaymentPaymentMethodDetailsCustom: StripeParams
     }
 }
 
-public enum PaymentRecordReportPaymentPaymentMethodDetailsType: String, Codable, Sendable {
-    case custom
+public struct PaymentRecordReportPaymentPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
 /// Information about the payment attempt cancelation.
@@ -463,9 +469,15 @@ public struct PaymentRecordReportPaymentCustomerDetails: StripeParams {
     }
 }
 
-public enum PaymentRecordReportPaymentCustomerPresence: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct PaymentRecordReportPaymentCustomerPresence: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// Information about the payment attempt failure.
@@ -496,10 +508,16 @@ public struct PaymentRecordReportPaymentGuaranteed: StripeParams {
     }
 }
 
-public enum PaymentRecordReportPaymentOutcome: String, Codable, Sendable {
-    case canceled
-    case failed
-    case guaranteed
+public struct PaymentRecordReportPaymentOutcome: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var guaranteed: Self { .init(rawValue: "guaranteed") }
 }
 
 /// Processor information for this payment.
@@ -516,8 +534,14 @@ public struct PaymentRecordReportPaymentProcessorDetails: StripeParams {
     }
 }
 
-public enum PaymentRecordReportPaymentProcessorDetailsType: String, Codable, Sendable {
-    case custom
+public struct PaymentRecordReportPaymentProcessorDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
 /// Information about the custom processor used to make this payment.
@@ -627,10 +651,16 @@ public struct PaymentRecordReportPaymentAttemptGuaranteed: StripeParams {
     }
 }
 
-public enum PaymentRecordReportPaymentAttemptOutcome: String, Codable, Sendable {
-    case canceled
-    case failed
-    case guaranteed
+public struct PaymentRecordReportPaymentAttemptOutcome: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var guaranteed: Self { .init(rawValue: "guaranteed") }
 }
 
 /// Information about the Payment Method debited for this payment.
@@ -731,8 +761,14 @@ public struct PaymentRecordReportPaymentAttemptPaymentMethodDetailsCustom: Strip
     }
 }
 
-public enum PaymentRecordReportPaymentAttemptPaymentMethodDetailsType: String, Codable, Sendable {
-    case custom
+public struct PaymentRecordReportPaymentAttemptPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
 /// Shipping information for this payment.
@@ -853,8 +889,14 @@ public struct PaymentRecordReportPaymentAttemptInformationalShippingDetailsAddre
     }
 }
 
-public enum PaymentRecordReportRefundOutcome: String, Codable, Sendable {
-    case refunded
+public struct PaymentRecordReportRefundOutcome: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var refunded: Self { .init(rawValue: "refunded") }
 }
 
 /// Processor information for this refund.
@@ -871,8 +913,14 @@ public struct PaymentRecordReportRefundProcessorDetails: StripeParams {
     }
 }
 
-public enum PaymentRecordReportRefundProcessorDetailsType: String, Codable, Sendable {
-    case custom
+public struct PaymentRecordReportRefundProcessorDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
 /// Information about the custom processor used to make this refund.

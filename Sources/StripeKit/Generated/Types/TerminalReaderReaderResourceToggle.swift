@@ -27,15 +27,27 @@ public struct TerminalReaderReaderResourceToggle: Codable, Sendable {
 }
 
 /// The toggle's default value. Can be `enabled` or `disabled`.
-public enum TerminalReaderReaderResourceToggleDefaultValue: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct TerminalReaderReaderResourceToggleDefaultValue: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// The toggle's collected value. Can be `enabled` or `disabled`.
-public enum TerminalReaderReaderResourceToggleValue: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct TerminalReaderReaderResourceToggleValue: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 public struct TerminalReaderReaderResourceToggleList: Codable, Sendable {

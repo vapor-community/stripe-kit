@@ -33,8 +33,14 @@ public struct BillingCreditBalanceSummary: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingCreditBalanceSummaryObject: String, Codable, Sendable {
-    case billingCreditBalanceSummary = "billing.credit_balance_summary"
+public struct BillingCreditBalanceSummaryObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingCreditBalanceSummary: Self { .init(rawValue: "billing.credit_balance_summary") }
 }
 
 public struct BillingCreditBalanceSummaryList: Codable, Sendable {

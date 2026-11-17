@@ -17,10 +17,16 @@ public struct InsightsResourcesPaymentEvaluationUserInterventionRaised: Codable,
 }
 
 /// Type of user intervention raised.
-public enum InsightsResourcesPaymentEvaluationUserInterventionRaisedType: String, Codable, Sendable {
-    case v3ds = "3ds"
-    case captcha
-    case custom
+public struct InsightsResourcesPaymentEvaluationUserInterventionRaisedType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var v3ds: Self { .init(rawValue: "3ds") }
+    public static var captcha: Self { .init(rawValue: "captcha") }
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
 public struct InsightsResourcesPaymentEvaluationUserInterventionRaisedList: Codable, Sendable {

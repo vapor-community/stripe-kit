@@ -15,10 +15,16 @@ public struct AccountUnificationAccountControllerStripeDashboard: Codable, Senda
 
 /// A value indicating the Stripe dashboard this account has access to independent of the Connect
 /// application.
-public enum AccountUnificationAccountControllerStripeDashboardType: String, Codable, Sendable {
-    case express
-    case full
-    case none
+public struct AccountUnificationAccountControllerStripeDashboardType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var express: Self { .init(rawValue: "express") }
+    public static var full: Self { .init(rawValue: "full") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct AccountUnificationAccountControllerStripeDashboardList: Codable, Sendable {

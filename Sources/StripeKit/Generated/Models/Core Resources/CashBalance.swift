@@ -37,8 +37,14 @@ public struct CashBalance: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CashBalanceObject: String, Codable, Sendable {
-    case cashBalance = "cash_balance"
+public struct CashBalanceObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cashBalance: Self { .init(rawValue: "cash_balance") }
 }
 
 public struct CashBalanceList: Codable, Sendable {

@@ -895,10 +895,16 @@ public struct PaymentMethodConfigurationCreateAcssDebitDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationCreateAcssDebitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateAcssDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// [Affirm](https://www.affirm.com/) gives your customers a way to split purchases over a series of
@@ -928,10 +934,16 @@ public struct PaymentMethodConfigurationCreateAffirmDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateAffirmDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateAffirmDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Afterpay gives your customers a way to pay for purchases in installments, check this
@@ -961,10 +973,16 @@ public struct PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreference:
     }
 }
 
-public enum PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateAfterpayClearpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Alipay is a digital wallet in China that has more than a billion active users worldwide. Alipay
@@ -994,10 +1012,16 @@ public struct PaymentMethodConfigurationCreateAlipayDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateAlipayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateAlipayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4
@@ -1025,10 +1049,16 @@ public struct PaymentMethodConfigurationCreateAlmaDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationCreateAlmaDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateAlmaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
@@ -1055,10 +1085,16 @@ public struct PaymentMethodConfigurationCreateAmazonPayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationCreateAmazonPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateAmazonPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in
@@ -1089,10 +1125,16 @@ public struct PaymentMethodConfigurationCreateApplePayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationCreateApplePayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateApplePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Apple Pay Later, a payment method for customers to buy now and pay later, gives your customers a way
@@ -1120,10 +1162,16 @@ public struct PaymentMethodConfigurationCreateApplePayLaterDisplayPreference: St
     }
 }
 
-public enum PaymentMethodConfigurationCreateApplePayLaterDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateApplePayLaterDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments
@@ -1152,10 +1200,16 @@ public struct PaymentMethodConfigurationCreateAuBecsDebitDisplayPreference: Stri
     }
 }
 
-public enum PaymentMethodConfigurationCreateAuBecsDebitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateAuBecsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account,
@@ -1183,10 +1237,16 @@ public struct PaymentMethodConfigurationCreateBacsDebitDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationCreateBacsDebitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateBacsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Bancontact is the most popular online payment method in Belgium, with over 15 million cards in
@@ -1216,10 +1276,16 @@ public struct PaymentMethodConfigurationCreateBancontactDisplayPreference: Strip
     }
 }
 
-public enum PaymentMethodConfigurationCreateBancontactDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateBancontactDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -1250,10 +1316,16 @@ public struct PaymentMethodConfigurationCreateBillieDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateBillieDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateBillieDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking
@@ -1281,10 +1353,16 @@ public struct PaymentMethodConfigurationCreateBizumDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationCreateBizumDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateBizumDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -1314,10 +1392,16 @@ public struct PaymentMethodConfigurationCreateBlikDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationCreateBlikDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateBlikDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Boleto is an official (regulated by the Central Bank of Brazil) payment method in Brazil. Check this
@@ -1345,10 +1429,16 @@ public struct PaymentMethodConfigurationCreateBoletoDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateBoletoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateBoletoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Cards are a popular way for consumers and businesses to pay online or in person. Stripe supports
@@ -1376,10 +1466,16 @@ public struct PaymentMethodConfigurationCreateCardDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationCreateCardDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Cartes Bancaires is France's local card network. More than 95% of these cards are co-branded with
@@ -1409,10 +1505,16 @@ public struct PaymentMethodConfigurationCreateCartesBancairesDisplayPreference: 
     }
 }
 
-public enum PaymentMethodConfigurationCreateCartesBancairesDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateCartesBancairesDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Cash App is a popular consumer app in the US that allows customers to bank, invest, send, and
@@ -1441,10 +1543,16 @@ public struct PaymentMethodConfigurationCreateCashappDisplayPreference: StripePa
     }
 }
 
-public enum PaymentMethodConfigurationCreateCashappDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateCashappDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// [Stablecoin payments](https://docs.stripe.com/payments/stablecoin-payments) enable customers to pay
@@ -1472,10 +1580,16 @@ public struct PaymentMethodConfigurationCreateCryptoDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateCryptoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateCryptoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Uses a customer’s [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment.
@@ -1504,10 +1618,16 @@ public struct PaymentMethodConfigurationCreateCustomerBalanceDisplayPreference: 
     }
 }
 
-public enum PaymentMethodConfigurationCreateCustomerBalanceDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateCustomerBalanceDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// EPS is an Austria-based payment method that allows customers to complete transactions online using
@@ -1536,10 +1656,16 @@ public struct PaymentMethodConfigurationCreateEpsDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationCreateEpsDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateEpsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Financial Process Exchange (FPX) is a Malaysia-based payment method that allows customers to
@@ -1571,10 +1697,16 @@ public struct PaymentMethodConfigurationCreateFpxDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationCreateFpxDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateFpxDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by
@@ -1603,10 +1735,16 @@ public struct PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferen
     }
 }
 
-public enum PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateFrMealVoucherConecsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// giropay is a German payment method based on online banking, introduced in 2006. It allows customers
@@ -1637,10 +1775,16 @@ public struct PaymentMethodConfigurationCreateGiropayDisplayPreference: StripePa
     }
 }
 
-public enum PaymentMethodConfigurationCreateGiropayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateGiropayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Google Pay allows customers to make payments in your app or website using any credit or debit card
@@ -1670,10 +1814,16 @@ public struct PaymentMethodConfigurationCreateGooglePayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationCreateGooglePayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateGooglePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/).
@@ -1702,10 +1852,16 @@ public struct PaymentMethodConfigurationCreateGrabpayDisplayPreference: StripePa
     }
 }
 
-public enum PaymentMethodConfigurationCreateGrabpayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateGrabpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// iDEAL is a Netherlands-based payment method that allows customers to complete transactions online
@@ -1736,10 +1892,16 @@ public struct PaymentMethodConfigurationCreateIdealDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationCreateIdealDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateIdealDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses
@@ -1771,10 +1933,16 @@ public struct PaymentMethodConfigurationCreateJcbDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationCreateJcbDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateJcbDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Kakao Pay is a popular local wallet available in South Korea.
@@ -1801,10 +1969,16 @@ public struct PaymentMethodConfigurationCreateKakaoPayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationCreateKakaoPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateKakaoPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Klarna gives customers a range of [payment
@@ -1835,10 +2009,16 @@ public struct PaymentMethodConfigurationCreateKlarnaDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateKlarnaDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateKlarnaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Konbini allows customers in Japan to pay for bills and online purchases at convenience stores with
@@ -1866,10 +2046,16 @@ public struct PaymentMethodConfigurationCreateKonbiniDisplayPreference: StripePa
     }
 }
 
-public enum PaymentMethodConfigurationCreateKonbiniDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateKonbiniDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Korean cards let users pay using locally issued cards from South Korea.
@@ -1896,10 +2082,16 @@ public struct PaymentMethodConfigurationCreateKrCardDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateKrCardDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateKrCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// [Link](https://docs.stripe.com/payments/link) is a payment method network. With Link, users save
@@ -1928,10 +2120,16 @@ public struct PaymentMethodConfigurationCreateLinkDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationCreateLinkDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateLinkDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout,
@@ -1960,10 +2158,16 @@ public struct PaymentMethodConfigurationCreateMbWayDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationCreateMbWayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateMbWayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// MobilePay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet
@@ -1993,10 +2197,16 @@ public struct PaymentMethodConfigurationCreateMobilepayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationCreateMobilepayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateMobilepayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in Europe and the United States can accept Multibanco payments from customers in
@@ -2025,10 +2235,16 @@ public struct PaymentMethodConfigurationCreateMultibancoDisplayPreference: Strip
     }
 }
 
-public enum PaymentMethodConfigurationCreateMultibancoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateMultibancoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Naver Pay is a popular local wallet available in South Korea.
@@ -2055,10 +2271,16 @@ public struct PaymentMethodConfigurationCreateNaverPayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationCreateNaverPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateNaverPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments
@@ -2087,10 +2309,16 @@ public struct PaymentMethodConfigurationCreateNzBankAccountDisplayPreference: St
     }
 }
 
-public enum PaymentMethodConfigurationCreateNzBankAccountDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateNzBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and
@@ -2120,10 +2348,16 @@ public struct PaymentMethodConfigurationCreateOxxoDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationCreateOxxoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateOxxoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Przelewy24 is a Poland-based payment method aggregator that allows customers to complete
@@ -2153,10 +2387,16 @@ public struct PaymentMethodConfigurationCreateP24DisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationCreateP24DisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateP24DisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their
@@ -2186,10 +2426,16 @@ public struct PaymentMethodConfigurationCreatePayByBankDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationCreatePayByBankDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreatePayByBankDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PAYCO is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
@@ -2217,10 +2463,16 @@ public struct PaymentMethodConfigurationCreatePaycoDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationCreatePaycoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreatePaycoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PayNow is a Singapore-based payment method that allows customers to make a payment using their
@@ -2249,10 +2501,16 @@ public struct PaymentMethodConfigurationCreatePaynowDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreatePaynowDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreatePaynowDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay
@@ -2281,10 +2539,16 @@ public struct PaymentMethodConfigurationCreatePaypalDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreatePaypalDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreatePaypalDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Customers can pay with PayPay online or using the PayPay app.
@@ -2311,10 +2575,16 @@ public struct PaymentMethodConfigurationCreatePaypayDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreatePaypayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreatePaypayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables
@@ -2344,10 +2614,16 @@ public struct PaymentMethodConfigurationCreatePaytoDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationCreatePaytoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreatePaytoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve
@@ -2376,10 +2652,16 @@ public struct PaymentMethodConfigurationCreatePixDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationCreatePixDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreatePixDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PromptPay is a Thailand-based payment method that allows customers to make a payment using their
@@ -2408,10 +2690,16 @@ public struct PaymentMethodConfigurationCreatePromptpayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationCreatePromptpayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreatePromptpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut
@@ -2440,10 +2728,16 @@ public struct PaymentMethodConfigurationCreateRevolutPayDisplayPreference: Strip
     }
 }
 
-public enum PaymentMethodConfigurationCreateRevolutPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateRevolutPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Samsung Pay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
@@ -2471,10 +2765,16 @@ public struct PaymentMethodConfigurationCreateSamsungPayDisplayPreference: Strip
     }
 }
 
-public enum PaymentMethodConfigurationCreateSamsungPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateSamsungPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Satispay is a [single-use](/payments/payment-methods#usage) payment method where customers are
@@ -2506,10 +2806,16 @@ public struct PaymentMethodConfigurationCreateSatispayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationCreateSatispayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateSatispayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Scalapay is a [single-use](/payments/payment-methods#usage) payment method that lets customers pay
@@ -2540,10 +2846,16 @@ public struct PaymentMethodConfigurationCreateScalapayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationCreateScalapayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateScalapayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is
@@ -2574,10 +2886,16 @@ public struct PaymentMethodConfigurationCreateSepaDebitDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationCreateSepaDebitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateSepaDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -2608,10 +2926,16 @@ public struct PaymentMethodConfigurationCreateSequraDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateSequraDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateSequraDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in Europe and the United States can use the [Payment Intents
@@ -2641,10 +2965,16 @@ public struct PaymentMethodConfigurationCreateSofortDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateSofortDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateSofortDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Sunbit is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method
@@ -2675,10 +3005,16 @@ public struct PaymentMethodConfigurationCreateSunbitDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationCreateSunbitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateSunbitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden.
@@ -2709,10 +3045,16 @@ public struct PaymentMethodConfigurationCreateSwishDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationCreateSwishDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateSwishDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile
@@ -2740,10 +3082,16 @@ public struct PaymentMethodConfigurationCreateTwintDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationCreateTwintDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateTwintDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it
@@ -2771,10 +3119,16 @@ public struct PaymentMethodConfigurationCreateUpiDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationCreateUpiDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateUpiDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in the United States can accept ACH direct debit payments from customers with a US bank
@@ -2803,10 +3157,16 @@ public struct PaymentMethodConfigurationCreateUsBankAccountDisplayPreference: St
     }
 }
 
-public enum PaymentMethodConfigurationCreateUsBankAccountDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateUsBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users.
@@ -2836,10 +3196,16 @@ public struct PaymentMethodConfigurationCreateWechatPayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationCreateWechatPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateWechatPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Zip gives your customers a way to split purchases over a series of payments. Check this
@@ -2867,10 +3233,16 @@ public struct PaymentMethodConfigurationCreateZipDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationCreateZipDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationCreateZipDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Canadian pre-authorized debit payments, check this
@@ -2898,10 +3270,16 @@ public struct PaymentMethodConfigurationUpdateAcssDebitDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationUpdateAcssDebitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateAcssDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// [Affirm](https://www.affirm.com/) gives your customers a way to split purchases over a series of
@@ -2931,10 +3309,16 @@ public struct PaymentMethodConfigurationUpdateAffirmDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateAffirmDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateAffirmDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Afterpay gives your customers a way to pay for purchases in installments, check this
@@ -2964,10 +3348,16 @@ public struct PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreference:
     }
 }
 
-public enum PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateAfterpayClearpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Alipay is a digital wallet in China that has more than a billion active users worldwide. Alipay
@@ -2997,10 +3387,16 @@ public struct PaymentMethodConfigurationUpdateAlipayDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateAlipayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateAlipayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4
@@ -3028,10 +3424,16 @@ public struct PaymentMethodConfigurationUpdateAlmaDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationUpdateAlmaDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateAlmaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
@@ -3058,10 +3460,16 @@ public struct PaymentMethodConfigurationUpdateAmazonPayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationUpdateAmazonPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateAmazonPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in
@@ -3092,10 +3500,16 @@ public struct PaymentMethodConfigurationUpdateApplePayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationUpdateApplePayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateApplePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Apple Pay Later, a payment method for customers to buy now and pay later, gives your customers a way
@@ -3123,10 +3537,16 @@ public struct PaymentMethodConfigurationUpdateApplePayLaterDisplayPreference: St
     }
 }
 
-public enum PaymentMethodConfigurationUpdateApplePayLaterDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateApplePayLaterDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in Australia can accept Bulk Electronic Clearing System (BECS) direct debit payments
@@ -3155,10 +3575,16 @@ public struct PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreference: Stri
     }
 }
 
-public enum PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateAuBecsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in the UK can accept Bacs Direct Debit payments from customers with a UK bank account,
@@ -3186,10 +3612,16 @@ public struct PaymentMethodConfigurationUpdateBacsDebitDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationUpdateBacsDebitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateBacsDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Bancontact is the most popular online payment method in Belgium, with over 15 million cards in
@@ -3219,10 +3651,16 @@ public struct PaymentMethodConfigurationUpdateBancontactDisplayPreference: Strip
     }
 }
 
-public enum PaymentMethodConfigurationUpdateBancontactDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateBancontactDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -3253,10 +3691,16 @@ public struct PaymentMethodConfigurationUpdateBillieDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateBillieDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateBillieDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// To enable Bizum, buyers need a Spanish IBAN from a bank connected to Bizum. Within their banking
@@ -3284,10 +3728,16 @@ public struct PaymentMethodConfigurationUpdateBizumDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationUpdateBizumDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateBizumDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// BLIK is a [single use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -3317,10 +3767,16 @@ public struct PaymentMethodConfigurationUpdateBlikDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationUpdateBlikDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateBlikDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Boleto is an official (regulated by the Central Bank of Brazil) payment method in Brazil. Check this
@@ -3348,10 +3804,16 @@ public struct PaymentMethodConfigurationUpdateBoletoDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateBoletoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateBoletoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Cards are a popular way for consumers and businesses to pay online or in person. Stripe supports
@@ -3379,10 +3841,16 @@ public struct PaymentMethodConfigurationUpdateCardDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationUpdateCardDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Cartes Bancaires is France's local card network. More than 95% of these cards are co-branded with
@@ -3412,10 +3880,16 @@ public struct PaymentMethodConfigurationUpdateCartesBancairesDisplayPreference: 
     }
 }
 
-public enum PaymentMethodConfigurationUpdateCartesBancairesDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateCartesBancairesDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Cash App is a popular consumer app in the US that allows customers to bank, invest, send, and
@@ -3444,10 +3918,16 @@ public struct PaymentMethodConfigurationUpdateCashappDisplayPreference: StripePa
     }
 }
 
-public enum PaymentMethodConfigurationUpdateCashappDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateCashappDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// [Stablecoin payments](https://docs.stripe.com/payments/stablecoin-payments) enable customers to pay
@@ -3475,10 +3955,16 @@ public struct PaymentMethodConfigurationUpdateCryptoDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateCryptoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateCryptoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Uses a customer’s [cash balance](https://docs.stripe.com/payments/customer-balance) for the payment.
@@ -3507,10 +3993,16 @@ public struct PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreference: 
     }
 }
 
-public enum PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateCustomerBalanceDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// EPS is an Austria-based payment method that allows customers to complete transactions online using
@@ -3539,10 +4031,16 @@ public struct PaymentMethodConfigurationUpdateEpsDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationUpdateEpsDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateEpsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Financial Process Exchange (FPX) is a Malaysia-based payment method that allows customers to
@@ -3574,10 +4072,16 @@ public struct PaymentMethodConfigurationUpdateFpxDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationUpdateFpxDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateFpxDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by
@@ -3606,10 +4110,16 @@ public struct PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreferen
     }
 }
 
-public enum PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateFrMealVoucherConecsDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// giropay is a German payment method based on online banking, introduced in 2006. It allows customers
@@ -3640,10 +4150,16 @@ public struct PaymentMethodConfigurationUpdateGiropayDisplayPreference: StripePa
     }
 }
 
-public enum PaymentMethodConfigurationUpdateGiropayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateGiropayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Google Pay allows customers to make payments in your app or website using any credit or debit card
@@ -3673,10 +4189,16 @@ public struct PaymentMethodConfigurationUpdateGooglePayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationUpdateGooglePayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateGooglePayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/).
@@ -3705,10 +4227,16 @@ public struct PaymentMethodConfigurationUpdateGrabpayDisplayPreference: StripePa
     }
 }
 
-public enum PaymentMethodConfigurationUpdateGrabpayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateGrabpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// iDEAL is a Netherlands-based payment method that allows customers to complete transactions online
@@ -3739,10 +4267,16 @@ public struct PaymentMethodConfigurationUpdateIdealDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationUpdateIdealDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateIdealDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses
@@ -3774,10 +4308,16 @@ public struct PaymentMethodConfigurationUpdateJcbDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationUpdateJcbDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateJcbDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Kakao Pay is a popular local wallet available in South Korea.
@@ -3804,10 +4344,16 @@ public struct PaymentMethodConfigurationUpdateKakaoPayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationUpdateKakaoPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateKakaoPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Klarna gives customers a range of [payment
@@ -3838,10 +4384,16 @@ public struct PaymentMethodConfigurationUpdateKlarnaDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateKlarnaDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateKlarnaDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Konbini allows customers in Japan to pay for bills and online purchases at convenience stores with
@@ -3869,10 +4421,16 @@ public struct PaymentMethodConfigurationUpdateKonbiniDisplayPreference: StripePa
     }
 }
 
-public enum PaymentMethodConfigurationUpdateKonbiniDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateKonbiniDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Korean cards let users pay using locally issued cards from South Korea.
@@ -3899,10 +4457,16 @@ public struct PaymentMethodConfigurationUpdateKrCardDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateKrCardDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateKrCardDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// [Link](https://docs.stripe.com/payments/link) is a payment method network. With Link, users save
@@ -3931,10 +4495,16 @@ public struct PaymentMethodConfigurationUpdateLinkDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationUpdateLinkDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateLinkDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout,
@@ -3963,10 +4533,16 @@ public struct PaymentMethodConfigurationUpdateMbWayDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationUpdateMbWayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateMbWayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// MobilePay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) card wallet
@@ -3996,10 +4572,16 @@ public struct PaymentMethodConfigurationUpdateMobilepayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationUpdateMobilepayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateMobilepayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in Europe and the United States can accept Multibanco payments from customers in
@@ -4028,10 +4610,16 @@ public struct PaymentMethodConfigurationUpdateMultibancoDisplayPreference: Strip
     }
 }
 
-public enum PaymentMethodConfigurationUpdateMultibancoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateMultibancoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Naver Pay is a popular local wallet available in South Korea.
@@ -4058,10 +4646,16 @@ public struct PaymentMethodConfigurationUpdateNaverPayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationUpdateNaverPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateNaverPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments
@@ -4090,10 +4684,16 @@ public struct PaymentMethodConfigurationUpdateNzBankAccountDisplayPreference: St
     }
 }
 
-public enum PaymentMethodConfigurationUpdateNzBankAccountDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateNzBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and
@@ -4123,10 +4723,16 @@ public struct PaymentMethodConfigurationUpdateOxxoDisplayPreference: StripeParam
     }
 }
 
-public enum PaymentMethodConfigurationUpdateOxxoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateOxxoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Przelewy24 is a Poland-based payment method aggregator that allows customers to complete
@@ -4156,10 +4762,16 @@ public struct PaymentMethodConfigurationUpdateP24DisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationUpdateP24DisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateP24DisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their
@@ -4189,10 +4801,16 @@ public struct PaymentMethodConfigurationUpdatePayByBankDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationUpdatePayByBankDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdatePayByBankDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PAYCO is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
@@ -4220,10 +4838,16 @@ public struct PaymentMethodConfigurationUpdatePaycoDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationUpdatePaycoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdatePaycoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PayNow is a Singapore-based payment method that allows customers to make a payment using their
@@ -4252,10 +4876,16 @@ public struct PaymentMethodConfigurationUpdatePaynowDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdatePaynowDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdatePaynowDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay
@@ -4284,10 +4914,16 @@ public struct PaymentMethodConfigurationUpdatePaypalDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdatePaypalDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdatePaypalDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Customers can pay with PayPay online or using the PayPay app.
@@ -4314,10 +4950,16 @@ public struct PaymentMethodConfigurationUpdatePaypayDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdatePaypayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdatePaypayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables
@@ -4347,10 +4989,16 @@ public struct PaymentMethodConfigurationUpdatePaytoDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationUpdatePaytoDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdatePaytoDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve
@@ -4379,10 +5027,16 @@ public struct PaymentMethodConfigurationUpdatePixDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationUpdatePixDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdatePixDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// PromptPay is a Thailand-based payment method that allows customers to make a payment using their
@@ -4411,10 +5065,16 @@ public struct PaymentMethodConfigurationUpdatePromptpayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationUpdatePromptpayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdatePromptpayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut
@@ -4443,10 +5103,16 @@ public struct PaymentMethodConfigurationUpdateRevolutPayDisplayPreference: Strip
     }
 }
 
-public enum PaymentMethodConfigurationUpdateRevolutPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateRevolutPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Samsung Pay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage local wallet
@@ -4474,10 +5140,16 @@ public struct PaymentMethodConfigurationUpdateSamsungPayDisplayPreference: Strip
     }
 }
 
-public enum PaymentMethodConfigurationUpdateSamsungPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateSamsungPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Satispay is a [single-use](/payments/payment-methods#usage) payment method where customers are
@@ -4509,10 +5181,16 @@ public struct PaymentMethodConfigurationUpdateSatispayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationUpdateSatispayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateSatispayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Scalapay is a [single-use](/payments/payment-methods#usage) payment method that lets customers pay
@@ -4543,10 +5221,16 @@ public struct PaymentMethodConfigurationUpdateScalapayDisplayPreference: StripeP
     }
 }
 
-public enum PaymentMethodConfigurationUpdateScalapayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateScalapayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is
@@ -4577,10 +5261,16 @@ public struct PaymentMethodConfigurationUpdateSepaDebitDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationUpdateSepaDebitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateSepaDebitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// SeQura is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that
@@ -4611,10 +5301,16 @@ public struct PaymentMethodConfigurationUpdateSequraDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateSequraDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateSequraDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in Europe and the United States can use the [Payment Intents
@@ -4644,10 +5340,16 @@ public struct PaymentMethodConfigurationUpdateSofortDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateSofortDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateSofortDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Sunbit is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method
@@ -4678,10 +5380,16 @@ public struct PaymentMethodConfigurationUpdateSunbitDisplayPreference: StripePar
     }
 }
 
-public enum PaymentMethodConfigurationUpdateSunbitDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateSunbitDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Swish is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Sweden.
@@ -4712,10 +5420,16 @@ public struct PaymentMethodConfigurationUpdateSwishDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationUpdateSwishDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateSwishDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile
@@ -4743,10 +5457,16 @@ public struct PaymentMethodConfigurationUpdateTwintDisplayPreference: StripePara
     }
 }
 
-public enum PaymentMethodConfigurationUpdateTwintDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateTwintDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Unified Payment Interface (UPI) is India's leading payment method with exponential growth since it
@@ -4774,10 +5494,16 @@ public struct PaymentMethodConfigurationUpdateUpiDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationUpdateUpiDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateUpiDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Stripe users in the United States can accept ACH direct debit payments from customers with a US bank
@@ -4806,10 +5532,16 @@ public struct PaymentMethodConfigurationUpdateUsBankAccountDisplayPreference: St
     }
 }
 
-public enum PaymentMethodConfigurationUpdateUsBankAccountDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateUsBankAccountDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users.
@@ -4839,10 +5571,16 @@ public struct PaymentMethodConfigurationUpdateWechatPayDisplayPreference: Stripe
     }
 }
 
-public enum PaymentMethodConfigurationUpdateWechatPayDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateWechatPayDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// Zip gives your customers a way to split purchases over a series of payments. Check this
@@ -4870,8 +5608,14 @@ public struct PaymentMethodConfigurationUpdateZipDisplayPreference: StripeParams
     }
 }
 
-public enum PaymentMethodConfigurationUpdateZipDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigurationUpdateZipDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }

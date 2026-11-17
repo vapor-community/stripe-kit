@@ -13,12 +13,23 @@ public struct InvoicesResourceUncollectibleStatusDetails: Codable, Sendable {
 }
 
 /// The reason why the invoice is uncollectible.
-public enum InvoicesResourceUncollectibleStatusDetailsReason: String, Codable, Sendable {
-    case maxPaymentAttempts = "max_payment_attempts"
-    case paymentNotReceived = "payment_not_received"
-    case subscriptionCanceled = "subscription_canceled"
-    case subscriptionPaused = "subscription_paused"
-    case userForgiven = "user_forgiven"
+public struct InvoicesResourceUncollectibleStatusDetailsReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The maximum number of payment attempts was reached.
+    public static var maxPaymentAttempts: Self { .init(rawValue: "max_payment_attempts") }
+    /// Payment was not received for the invoice.
+    public static var paymentNotReceived: Self { .init(rawValue: "payment_not_received") }
+    /// The subscription associated with the invoice was canceled.
+    public static var subscriptionCanceled: Self { .init(rawValue: "subscription_canceled") }
+    /// The subscription associated with the invoice had `pause_collection` set.
+    public static var subscriptionPaused: Self { .init(rawValue: "subscription_paused") }
+    /// The invoice was marked uncollectible by the user.
+    public static var userForgiven: Self { .init(rawValue: "user_forgiven") }
 }
 
 public struct InvoicesResourceUncollectibleStatusDetailsList: Codable, Sendable {

@@ -86,18 +86,61 @@ func docComment(_ description: String?, indent: String = "") -> [String] {
     return wordWrap(cleanDescription(description), lineLength: 100).map { "\(indent)/// \($0)" }
 }
 
-/// A `String`-backed enum for a spec enum. "" is dropped (Stripe uses it to mean "unset"), and
-/// values that map to the same Swift case are emitted once. Empty when no cases are left.
-func generateStringEnum(name: String, cases: [String], description: String? = nil) -> [String] {
-    var lines = docComment(description)
-    lines.append("public enum \(name): String, Codable, Sendable {")
-    var seenCases = Set<String>()
-    for rawCase in cases where !rawCase.isEmpty {
-        let swiftCase = enumCaseToSwift(rawCase)
-        guard seenCases.insert(swiftCase).inserted else { continue }
-        lines.append(swiftCase == rawCase ? "    case \(swiftCase)" : "    case \(swiftCase) = \"\(rawCase)\"")
+/// The case a polymorphic enum (`ExternalAccount`, `PaymentSource`) holds an object of a type it
+/// doesn't know in, as raw JSON: `.undocumented(json)`. Named like swift-openapi-generator's
+/// `undocumented` cases.
+let undocumentedCase = "undocumented"
+
+/// A Swift string literal for `value`
+func swiftStringLiteral(_ value: String) -> String {
+    "\"" + value.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"") + "\""
+}
+
+/// An extensible string type for a spec enum: a struct holding the raw value, with a static
+/// member per known value, like the "extensible enums" Apple's Objective-C headers import as
+/// (`NS_TYPED_EXTENSIBLE_ENUM`) and Soto's open-ended types.
+///
+///     public struct PaymentMethodType: RawRepresentable, Codable, Hashable, Sendable {
+///         public let rawValue: String
+///         public static var card: Self { .init(rawValue: "card") }
+///     }
+///
+/// Stripe adds enum values without a new API version (new payment method types, error codes,
+/// …), so any value decodes, including ones this version doesn't list, and can be sent in
+/// params (`.init(rawValue: "new_value")`). Call sites read like an enum's: `type == .card`,
+/// `switch type { case .card: … default: … }`. No mapping code is needed, so it costs a line
+/// per value.
+///
+/// `valueDescriptions` (from `x-stripeEnum`) become the members' doc comments. "" is skipped
+/// (Stripe uses it to mean "unset"); values that map to the same Swift name keep the first.
+/// Empty when no values are left.
+func generateStringEnum(
+    name: String,
+    cases: [String],
+    description: String? = nil,
+    valueDescriptions: [String: String] = [:]
+) -> [String] {
+    var members: [(name: String, rawValue: String)] = []
+    var seen: Set<String> = ["rawValue"]
+    for rawValue in cases where !rawValue.isEmpty {
+        let member = enumCaseToSwift(rawValue)
+        guard seen.insert(member).inserted else { continue }
+        members.append((member, rawValue))
     }
-    guard !seenCases.isEmpty else { return [] }
+    guard !members.isEmpty else { return [] }
+
+    var lines = docComment(description)
+    lines.append("public struct \(name): RawRepresentable, Codable, Hashable, Sendable {")
+    lines.append("    public let rawValue: String")
+    lines.append("")
+    lines.append("    public init(rawValue: String) {")
+    lines.append("        self.rawValue = rawValue")
+    lines.append("    }")
+    lines.append("")
+    for member in members {
+        lines.append(contentsOf: docComment(valueDescriptions[member.rawValue], indent: "    "))
+        lines.append("    public static var \(member.name): Self { .init(rawValue: \(swiftStringLiteral(member.rawValue))) }")
+    }
     lines.append("}")
     return lines
 }

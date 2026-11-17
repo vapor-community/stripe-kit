@@ -123,24 +123,50 @@ public struct AppsInstallUpdateParams: StripeParams {
     }
 }
 
-public enum AppsInstallCreateChannel: String, Codable, Sendable {
-    case privateLive = "private_live"
-    case privateTest = "private_test"
-    case `public` = "public"
-    case testing
+public struct AppsInstallCreateChannel: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// A private app installed in live mode.
+    public static var privateLive: Self { .init(rawValue: "private_live") }
+    /// A private app installed in test mode.
+    public static var privateTest: Self { .init(rawValue: "private_test") }
+    /// The published version of the app.
+    public static var `public`: Self { .init(rawValue: "public") }
+    /// A pre-release version of the app installed for external testing.
+    public static var testing: Self { .init(rawValue: "testing") }
 }
 
-public enum AppsInstallListChannel: String, Codable, Sendable {
-    case privateLive = "private_live"
-    case privateTest = "private_test"
-    case `public` = "public"
-    case testing
+public struct AppsInstallListChannel: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// A private app installed in live mode.
+    public static var privateLive: Self { .init(rawValue: "private_live") }
+    /// A private app installed in test mode.
+    public static var privateTest: Self { .init(rawValue: "private_test") }
+    /// The published version of the app.
+    public static var `public`: Self { .init(rawValue: "public") }
+    /// A pre-release version of the app installed for external testing.
+    public static var testing: Self { .init(rawValue: "testing") }
 }
 
-public enum AppsInstallListStatus: String, Codable, Sendable {
-    case installFailed = "install_failed"
-    case installed
-    case installing
-    case uninstallFailed = "uninstall_failed"
-    case uninstalling
+public struct AppsInstallListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var installFailed: Self { .init(rawValue: "install_failed") }
+    public static var installed: Self { .init(rawValue: "installed") }
+    public static var installing: Self { .init(rawValue: "installing") }
+    public static var uninstallFailed: Self { .init(rawValue: "uninstall_failed") }
+    public static var uninstalling: Self { .init(rawValue: "uninstalling") }
 }

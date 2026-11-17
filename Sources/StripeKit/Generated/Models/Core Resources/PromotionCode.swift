@@ -65,8 +65,14 @@ public struct PromotionCode: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PromotionCodeObject: String, Codable, Sendable {
-    case promotionCode = "promotion_code"
+public struct PromotionCodeObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var promotionCode: Self { .init(rawValue: "promotion_code") }
 }
 
 public struct PromotionCodeList: Codable, Sendable {

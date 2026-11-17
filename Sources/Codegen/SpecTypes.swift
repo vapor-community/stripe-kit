@@ -104,6 +104,9 @@ final class PropertyObject: Decodable {
     /// Unlike the parent's `x-expandableFields`, which also lists plain nested objects so
     /// their own fields can be expanded through them.
     let expansionResources: [PropertyObject]?
+    /// Descriptions of some of an enum's values, from the SDK spec's undocumented
+    /// `x-stripeEnum` annotation (`{"kind": "open", "values": [{"value", "description"}]}`)
+    let enumDescriptions: [String: String]?
     
     enum CodingKeys: String, CodingKey {
         case type, format, description, title, `enum`
@@ -111,6 +114,15 @@ final class PropertyObject: Decodable {
         case anyOf, oneOf, nullable, items, properties, required
         case additionalProperties
         case expansionResources = "x-expansionResources"
+        case stripeEnum = "x-stripeEnum"
+    }
+
+    private struct StripeEnum: Decodable {
+        struct Value: Decodable {
+            let value: String
+            let description: String?
+        }
+        let values: [Value]?
     }
 
     private struct ExpansionResources: Decodable {
@@ -139,6 +151,11 @@ final class PropertyObject: Decodable {
             additionalProperties = nil
         }
         expansionResources = try container.decodeIfPresent(ExpansionResources.self, forKey: .expansionResources)?.oneOf
+        let stripeEnumValues = (try? container.decodeIfPresent(StripeEnum.self, forKey: .stripeEnum))?.values ?? []
+        let descriptions = stripeEnumValues.reduce(into: [String: String]()) { result, value in
+            if let description = value.description, !description.isEmpty { result[value.value] = description }
+        }
+        enumDescriptions = descriptions.isEmpty ? nil : descriptions
     }
 
     /// Build a schema in code, e.g. an object synthesized from an operation's query parameters.
@@ -156,7 +173,8 @@ final class PropertyObject: Decodable {
         properties: [String: PropertyObject]? = nil,
         required: [String]? = nil,
         additionalProperties: PropertyObject? = nil,
-        expansionResources: [PropertyObject]? = nil
+        expansionResources: [PropertyObject]? = nil,
+        enumDescriptions: [String: String]? = nil
     ) {
         self.type = type
         self.format = format
@@ -172,6 +190,7 @@ final class PropertyObject: Decodable {
         self.required = required
         self.additionalProperties = additionalProperties
         self.expansionResources = expansionResources
+        self.enumDescriptions = enumDescriptions
     }
 
     /// A copy of this schema with a different description.
@@ -180,7 +199,7 @@ final class PropertyObject: Decodable {
             type: type, format: format, description: description, title: title, enum: `enum`, ref: ref,
             anyOf: anyOf, oneOf: oneOf, nullable: nullable, items: items,
             properties: properties, required: required, additionalProperties: additionalProperties,
-            expansionResources: expansionResources
+            expansionResources: expansionResources, enumDescriptions: enumDescriptions
         )
     }
 

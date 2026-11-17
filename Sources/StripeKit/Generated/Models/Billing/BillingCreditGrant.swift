@@ -72,14 +72,26 @@ public struct BillingCreditGrant: Codable, Sendable {
 
 /// The category of this credit grant. This is for tracking purposes and isn't displayed to the
 /// customer.
-public enum BillingCreditGrantCategory: String, Codable, Sendable {
-    case paid
-    case promotional
+public struct BillingCreditGrantCategory: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paid: Self { .init(rawValue: "paid") }
+    public static var promotional: Self { .init(rawValue: "promotional") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingCreditGrantObject: String, Codable, Sendable {
-    case billingCreditGrant = "billing.credit_grant"
+public struct BillingCreditGrantObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingCreditGrant: Self { .init(rawValue: "billing.credit_grant") }
 }
 
 public struct BillingCreditGrantList: Codable, Sendable {

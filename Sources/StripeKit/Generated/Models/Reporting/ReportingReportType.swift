@@ -53,8 +53,14 @@ public struct ReportingReportType: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ReportingReportTypeObject: String, Codable, Sendable {
-    case reportingReportType = "reporting.report_type"
+public struct ReportingReportTypeObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var reportingReportType: Self { .init(rawValue: "reporting.report_type") }
 }
 
 public struct ReportingReportTypeList: Codable, Sendable {

@@ -41,9 +41,15 @@ public struct DisputeVisaCompellingEvidence3DisputedTransaction: Codable, Sendab
 }
 
 /// Categorization of disputed payment.
-public enum DisputeVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices: String, Codable, Sendable {
-    case merchandise
-    case services
+public struct DisputeVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var services: Self { .init(rawValue: "services") }
 }
 
 public struct DisputeVisaCompellingEvidence3DisputedTransactionList: Codable, Sendable {

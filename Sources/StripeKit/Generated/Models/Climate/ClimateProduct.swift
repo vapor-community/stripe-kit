@@ -48,8 +48,14 @@ public struct ClimateProduct: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ClimateProductObject: String, Codable, Sendable {
-    case climateProduct = "climate.product"
+public struct ClimateProductObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var climateProduct: Self { .init(rawValue: "climate.product") }
 }
 
 public struct ClimateProductList: Codable, Sendable {

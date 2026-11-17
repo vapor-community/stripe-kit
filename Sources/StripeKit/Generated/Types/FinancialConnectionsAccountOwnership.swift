@@ -20,8 +20,14 @@ public struct FinancialConnectionsAccountOwnership: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum FinancialConnectionsAccountOwnershipObject: String, Codable, Sendable {
-    case financialConnectionsAccountOwnership = "financial_connections.account_ownership"
+public struct FinancialConnectionsAccountOwnershipObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var financialConnectionsAccountOwnership: Self { .init(rawValue: "financial_connections.account_ownership") }
 }
 
 public struct FinancialConnectionsAccountOwnershipList: Codable, Sendable {

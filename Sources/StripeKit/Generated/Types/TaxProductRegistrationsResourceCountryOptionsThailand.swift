@@ -13,8 +13,15 @@ public struct TaxProductRegistrationsResourceCountryOptionsThailand: Codable, Se
 }
 
 /// Type of registration in `country`.
-public enum TaxProductRegistrationsResourceCountryOptionsThailandType: String, Codable, Sendable {
-    case simplified
+public struct TaxProductRegistrationsResourceCountryOptionsThailandType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// A simplified Tax Registration in Thailand to collect VAT.
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsThailandList: Codable, Sendable {

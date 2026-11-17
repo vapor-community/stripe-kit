@@ -20,13 +20,19 @@ public struct IssuingCardSpendingLimit: Codable, Sendable {
 }
 
 /// Interval (or event) to which the amount applies.
-public enum IssuingCardSpendingLimitInterval: String, Codable, Sendable {
-    case allTime = "all_time"
-    case daily
-    case monthly
-    case perAuthorization = "per_authorization"
-    case weekly
-    case yearly
+public struct IssuingCardSpendingLimitInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var allTime: Self { .init(rawValue: "all_time") }
+    public static var daily: Self { .init(rawValue: "daily") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var perAuthorization: Self { .init(rawValue: "per_authorization") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
+    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
 public struct IssuingCardSpendingLimitList: Codable, Sendable {

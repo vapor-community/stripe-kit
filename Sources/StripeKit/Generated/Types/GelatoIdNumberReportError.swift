@@ -16,10 +16,16 @@ public struct GelatoIdNumberReportError: Codable, Sendable {
 }
 
 /// A short machine-readable string giving the reason for the verification failure.
-public enum GelatoIdNumberReportErrorCode: String, Codable, Sendable {
-    case idNumberInsufficientDocumentData = "id_number_insufficient_document_data"
-    case idNumberMismatch = "id_number_mismatch"
-    case idNumberUnverifiedOther = "id_number_unverified_other"
+public struct GelatoIdNumberReportErrorCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var idNumberInsufficientDocumentData: Self { .init(rawValue: "id_number_insufficient_document_data") }
+    public static var idNumberMismatch: Self { .init(rawValue: "id_number_mismatch") }
+    public static var idNumberUnverifiedOther: Self { .init(rawValue: "id_number_unverified_other") }
 }
 
 public struct GelatoIdNumberReportErrorList: Codable, Sendable {

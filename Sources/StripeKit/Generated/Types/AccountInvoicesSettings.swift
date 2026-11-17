@@ -26,10 +26,16 @@ public struct AccountInvoicesSettings: Codable, Sendable {
 /// Whether to save the payment method after a payment is completed for a one-time invoice or a
 /// subscription invoice when the customer already has a default payment method on the hosted invoice
 /// page.
-public enum AccountInvoicesSettingsHostedPaymentMethodSave: String, Codable, Sendable {
-    case always
-    case never
-    case offer
+public struct AccountInvoicesSettingsHostedPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
+    public static var offer: Self { .init(rawValue: "offer") }
 }
 
 public struct AccountInvoicesSettingsList: Codable, Sendable {

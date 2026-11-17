@@ -21,9 +21,15 @@ public struct InvoicePaymentMethodOptionsPix: Codable, Sendable {
 }
 
 /// Determines if the amount includes the IOF tax.
-public enum InvoicePaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
-    case always
-    case never
+public struct InvoicePaymentMethodOptionsPixAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct InvoicePaymentMethodOptionsPixList: Codable, Sendable {

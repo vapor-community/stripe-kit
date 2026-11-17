@@ -16,8 +16,15 @@ public struct DiscountSource: Codable, Sendable {
 }
 
 /// The source type of the discount.
-public enum DiscountSourceType: String, Codable, Sendable {
-    case coupon
+public struct DiscountSourceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Coupon source type
+    public static var coupon: Self { .init(rawValue: "coupon") }
 }
 
 public struct DiscountSourceList: Codable, Sendable {

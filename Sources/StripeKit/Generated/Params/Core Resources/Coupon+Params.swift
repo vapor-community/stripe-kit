@@ -174,10 +174,16 @@ public struct CouponCreateCurrencyOptions: StripeParams {
     }
 }
 
-public enum CouponCreateDuration: String, Codable, Sendable {
-    case forever
-    case once
-    case repeating
+public struct CouponCreateDuration: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var forever: Self { .init(rawValue: "forever") }
+    public static var once: Self { .init(rawValue: "once") }
+    public static var repeating: Self { .init(rawValue: "repeating") }
 }
 
 public struct CouponUpdateCurrencyOptions: StripeParams {

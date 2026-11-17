@@ -22,8 +22,14 @@ public struct PaymentMethodOptionsBillie: Codable, Sendable {
 }
 
 /// Controls when the funds will be captured from the customer's account.
-public enum PaymentMethodOptionsBillieCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct PaymentMethodOptionsBillieCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 public struct PaymentMethodOptionsBillieList: Codable, Sendable {

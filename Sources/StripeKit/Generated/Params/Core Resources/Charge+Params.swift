@@ -462,9 +462,15 @@ public struct ChargeUpdateFraudDetails: StripeParams {
     }
 }
 
-public enum ChargeUpdateFraudDetailsUserReport: String, Codable, Sendable {
-    case fraudulent
-    case safe
+public struct ChargeUpdateFraudDetailsUserReport: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var safe: Self { .init(rawValue: "safe") }
 }
 
 /// Shipping information for the charge. Helps prevent fraud on charges for physical goods.

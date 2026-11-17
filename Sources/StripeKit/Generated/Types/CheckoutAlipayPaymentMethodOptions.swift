@@ -37,8 +37,16 @@ public struct CheckoutAlipayPaymentMethodOptions: Codable, Sendable {
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum CheckoutAlipayPaymentMethodOptionsSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutAlipayPaymentMethodOptionsSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Use `none` if you do not intend to reuse this payment method and want to override the top-level
+    /// `setup_future_usage` value for this payment method.
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct CheckoutAlipayPaymentMethodOptionsList: Codable, Sendable {

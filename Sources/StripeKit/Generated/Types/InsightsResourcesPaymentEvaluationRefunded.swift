@@ -21,11 +21,17 @@ public struct InsightsResourcesPaymentEvaluationRefunded: Codable, Sendable {
 }
 
 /// Indicates the reason for the refund.
-public enum InsightsResourcesPaymentEvaluationRefundedReason: String, Codable, Sendable {
-    case duplicate
-    case fraudulent
-    case other
-    case requestedByCustomer = "requested_by_customer"
+public struct InsightsResourcesPaymentEvaluationRefundedReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var requestedByCustomer: Self { .init(rawValue: "requested_by_customer") }
 }
 
 public struct InsightsResourcesPaymentEvaluationRefundedList: Codable, Sendable {

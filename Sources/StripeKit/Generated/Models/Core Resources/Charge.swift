@@ -213,15 +213,27 @@ public struct Charge: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ChargeObject: String, Codable, Sendable {
-    case charge
+public struct ChargeObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var charge: Self { .init(rawValue: "charge") }
 }
 
 /// The status of the payment is either `succeeded`, `pending`, or `failed`.
-public enum ChargeStatus: String, Codable, Sendable {
-    case failed
-    case pending
-    case succeeded
+public struct ChargeStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct ChargeList: Codable, Sendable {

@@ -65,8 +65,14 @@ public struct Discount: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DiscountObject: String, Codable, Sendable {
-    case discount
+public struct DiscountObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var discount: Self { .init(rawValue: "discount") }
 }
 
 public struct DiscountList: Codable, Sendable {

@@ -157,13 +157,25 @@ public struct TopupCreatePaymentMethodOptionsUsBankAccount: StripeParams {
     }
 }
 
-public enum TopupCreatePaymentMethodOptionsUsBankAccountNetwork: String, Codable, Sendable {
-    case ach
+public struct TopupCreatePaymentMethodOptionsUsBankAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
 }
 
-public enum TopupListStatus: String, Codable, Sendable {
-    case canceled
-    case failed
-    case pending
-    case succeeded
+public struct TopupListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }

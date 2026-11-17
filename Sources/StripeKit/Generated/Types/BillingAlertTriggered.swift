@@ -24,8 +24,14 @@ public struct BillingAlertTriggered: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingAlertTriggeredObject: String, Codable, Sendable {
-    case billingAlertTriggered = "billing.alert_triggered"
+public struct BillingAlertTriggeredObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingAlertTriggered: Self { .init(rawValue: "billing.alert_triggered") }
 }
 
 public struct BillingAlertTriggeredList: Codable, Sendable {

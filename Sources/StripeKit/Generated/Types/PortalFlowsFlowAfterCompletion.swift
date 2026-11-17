@@ -23,10 +23,16 @@ public struct PortalFlowsFlowAfterCompletion: Codable, Sendable {
 }
 
 /// The specified type of behavior after the flow is completed.
-public enum PortalFlowsFlowAfterCompletionType: String, Codable, Sendable {
-    case hostedConfirmation = "hosted_confirmation"
-    case portalHomepage = "portal_homepage"
-    case redirect
+public struct PortalFlowsFlowAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var hostedConfirmation: Self { .init(rawValue: "hosted_confirmation") }
+    public static var portalHomepage: Self { .init(rawValue: "portal_homepage") }
+    public static var redirect: Self { .init(rawValue: "redirect") }
 }
 
 public struct PortalFlowsFlowAfterCompletionList: Codable, Sendable {

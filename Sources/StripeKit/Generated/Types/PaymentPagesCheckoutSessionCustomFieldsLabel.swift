@@ -15,8 +15,14 @@ public struct PaymentPagesCheckoutSessionCustomFieldsLabel: Codable, Sendable {
 }
 
 /// The type of the label.
-public enum PaymentPagesCheckoutSessionCustomFieldsLabelType: String, Codable, Sendable {
-    case custom
+public struct PaymentPagesCheckoutSessionCustomFieldsLabelType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
 public struct PaymentPagesCheckoutSessionCustomFieldsLabelList: Codable, Sendable {

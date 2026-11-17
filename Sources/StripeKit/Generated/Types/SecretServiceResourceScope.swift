@@ -15,9 +15,15 @@ public struct SecretServiceResourceScope: Codable, Sendable {
 }
 
 /// The secret scope type.
-public enum SecretServiceResourceScopeType: String, Codable, Sendable {
-    case account
-    case user
+public struct SecretServiceResourceScopeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var user: Self { .init(rawValue: "user") }
 }
 
 public struct SecretServiceResourceScopeList: Codable, Sendable {

@@ -26,18 +26,30 @@ public struct SubscriptionPaymentMethodOptionsMandateOptionsPix: Codable, Sendab
 }
 
 /// Determines if the amount includes the IOF tax.
-public enum SubscriptionPaymentMethodOptionsMandateOptionsPixAmountIncludesIof: String, Codable, Sendable {
-    case always
-    case never
+public struct SubscriptionPaymentMethodOptionsMandateOptionsPixAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Schedule at which the future payments will be charged.
-public enum SubscriptionPaymentMethodOptionsMandateOptionsPixPaymentSchedule: String, Codable, Sendable {
-    case halfyearly
-    case monthly
-    case quarterly
-    case weekly
-    case yearly
+public struct SubscriptionPaymentMethodOptionsMandateOptionsPixPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var halfyearly: Self { .init(rawValue: "halfyearly") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var quarterly: Self { .init(rawValue: "quarterly") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
+    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
 public struct SubscriptionPaymentMethodOptionsMandateOptionsPixList: Codable, Sendable {

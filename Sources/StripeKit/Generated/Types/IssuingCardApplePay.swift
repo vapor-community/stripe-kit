@@ -20,10 +20,16 @@ public struct IssuingCardApplePay: Codable, Sendable {
 }
 
 /// Reason the card is ineligible for Apple Pay
-public enum IssuingCardApplePayIneligibleReason: String, Codable, Sendable {
-    case missingAgreement = "missing_agreement"
-    case missingCardholderContact = "missing_cardholder_contact"
-    case unsupportedRegion = "unsupported_region"
+public struct IssuingCardApplePayIneligibleReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var missingAgreement: Self { .init(rawValue: "missing_agreement") }
+    public static var missingCardholderContact: Self { .init(rawValue: "missing_cardholder_contact") }
+    public static var unsupportedRegion: Self { .init(rawValue: "unsupported_region") }
 }
 
 public struct IssuingCardApplePayList: Codable, Sendable {

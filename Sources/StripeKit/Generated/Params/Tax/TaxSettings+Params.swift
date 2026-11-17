@@ -49,10 +49,16 @@ public struct TaxSettingsUpdateDefaults: StripeParams {
     }
 }
 
-public enum TaxSettingsUpdateDefaultsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case inferredByCurrency = "inferred_by_currency"
+public struct TaxSettingsUpdateDefaultsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var inferredByCurrency: Self { .init(rawValue: "inferred_by_currency") }
 }
 
 /// The place where your business is located.

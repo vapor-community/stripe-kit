@@ -79,16 +79,28 @@ public struct FinancialConnectionsSessionCreateAccountHolder: StripeParams {
     }
 }
 
-public enum FinancialConnectionsSessionCreateAccountHolderType: String, Codable, Sendable {
-    case account
-    case customer
+public struct FinancialConnectionsSessionCreateAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var customer: Self { .init(rawValue: "customer") }
 }
 
-public enum FinancialConnectionsSessionCreatePermissions: String, Codable, Sendable {
-    case balances
-    case ownership
-    case paymentMethod = "payment_method"
-    case transactions
+public struct FinancialConnectionsSessionCreatePermissions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
 /// Filters to restrict the kinds of accounts to collect.
@@ -115,18 +127,35 @@ public struct FinancialConnectionsSessionCreateFilters: StripeParams {
     }
 }
 
-public enum FinancialConnectionsSessionCreateFiltersAccountSubcategories: String, Codable, Sendable {
-    case checking
-    case creditCard = "credit_card"
-    case lineOfCredit = "line_of_credit"
-    case mortgage
-    case savings
+public struct FinancialConnectionsSessionCreateFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var creditCard: Self { .init(rawValue: "credit_card") }
+    public static var lineOfCredit: Self { .init(rawValue: "line_of_credit") }
+    public static var mortgage: Self { .init(rawValue: "mortgage") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
-public enum FinancialConnectionsSessionCreateFiltersRequirePaymentMethodSupport: String, Codable, Sendable {
-    case all
-    case atLeastOne = "at_least_one"
-    case none
+public struct FinancialConnectionsSessionCreateFiltersRequirePaymentMethodSupport: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// All accounts in the Session must be payment-eligible, and at least one payment-eligible account must
+    /// successfully retrieve account and routing numbers before the Session can complete.
+    public static var all: Self { .init(rawValue: "all") }
+    /// At least one account in the Session must be payment-eligible and successfully retrieve account and
+    /// routing numbers before the Session can complete.
+    public static var atLeastOne: Self { .init(rawValue: "at_least_one") }
+    /// Accounts are not required to be payment-eligible.
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Settings for configuring Session-specific limits.
@@ -150,13 +179,25 @@ public struct FinancialConnectionsSessionCreateManualEntry: StripeParams {
     }
 }
 
-public enum FinancialConnectionsSessionCreateManualEntryMode: String, Codable, Sendable {
-    case automatic
-    case disabled
+public struct FinancialConnectionsSessionCreateManualEntryMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var disabled: Self { .init(rawValue: "disabled") }
 }
 
-public enum FinancialConnectionsSessionCreatePrefetch: String, Codable, Sendable {
-    case balances
-    case ownership
-    case transactions
+public struct FinancialConnectionsSessionCreatePrefetch: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }

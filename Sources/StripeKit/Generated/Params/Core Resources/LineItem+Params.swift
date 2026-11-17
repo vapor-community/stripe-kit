@@ -272,10 +272,16 @@ public struct LineItemUpdatePriceDataProductDataTaxDetails: StripeParams {
     }
 }
 
-public enum LineItemUpdatePriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct LineItemUpdatePriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// The pricing information for the invoice item.
@@ -372,60 +378,124 @@ public struct LineItemUpdateTaxAmountsTaxRateData: StripeParams {
     }
 }
 
-public enum LineItemUpdateTaxAmountsTaxRateDataJurisdictionLevel: String, Codable, Sendable {
-    case city
-    case country
-    case county
-    case district
-    case multiple
-    case state
+public struct LineItemUpdateTaxAmountsTaxRateDataJurisdictionLevel: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var city: Self { .init(rawValue: "city") }
+    public static var country: Self { .init(rawValue: "country") }
+    public static var county: Self { .init(rawValue: "county") }
+    public static var district: Self { .init(rawValue: "district") }
+    public static var multiple: Self { .init(rawValue: "multiple") }
+    public static var state: Self { .init(rawValue: "state") }
 }
 
-public enum LineItemUpdateTaxAmountsTaxRateDataTaxType: String, Codable, Sendable {
-    case admissionsTax = "admissions_tax"
-    case amusementTax = "amusement_tax"
-    case attendanceTax = "attendance_tax"
-    case communicationsTax = "communications_tax"
-    case digitalExciseTax = "digital_excise_tax"
-    case entertainmentTax = "entertainment_tax"
-    case getFund = "get_fund"
-    case grossReceiptsTax = "gross_receipts_tax"
-    case gst
-    case hospitalityTax = "hospitality_tax"
-    case hst
-    case igst
-    case jct
-    case leaseTax = "lease_tax"
-    case luxuryTax = "luxury_tax"
-    case massTransitParkingTax = "mass_transit_parking_tax"
-    case nhil
-    case parkingTax = "parking_tax"
-    case pst
-    case qst
-    case resortTax = "resort_tax"
-    case retailDeliveryFee = "retail_delivery_fee"
-    case rst
-    case salesTax = "sales_tax"
-    case serviceTax = "service_tax"
-    case tourismTax = "tourism_tax"
-    case utilityUsersTax = "utility_users_tax"
-    case vat
+public struct LineItemUpdateTaxAmountsTaxRateDataTaxType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Admissions Tax
+    public static var admissionsTax: Self { .init(rawValue: "admissions_tax") }
+    /// Amusement Tax
+    public static var amusementTax: Self { .init(rawValue: "amusement_tax") }
+    /// Attendance Tax
+    public static var attendanceTax: Self { .init(rawValue: "attendance_tax") }
+    /// Communications Tax
+    public static var communicationsTax: Self { .init(rawValue: "communications_tax") }
+    /// Digital Excise Tax
+    public static var digitalExciseTax: Self { .init(rawValue: "digital_excise_tax") }
+    /// Entertainment Tax
+    public static var entertainmentTax: Self { .init(rawValue: "entertainment_tax") }
+    /// Ghana Education Trust Fund Levy
+    public static var getFund: Self { .init(rawValue: "get_fund") }
+    /// Gross Receipts Tax
+    public static var grossReceiptsTax: Self { .init(rawValue: "gross_receipts_tax") }
+    /// Goods and Services Tax
+    public static var gst: Self { .init(rawValue: "gst") }
+    /// Hospitality Tax
+    public static var hospitalityTax: Self { .init(rawValue: "hospitality_tax") }
+    /// Harmonized Sales Tax
+    public static var hst: Self { .init(rawValue: "hst") }
+    /// Integrated Goods and Services Tax
+    public static var igst: Self { .init(rawValue: "igst") }
+    /// Japanese Consumption Tax
+    public static var jct: Self { .init(rawValue: "jct") }
+    /// Chicago Lease Tax
+    public static var leaseTax: Self { .init(rawValue: "lease_tax") }
+    /// Luxury Tax
+    public static var luxuryTax: Self { .init(rawValue: "luxury_tax") }
+    /// Mass Transit Parking Tax
+    public static var massTransitParkingTax: Self { .init(rawValue: "mass_transit_parking_tax") }
+    /// National Health Insurance Levy
+    public static var nhil: Self { .init(rawValue: "nhil") }
+    /// Parking Tax
+    public static var parkingTax: Self { .init(rawValue: "parking_tax") }
+    /// Provincial Sales Tax
+    public static var pst: Self { .init(rawValue: "pst") }
+    /// Quebec Sales Tax
+    public static var qst: Self { .init(rawValue: "qst") }
+    /// Resort Tax
+    public static var resortTax: Self { .init(rawValue: "resort_tax") }
+    /// Retail Delivery Fee
+    public static var retailDeliveryFee: Self { .init(rawValue: "retail_delivery_fee") }
+    /// Retail Sales Tax
+    public static var rst: Self { .init(rawValue: "rst") }
+    /// Sales Tax
+    public static var salesTax: Self { .init(rawValue: "sales_tax") }
+    /// Service Tax
+    public static var serviceTax: Self { .init(rawValue: "service_tax") }
+    /// Tourism Tax
+    public static var tourismTax: Self { .init(rawValue: "tourism_tax") }
+    /// Utility Users Tax
+    public static var utilityUsersTax: Self { .init(rawValue: "utility_users_tax") }
+    /// Value-Added Tax
+    public static var vat: Self { .init(rawValue: "vat") }
 }
 
-public enum LineItemUpdateTaxAmountsTaxabilityReason: String, Codable, Sendable {
-    case customerExempt = "customer_exempt"
-    case notCollecting = "not_collecting"
-    case notSubjectToTax = "not_subject_to_tax"
-    case notSupported = "not_supported"
-    case portionProductExempt = "portion_product_exempt"
-    case portionReducedRated = "portion_reduced_rated"
-    case portionStandardRated = "portion_standard_rated"
-    case productExempt = "product_exempt"
-    case productExemptHoliday = "product_exempt_holiday"
-    case proportionallyRated = "proportionally_rated"
-    case reducedRated = "reduced_rated"
-    case reverseCharge = "reverse_charge"
-    case standardRated = "standard_rated"
-    case taxableBasisReduced = "taxable_basis_reduced"
-    case zeroRated = "zero_rated"
+public struct LineItemUpdateTaxAmountsTaxabilityReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// No tax is applied as the customer is exempt from tax.
+    public static var customerExempt: Self { .init(rawValue: "customer_exempt") }
+    /// No tax is collected either because you are not registered to collect tax in this jurisdiction, or
+    /// because the non-taxable product tax code (`txcd_00000000`) was used.
+    public static var notCollecting: Self { .init(rawValue: "not_collecting") }
+    /// No tax is imposed on this transaction.
+    public static var notSubjectToTax: Self { .init(rawValue: "not_subject_to_tax") }
+    /// No tax applied. Stripe doesn’t support this jurisdiction, territory, or product.
+    public static var notSupported: Self { .init(rawValue: "not_supported") }
+    /// A portion of the price is exempt from tax.
+    public static var portionProductExempt: Self { .init(rawValue: "portion_product_exempt") }
+    /// A portion of the price is taxed at a reduced rate.
+    public static var portionReducedRated: Self { .init(rawValue: "portion_reduced_rated") }
+    /// A portion of the price is taxed at the standard rate.
+    public static var portionStandardRated: Self { .init(rawValue: "portion_standard_rated") }
+    /// The product or service is nontaxable or exempt from tax.
+    public static var productExempt: Self { .init(rawValue: "product_exempt") }
+    /// The product or service is not taxed due to a sales tax holiday.
+    public static var productExemptHoliday: Self { .init(rawValue: "product_exempt_holiday") }
+    /// The shipping cost tax rate is calculated as a weighted average of the other line items' rates,
+    /// weighted by their amounts.
+    public static var proportionallyRated: Self { .init(rawValue: "proportionally_rated") }
+    /// Taxed at a reduced rate.
+    public static var reducedRated: Self { .init(rawValue: "reduced_rated") }
+    /// No tax is applied as it is the responsibility of the buyer to account for tax in this case.
+    public static var reverseCharge: Self { .init(rawValue: "reverse_charge") }
+    /// Taxed at the standard rate.
+    public static var standardRated: Self { .init(rawValue: "standard_rated") }
+    /// A reduced amount of the price is subject to tax.
+    public static var taxableBasisReduced: Self { .init(rawValue: "taxable_basis_reduced") }
+    /// The transaction is taxed at a special rate of 0% or the transaction is exempt (but these exempt
+    /// transactions still let you deduct the "input VAT" paid on your business purchases).
+    public static var zeroRated: Self { .init(rawValue: "zero_rated") }
 }

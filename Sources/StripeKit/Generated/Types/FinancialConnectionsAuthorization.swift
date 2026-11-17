@@ -34,14 +34,26 @@ public struct FinancialConnectionsAuthorization: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum FinancialConnectionsAuthorizationObject: String, Codable, Sendable {
-    case financialConnectionsAuthorization = "financial_connections.authorization"
+public struct FinancialConnectionsAuthorizationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var financialConnectionsAuthorization: Self { .init(rawValue: "financial_connections.authorization") }
 }
 
 /// The status of the connection to the Authorization.
-public enum FinancialConnectionsAuthorizationStatus: String, Codable, Sendable {
-    case active
-    case inactive
+public struct FinancialConnectionsAuthorizationStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
 public struct FinancialConnectionsAuthorizationList: Codable, Sendable {

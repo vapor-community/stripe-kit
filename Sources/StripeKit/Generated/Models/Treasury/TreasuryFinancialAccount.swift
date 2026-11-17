@@ -75,14 +75,26 @@ public struct TreasuryFinancialAccount: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TreasuryFinancialAccountObject: String, Codable, Sendable {
-    case treasuryFinancialAccount = "treasury.financial_account"
+public struct TreasuryFinancialAccountObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var treasuryFinancialAccount: Self { .init(rawValue: "treasury.financial_account") }
 }
 
 /// Status of this FinancialAccount.
-public enum TreasuryFinancialAccountStatus: String, Codable, Sendable {
-    case closed
-    case `open` = "open"
+public struct TreasuryFinancialAccountStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var closed: Self { .init(rawValue: "closed") }
+    public static var `open`: Self { .init(rawValue: "open") }
 }
 
 public struct TreasuryFinancialAccountList: Codable, Sendable {

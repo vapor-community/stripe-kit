@@ -16,10 +16,16 @@ public struct InsightsResourcesPaymentEvaluationUserInterventionResolved: Codabl
 }
 
 /// Result of the intervention if it has been completed.
-public enum InsightsResourcesPaymentEvaluationUserInterventionResolvedOutcome: String, Codable, Sendable {
-    case abandoned
-    case failed
-    case passed
+public struct InsightsResourcesPaymentEvaluationUserInterventionResolvedOutcome: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var abandoned: Self { .init(rawValue: "abandoned") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var passed: Self { .init(rawValue: "passed") }
 }
 
 public struct InsightsResourcesPaymentEvaluationUserInterventionResolvedList: Codable, Sendable {

@@ -19,9 +19,15 @@ public struct TaxCodeRequirements: Codable, Sendable {
 
 /// Describes whether a performance location is required for a successful tax calculation with a tax
 /// code.
-public enum TaxCodeRequirementsPerformanceLocation: String, Codable, Sendable {
-    case optional
-    case required
+public struct TaxCodeRequirementsPerformanceLocation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var optional: Self { .init(rawValue: "optional") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 public struct TaxCodeRequirementsList: Codable, Sendable {

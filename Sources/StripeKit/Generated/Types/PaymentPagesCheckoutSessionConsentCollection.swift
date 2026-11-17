@@ -29,15 +29,27 @@ public struct PaymentPagesCheckoutSessionConsentCollection: Codable, Sendable {
 /// Checkout Session will determine whether to display an option to opt into promotional communication
 /// from the merchant depending on the customer's locale. Only available to US merchants and US
 /// customers.
-public enum PaymentPagesCheckoutSessionConsentCollectionPromotions: String, Codable, Sendable {
-    case auto
-    case none
+public struct PaymentPagesCheckoutSessionConsentCollectionPromotions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// If set to `required`, it requires customers to accept the terms of service before being able to pay.
-public enum PaymentPagesCheckoutSessionConsentCollectionTermsOfService: String, Codable, Sendable {
-    case none
-    case required
+public struct PaymentPagesCheckoutSessionConsentCollectionTermsOfService: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 public struct PaymentPagesCheckoutSessionConsentCollectionList: Codable, Sendable {

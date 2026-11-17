@@ -85,23 +85,43 @@ public struct Topup: Codable, Sendable {
 }
 
 /// Indicates whether the top-up was initiated by Stripe or by the user.
-public enum TopupInitiatedBy: String, Codable, Sendable {
-    case stripe
-    case user
+public struct TopupInitiatedBy: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The top-up was initiated by Stripe.
+    public static var stripe: Self { .init(rawValue: "stripe") }
+    /// The top-up was initiated by the user.
+    public static var user: Self { .init(rawValue: "user") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TopupObject: String, Codable, Sendable {
-    case topup
+public struct TopupObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var topup: Self { .init(rawValue: "topup") }
 }
 
 /// The status of the top-up is either `canceled`, `failed`, `pending`, `reversed`, or `succeeded`.
-public enum TopupStatus: String, Codable, Sendable {
-    case canceled
-    case failed
-    case pending
-    case reversed
-    case succeeded
+public struct TopupStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var reversed: Self { .init(rawValue: "reversed") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct TopupList: Codable, Sendable {

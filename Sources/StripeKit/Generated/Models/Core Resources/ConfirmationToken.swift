@@ -75,17 +75,29 @@ public struct ConfirmationToken: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ConfirmationTokenObject: String, Codable, Sendable {
-    case confirmationToken = "confirmation_token"
+public struct ConfirmationTokenObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var confirmationToken: Self { .init(rawValue: "confirmation_token") }
 }
 
 /// Indicates that you intend to make future payments with this ConfirmationToken's payment method. The
 /// presence of this property will [attach the payment
 /// method](https://docs.stripe.com/payments/save-during-payment) to the PaymentIntent's Customer, if
 /// present, after the PaymentIntent is confirmed and any required actions from the user are complete.
-public enum ConfirmationTokenSetupFutureUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct ConfirmationTokenSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 public struct ConfirmationTokenList: Codable, Sendable {

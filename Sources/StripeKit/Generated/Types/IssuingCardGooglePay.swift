@@ -20,10 +20,16 @@ public struct IssuingCardGooglePay: Codable, Sendable {
 }
 
 /// Reason the card is ineligible for Google Pay
-public enum IssuingCardGooglePayIneligibleReason: String, Codable, Sendable {
-    case missingAgreement = "missing_agreement"
-    case missingCardholderContact = "missing_cardholder_contact"
-    case unsupportedRegion = "unsupported_region"
+public struct IssuingCardGooglePayIneligibleReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var missingAgreement: Self { .init(rawValue: "missing_agreement") }
+    public static var missingCardholderContact: Self { .init(rawValue: "missing_cardholder_contact") }
+    public static var unsupportedRegion: Self { .init(rawValue: "unsupported_region") }
 }
 
 public struct IssuingCardGooglePayList: Codable, Sendable {

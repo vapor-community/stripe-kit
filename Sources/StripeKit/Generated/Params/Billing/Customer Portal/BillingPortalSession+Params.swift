@@ -80,8 +80,15 @@ public struct BillingPortalSessionCreateAfterExpiration: StripeParams {
     }
 }
 
-public enum BillingPortalSessionCreateAfterExpirationType: String, Codable, Sendable {
-    case customerLogin = "customer_login"
+public struct BillingPortalSessionCreateAfterExpirationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Allow the customer to authenticate by email to create a replacement session.
+    public static var customerLogin: Self { .init(rawValue: "customer_login") }
 }
 
 /// Configuration for authenticating the customer after the session expires.
@@ -135,13 +142,19 @@ public struct BillingPortalSessionCreateFlowData: StripeParams {
     }
 }
 
-public enum BillingPortalSessionCreateFlowDataType: String, Codable, Sendable {
-    case customerUpdate = "customer_update"
-    case paymentMethodUpdate = "payment_method_update"
-    case subscriptionCancel = "subscription_cancel"
-    case subscriptionPause = "subscription_pause"
-    case subscriptionUpdate = "subscription_update"
-    case subscriptionUpdateConfirm = "subscription_update_confirm"
+public struct BillingPortalSessionCreateFlowDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerUpdate: Self { .init(rawValue: "customer_update") }
+    public static var paymentMethodUpdate: Self { .init(rawValue: "payment_method_update") }
+    public static var subscriptionCancel: Self { .init(rawValue: "subscription_cancel") }
+    public static var subscriptionPause: Self { .init(rawValue: "subscription_pause") }
+    public static var subscriptionUpdate: Self { .init(rawValue: "subscription_update") }
+    public static var subscriptionUpdateConfirm: Self { .init(rawValue: "subscription_update_confirm") }
 }
 
 /// Behavior after the flow is completed.
@@ -166,10 +179,16 @@ public struct BillingPortalSessionCreateFlowDataAfterCompletion: StripeParams {
     }
 }
 
-public enum BillingPortalSessionCreateFlowDataAfterCompletionType: String, Codable, Sendable {
-    case hostedConfirmation = "hosted_confirmation"
-    case portalHomepage = "portal_homepage"
-    case redirect
+public struct BillingPortalSessionCreateFlowDataAfterCompletionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var hostedConfirmation: Self { .init(rawValue: "hosted_confirmation") }
+    public static var portalHomepage: Self { .init(rawValue: "portal_homepage") }
+    public static var redirect: Self { .init(rawValue: "redirect") }
 }
 
 /// Configuration when `after_completion.type=hosted_confirmation`.
@@ -241,8 +260,14 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionCoupo
     }
 }
 
-public enum BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionType: String, Codable, Sendable {
-    case couponOffer = "coupon_offer"
+public struct BillingPortalSessionCreateFlowDataSubscriptionCancelRetentionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var couponOffer: Self { .init(rawValue: "coupon_offer") }
 }
 
 /// Configuration when `flow_data.type=subscription_pause`.
@@ -320,52 +345,58 @@ public struct BillingPortalSessionCreateFlowDataSubscriptionUpdateConfirmDiscoun
     }
 }
 
-public enum BillingPortalSessionCreateLocale: String, Codable, Sendable {
-    case auto
-    case bg
-    case cs
-    case da
-    case de
-    case el
-    case en
-    case enAu = "en-AU"
-    case enCa = "en-CA"
-    case enGb = "en-GB"
-    case enIe = "en-IE"
-    case enIn = "en-IN"
-    case enNz = "en-NZ"
-    case enSg = "en-SG"
-    case es
-    case es419 = "es-419"
-    case et
-    case fi
-    case fil
-    case fr
-    case frCa = "fr-CA"
-    case hr
-    case hu
-    case id
-    case it
-    case ja
-    case ko
-    case lt
-    case lv
-    case ms
-    case mt
-    case nb
-    case nl
-    case pl
-    case pt
-    case ptBr = "pt-BR"
-    case ro
-    case ru
-    case sk
-    case sl
-    case sv
-    case th
-    case tr
-    case vi
-    case zh
-    case zhHk = "zh-HK"
-    case zhTw = "zh-TW"
+public struct BillingPortalSessionCreateLocale: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var bg: Self { .init(rawValue: "bg") }
+    public static var cs: Self { .init(rawValue: "cs") }
+    public static var da: Self { .init(rawValue: "da") }
+    public static var de: Self { .init(rawValue: "de") }
+    public static var el: Self { .init(rawValue: "el") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var enAu: Self { .init(rawValue: "en-AU") }
+    public static var enCa: Self { .init(rawValue: "en-CA") }
+    public static var enGb: Self { .init(rawValue: "en-GB") }
+    public static var enIe: Self { .init(rawValue: "en-IE") }
+    public static var enIn: Self { .init(rawValue: "en-IN") }
+    public static var enNz: Self { .init(rawValue: "en-NZ") }
+    public static var enSg: Self { .init(rawValue: "en-SG") }
+    public static var es: Self { .init(rawValue: "es") }
+    public static var es419: Self { .init(rawValue: "es-419") }
+    public static var et: Self { .init(rawValue: "et") }
+    public static var fi: Self { .init(rawValue: "fi") }
+    public static var fil: Self { .init(rawValue: "fil") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var frCa: Self { .init(rawValue: "fr-CA") }
+    public static var hr: Self { .init(rawValue: "hr") }
+    public static var hu: Self { .init(rawValue: "hu") }
+    public static var id: Self { .init(rawValue: "id") }
+    public static var it: Self { .init(rawValue: "it") }
+    public static var ja: Self { .init(rawValue: "ja") }
+    public static var ko: Self { .init(rawValue: "ko") }
+    public static var lt: Self { .init(rawValue: "lt") }
+    public static var lv: Self { .init(rawValue: "lv") }
+    public static var ms: Self { .init(rawValue: "ms") }
+    public static var mt: Self { .init(rawValue: "mt") }
+    public static var nb: Self { .init(rawValue: "nb") }
+    public static var nl: Self { .init(rawValue: "nl") }
+    public static var pl: Self { .init(rawValue: "pl") }
+    public static var pt: Self { .init(rawValue: "pt") }
+    public static var ptBr: Self { .init(rawValue: "pt-BR") }
+    public static var ro: Self { .init(rawValue: "ro") }
+    public static var ru: Self { .init(rawValue: "ru") }
+    public static var sk: Self { .init(rawValue: "sk") }
+    public static var sl: Self { .init(rawValue: "sl") }
+    public static var sv: Self { .init(rawValue: "sv") }
+    public static var th: Self { .init(rawValue: "th") }
+    public static var tr: Self { .init(rawValue: "tr") }
+    public static var vi: Self { .init(rawValue: "vi") }
+    public static var zh: Self { .init(rawValue: "zh") }
+    public static var zhHk: Self { .init(rawValue: "zh-HK") }
+    public static var zhTw: Self { .init(rawValue: "zh-TW") }
 }

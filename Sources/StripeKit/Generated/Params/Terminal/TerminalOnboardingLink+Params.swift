@@ -64,6 +64,12 @@ public struct TerminalOnboardingLinkCreateLinkOptionsAppleTermsAndConditions: St
     }
 }
 
-public enum TerminalOnboardingLinkCreateLinkType: String, Codable, Sendable {
-    case appleTermsAndConditions = "apple_terms_and_conditions"
+public struct TerminalOnboardingLinkCreateLinkType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var appleTermsAndConditions: Self { .init(rawValue: "apple_terms_and_conditions") }
 }

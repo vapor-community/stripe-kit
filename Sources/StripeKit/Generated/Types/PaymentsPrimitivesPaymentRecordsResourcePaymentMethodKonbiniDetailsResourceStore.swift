@@ -13,11 +13,21 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodKonbiniDetail
 }
 
 /// The name of the convenience store chain where the payment was completed.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodKonbiniDetailsResourceStoreChain: String, Codable, Sendable {
-    case familymart
-    case lawson
-    case ministop
-    case seicomart
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodKonbiniDetailsResourceStoreChain: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// FamilyMart convenience store chain.
+    public static var familymart: Self { .init(rawValue: "familymart") }
+    /// Lawson convenience store chain.
+    public static var lawson: Self { .init(rawValue: "lawson") }
+    /// Ministop convenience store chain.
+    public static var ministop: Self { .init(rawValue: "ministop") }
+    /// Seicomart convenience store chain.
+    public static var seicomart: Self { .init(rawValue: "seicomart") }
 }
 
 public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodKonbiniDetailsResourceStoreList: Codable, Sendable {

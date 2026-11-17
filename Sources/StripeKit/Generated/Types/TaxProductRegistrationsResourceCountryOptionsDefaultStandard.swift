@@ -17,9 +17,15 @@ public struct TaxProductRegistrationsResourceCountryOptionsDefaultStandard: Coda
 }
 
 /// Place of supply scheme used in an Default standard registration.
-public enum TaxProductRegistrationsResourceCountryOptionsDefaultStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxProductRegistrationsResourceCountryOptionsDefaultStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsDefaultStandardList: Codable, Sendable {

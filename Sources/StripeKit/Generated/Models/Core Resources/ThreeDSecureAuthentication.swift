@@ -79,57 +79,109 @@ public struct ThreeDSecureAuthentication: Codable, Sendable {
 }
 
 /// The 3DS directory server with which this 3DS Authentication was processed.
-public enum ThreeDSecureAuthenticationDirectoryServer: String, Codable, Sendable {
-    case americanExpress = "american_express"
-    case cartesBancaires = "cartes_bancaires"
-    case discover
-    case mastercard
-    case visa
+public struct ThreeDSecureAuthenticationDirectoryServer: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var americanExpress: Self { .init(rawValue: "american_express") }
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var discover: Self { .init(rawValue: "discover") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 /// Indicates whether this 3DS Authentication is being performed for a payment or non-payment use case.
-public enum ThreeDSecureAuthenticationMessageCategory: String, Codable, Sendable {
-    case nonPaymentAuthentication = "non_payment_authentication"
-    case paymentAuthentication = "payment_authentication"
+public struct ThreeDSecureAuthenticationMessageCategory: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var nonPaymentAuthentication: Self { .init(rawValue: "non_payment_authentication") }
+    public static var paymentAuthentication: Self { .init(rawValue: "payment_authentication") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ThreeDSecureAuthenticationObject: String, Codable, Sendable {
-    case threeDSecureAuthentication = "three_d_secure.authentication"
+public struct ThreeDSecureAuthenticationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var threeDSecureAuthentication: Self { .init(rawValue: "three_d_secure.authentication") }
 }
 
 /// The outcome of this 3DS Authentication.
-public enum ThreeDSecureAuthenticationOutcome: String, Codable, Sendable {
-    case abandoned
-    case attemptAcknowledged = "attempt_acknowledged"
-    case authenticated
-    case canceled
-    case denied
-    case informational
-    case internalError = "internal_error"
-    case notSupported = "not_supported"
-    case notTriggered = "not_triggered"
-    case processingError = "processing_error"
-    case rejected
+public struct ThreeDSecureAuthenticationOutcome: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var abandoned: Self { .init(rawValue: "abandoned") }
+    public static var attemptAcknowledged: Self { .init(rawValue: "attempt_acknowledged") }
+    public static var authenticated: Self { .init(rawValue: "authenticated") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var denied: Self { .init(rawValue: "denied") }
+    public static var informational: Self { .init(rawValue: "informational") }
+    public static var internalError: Self { .init(rawValue: "internal_error") }
+    public static var notSupported: Self { .init(rawValue: "not_supported") }
+    public static var notTriggered: Self { .init(rawValue: "not_triggered") }
+    public static var processingError: Self { .init(rawValue: "processing_error") }
+    public static var rejected: Self { .init(rawValue: "rejected") }
 }
 
 /// The reason for invoking this 3DS Authentication.
-public enum ThreeDSecureAuthenticationReason: String, Codable, Sendable {
-    case cardholderAuthentication = "cardholder_authentication"
-    case issuerRequested = "issuer_requested"
-    case liabilityShift = "liability_shift"
-    case processingCosts = "processing_costs"
-    case regulatoryCompliance = "regulatory_compliance"
+public struct ThreeDSecureAuthenticationReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The authentication is performed to attempt to require the cardholder to actively complete a
+    /// challenge.
+    public static var cardholderAuthentication: Self { .init(rawValue: "cardholder_authentication") }
+    /// The authentication is performed when the issuer soft declines the transaction. This option should be
+    /// used when you have tried authorization without 3DS authentication and the bank responded in a soft
+    /// decline. Stripe will then trigger 3DS, post which you can retry authorization with the issuer.
+    public static var issuerRequested: Self { .init(rawValue: "issuer_requested") }
+    /// The authentication is performed to try to shift liability away from the merchant and onto the issuer
+    /// to reduce the cost implications from disputes. **Note**: If you don't select `liability_shift` as
+    /// your reason, the 3DS flow won't prioritize liability shift as a desired outcome. And even when
+    /// `liability_shift` is selected, liability shift is not guaranteed, since that decision is made by the
+    /// network and not Stripe([source](/payments/3d-secure/authentication-flow#disputed-payments)).
+    public static var liabilityShift: Self { .init(rawValue: "liability_shift") }
+    /// The authentication is performed to optimize payments processing cost.
+    public static var processingCosts: Self { .init(rawValue: "processing_costs") }
+    /// The authentication is performed solely to enable compliance with local regulations such as SCA
+    /// (Strong Customer Authentication). Use this option when your sole requirement is compliance with
+    /// local regulations, such as SCA or other 3DS-related mandates. The authentication will be performed
+    /// only as necessary for compliance purposes. **Note:** This `reason` parameter value will always apply
+    /// even when you do not choose this value explicitly.
+    public static var regulatoryCompliance: Self { .init(rawValue: "regulatory_compliance") }
 }
 
 /// Status of this Authentication.
-public enum ThreeDSecureAuthenticationStatus: String, Codable, Sendable {
-    case canceled
-    case error
-    case failed
-    case requiresChallenge = "requires_challenge"
-    case requiresSubmission = "requires_submission"
-    case succeeded
+public struct ThreeDSecureAuthenticationStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var error: Self { .init(rawValue: "error") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var requiresChallenge: Self { .init(rawValue: "requires_challenge") }
+    public static var requiresSubmission: Self { .init(rawValue: "requires_submission") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct ThreeDSecureAuthenticationList: Codable, Sendable {

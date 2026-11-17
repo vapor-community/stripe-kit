@@ -20,8 +20,14 @@ public struct PaymentMethodDetailsCardPresentOffline: Codable, Sendable {
 }
 
 /// The method used to process this payment method offline. Only deferred is allowed.
-public enum PaymentMethodDetailsCardPresentOfflineType: String, Codable, Sendable {
-    case deferred
+public struct PaymentMethodDetailsCardPresentOfflineType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var deferred: Self { .init(rawValue: "deferred") }
 }
 
 public struct PaymentMethodDetailsCardPresentOfflineList: Codable, Sendable {

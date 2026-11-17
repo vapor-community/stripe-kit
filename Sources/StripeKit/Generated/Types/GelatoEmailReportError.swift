@@ -16,9 +16,15 @@ public struct GelatoEmailReportError: Codable, Sendable {
 }
 
 /// A short machine-readable string giving the reason for the verification failure.
-public enum GelatoEmailReportErrorCode: String, Codable, Sendable {
-    case emailUnverifiedOther = "email_unverified_other"
-    case emailVerificationDeclined = "email_verification_declined"
+public struct GelatoEmailReportErrorCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var emailUnverifiedOther: Self { .init(rawValue: "email_unverified_other") }
+    public static var emailVerificationDeclined: Self { .init(rawValue: "email_verification_declined") }
 }
 
 public struct GelatoEmailReportErrorList: Codable, Sendable {

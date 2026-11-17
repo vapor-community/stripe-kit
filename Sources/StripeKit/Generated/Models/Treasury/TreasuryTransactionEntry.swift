@@ -61,45 +61,63 @@ public struct TreasuryTransactionEntry: Codable, Sendable {
 }
 
 /// Type of the flow associated with the TransactionEntry.
-public enum TreasuryTransactionEntryFlowType: String, Codable, Sendable {
-    case creditReversal = "credit_reversal"
-    case debitReversal = "debit_reversal"
-    case inboundTransfer = "inbound_transfer"
-    case issuingAuthorization = "issuing_authorization"
-    case other
-    case outboundPayment = "outbound_payment"
-    case outboundTransfer = "outbound_transfer"
-    case receivedCredit = "received_credit"
-    case receivedDebit = "received_debit"
+public struct TreasuryTransactionEntryFlowType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditReversal: Self { .init(rawValue: "credit_reversal") }
+    public static var debitReversal: Self { .init(rawValue: "debit_reversal") }
+    public static var inboundTransfer: Self { .init(rawValue: "inbound_transfer") }
+    public static var issuingAuthorization: Self { .init(rawValue: "issuing_authorization") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var outboundPayment: Self { .init(rawValue: "outbound_payment") }
+    public static var outboundTransfer: Self { .init(rawValue: "outbound_transfer") }
+    public static var receivedCredit: Self { .init(rawValue: "received_credit") }
+    public static var receivedDebit: Self { .init(rawValue: "received_debit") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TreasuryTransactionEntryObject: String, Codable, Sendable {
-    case treasuryTransactionEntry = "treasury.transaction_entry"
+public struct TreasuryTransactionEntryObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var treasuryTransactionEntry: Self { .init(rawValue: "treasury.transaction_entry") }
 }
 
 /// The specific money movement that generated the TransactionEntry.
-public enum TreasuryTransactionEntryType: String, Codable, Sendable {
-    case creditReversal = "credit_reversal"
-    case creditReversalPosting = "credit_reversal_posting"
-    case debitReversal = "debit_reversal"
-    case inboundTransfer = "inbound_transfer"
-    case inboundTransferReturn = "inbound_transfer_return"
-    case issuingAuthorizationHold = "issuing_authorization_hold"
-    case issuingAuthorizationRelease = "issuing_authorization_release"
-    case other
-    case outboundPayment = "outbound_payment"
-    case outboundPaymentCancellation = "outbound_payment_cancellation"
-    case outboundPaymentFailure = "outbound_payment_failure"
-    case outboundPaymentPosting = "outbound_payment_posting"
-    case outboundPaymentReturn = "outbound_payment_return"
-    case outboundTransfer = "outbound_transfer"
-    case outboundTransferCancellation = "outbound_transfer_cancellation"
-    case outboundTransferFailure = "outbound_transfer_failure"
-    case outboundTransferPosting = "outbound_transfer_posting"
-    case outboundTransferReturn = "outbound_transfer_return"
-    case receivedCredit = "received_credit"
-    case receivedDebit = "received_debit"
+public struct TreasuryTransactionEntryType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditReversal: Self { .init(rawValue: "credit_reversal") }
+    public static var creditReversalPosting: Self { .init(rawValue: "credit_reversal_posting") }
+    public static var debitReversal: Self { .init(rawValue: "debit_reversal") }
+    public static var inboundTransfer: Self { .init(rawValue: "inbound_transfer") }
+    public static var inboundTransferReturn: Self { .init(rawValue: "inbound_transfer_return") }
+    public static var issuingAuthorizationHold: Self { .init(rawValue: "issuing_authorization_hold") }
+    public static var issuingAuthorizationRelease: Self { .init(rawValue: "issuing_authorization_release") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var outboundPayment: Self { .init(rawValue: "outbound_payment") }
+    public static var outboundPaymentCancellation: Self { .init(rawValue: "outbound_payment_cancellation") }
+    public static var outboundPaymentFailure: Self { .init(rawValue: "outbound_payment_failure") }
+    public static var outboundPaymentPosting: Self { .init(rawValue: "outbound_payment_posting") }
+    public static var outboundPaymentReturn: Self { .init(rawValue: "outbound_payment_return") }
+    public static var outboundTransfer: Self { .init(rawValue: "outbound_transfer") }
+    public static var outboundTransferCancellation: Self { .init(rawValue: "outbound_transfer_cancellation") }
+    public static var outboundTransferFailure: Self { .init(rawValue: "outbound_transfer_failure") }
+    public static var outboundTransferPosting: Self { .init(rawValue: "outbound_transfer_posting") }
+    public static var outboundTransferReturn: Self { .init(rawValue: "outbound_transfer_return") }
+    public static var receivedCredit: Self { .init(rawValue: "received_credit") }
+    public static var receivedDebit: Self { .init(rawValue: "received_debit") }
 }
 
 public struct TreasuryTransactionEntryList: Codable, Sendable {

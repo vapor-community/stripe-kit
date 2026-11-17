@@ -17,10 +17,16 @@ public struct TaxProductRegistrationsResourceCountryOptionsEuStandard: Codable, 
 }
 
 /// Place of supply scheme used in an EU standard registration.
-public enum TaxProductRegistrationsResourceCountryOptionsEuStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxProductRegistrationsResourceCountryOptionsEuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsEuStandardList: Codable, Sendable {

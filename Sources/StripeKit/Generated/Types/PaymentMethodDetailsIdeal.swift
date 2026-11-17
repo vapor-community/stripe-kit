@@ -42,52 +42,64 @@ public struct PaymentMethodDetailsIdeal: Codable, Sendable {
 /// The customer's bank. Can be one of `abn_amro`, `adyen`, `asn_bank`, `bunq`, `buut`, `finom`,
 /// `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`,
 /// `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
-public enum PaymentMethodDetailsIdealBank: String, Codable, Sendable {
-    case abnAmro = "abn_amro"
-    case adyen
-    case asnBank = "asn_bank"
-    case bunq
-    case buut
-    case finom
-    case handelsbanken
-    case ing
-    case knab
-    case mollie
-    case moneyou
-    case n26
-    case nn
-    case rabobank
-    case regiobank
-    case revolut
-    case snsBank = "sns_bank"
-    case triodosBank = "triodos_bank"
-    case vanLanschot = "van_lanschot"
-    case yoursafe
+public struct PaymentMethodDetailsIdealBank: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var abnAmro: Self { .init(rawValue: "abn_amro") }
+    public static var adyen: Self { .init(rawValue: "adyen") }
+    public static var asnBank: Self { .init(rawValue: "asn_bank") }
+    public static var bunq: Self { .init(rawValue: "bunq") }
+    public static var buut: Self { .init(rawValue: "buut") }
+    public static var finom: Self { .init(rawValue: "finom") }
+    public static var handelsbanken: Self { .init(rawValue: "handelsbanken") }
+    public static var ing: Self { .init(rawValue: "ing") }
+    public static var knab: Self { .init(rawValue: "knab") }
+    public static var mollie: Self { .init(rawValue: "mollie") }
+    public static var moneyou: Self { .init(rawValue: "moneyou") }
+    public static var n26: Self { .init(rawValue: "n26") }
+    public static var nn: Self { .init(rawValue: "nn") }
+    public static var rabobank: Self { .init(rawValue: "rabobank") }
+    public static var regiobank: Self { .init(rawValue: "regiobank") }
+    public static var revolut: Self { .init(rawValue: "revolut") }
+    public static var snsBank: Self { .init(rawValue: "sns_bank") }
+    public static var triodosBank: Self { .init(rawValue: "triodos_bank") }
+    public static var vanLanschot: Self { .init(rawValue: "van_lanschot") }
+    public static var yoursafe: Self { .init(rawValue: "yoursafe") }
 }
 
 /// The Bank Identifier Code of the customer's bank.
-public enum PaymentMethodDetailsIdealBic: String, Codable, Sendable {
-    case abnanl2a = "ABNANL2A"
-    case adybnl2a = "ADYBNL2A"
-    case asnbnl21 = "ASNBNL21"
-    case bitsnl2a = "BITSNL2A"
-    case bunqnl2a = "BUNQNL2A"
-    case buutnl2a = "BUUTNL2A"
-    case fnomnl22 = "FNOMNL22"
-    case fvlbnl22 = "FVLBNL22"
-    case handnl2a = "HANDNL2A"
-    case ingbnl2a = "INGBNL2A"
-    case knabnl2h = "KNABNL2H"
-    case mllenl2a = "MLLENL2A"
-    case moyonl21 = "MOYONL21"
-    case nnbanl2g = "NNBANL2G"
-    case ntsbdeb1 = "NTSBDEB1"
-    case rabonl2u = "RABONL2U"
-    case rbrbnl21 = "RBRBNL21"
-    case revoie23 = "REVOIE23"
-    case revolt21 = "REVOLT21"
-    case snsbnl2a = "SNSBNL2A"
-    case trionl2u = "TRIONL2U"
+public struct PaymentMethodDetailsIdealBic: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var abnanl2a: Self { .init(rawValue: "ABNANL2A") }
+    public static var adybnl2a: Self { .init(rawValue: "ADYBNL2A") }
+    public static var asnbnl21: Self { .init(rawValue: "ASNBNL21") }
+    public static var bitsnl2a: Self { .init(rawValue: "BITSNL2A") }
+    public static var bunqnl2a: Self { .init(rawValue: "BUNQNL2A") }
+    public static var buutnl2a: Self { .init(rawValue: "BUUTNL2A") }
+    public static var fnomnl22: Self { .init(rawValue: "FNOMNL22") }
+    public static var fvlbnl22: Self { .init(rawValue: "FVLBNL22") }
+    public static var handnl2a: Self { .init(rawValue: "HANDNL2A") }
+    public static var ingbnl2a: Self { .init(rawValue: "INGBNL2A") }
+    public static var knabnl2h: Self { .init(rawValue: "KNABNL2H") }
+    public static var mllenl2a: Self { .init(rawValue: "MLLENL2A") }
+    public static var moyonl21: Self { .init(rawValue: "MOYONL21") }
+    public static var nnbanl2g: Self { .init(rawValue: "NNBANL2G") }
+    public static var ntsbdeb1: Self { .init(rawValue: "NTSBDEB1") }
+    public static var rabonl2u: Self { .init(rawValue: "RABONL2U") }
+    public static var rbrbnl21: Self { .init(rawValue: "RBRBNL21") }
+    public static var revoie23: Self { .init(rawValue: "REVOIE23") }
+    public static var revolt21: Self { .init(rawValue: "REVOLT21") }
+    public static var snsbnl2a: Self { .init(rawValue: "SNSBNL2A") }
+    public static var trionl2u: Self { .init(rawValue: "TRIONL2U") }
 }
 
 public struct PaymentMethodDetailsIdealList: Codable, Sendable {

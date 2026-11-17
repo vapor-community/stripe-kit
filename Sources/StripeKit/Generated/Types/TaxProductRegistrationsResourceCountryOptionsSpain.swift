@@ -14,11 +14,21 @@ public struct TaxProductRegistrationsResourceCountryOptionsSpain: Codable, Senda
 }
 
 /// Type of registration in ES.
-public enum TaxProductRegistrationsResourceCountryOptionsSpainType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxProductRegistrationsResourceCountryOptionsSpainType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Common for businesses shipping goods below EUR 150 from non-EU countries to EU customers.
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    /// Common for businesses established outside of the EU selling services to customers in the EU.
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    /// Common for businesses established in the EU selling goods and services to customers in the EU.
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    /// Common for businesses selling goods and services to customers in this country.
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsSpainList: Codable, Sendable {

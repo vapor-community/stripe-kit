@@ -15,8 +15,14 @@ public struct OutboundTransfersPaymentMethodDetailsFinancialAccount: Codable, Se
 }
 
 /// The rails used to send funds.
-public enum OutboundTransfersPaymentMethodDetailsFinancialAccountNetwork: String, Codable, Sendable {
-    case stripe
+public struct OutboundTransfersPaymentMethodDetailsFinancialAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 public struct OutboundTransfersPaymentMethodDetailsFinancialAccountList: Codable, Sendable {

@@ -96,10 +96,22 @@ public struct TaxLocationCreateAddress: StripeParams {
     }
 }
 
-public enum TaxLocationCreateType: String, Codable, Sendable {
-    case performance
+public struct TaxLocationCreateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var performance: Self { .init(rawValue: "performance") }
 }
 
-public enum TaxLocationListType: String, Codable, Sendable {
-    case performance
+public struct TaxLocationListType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var performance: Self { .init(rawValue: "performance") }
 }

@@ -26,8 +26,14 @@ public struct ConnectCollectionTransfer: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ConnectCollectionTransferObject: String, Codable, Sendable {
-    case connectCollectionTransfer = "connect_collection_transfer"
+public struct ConnectCollectionTransferObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var connectCollectionTransfer: Self { .init(rawValue: "connect_collection_transfer") }
 }
 
 public struct ConnectCollectionTransferList: Codable, Sendable {

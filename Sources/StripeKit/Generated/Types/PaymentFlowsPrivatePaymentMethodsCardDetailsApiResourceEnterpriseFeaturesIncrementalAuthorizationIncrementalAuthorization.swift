@@ -13,9 +13,15 @@ public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseF
 }
 
 /// Indicates whether or not the incremental authorization feature is supported.
-public enum PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesIncrementalAuthorizationIncrementalAuthorizationStatus: String, Codable, Sendable {
-    case available
-    case unavailable
+public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesIncrementalAuthorizationIncrementalAuthorizationStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var available: Self { .init(rawValue: "available") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
 }
 
 public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesIncrementalAuthorizationIncrementalAuthorizationList: Codable, Sendable {

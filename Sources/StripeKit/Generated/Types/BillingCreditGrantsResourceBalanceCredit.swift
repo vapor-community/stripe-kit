@@ -23,9 +23,15 @@ public struct BillingCreditGrantsResourceBalanceCredit: Codable, Sendable {
 }
 
 /// The type of credit transaction.
-public enum BillingCreditGrantsResourceBalanceCreditType: String, Codable, Sendable {
-    case creditsApplicationInvoiceVoided = "credits_application_invoice_voided"
-    case creditsGranted = "credits_granted"
+public struct BillingCreditGrantsResourceBalanceCreditType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditsApplicationInvoiceVoided: Self { .init(rawValue: "credits_application_invoice_voided") }
+    public static var creditsGranted: Self { .init(rawValue: "credits_granted") }
 }
 
 public struct BillingCreditGrantsResourceBalanceCreditList: Codable, Sendable {

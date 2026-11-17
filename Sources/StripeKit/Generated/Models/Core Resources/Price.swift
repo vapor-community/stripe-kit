@@ -113,14 +113,26 @@ public struct Price: Codable, Sendable {
 /// in `quantity` (for prices with `usage_type=licensed`), or per unit of total usage (for prices with
 /// `usage_type=metered`). `tiered` indicates that the unit pricing will be computed using a tiering
 /// strategy as defined using the `tiers` and `tiers_mode` attributes.
-public enum PriceBillingScheme: String, Codable, Sendable {
-    case perUnit = "per_unit"
-    case tiered
+public struct PriceBillingScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var perUnit: Self { .init(rawValue: "per_unit") }
+    public static var tiered: Self { .init(rawValue: "tiered") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PriceObject: String, Codable, Sendable {
-    case price
+public struct PriceObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var price: Self { .init(rawValue: "price") }
 }
 
 /// Only required if a [default tax
@@ -128,25 +140,43 @@ public enum PriceObject: String, Codable, Sendable {
 /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
 /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
 /// either `inclusive` or `exclusive`, it cannot be changed.
-public enum PriceTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct PriceTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the
 /// maximum quantity within a period determines the per unit price. In `graduated` tiering, pricing can
 /// change as the quantity grows.
-public enum PriceTiersMode: String, Codable, Sendable {
-    case graduated
-    case volume
+public struct PriceTiersMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var graduated: Self { .init(rawValue: "graduated") }
+    public static var volume: Self { .init(rawValue: "volume") }
 }
 
 /// One of `one_time` or `recurring` depending on whether the price is for a one-time purchase or a
 /// recurring (subscription) purchase.
-public enum PriceType: String, Codable, Sendable {
-    case oneTime = "one_time"
-    case recurring
+public struct PriceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var oneTime: Self { .init(rawValue: "one_time") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
 }
 
 public struct PriceList: Codable, Sendable {

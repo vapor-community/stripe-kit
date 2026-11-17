@@ -29,8 +29,14 @@ public struct ApplePayDomain: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ApplePayDomainObject: String, Codable, Sendable {
-    case applePayDomain = "apple_pay_domain"
+public struct ApplePayDomainObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var applePayDomain: Self { .init(rawValue: "apple_pay_domain") }
 }
 
 public struct ApplePayDomainList: Codable, Sendable {

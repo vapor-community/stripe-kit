@@ -13,9 +13,15 @@ public struct BankConnectionsResourceAuthorizationStatusDetailsApiResourceInacti
 }
 
 /// The action (if any) to relink the inactive Authorization.
-public enum BankConnectionsResourceAuthorizationStatusDetailsApiResourceInactiveStatusDetailsAction: String, Codable, Sendable {
-    case none
-    case relinkRequired = "relink_required"
+public struct BankConnectionsResourceAuthorizationStatusDetailsApiResourceInactiveStatusDetailsAction: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var relinkRequired: Self { .init(rawValue: "relink_required") }
 }
 
 public struct BankConnectionsResourceAuthorizationStatusDetailsApiResourceInactiveStatusDetailsList: Codable, Sendable {

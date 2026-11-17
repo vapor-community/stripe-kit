@@ -17,9 +17,17 @@ public struct SubscriptionsResourceBillingModeFlexible: Codable, Sendable {
 }
 
 /// Controls how invoices and invoice items display proration amounts and discount amounts.
-public enum SubscriptionsResourceBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
-    case included
-    case itemized
+public struct SubscriptionsResourceBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Amounts are net of discounts, and discount amounts are zero.
+    public static var included: Self { .init(rawValue: "included") }
+    /// Amounts are gross of discounts, and discount amounts are accurate.
+    public static var itemized: Self { .init(rawValue: "itemized") }
 }
 
 public struct SubscriptionsResourceBillingModeFlexibleList: Codable, Sendable {

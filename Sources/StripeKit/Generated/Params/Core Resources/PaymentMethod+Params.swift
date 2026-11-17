@@ -461,10 +461,16 @@ public struct PaymentMethodCreateAcssDebit: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct PaymentMethodCreateAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
@@ -624,10 +630,16 @@ public struct PaymentMethodCreateCardCardDetailsNetworks: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateCardCardDetailsNetworksPreferred: String, Codable, Sendable {
-    case cartesBancaires = "cartes_bancaires"
-    case mastercard
-    case visa
+public struct PaymentMethodCreateCardCardDetailsNetworksPreferred: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 public struct PaymentMethodCreateCardToken: StripeParams {
@@ -683,35 +695,41 @@ public struct PaymentMethodCreateEps: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateEpsBank: String, Codable, Sendable {
-    case arzteUndApothekerBank = "arzte_und_apotheker_bank"
-    case austrianAnadiBankAg = "austrian_anadi_bank_ag"
-    case bankAustria = "bank_austria"
-    case bankhausCarlSpangler = "bankhaus_carl_spangler"
-    case bankhausSchelhammerUndSchatteraAg = "bankhaus_schelhammer_und_schattera_ag"
-    case bawagPskAg = "bawag_psk_ag"
-    case bksBankAg = "bks_bank_ag"
-    case brullKallmusBankAg = "brull_kallmus_bank_ag"
-    case btvVierLanderBank = "btv_vier_lander_bank"
-    case capitalBankGraweGruppeAg = "capital_bank_grawe_gruppe_ag"
-    case deutscheBankAg = "deutsche_bank_ag"
-    case dolomitenbank
-    case easybankAg = "easybank_ag"
-    case ersteBankUndSparkassen = "erste_bank_und_sparkassen"
-    case hypoAlpeadriabankInternationalAg = "hypo_alpeadriabank_international_ag"
-    case hypoBankBurgenlandAktiengesellschaft = "hypo_bank_burgenland_aktiengesellschaft"
-    case hypoNoeLbFurNiederosterreichUWien = "hypo_noe_lb_fur_niederosterreich_u_wien"
-    case hypoOberosterreichSalzburgSteiermark = "hypo_oberosterreich_salzburg_steiermark"
-    case hypoTirolBankAg = "hypo_tirol_bank_ag"
-    case hypoVorarlbergBankAg = "hypo_vorarlberg_bank_ag"
-    case marchfelderBank = "marchfelder_bank"
-    case oberbankAg = "oberbank_ag"
-    case raiffeisenBankengruppeOsterreich = "raiffeisen_bankengruppe_osterreich"
-    case schoellerbankAg = "schoellerbank_ag"
-    case spardaBankWien = "sparda_bank_wien"
-    case volksbankGruppe = "volksbank_gruppe"
-    case volkskreditbankAg = "volkskreditbank_ag"
-    case vrBankBraunau = "vr_bank_braunau"
+public struct PaymentMethodCreateEpsBank: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var arzteUndApothekerBank: Self { .init(rawValue: "arzte_und_apotheker_bank") }
+    public static var austrianAnadiBankAg: Self { .init(rawValue: "austrian_anadi_bank_ag") }
+    public static var bankAustria: Self { .init(rawValue: "bank_austria") }
+    public static var bankhausCarlSpangler: Self { .init(rawValue: "bankhaus_carl_spangler") }
+    public static var bankhausSchelhammerUndSchatteraAg: Self { .init(rawValue: "bankhaus_schelhammer_und_schattera_ag") }
+    public static var bawagPskAg: Self { .init(rawValue: "bawag_psk_ag") }
+    public static var bksBankAg: Self { .init(rawValue: "bks_bank_ag") }
+    public static var brullKallmusBankAg: Self { .init(rawValue: "brull_kallmus_bank_ag") }
+    public static var btvVierLanderBank: Self { .init(rawValue: "btv_vier_lander_bank") }
+    public static var capitalBankGraweGruppeAg: Self { .init(rawValue: "capital_bank_grawe_gruppe_ag") }
+    public static var deutscheBankAg: Self { .init(rawValue: "deutsche_bank_ag") }
+    public static var dolomitenbank: Self { .init(rawValue: "dolomitenbank") }
+    public static var easybankAg: Self { .init(rawValue: "easybank_ag") }
+    public static var ersteBankUndSparkassen: Self { .init(rawValue: "erste_bank_und_sparkassen") }
+    public static var hypoAlpeadriabankInternationalAg: Self { .init(rawValue: "hypo_alpeadriabank_international_ag") }
+    public static var hypoBankBurgenlandAktiengesellschaft: Self { .init(rawValue: "hypo_bank_burgenland_aktiengesellschaft") }
+    public static var hypoNoeLbFurNiederosterreichUWien: Self { .init(rawValue: "hypo_noe_lb_fur_niederosterreich_u_wien") }
+    public static var hypoOberosterreichSalzburgSteiermark: Self { .init(rawValue: "hypo_oberosterreich_salzburg_steiermark") }
+    public static var hypoTirolBankAg: Self { .init(rawValue: "hypo_tirol_bank_ag") }
+    public static var hypoVorarlbergBankAg: Self { .init(rawValue: "hypo_vorarlberg_bank_ag") }
+    public static var marchfelderBank: Self { .init(rawValue: "marchfelder_bank") }
+    public static var oberbankAg: Self { .init(rawValue: "oberbank_ag") }
+    public static var raiffeisenBankengruppeOsterreich: Self { .init(rawValue: "raiffeisen_bankengruppe_osterreich") }
+    public static var schoellerbankAg: Self { .init(rawValue: "schoellerbank_ag") }
+    public static var spardaBankWien: Self { .init(rawValue: "sparda_bank_wien") }
+    public static var volksbankGruppe: Self { .init(rawValue: "volksbank_gruppe") }
+    public static var volkskreditbankAg: Self { .init(rawValue: "volkskreditbank_ag") }
+    public static var vrBankBraunau: Self { .init(rawValue: "vr_bank_braunau") }
 }
 
 /// If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
@@ -732,37 +750,49 @@ public struct PaymentMethodCreateFpx: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateFpxBank: String, Codable, Sendable {
-    case affinBank = "affin_bank"
-    case agrobank
-    case allianceBank = "alliance_bank"
-    case ambank
-    case bankIslam = "bank_islam"
-    case bankMuamalat = "bank_muamalat"
-    case bankOfChina = "bank_of_china"
-    case bankRakyat = "bank_rakyat"
-    case bnpParibas = "bnp_paribas"
-    case bsn
-    case cimb
-    case citibank
-    case deutscheBank = "deutsche_bank"
-    case hongLeongBank = "hong_leong_bank"
-    case hsbc
-    case kfh
-    case maybank2e
-    case maybank2u
-    case mbsbBank = "mbsb_bank"
-    case ocbc
-    case pbEnterprise = "pb_enterprise"
-    case publicBank = "public_bank"
-    case rhb
-    case standardChartered = "standard_chartered"
-    case uob
+public struct PaymentMethodCreateFpxBank: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var affinBank: Self { .init(rawValue: "affin_bank") }
+    public static var agrobank: Self { .init(rawValue: "agrobank") }
+    public static var allianceBank: Self { .init(rawValue: "alliance_bank") }
+    public static var ambank: Self { .init(rawValue: "ambank") }
+    public static var bankIslam: Self { .init(rawValue: "bank_islam") }
+    public static var bankMuamalat: Self { .init(rawValue: "bank_muamalat") }
+    public static var bankOfChina: Self { .init(rawValue: "bank_of_china") }
+    public static var bankRakyat: Self { .init(rawValue: "bank_rakyat") }
+    public static var bnpParibas: Self { .init(rawValue: "bnp_paribas") }
+    public static var bsn: Self { .init(rawValue: "bsn") }
+    public static var cimb: Self { .init(rawValue: "cimb") }
+    public static var citibank: Self { .init(rawValue: "citibank") }
+    public static var deutscheBank: Self { .init(rawValue: "deutsche_bank") }
+    public static var hongLeongBank: Self { .init(rawValue: "hong_leong_bank") }
+    public static var hsbc: Self { .init(rawValue: "hsbc") }
+    public static var kfh: Self { .init(rawValue: "kfh") }
+    public static var maybank2e: Self { .init(rawValue: "maybank2e") }
+    public static var maybank2u: Self { .init(rawValue: "maybank2u") }
+    public static var mbsbBank: Self { .init(rawValue: "mbsb_bank") }
+    public static var ocbc: Self { .init(rawValue: "ocbc") }
+    public static var pbEnterprise: Self { .init(rawValue: "pb_enterprise") }
+    public static var publicBank: Self { .init(rawValue: "public_bank") }
+    public static var rhb: Self { .init(rawValue: "rhb") }
+    public static var standardChartered: Self { .init(rawValue: "standard_chartered") }
+    public static var uob: Self { .init(rawValue: "uob") }
 }
 
-public enum PaymentMethodCreateFpxAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct PaymentMethodCreateFpxAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 /// If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -775,27 +805,33 @@ public struct PaymentMethodCreateIdeal: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateIdealBank: String, Codable, Sendable {
-    case abnAmro = "abn_amro"
-    case adyen
-    case asnBank = "asn_bank"
-    case bunq
-    case buut
-    case finom
-    case handelsbanken
-    case ing
-    case knab
-    case mollie
-    case moneyou
-    case n26
-    case nn
-    case rabobank
-    case regiobank
-    case revolut
-    case snsBank = "sns_bank"
-    case triodosBank = "triodos_bank"
-    case vanLanschot = "van_lanschot"
-    case yoursafe
+public struct PaymentMethodCreateIdealBank: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var abnAmro: Self { .init(rawValue: "abn_amro") }
+    public static var adyen: Self { .init(rawValue: "adyen") }
+    public static var asnBank: Self { .init(rawValue: "asn_bank") }
+    public static var bunq: Self { .init(rawValue: "bunq") }
+    public static var buut: Self { .init(rawValue: "buut") }
+    public static var finom: Self { .init(rawValue: "finom") }
+    public static var handelsbanken: Self { .init(rawValue: "handelsbanken") }
+    public static var ing: Self { .init(rawValue: "ing") }
+    public static var knab: Self { .init(rawValue: "knab") }
+    public static var mollie: Self { .init(rawValue: "mollie") }
+    public static var moneyou: Self { .init(rawValue: "moneyou") }
+    public static var n26: Self { .init(rawValue: "n26") }
+    public static var nn: Self { .init(rawValue: "nn") }
+    public static var rabobank: Self { .init(rawValue: "rabobank") }
+    public static var regiobank: Self { .init(rawValue: "regiobank") }
+    public static var revolut: Self { .init(rawValue: "revolut") }
+    public static var snsBank: Self { .init(rawValue: "sns_bank") }
+    public static var triodosBank: Self { .init(rawValue: "triodos_bank") }
+    public static var vanLanschot: Self { .init(rawValue: "van_lanschot") }
+    public static var yoursafe: Self { .init(rawValue: "yoursafe") }
 }
 
 /// If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
@@ -836,9 +872,15 @@ public struct PaymentMethodCreateNaverPay: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateNaverPayFunding: String, Codable, Sendable {
-    case card
-    case points
+public struct PaymentMethodCreateNaverPayFunding: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
+    public static var points: Self { .init(rawValue: "points") }
 }
 
 /// If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account
@@ -886,33 +928,39 @@ public struct PaymentMethodCreateP24: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateP24Bank: String, Codable, Sendable {
-    case aliorBank = "alior_bank"
-    case bankMillennium = "bank_millennium"
-    case bankNowyBfgSa = "bank_nowy_bfg_sa"
-    case bankPekaoSa = "bank_pekao_sa"
-    case bankiSpbdzielcze = "banki_spbdzielcze"
-    case blik
-    case bnpParibas = "bnp_paribas"
-    case boz
-    case citiHandlowy = "citi_handlowy"
-    case creditAgricole = "credit_agricole"
-    case envelobank
-    case etransferPocztowy24 = "etransfer_pocztowy24"
-    case getinBank = "getin_bank"
-    case ideabank
-    case ing
-    case inteligo
-    case mbankMtransfer = "mbank_mtransfer"
-    case nestPrzelew = "nest_przelew"
-    case noblePay = "noble_pay"
-    case pbacZIpko = "pbac_z_ipko"
-    case plusBank = "plus_bank"
-    case santanderPrzelew24 = "santander_przelew24"
-    case tmobileUsbugiBankowe = "tmobile_usbugi_bankowe"
-    case toyotaBank = "toyota_bank"
-    case velobank
-    case volkswagenBank = "volkswagen_bank"
+public struct PaymentMethodCreateP24Bank: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var aliorBank: Self { .init(rawValue: "alior_bank") }
+    public static var bankMillennium: Self { .init(rawValue: "bank_millennium") }
+    public static var bankNowyBfgSa: Self { .init(rawValue: "bank_nowy_bfg_sa") }
+    public static var bankPekaoSa: Self { .init(rawValue: "bank_pekao_sa") }
+    public static var bankiSpbdzielcze: Self { .init(rawValue: "banki_spbdzielcze") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var bnpParibas: Self { .init(rawValue: "bnp_paribas") }
+    public static var boz: Self { .init(rawValue: "boz") }
+    public static var citiHandlowy: Self { .init(rawValue: "citi_handlowy") }
+    public static var creditAgricole: Self { .init(rawValue: "credit_agricole") }
+    public static var envelobank: Self { .init(rawValue: "envelobank") }
+    public static var etransferPocztowy24: Self { .init(rawValue: "etransfer_pocztowy24") }
+    public static var getinBank: Self { .init(rawValue: "getin_bank") }
+    public static var ideabank: Self { .init(rawValue: "ideabank") }
+    public static var ing: Self { .init(rawValue: "ing") }
+    public static var inteligo: Self { .init(rawValue: "inteligo") }
+    public static var mbankMtransfer: Self { .init(rawValue: "mbank_mtransfer") }
+    public static var nestPrzelew: Self { .init(rawValue: "nest_przelew") }
+    public static var noblePay: Self { .init(rawValue: "noble_pay") }
+    public static var pbacZIpko: Self { .init(rawValue: "pbac_z_ipko") }
+    public static var plusBank: Self { .init(rawValue: "plus_bank") }
+    public static var santanderPrzelew24: Self { .init(rawValue: "santander_przelew24") }
+    public static var tmobileUsbugiBankowe: Self { .init(rawValue: "tmobile_usbugi_bankowe") }
+    public static var toyotaBank: Self { .init(rawValue: "toyota_bank") }
+    public static var velobank: Self { .init(rawValue: "velobank") }
+    public static var volkswagenBank: Self { .init(rawValue: "volkswagen_bank") }
 }
 
 /// If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
@@ -970,73 +1018,85 @@ public struct PaymentMethodCreateSofort: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateSofortCountry: String, Codable, Sendable {
-    case at = "AT"
-    case be = "BE"
-    case de = "DE"
-    case es = "ES"
-    case it = "IT"
-    case nl = "NL"
+public struct PaymentMethodCreateSofortCountry: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var at: Self { .init(rawValue: "AT") }
+    public static var be: Self { .init(rawValue: "BE") }
+    public static var de: Self { .init(rawValue: "DE") }
+    public static var es: Self { .init(rawValue: "ES") }
+    public static var it: Self { .init(rawValue: "IT") }
+    public static var nl: Self { .init(rawValue: "NL") }
 }
 
-public enum PaymentMethodCreateType: String, Codable, Sendable {
-    case acssDebit = "acss_debit"
-    case affirm
-    case afterpayClearpay = "afterpay_clearpay"
-    case alipay
-    case alma
-    case amazonPay = "amazon_pay"
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case bizum
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case crypto
-    case custom
-    case customerBalance = "customer_balance"
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case kakaoPay = "kakao_pay"
-    case klarna
-    case konbini
-    case krCard = "kr_card"
-    case link
-    case mbWay = "mb_way"
-    case mobilepay
-    case multibanco
-    case naverPay = "naver_pay"
-    case nzBankAccount = "nz_bank_account"
-    case oxxo
-    case p24
-    case payByBank = "pay_by_bank"
-    case payco
-    case paynow
-    case paypal
-    case paypay
-    case payto
-    case pix
-    case promptpay
-    case revolutPay = "revolut_pay"
-    case samsungPay = "samsung_pay"
-    case satispay
-    case scalapay
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case sunbit
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
-    case zip
+public struct PaymentMethodCreateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var alma: Self { .init(rawValue: "alma") }
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var bizum: Self { .init(rawValue: "bizum") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var crypto: Self { .init(rawValue: "crypto") }
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var krCard: Self { .init(rawValue: "kr_card") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var naverPay: Self { .init(rawValue: "naver_pay") }
+    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
+    public static var oxxo: Self { .init(rawValue: "oxxo") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var payco: Self { .init(rawValue: "payco") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var paypay: Self { .init(rawValue: "paypay") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
+    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var scalapay: Self { .init(rawValue: "scalapay") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var sunbit: Self { .init(rawValue: "sunbit") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
+    public static var zip: Self { .init(rawValue: "zip") }
 }
 
 /// If this is a `upi` PaymentMethod, this hash contains details about the UPI payment method.
@@ -1081,9 +1141,15 @@ public struct PaymentMethodCreateUpiMandateOptions: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateUpiMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct PaymentMethodCreateUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
@@ -1117,86 +1183,116 @@ public struct PaymentMethodCreateUsBankAccount: StripeParams {
     }
 }
 
-public enum PaymentMethodCreateUsBankAccountAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct PaymentMethodCreateUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public enum PaymentMethodCreateUsBankAccountAccountType: String, Codable, Sendable {
-    case checking
-    case savings
+public struct PaymentMethodCreateUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
-public enum PaymentMethodListAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct PaymentMethodListAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum PaymentMethodListType: String, Codable, Sendable {
-    case acssDebit = "acss_debit"
-    case affirm
-    case afterpayClearpay = "afterpay_clearpay"
-    case alipay
-    case alma
-    case amazonPay = "amazon_pay"
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case bizum
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case crypto
-    case custom
-    case customerBalance = "customer_balance"
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case kakaoPay = "kakao_pay"
-    case klarna
-    case konbini
-    case krCard = "kr_card"
-    case link
-    case mbWay = "mb_way"
-    case mobilepay
-    case multibanco
-    case naverPay = "naver_pay"
-    case nzBankAccount = "nz_bank_account"
-    case oxxo
-    case p24
-    case payByBank = "pay_by_bank"
-    case payco
-    case paynow
-    case paypal
-    case paypay
-    case payto
-    case pix
-    case promptpay
-    case revolutPay = "revolut_pay"
-    case samsungPay = "samsung_pay"
-    case satispay
-    case scalapay
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case sunbit
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
-    case zip
+public struct PaymentMethodListType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var alma: Self { .init(rawValue: "alma") }
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var bizum: Self { .init(rawValue: "bizum") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var crypto: Self { .init(rawValue: "crypto") }
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var krCard: Self { .init(rawValue: "kr_card") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var naverPay: Self { .init(rawValue: "naver_pay") }
+    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
+    public static var oxxo: Self { .init(rawValue: "oxxo") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var payco: Self { .init(rawValue: "payco") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var paypay: Self { .init(rawValue: "paypay") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
+    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var scalapay: Self { .init(rawValue: "scalapay") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var sunbit: Self { .init(rawValue: "sunbit") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
+    public static var zip: Self { .init(rawValue: "zip") }
 }
 
-public enum PaymentMethodUpdateAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct PaymentMethodUpdateAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
@@ -1298,10 +1394,16 @@ public struct PaymentMethodUpdateCardNetworks: StripeParams {
     }
 }
 
-public enum PaymentMethodUpdateCardNetworksPreferred: String, Codable, Sendable {
-    case cartesBancaires = "cartes_bancaires"
-    case mastercard
-    case visa
+public struct PaymentMethodUpdateCardNetworksPreferred: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 /// If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account
@@ -1323,12 +1425,24 @@ public struct PaymentMethodUpdateUsBankAccount: StripeParams {
     }
 }
 
-public enum PaymentMethodUpdateUsBankAccountAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct PaymentMethodUpdateUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public enum PaymentMethodUpdateUsBankAccountAccountType: String, Codable, Sendable {
-    case checking
-    case savings
+public struct PaymentMethodUpdateUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }

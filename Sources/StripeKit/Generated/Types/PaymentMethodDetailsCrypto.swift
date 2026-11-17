@@ -26,24 +26,42 @@ public struct PaymentMethodDetailsCrypto: Codable, Sendable {
 }
 
 /// The blockchain network that the transaction was sent on.
-public enum PaymentMethodDetailsCryptoNetwork: String, Codable, Sendable {
-    case base
-    case ethereum
-    case polygon
-    case solana
-    case sui
-    case tempo
+public struct PaymentMethodDetailsCryptoNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Base
+    public static var base: Self { .init(rawValue: "base") }
+    /// Ethereum
+    public static var ethereum: Self { .init(rawValue: "ethereum") }
+    /// Polygon
+    public static var polygon: Self { .init(rawValue: "polygon") }
+    /// Solana
+    public static var solana: Self { .init(rawValue: "solana") }
+    /// Sui
+    public static var sui: Self { .init(rawValue: "sui") }
+    /// Tempo
+    public static var tempo: Self { .init(rawValue: "tempo") }
 }
 
 /// The token currency that the transaction was sent with.
-public enum PaymentMethodDetailsCryptoTokenCurrency: String, Codable, Sendable {
-    case ousd
-    case phantomCash = "phantom_cash"
-    case usdc
-    case usdg
-    case usdp
-    case usdsui
-    case usdt
+public struct PaymentMethodDetailsCryptoTokenCurrency: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ousd: Self { .init(rawValue: "ousd") }
+    public static var phantomCash: Self { .init(rawValue: "phantom_cash") }
+    public static var usdc: Self { .init(rawValue: "usdc") }
+    public static var usdg: Self { .init(rawValue: "usdg") }
+    public static var usdp: Self { .init(rawValue: "usdp") }
+    public static var usdsui: Self { .init(rawValue: "usdsui") }
+    public static var usdt: Self { .init(rawValue: "usdt") }
 }
 
 public struct PaymentMethodDetailsCryptoList: Codable, Sendable {

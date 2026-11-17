@@ -14,8 +14,15 @@ public struct ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehavior
 }
 
 /// The type of behavior when the trial offer ends.
-public enum ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehaviorType: String, Codable, Sendable {
-    case transition
+public struct ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehaviorType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The new price to use at the end of the trial period initiated by this offer.
+    public static var transition: Self { .init(rawValue: "transition") }
 }
 
 public struct ProductCatalogImplEndpointsTrialOfferResourceTrialOfferEndBehaviorList: Codable, Sendable {

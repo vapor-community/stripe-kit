@@ -204,9 +204,15 @@ public struct TreasuryFinancialAccountCloseForwardingSettings: StripeParams {
     }
 }
 
-public enum TreasuryFinancialAccountCloseForwardingSettingsType: String, Codable, Sendable {
-    case financialAccount = "financial_account"
-    case paymentMethod = "payment_method"
+public struct TreasuryFinancialAccountCloseForwardingSettingsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var financialAccount: Self { .init(rawValue: "financial_account") }
+    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
 }
 
 /// Encodes whether a FinancialAccount has access to a particular feature. Stripe or the platform can
@@ -424,19 +430,37 @@ public struct TreasuryFinancialAccountCreatePlatformRestrictions: StripeParams {
     }
 }
 
-public enum TreasuryFinancialAccountCreatePlatformRestrictionsInboundFlows: String, Codable, Sendable {
-    case restricted
-    case unrestricted
+public struct TreasuryFinancialAccountCreatePlatformRestrictionsInboundFlows: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var restricted: Self { .init(rawValue: "restricted") }
+    public static var unrestricted: Self { .init(rawValue: "unrestricted") }
 }
 
-public enum TreasuryFinancialAccountCreatePlatformRestrictionsOutboundFlows: String, Codable, Sendable {
-    case restricted
-    case unrestricted
+public struct TreasuryFinancialAccountCreatePlatformRestrictionsOutboundFlows: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var restricted: Self { .init(rawValue: "restricted") }
+    public static var unrestricted: Self { .init(rawValue: "unrestricted") }
 }
 
-public enum TreasuryFinancialAccountListStatus: String, Codable, Sendable {
-    case closed
-    case `open` = "open"
+public struct TreasuryFinancialAccountListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var closed: Self { .init(rawValue: "closed") }
+    public static var `open`: Self { .init(rawValue: "open") }
 }
 
 /// Encodes whether a FinancialAccount has access to a particular feature, with a status enum and
@@ -659,9 +683,15 @@ public struct TreasuryFinancialAccountUpdateForwardingSettings: StripeParams {
     }
 }
 
-public enum TreasuryFinancialAccountUpdateForwardingSettingsType: String, Codable, Sendable {
-    case financialAccount = "financial_account"
-    case paymentMethod = "payment_method"
+public struct TreasuryFinancialAccountUpdateForwardingSettingsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var financialAccount: Self { .init(rawValue: "financial_account") }
+    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
 }
 
 /// The set of functionalities that the platform can restrict on the FinancialAccount.
@@ -682,12 +712,24 @@ public struct TreasuryFinancialAccountUpdatePlatformRestrictions: StripeParams {
     }
 }
 
-public enum TreasuryFinancialAccountUpdatePlatformRestrictionsInboundFlows: String, Codable, Sendable {
-    case restricted
-    case unrestricted
+public struct TreasuryFinancialAccountUpdatePlatformRestrictionsInboundFlows: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var restricted: Self { .init(rawValue: "restricted") }
+    public static var unrestricted: Self { .init(rawValue: "unrestricted") }
 }
 
-public enum TreasuryFinancialAccountUpdatePlatformRestrictionsOutboundFlows: String, Codable, Sendable {
-    case restricted
-    case unrestricted
+public struct TreasuryFinancialAccountUpdatePlatformRestrictionsOutboundFlows: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var restricted: Self { .init(rawValue: "restricted") }
+    public static var unrestricted: Self { .init(rawValue: "unrestricted") }
 }

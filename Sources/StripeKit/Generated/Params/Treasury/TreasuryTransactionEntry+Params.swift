@@ -58,7 +58,13 @@ public struct TreasuryTransactionEntryListParams: StripeParams {
     }
 }
 
-public enum TreasuryTransactionEntryListOrderBy: String, Codable, Sendable {
-    case created
-    case effectiveAt = "effective_at"
+public struct TreasuryTransactionEntryListOrderBy: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var created: Self { .init(rawValue: "created") }
+    public static var effectiveAt: Self { .init(rawValue: "effective_at") }
 }

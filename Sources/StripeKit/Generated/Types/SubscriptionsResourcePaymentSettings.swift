@@ -28,9 +28,15 @@ public struct SubscriptionsResourcePaymentSettings: Codable, Sendable {
 
 /// Configure whether Stripe updates `subscription.default_payment_method` when payment succeeds.
 /// Defaults to `off`.
-public enum SubscriptionsResourcePaymentSettingsSaveDefaultPaymentMethod: String, Codable, Sendable {
-    case off
-    case onSubscription = "on_subscription"
+public struct SubscriptionsResourcePaymentSettingsSaveDefaultPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var off: Self { .init(rawValue: "off") }
+    public static var onSubscription: Self { .init(rawValue: "on_subscription") }
 }
 
 public struct SubscriptionsResourcePaymentSettingsList: Codable, Sendable {

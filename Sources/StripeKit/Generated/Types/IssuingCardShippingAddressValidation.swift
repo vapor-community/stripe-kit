@@ -23,17 +23,29 @@ public struct IssuingCardShippingAddressValidation: Codable, Sendable {
 }
 
 /// The address validation capabilities to use.
-public enum IssuingCardShippingAddressValidationMode: String, Codable, Sendable {
-    case disabled
-    case normalizationOnly = "normalization_only"
-    case validationAndNormalization = "validation_and_normalization"
+public struct IssuingCardShippingAddressValidationMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var normalizationOnly: Self { .init(rawValue: "normalization_only") }
+    public static var validationAndNormalization: Self { .init(rawValue: "validation_and_normalization") }
 }
 
 /// The validation result for the shipping address.
-public enum IssuingCardShippingAddressValidationResult: String, Codable, Sendable {
-    case indeterminate
-    case likelyDeliverable = "likely_deliverable"
-    case likelyUndeliverable = "likely_undeliverable"
+public struct IssuingCardShippingAddressValidationResult: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var indeterminate: Self { .init(rawValue: "indeterminate") }
+    public static var likelyDeliverable: Self { .init(rawValue: "likely_deliverable") }
+    public static var likelyUndeliverable: Self { .init(rawValue: "likely_undeliverable") }
 }
 
 public struct IssuingCardShippingAddressValidationList: Codable, Sendable {

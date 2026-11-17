@@ -20,12 +20,18 @@ public struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransac
 }
 
 /// The banking network used for this funding.
-public enum CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransferNetwork: String, Codable, Sendable {
-    case ach
-    case domesticWireUs = "domestic_wire_us"
-    case fednow
-    case rtp
-    case swift
+public struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransferNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
+    public static var domesticWireUs: Self { .init(rawValue: "domestic_wire_us") }
+    public static var fednow: Self { .init(rawValue: "fednow") }
+    public static var rtp: Self { .init(rawValue: "rtp") }
+    public static var swift: Self { .init(rawValue: "swift") }
 }
 
 public struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransferList: Codable, Sendable {

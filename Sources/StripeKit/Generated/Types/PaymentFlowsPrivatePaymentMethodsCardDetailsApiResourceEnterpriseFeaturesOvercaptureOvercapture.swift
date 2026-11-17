@@ -20,9 +20,15 @@ public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseF
 }
 
 /// Indicates whether or not the authorized amount can be over-captured.
-public enum PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesOvercaptureOvercaptureStatus: String, Codable, Sendable {
-    case available
-    case unavailable
+public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesOvercaptureOvercaptureStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var available: Self { .init(rawValue: "available") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
 }
 
 public struct PaymentFlowsPrivatePaymentMethodsCardDetailsApiResourceEnterpriseFeaturesOvercaptureOvercaptureList: Codable, Sendable {

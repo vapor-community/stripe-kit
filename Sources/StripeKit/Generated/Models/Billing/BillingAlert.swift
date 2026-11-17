@@ -40,20 +40,38 @@ public struct BillingAlert: Codable, Sendable {
 }
 
 /// Defines the type of the alert.
-public enum BillingAlertAlertType: String, Codable, Sendable {
-    case usageThreshold = "usage_threshold"
+public struct BillingAlertAlertType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var usageThreshold: Self { .init(rawValue: "usage_threshold") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingAlertObject: String, Codable, Sendable {
-    case billingAlert = "billing.alert"
+public struct BillingAlertObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingAlert: Self { .init(rawValue: "billing.alert") }
 }
 
 /// Status of the alert. This can be active, inactive or archived.
-public enum BillingAlertStatus: String, Codable, Sendable {
-    case active
-    case archived
-    case inactive
+public struct BillingAlertStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var archived: Self { .init(rawValue: "archived") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
 public struct BillingAlertList: Codable, Sendable {

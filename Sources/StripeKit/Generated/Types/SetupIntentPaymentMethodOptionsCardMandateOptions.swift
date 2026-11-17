@@ -52,18 +52,30 @@ public struct SetupIntentPaymentMethodOptionsCardMandateOptions: Codable, Sendab
 /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
 /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
 /// param.
-public enum SetupIntentPaymentMethodOptionsCardMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct SetupIntentPaymentMethodOptionsCardMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 /// Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
-public enum SetupIntentPaymentMethodOptionsCardMandateOptionsInterval: String, Codable, Sendable {
-    case day
-    case month
-    case sporadic
-    case week
-    case year
+public struct SetupIntentPaymentMethodOptionsCardMandateOptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var sporadic: Self { .init(rawValue: "sporadic") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 public struct SetupIntentPaymentMethodOptionsCardMandateOptionsList: Codable, Sendable {

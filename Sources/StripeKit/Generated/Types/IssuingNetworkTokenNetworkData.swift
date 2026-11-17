@@ -27,9 +27,15 @@ public struct IssuingNetworkTokenNetworkData: Codable, Sendable {
 
 /// The network that the token is associated with. An additional hash is included with a name matching
 /// this value, containing tokenization data specific to the card network.
-public enum IssuingNetworkTokenNetworkDataType: String, Codable, Sendable {
-    case mastercard
-    case visa
+public struct IssuingNetworkTokenNetworkDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 public struct IssuingNetworkTokenNetworkDataList: Codable, Sendable {

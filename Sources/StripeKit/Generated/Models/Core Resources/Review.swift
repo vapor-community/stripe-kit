@@ -68,26 +68,44 @@ public struct Review: Codable, Sendable {
 /// The reason the review was closed, or null if it has not yet been closed. One of `approved`,
 /// `refunded`, `refunded_as_fraud`, `disputed`, `redacted`, `canceled`, `payment_never_settled`, or
 /// `acknowledged`.
-public enum ReviewClosedReason: String, Codable, Sendable {
-    case acknowledged
-    case approved
-    case canceled
-    case disputed
-    case paymentNeverSettled = "payment_never_settled"
-    case redacted
-    case refunded
-    case refundedAsFraud = "refunded_as_fraud"
+public struct ReviewClosedReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acknowledged: Self { .init(rawValue: "acknowledged") }
+    public static var approved: Self { .init(rawValue: "approved") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var disputed: Self { .init(rawValue: "disputed") }
+    public static var paymentNeverSettled: Self { .init(rawValue: "payment_never_settled") }
+    public static var redacted: Self { .init(rawValue: "redacted") }
+    public static var refunded: Self { .init(rawValue: "refunded") }
+    public static var refundedAsFraud: Self { .init(rawValue: "refunded_as_fraud") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ReviewObject: String, Codable, Sendable {
-    case review
+public struct ReviewObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var review: Self { .init(rawValue: "review") }
 }
 
 /// The reason the review was opened. One of `rule` or `manual`.
-public enum ReviewOpenedReason: String, Codable, Sendable {
-    case manual
-    case rule
+public struct ReviewOpenedReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var rule: Self { .init(rawValue: "rule") }
 }
 
 public struct ReviewList: Codable, Sendable {

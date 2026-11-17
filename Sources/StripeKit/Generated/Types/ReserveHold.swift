@@ -74,35 +74,68 @@ public struct ReserveHold: Codable, Sendable {
 }
 
 /// Indicates which party created this ReserveHold.
-public enum ReserveHoldCreatedBy: String, Codable, Sendable {
-    case application
-    case stripe
+public struct ReserveHoldCreatedBy: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var application: Self { .init(rawValue: "application") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 /// The balance destination to which the reserved funds are sent.
-public enum ReserveHoldDestination: String, Codable, Sendable {
-    case other
-    case riskReserved = "risk_reserved"
-    case settlementReserved = "settlement_reserved"
+public struct ReserveHoldDestination: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Funds are held in another reserve balance.
+    public static var other: Self { .init(rawValue: "other") }
+    /// Funds are held in the risk reserved balance.
+    public static var riskReserved: Self { .init(rawValue: "risk_reserved") }
+    /// Funds are held in the settlement reserved balance.
+    public static var settlementReserved: Self { .init(rawValue: "settlement_reserved") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ReserveHoldObject: String, Codable, Sendable {
-    case reserveHold = "reserve.hold"
+public struct ReserveHoldObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var reserveHold: Self { .init(rawValue: "reserve.hold") }
 }
 
 /// The reason for the ReserveHold.
-public enum ReserveHoldReason: String, Codable, Sendable {
-    case charge
-    case standalone
+public struct ReserveHoldReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var charge: Self { .init(rawValue: "charge") }
+    public static var standalone: Self { .init(rawValue: "standalone") }
 }
 
 /// Which source balance type this ReserveHold reserves funds from. One of `bank_account`, `card`, or
 /// `fpx`.
-public enum ReserveHoldSourceType: String, Codable, Sendable {
-    case bankAccount = "bank_account"
-    case card
-    case fpx
+public struct ReserveHoldSourceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankAccount: Self { .init(rawValue: "bank_account") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
 }
 
 public struct ReserveHoldList: Codable, Sendable {

@@ -16,8 +16,14 @@ public struct BalanceSettings: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BalanceSettingsObject: String, Codable, Sendable {
-    case balanceSettings = "balance_settings"
+public struct BalanceSettingsObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balanceSettings: Self { .init(rawValue: "balance_settings") }
 }
 
 public struct BalanceSettingsList: Codable, Sendable {

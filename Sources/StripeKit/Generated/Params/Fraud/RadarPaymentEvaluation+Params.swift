@@ -199,8 +199,14 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetails: St
     }
 }
 
-public enum RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsMoneyMovementType: String, Codable, Sendable {
-    case card
+public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsMoneyMovementType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
 }
 
 /// Describes card money movement details.
@@ -221,16 +227,28 @@ public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCard
     }
 }
 
-public enum RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardCustomerPresence: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardCustomerPresence: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public enum RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardPaymentType: String, Codable, Sendable {
-    case oneOff = "one_off"
-    case recurring
-    case setupOneOff = "setup_one_off"
-    case setupRecurring = "setup_recurring"
+public struct RadarPaymentEvaluationCreatePaymentDetailsMoneyMovementDetailsCardPaymentType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var oneOff: Self { .init(rawValue: "one_off") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
+    public static var setupOneOff: Self { .init(rawValue: "setup_one_off") }
+    public static var setupRecurring: Self { .init(rawValue: "setup_recurring") }
 }
 
 /// Shipping details for the payment evaluation.

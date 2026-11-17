@@ -19,10 +19,16 @@ public struct TaxProductRegistrationsResourceCountryOptionsCanada: Codable, Send
 }
 
 /// Type of registration in Canada.
-public enum TaxProductRegistrationsResourceCountryOptionsCanadaType: String, Codable, Sendable {
-    case provinceStandard = "province_standard"
-    case simplified
-    case standard
+public struct TaxProductRegistrationsResourceCountryOptionsCanadaType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var provinceStandard: Self { .init(rawValue: "province_standard") }
+    public static var simplified: Self { .init(rawValue: "simplified") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsCanadaList: Codable, Sendable {

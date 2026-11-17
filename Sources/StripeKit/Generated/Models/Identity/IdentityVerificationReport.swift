@@ -61,15 +61,27 @@ public struct IdentityVerificationReport: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum IdentityVerificationReportObject: String, Codable, Sendable {
-    case identityVerificationReport = "identity.verification_report"
+public struct IdentityVerificationReportObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var identityVerificationReport: Self { .init(rawValue: "identity.verification_report") }
 }
 
 /// Type of report.
-public enum IdentityVerificationReportType: String, Codable, Sendable {
-    case document
-    case idNumber = "id_number"
-    case verificationFlow = "verification_flow"
+public struct IdentityVerificationReportType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var document: Self { .init(rawValue: "document") }
+    public static var idNumber: Self { .init(rawValue: "id_number") }
+    public static var verificationFlow: Self { .init(rawValue: "verification_flow") }
 }
 
 public struct IdentityVerificationReportList: Codable, Sendable {

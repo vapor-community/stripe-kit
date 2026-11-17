@@ -15,8 +15,14 @@ public struct PaymentsPrimitivesPaymentRecordsResourceProcessorDetails: Codable,
 }
 
 /// The processor used for this payment attempt.
-public enum PaymentsPrimitivesPaymentRecordsResourceProcessorDetailsType: String, Codable, Sendable {
-    case custom
+public struct PaymentsPrimitivesPaymentRecordsResourceProcessorDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
 public struct PaymentsPrimitivesPaymentRecordsResourceProcessorDetailsList: Codable, Sendable {

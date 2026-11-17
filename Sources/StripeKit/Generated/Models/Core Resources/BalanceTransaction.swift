@@ -92,16 +92,28 @@ public struct BalanceTransaction: Codable, Sendable {
 }
 
 /// The balance that this transaction impacts.
-public enum BalanceTransactionBalanceType: String, Codable, Sendable {
-    case issuing
-    case payments
-    case refundAndDisputePrefunding = "refund_and_dispute_prefunding"
-    case riskReserved = "risk_reserved"
+public struct BalanceTransactionBalanceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var issuing: Self { .init(rawValue: "issuing") }
+    public static var payments: Self { .init(rawValue: "payments") }
+    public static var refundAndDisputePrefunding: Self { .init(rawValue: "refund_and_dispute_prefunding") }
+    public static var riskReserved: Self { .init(rawValue: "risk_reserved") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BalanceTransactionObject: String, Codable, Sendable {
-    case balanceTransaction = "balance_transaction"
+public struct BalanceTransactionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balanceTransaction: Self { .init(rawValue: "balance_transaction") }
 }
 
 /// Transaction type: `tax_fund`, `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`,
@@ -120,59 +132,65 @@ public enum BalanceTransactionObject: String, Codable, Sendable {
 /// `fee_credit_funding`. Learn more about [balance transaction types and what they
 /// represent](https://stripe.com/docs/reports/balance-transaction-types). To classify transactions for
 /// accounting purposes, consider `reporting_category` instead.
-public enum BalanceTransactionType: String, Codable, Sendable {
-    case adjustment
-    case advance
-    case advanceFunding = "advance_funding"
-    case anticipationRepayment = "anticipation_repayment"
-    case applicationFee = "application_fee"
-    case applicationFeeRefund = "application_fee_refund"
-    case charge
-    case climateOrderPurchase = "climate_order_purchase"
-    case climateOrderRefund = "climate_order_refund"
-    case connectCollectionTransfer = "connect_collection_transfer"
-    case contribution
-    case feeCreditFunding = "fee_credit_funding"
-    case inboundTransfer = "inbound_transfer"
-    case inboundTransferReversal = "inbound_transfer_reversal"
-    case issuingAuthorizationHold = "issuing_authorization_hold"
-    case issuingAuthorizationRelease = "issuing_authorization_release"
-    case issuingDispute = "issuing_dispute"
-    case issuingDisputeProvisionalCredit = "issuing_dispute_provisional_credit"
-    case issuingDisputeProvisionalCreditReversal = "issuing_dispute_provisional_credit_reversal"
-    case issuingTransaction = "issuing_transaction"
-    case obligationOutbound = "obligation_outbound"
-    case obligationReversalInbound = "obligation_reversal_inbound"
-    case payment
-    case paymentFailureRefund = "payment_failure_refund"
-    case paymentNetworkReserveHold = "payment_network_reserve_hold"
-    case paymentNetworkReserveRelease = "payment_network_reserve_release"
-    case paymentRefund = "payment_refund"
-    case paymentReversal = "payment_reversal"
-    case paymentUnreconciled = "payment_unreconciled"
-    case payout
-    case payoutCancel = "payout_cancel"
-    case payoutFailure = "payout_failure"
-    case payoutMinimumBalanceHold = "payout_minimum_balance_hold"
-    case payoutMinimumBalanceRelease = "payout_minimum_balance_release"
-    case refund
-    case refundFailure = "refund_failure"
-    case reserveHold = "reserve_hold"
-    case reserveRelease = "reserve_release"
-    case reserveTransaction = "reserve_transaction"
-    case reservedFunds = "reserved_funds"
-    case stripeBalancePaymentDebit = "stripe_balance_payment_debit"
-    case stripeBalancePaymentDebitReversal = "stripe_balance_payment_debit_reversal"
-    case stripeFee = "stripe_fee"
-    case stripeFxFee = "stripe_fx_fee"
-    case taxFee = "tax_fee"
-    case taxFund = "tax_fund"
-    case topup
-    case topupReversal = "topup_reversal"
-    case transfer
-    case transferCancel = "transfer_cancel"
-    case transferFailure = "transfer_failure"
-    case transferRefund = "transfer_refund"
+public struct BalanceTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var adjustment: Self { .init(rawValue: "adjustment") }
+    public static var advance: Self { .init(rawValue: "advance") }
+    public static var advanceFunding: Self { .init(rawValue: "advance_funding") }
+    public static var anticipationRepayment: Self { .init(rawValue: "anticipation_repayment") }
+    public static var applicationFee: Self { .init(rawValue: "application_fee") }
+    public static var applicationFeeRefund: Self { .init(rawValue: "application_fee_refund") }
+    public static var charge: Self { .init(rawValue: "charge") }
+    public static var climateOrderPurchase: Self { .init(rawValue: "climate_order_purchase") }
+    public static var climateOrderRefund: Self { .init(rawValue: "climate_order_refund") }
+    public static var connectCollectionTransfer: Self { .init(rawValue: "connect_collection_transfer") }
+    public static var contribution: Self { .init(rawValue: "contribution") }
+    public static var feeCreditFunding: Self { .init(rawValue: "fee_credit_funding") }
+    public static var inboundTransfer: Self { .init(rawValue: "inbound_transfer") }
+    public static var inboundTransferReversal: Self { .init(rawValue: "inbound_transfer_reversal") }
+    public static var issuingAuthorizationHold: Self { .init(rawValue: "issuing_authorization_hold") }
+    public static var issuingAuthorizationRelease: Self { .init(rawValue: "issuing_authorization_release") }
+    public static var issuingDispute: Self { .init(rawValue: "issuing_dispute") }
+    public static var issuingDisputeProvisionalCredit: Self { .init(rawValue: "issuing_dispute_provisional_credit") }
+    public static var issuingDisputeProvisionalCreditReversal: Self { .init(rawValue: "issuing_dispute_provisional_credit_reversal") }
+    public static var issuingTransaction: Self { .init(rawValue: "issuing_transaction") }
+    public static var obligationOutbound: Self { .init(rawValue: "obligation_outbound") }
+    public static var obligationReversalInbound: Self { .init(rawValue: "obligation_reversal_inbound") }
+    public static var payment: Self { .init(rawValue: "payment") }
+    public static var paymentFailureRefund: Self { .init(rawValue: "payment_failure_refund") }
+    public static var paymentNetworkReserveHold: Self { .init(rawValue: "payment_network_reserve_hold") }
+    public static var paymentNetworkReserveRelease: Self { .init(rawValue: "payment_network_reserve_release") }
+    public static var paymentRefund: Self { .init(rawValue: "payment_refund") }
+    public static var paymentReversal: Self { .init(rawValue: "payment_reversal") }
+    public static var paymentUnreconciled: Self { .init(rawValue: "payment_unreconciled") }
+    public static var payout: Self { .init(rawValue: "payout") }
+    public static var payoutCancel: Self { .init(rawValue: "payout_cancel") }
+    public static var payoutFailure: Self { .init(rawValue: "payout_failure") }
+    public static var payoutMinimumBalanceHold: Self { .init(rawValue: "payout_minimum_balance_hold") }
+    public static var payoutMinimumBalanceRelease: Self { .init(rawValue: "payout_minimum_balance_release") }
+    public static var refund: Self { .init(rawValue: "refund") }
+    public static var refundFailure: Self { .init(rawValue: "refund_failure") }
+    public static var reserveHold: Self { .init(rawValue: "reserve_hold") }
+    public static var reserveRelease: Self { .init(rawValue: "reserve_release") }
+    public static var reserveTransaction: Self { .init(rawValue: "reserve_transaction") }
+    public static var reservedFunds: Self { .init(rawValue: "reserved_funds") }
+    public static var stripeBalancePaymentDebit: Self { .init(rawValue: "stripe_balance_payment_debit") }
+    public static var stripeBalancePaymentDebitReversal: Self { .init(rawValue: "stripe_balance_payment_debit_reversal") }
+    public static var stripeFee: Self { .init(rawValue: "stripe_fee") }
+    public static var stripeFxFee: Self { .init(rawValue: "stripe_fx_fee") }
+    public static var taxFee: Self { .init(rawValue: "tax_fee") }
+    public static var taxFund: Self { .init(rawValue: "tax_fund") }
+    public static var topup: Self { .init(rawValue: "topup") }
+    public static var topupReversal: Self { .init(rawValue: "topup_reversal") }
+    public static var transfer: Self { .init(rawValue: "transfer") }
+    public static var transferCancel: Self { .init(rawValue: "transfer_cancel") }
+    public static var transferFailure: Self { .init(rawValue: "transfer_failure") }
+    public static var transferRefund: Self { .init(rawValue: "transfer_refund") }
 }
 
 public struct BalanceTransactionList: Codable, Sendable {

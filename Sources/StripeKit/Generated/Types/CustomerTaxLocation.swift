@@ -17,11 +17,17 @@ public struct CustomerTaxLocation: Codable, Sendable {
 }
 
 /// The data source used to infer the customer's location.
-public enum CustomerTaxLocationSource: String, Codable, Sendable {
-    case billingAddress = "billing_address"
-    case ipAddress = "ip_address"
-    case paymentMethod = "payment_method"
-    case shippingDestination = "shipping_destination"
+public struct CustomerTaxLocationSource: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingAddress: Self { .init(rawValue: "billing_address") }
+    public static var ipAddress: Self { .init(rawValue: "ip_address") }
+    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
+    public static var shippingDestination: Self { .init(rawValue: "shipping_destination") }
 }
 
 public struct CustomerTaxLocationList: Codable, Sendable {

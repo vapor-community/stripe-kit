@@ -20,12 +20,18 @@ public struct TreasuryReceivedCreditsResourceReversalDetails: Codable, Sendable 
 }
 
 /// Set if a ReceivedCredit cannot be reversed.
-public enum TreasuryReceivedCreditsResourceReversalDetailsRestrictedReason: String, Codable, Sendable {
-    case alreadyReversed = "already_reversed"
-    case deadlinePassed = "deadline_passed"
-    case networkRestricted = "network_restricted"
-    case other
-    case sourceFlowRestricted = "source_flow_restricted"
+public struct TreasuryReceivedCreditsResourceReversalDetailsRestrictedReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alreadyReversed: Self { .init(rawValue: "already_reversed") }
+    public static var deadlinePassed: Self { .init(rawValue: "deadline_passed") }
+    public static var networkRestricted: Self { .init(rawValue: "network_restricted") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var sourceFlowRestricted: Self { .init(rawValue: "source_flow_restricted") }
 }
 
 public struct TreasuryReceivedCreditsResourceReversalDetailsList: Codable, Sendable {

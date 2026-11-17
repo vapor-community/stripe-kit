@@ -65,8 +65,14 @@ public struct TerminalConfiguration: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TerminalConfigurationObject: String, Codable, Sendable {
-    case terminalConfiguration = "terminal.configuration"
+public struct TerminalConfigurationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var terminalConfiguration: Self { .init(rawValue: "terminal.configuration") }
 }
 
 public struct TerminalConfigurationList: Codable, Sendable {

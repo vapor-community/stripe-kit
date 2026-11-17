@@ -150,22 +150,40 @@ public struct Quote: Codable, Sendable {
 /// method attached to the subscription or customer. When sending an invoice, Stripe will email your
 /// customer an invoice with payment instructions and mark the subscription as `active`. Defaults to
 /// `charge_automatically`.
-public enum QuoteCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct QuoteCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum QuoteObject: String, Codable, Sendable {
-    case quote
+public struct QuoteObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var quote: Self { .init(rawValue: "quote") }
 }
 
 /// The status of the quote.
-public enum QuoteStatus: String, Codable, Sendable {
-    case accepted
-    case canceled
-    case draft
-    case `open` = "open"
+public struct QuoteStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accepted: Self { .init(rawValue: "accepted") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var draft: Self { .init(rawValue: "draft") }
+    public static var `open`: Self { .init(rawValue: "open") }
 }
 
 public struct QuoteList: Codable, Sendable {

@@ -14,12 +14,24 @@ public struct SubscriptionsResourcePausedStatusDetailsSubscription: Codable, Sen
 }
 
 /// The reason that the subscription was paused.
-public enum SubscriptionsResourcePausedStatusDetailsSubscriptionType: String, Codable, Sendable {
-    case finalPaymentFailure = "final_payment_failure"
-    case firstPaymentFailure = "first_payment_failure"
-    case pauseRequested = "pause_requested"
-    case system
-    case trialEndWithoutPaymentMethod = "trial_end_without_payment_method"
+public struct SubscriptionsResourcePausedStatusDetailsSubscriptionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Indicates the subscription was paused because the final payment attempt failed.
+    public static var finalPaymentFailure: Self { .init(rawValue: "final_payment_failure") }
+    /// Indicates the subscription was paused because the first payment attempt failed.
+    public static var firstPaymentFailure: Self { .init(rawValue: "first_payment_failure") }
+    /// Indicates the subscription was paused using an API request.
+    public static var pauseRequested: Self { .init(rawValue: "pause_requested") }
+    /// Indicates the subscription was paused by Stripe.
+    public static var system: Self { .init(rawValue: "system") }
+    /// Indicates the subscription was paused because a trial ended without the customer providing a payment
+    /// method.
+    public static var trialEndWithoutPaymentMethod: Self { .init(rawValue: "trial_end_without_payment_method") }
 }
 
 public struct SubscriptionsResourcePausedStatusDetailsSubscriptionList: Codable, Sendable {

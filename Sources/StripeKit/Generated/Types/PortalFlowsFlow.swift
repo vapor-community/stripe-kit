@@ -34,13 +34,19 @@ public struct PortalFlowsFlow: Codable, Sendable {
 }
 
 /// Type of flow that the customer will go through.
-public enum PortalFlowsFlowType: String, Codable, Sendable {
-    case customerUpdate = "customer_update"
-    case paymentMethodUpdate = "payment_method_update"
-    case subscriptionCancel = "subscription_cancel"
-    case subscriptionPause = "subscription_pause"
-    case subscriptionUpdate = "subscription_update"
-    case subscriptionUpdateConfirm = "subscription_update_confirm"
+public struct PortalFlowsFlowType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerUpdate: Self { .init(rawValue: "customer_update") }
+    public static var paymentMethodUpdate: Self { .init(rawValue: "payment_method_update") }
+    public static var subscriptionCancel: Self { .init(rawValue: "subscription_cancel") }
+    public static var subscriptionPause: Self { .init(rawValue: "subscription_pause") }
+    public static var subscriptionUpdate: Self { .init(rawValue: "subscription_update") }
+    public static var subscriptionUpdateConfirm: Self { .init(rawValue: "subscription_update_confirm") }
 }
 
 public struct PortalFlowsFlowList: Codable, Sendable {

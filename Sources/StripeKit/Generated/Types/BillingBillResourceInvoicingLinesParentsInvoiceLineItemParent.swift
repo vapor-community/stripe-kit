@@ -23,9 +23,15 @@ public struct BillingBillResourceInvoicingLinesParentsInvoiceLineItemParent: Cod
 }
 
 /// The type of parent that generated this line item
-public enum BillingBillResourceInvoicingLinesParentsInvoiceLineItemParentType: String, Codable, Sendable {
-    case invoiceItemDetails = "invoice_item_details"
-    case subscriptionItemDetails = "subscription_item_details"
+public struct BillingBillResourceInvoicingLinesParentsInvoiceLineItemParentType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var invoiceItemDetails: Self { .init(rawValue: "invoice_item_details") }
+    public static var subscriptionItemDetails: Self { .init(rawValue: "subscription_item_details") }
 }
 
 public struct BillingBillResourceInvoicingLinesParentsInvoiceLineItemParentList: Codable, Sendable {

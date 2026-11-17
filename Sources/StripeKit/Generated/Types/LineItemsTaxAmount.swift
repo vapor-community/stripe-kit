@@ -28,22 +28,28 @@ public struct LineItemsTaxAmount: Codable, Sendable {
 
 /// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for
 /// this field may be extended as new tax rules are supported.
-public enum LineItemsTaxAmountTaxabilityReason: String, Codable, Sendable {
-    case customerExempt = "customer_exempt"
-    case notCollecting = "not_collecting"
-    case notSubjectToTax = "not_subject_to_tax"
-    case notSupported = "not_supported"
-    case portionProductExempt = "portion_product_exempt"
-    case portionReducedRated = "portion_reduced_rated"
-    case portionStandardRated = "portion_standard_rated"
-    case productExempt = "product_exempt"
-    case productExemptHoliday = "product_exempt_holiday"
-    case proportionallyRated = "proportionally_rated"
-    case reducedRated = "reduced_rated"
-    case reverseCharge = "reverse_charge"
-    case standardRated = "standard_rated"
-    case taxableBasisReduced = "taxable_basis_reduced"
-    case zeroRated = "zero_rated"
+public struct LineItemsTaxAmountTaxabilityReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerExempt: Self { .init(rawValue: "customer_exempt") }
+    public static var notCollecting: Self { .init(rawValue: "not_collecting") }
+    public static var notSubjectToTax: Self { .init(rawValue: "not_subject_to_tax") }
+    public static var notSupported: Self { .init(rawValue: "not_supported") }
+    public static var portionProductExempt: Self { .init(rawValue: "portion_product_exempt") }
+    public static var portionReducedRated: Self { .init(rawValue: "portion_reduced_rated") }
+    public static var portionStandardRated: Self { .init(rawValue: "portion_standard_rated") }
+    public static var productExempt: Self { .init(rawValue: "product_exempt") }
+    public static var productExemptHoliday: Self { .init(rawValue: "product_exempt_holiday") }
+    public static var proportionallyRated: Self { .init(rawValue: "proportionally_rated") }
+    public static var reducedRated: Self { .init(rawValue: "reduced_rated") }
+    public static var reverseCharge: Self { .init(rawValue: "reverse_charge") }
+    public static var standardRated: Self { .init(rawValue: "standard_rated") }
+    public static var taxableBasisReduced: Self { .init(rawValue: "taxable_basis_reduced") }
+    public static var zeroRated: Self { .init(rawValue: "zero_rated") }
 }
 
 public struct LineItemsTaxAmountList: Codable, Sendable {

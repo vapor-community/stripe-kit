@@ -13,9 +13,15 @@ public struct CheckoutLinkWalletOptions: Codable, Sendable {
 }
 
 /// Describes whether Checkout should display Link. Defaults to `auto`.
-public enum CheckoutLinkWalletOptionsDisplay: String, Codable, Sendable {
-    case auto
-    case never
+public struct CheckoutLinkWalletOptionsDisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct CheckoutLinkWalletOptionsList: Codable, Sendable {

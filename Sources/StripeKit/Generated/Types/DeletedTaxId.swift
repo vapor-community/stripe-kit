@@ -17,8 +17,14 @@ public struct DeletedTaxId: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DeletedTaxIdObject: String, Codable, Sendable {
-    case taxId = "tax_id"
+public struct DeletedTaxIdObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxId: Self { .init(rawValue: "tax_id") }
 }
 
 public struct DeletedTaxIdList: Codable, Sendable {

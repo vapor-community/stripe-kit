@@ -34,15 +34,27 @@ public struct TaxSettings: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TaxSettingsObject: String, Codable, Sendable {
-    case taxSettings = "tax.settings"
+public struct TaxSettingsObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxSettings: Self { .init(rawValue: "tax.settings") }
 }
 
 /// Whether these settings have the information Stripe Tax needs to calculate tax. It doesn't reflect
 /// whether your integration is ready to collect tax.
-public enum TaxSettingsStatus: String, Codable, Sendable {
-    case active
-    case pending
+public struct TaxSettingsStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 public struct TaxSettingsList: Codable, Sendable {

@@ -21,10 +21,16 @@ public struct SetupIntentPaymentMethodOptionsUsBankAccount: Codable, Sendable {
 }
 
 /// Bank account verification method. The default value is `automatic`.
-public enum SetupIntentPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct SetupIntentPaymentMethodOptionsUsBankAccountVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
 public struct SetupIntentPaymentMethodOptionsUsBankAccountList: Codable, Sendable {

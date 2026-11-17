@@ -13,8 +13,14 @@ public struct TaxProductRegistrationsResourceCountryOptionsDefault: Codable, Sen
 }
 
 /// Type of registration in `country`.
-public enum TaxProductRegistrationsResourceCountryOptionsDefaultType: String, Codable, Sendable {
-    case standard
+public struct TaxProductRegistrationsResourceCountryOptionsDefaultType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsDefaultList: Codable, Sendable {

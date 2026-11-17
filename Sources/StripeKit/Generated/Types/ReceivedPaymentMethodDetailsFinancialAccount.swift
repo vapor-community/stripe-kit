@@ -15,8 +15,14 @@ public struct ReceivedPaymentMethodDetailsFinancialAccount: Codable, Sendable {
 }
 
 /// The rails the ReceivedCredit was sent over. A FinancialAccount can only send funds over `stripe`.
-public enum ReceivedPaymentMethodDetailsFinancialAccountNetwork: String, Codable, Sendable {
-    case stripe
+public struct ReceivedPaymentMethodDetailsFinancialAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 public struct ReceivedPaymentMethodDetailsFinancialAccountList: Codable, Sendable {

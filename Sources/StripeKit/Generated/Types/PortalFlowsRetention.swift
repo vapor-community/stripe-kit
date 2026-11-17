@@ -20,8 +20,14 @@ public struct PortalFlowsRetention: Codable, Sendable {
 }
 
 /// Type of retention strategy that will be used.
-public enum PortalFlowsRetentionType: String, Codable, Sendable {
-    case couponOffer = "coupon_offer"
+public struct PortalFlowsRetentionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var couponOffer: Self { .init(rawValue: "coupon_offer") }
 }
 
 public struct PortalFlowsRetentionList: Codable, Sendable {

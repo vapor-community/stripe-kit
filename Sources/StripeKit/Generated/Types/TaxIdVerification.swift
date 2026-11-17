@@ -23,11 +23,17 @@ public struct TaxIdVerification: Codable, Sendable {
 }
 
 /// Verification status, one of `pending`, `verified`, `unverified`, or `unavailable`.
-public enum TaxIdVerificationStatus: String, Codable, Sendable {
-    case pending
-    case unavailable
-    case unverified
-    case verified
+public struct TaxIdVerificationStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unverified: Self { .init(rawValue: "unverified") }
+    public static var verified: Self { .init(rawValue: "verified") }
 }
 
 public struct TaxIdVerificationList: Codable, Sendable {

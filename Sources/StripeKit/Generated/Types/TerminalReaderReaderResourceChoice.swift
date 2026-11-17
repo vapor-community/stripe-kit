@@ -18,9 +18,15 @@ public struct TerminalReaderReaderResourceChoice: Codable, Sendable {
 }
 
 /// The button style for the choice. Can be `primary` or `secondary`.
-public enum TerminalReaderReaderResourceChoiceStyle: String, Codable, Sendable {
-    case primary
-    case secondary
+public struct TerminalReaderReaderResourceChoiceStyle: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var primary: Self { .init(rawValue: "primary") }
+    public static var secondary: Self { .init(rawValue: "secondary") }
 }
 
 public struct TerminalReaderReaderResourceChoiceList: Codable, Sendable {

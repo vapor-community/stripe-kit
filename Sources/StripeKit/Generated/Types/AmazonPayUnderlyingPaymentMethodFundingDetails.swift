@@ -14,8 +14,14 @@ public struct AmazonPayUnderlyingPaymentMethodFundingDetails: Codable, Sendable 
 }
 
 /// funding type of the underlying payment method.
-public enum AmazonPayUnderlyingPaymentMethodFundingDetailsType: String, Codable, Sendable {
-    case card
+public struct AmazonPayUnderlyingPaymentMethodFundingDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
 }
 
 public struct AmazonPayUnderlyingPaymentMethodFundingDetailsList: Codable, Sendable {

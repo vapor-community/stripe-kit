@@ -25,9 +25,15 @@ public struct PaymentIntentNextActionVerifyWithMicrodeposits: Codable, Sendable 
 
 /// The type of the microdeposit sent to the customer. Used to distinguish between different
 /// verification methods.
-public enum PaymentIntentNextActionVerifyWithMicrodepositsMicrodepositType: String, Codable, Sendable {
-    case amounts
-    case descriptorCode = "descriptor_code"
+public struct PaymentIntentNextActionVerifyWithMicrodepositsMicrodepositType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var amounts: Self { .init(rawValue: "amounts") }
+    public static var descriptorCode: Self { .init(rawValue: "descriptor_code") }
 }
 
 public struct PaymentIntentNextActionVerifyWithMicrodepositsList: Codable, Sendable {

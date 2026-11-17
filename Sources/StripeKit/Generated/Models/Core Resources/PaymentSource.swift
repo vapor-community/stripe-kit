@@ -7,13 +7,15 @@
 
 import Foundation
 
-/// Polymorphic type — discriminated on the `object` field.
-/// Variants: Account, BankAccount, Card, Source
+/// One of several object types, decoded by its `object` field: Account, BankAccount, Card, Source.
+/// An object of a type this version of StripeKit doesn't know decodes as `.undocumented`.
 public enum PaymentSource: Codable, Sendable {
     case account(Account)
     case bankAccount(BankAccount)
     case card(Card)
     case source(Source)
+    /// An object of a type this version of StripeKit doesn't know, as raw JSON
+    case undocumented(JSONValue)
 
     // MARK: - Discriminated Codable
 
@@ -34,12 +36,7 @@ public enum PaymentSource: Codable, Sendable {
         case "source":
             self = .source(try Source(from: decoder))
         default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown PaymentSource object type: \(object)"
-                )
-            )
+            self = .undocumented(try JSONValue(from: decoder))
         }
     }
 
@@ -52,6 +49,8 @@ public enum PaymentSource: Codable, Sendable {
         case .card(let value):
             try value.encode(to: encoder)
         case .source(let value):
+            try value.encode(to: encoder)
+        case .undocumented(let value):
             try value.encode(to: encoder)
         }
     }
@@ -82,8 +81,7 @@ public enum PaymentSource: Codable, Sendable {
 
 }
 
-/// A list of `PaymentSource`s, each decoded by its `object` field. Items of a type this
-/// version of StripeKit doesn't know are skipped.
+/// A list of `PaymentSource`s, each decoded by its `object` field.
 public struct PaymentSourceList: Codable, Sendable {
     public var object: String
     public var hasMore: Bool?
@@ -110,37 +108,10 @@ public struct PaymentSourceList: Codable, Sendable {
         self.data = data
     }
 
-    private enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case object
         case hasMore = "has_more"
         case url
         case data
-    }
-
-    private struct ObjectDiscriminator: Decodable {
-        let object: String
-    }
-
-    private static let knownObjects: Set<String> = ["account", "bank_account", "card", "source"]
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        object = try container.decode(String.self, forKey: .object)
-        hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)
-        url = try container.decodeIfPresent(String.self, forKey: .url)
-        data = []
-        guard container.contains(.data), try !container.decodeNil(forKey: .data) else { return }
-        // Read each item's `object` first (from a second container over the same array),
-        // then decode it as the enum, or skip it if its type is unknown
-        var discriminators = try container.nestedUnkeyedContainer(forKey: .data)
-        var items = try container.nestedUnkeyedContainer(forKey: .data)
-        while !items.isAtEnd {
-            let itemObject = try discriminators.decode(ObjectDiscriminator.self).object
-            if Self.knownObjects.contains(itemObject) {
-                data.append(try items.decode(PaymentSource.self))
-            } else {
-                _ = try items.decode(ObjectDiscriminator.self)
-            }
-        }
     }
 }

@@ -78,9 +78,15 @@ public struct PaymentMethodCard: Codable, Sendable {
 }
 
 /// Status of a card based on the card issuer.
-public enum PaymentMethodCardRegulatedStatus: String, Codable, Sendable {
-    case regulated
-    case unregulated
+public struct PaymentMethodCardRegulatedStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var regulated: Self { .init(rawValue: "regulated") }
+    public static var unregulated: Self { .init(rawValue: "unregulated") }
 }
 
 public struct PaymentMethodCardList: Codable, Sendable {

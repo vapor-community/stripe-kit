@@ -44,25 +44,45 @@ public struct PortalSubscriptionUpdate: Codable, Sendable {
 /// `now` or `unchanged`, and the default value is `unchanged`. Setting the value to `now` resets the
 /// subscription's billing cycle anchor to the current time (in UTC). For more information, see the
 /// billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
-public enum PortalSubscriptionUpdateBillingCycleAnchor: String, Codable, Sendable {
-    case now
-    case unchanged
+public struct PortalSubscriptionUpdateBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Resets the subscription's billing cycle anchor to the current time.
+    public static var now: Self { .init(rawValue: "now") }
+    /// Keeps the subscription's billing cycle anchor unchanged.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
 /// Determines how to handle prorations resulting from subscription updates. Valid values are `none`,
 /// `create_prorations`, and `always_invoice`. Defaults to a value of `none` if you don't set it during
 /// creation.
-public enum PortalSubscriptionUpdateProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct PortalSubscriptionUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Determines how handle updates to trialing subscriptions. Valid values are `end_trial` and
 /// `continue_trial`. Defaults to a value of `end_trial` if you don't set it during creation.
-public enum PortalSubscriptionUpdateTrialUpdateBehavior: String, Codable, Sendable {
-    case continueTrial = "continue_trial"
-    case endTrial = "end_trial"
+public struct PortalSubscriptionUpdateTrialUpdateBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var continueTrial: Self { .init(rawValue: "continue_trial") }
+    public static var endTrial: Self { .init(rawValue: "end_trial") }
 }
 
 public struct PortalSubscriptionUpdateList: Codable, Sendable {

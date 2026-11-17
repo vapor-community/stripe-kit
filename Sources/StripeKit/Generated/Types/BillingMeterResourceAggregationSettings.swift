@@ -13,10 +13,16 @@ public struct BillingMeterResourceAggregationSettings: Codable, Sendable {
 }
 
 /// Specifies how events are aggregated.
-public enum BillingMeterResourceAggregationSettingsFormula: String, Codable, Sendable {
-    case count
-    case last
-    case sum
+public struct BillingMeterResourceAggregationSettingsFormula: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var count: Self { .init(rawValue: "count") }
+    public static var last: Self { .init(rawValue: "last") }
+    public static var sum: Self { .init(rawValue: "sum") }
 }
 
 public struct BillingMeterResourceAggregationSettingsList: Codable, Sendable {

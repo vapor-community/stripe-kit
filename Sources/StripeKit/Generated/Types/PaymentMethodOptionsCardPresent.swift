@@ -29,9 +29,19 @@ public struct PaymentMethodOptionsCardPresent: Codable, Sendable {
 }
 
 /// Controls when the funds will be captured from the customer's account.
-public enum PaymentMethodOptionsCardPresentCaptureMethod: String, Codable, Sendable {
-    case manual
-    case manualPreferred = "manual_preferred"
+public struct PaymentMethodOptionsCardPresentCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Use `manual` if you intend to place the funds on hold and want to override the top-level
+    /// `capture_method` value for this payment method.
+    public static var manual: Self { .init(rawValue: "manual") }
+    /// Use `manual_preferred` if you prefer `manual` capture_method but support falling back to `automatic`
+    /// based on the presented payment method.
+    public static var manualPreferred: Self { .init(rawValue: "manual_preferred") }
 }
 
 public struct PaymentMethodOptionsCardPresentList: Codable, Sendable {

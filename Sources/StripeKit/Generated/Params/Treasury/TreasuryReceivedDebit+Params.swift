@@ -86,8 +86,14 @@ public struct TreasuryReceivedDebitListParams: StripeParams {
     }
 }
 
-public enum TreasuryReceivedDebitCreateNetwork: String, Codable, Sendable {
-    case ach
+public struct TreasuryReceivedDebitCreateNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
 }
 
 /// Initiating payment method details for the object.
@@ -108,8 +114,14 @@ public struct TreasuryReceivedDebitCreateInitiatingPaymentMethodDetails: StripeP
     }
 }
 
-public enum TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsType: String, Codable, Sendable {
-    case usBankAccount = "us_bank_account"
+public struct TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
 }
 
 /// Optional fields for `us_bank_account`.
@@ -134,7 +146,13 @@ public struct TreasuryReceivedDebitCreateInitiatingPaymentMethodDetailsUsBankAcc
     }
 }
 
-public enum TreasuryReceivedDebitListStatus: String, Codable, Sendable {
-    case failed
-    case succeeded
+public struct TreasuryReceivedDebitListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }

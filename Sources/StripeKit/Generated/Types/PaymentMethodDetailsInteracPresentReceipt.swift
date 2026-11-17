@@ -49,10 +49,16 @@ public struct PaymentMethodDetailsInteracPresentReceipt: Codable, Sendable {
 }
 
 /// The type of account being debited or credited
-public enum PaymentMethodDetailsInteracPresentReceiptAccountType: String, Codable, Sendable {
-    case checking
-    case savings
-    case unknown
+public struct PaymentMethodDetailsInteracPresentReceiptAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
 }
 
 public struct PaymentMethodDetailsInteracPresentReceiptList: Codable, Sendable {

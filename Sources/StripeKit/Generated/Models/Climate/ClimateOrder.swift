@@ -89,24 +89,42 @@ public struct ClimateOrder: Codable, Sendable {
 }
 
 /// Reason for the cancellation of this order.
-public enum ClimateOrderCancellationReason: String, Codable, Sendable {
-    case expired
-    case productUnavailable = "product_unavailable"
-    case requested
+public struct ClimateOrderCancellationReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var productUnavailable: Self { .init(rawValue: "product_unavailable") }
+    public static var requested: Self { .init(rawValue: "requested") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ClimateOrderObject: String, Codable, Sendable {
-    case climateOrder = "climate.order"
+public struct ClimateOrderObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var climateOrder: Self { .init(rawValue: "climate.order") }
 }
 
 /// The current status of this order.
-public enum ClimateOrderStatus: String, Codable, Sendable {
-    case awaitingFunds = "awaiting_funds"
-    case canceled
-    case confirmed
-    case delivered
-    case `open` = "open"
+public struct ClimateOrderStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var awaitingFunds: Self { .init(rawValue: "awaiting_funds") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var confirmed: Self { .init(rawValue: "confirmed") }
+    public static var delivered: Self { .init(rawValue: "delivered") }
+    public static var `open`: Self { .init(rawValue: "open") }
 }
 
 public struct ClimateOrderList: Codable, Sendable {

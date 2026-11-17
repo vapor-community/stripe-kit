@@ -25,10 +25,16 @@ public struct TerminalConfigurationConfigurationResourceWifiConfig: Codable, Sen
 
 /// Security type of the WiFi network. The hash with the corresponding name contains the credentials for
 /// this security type.
-public enum TerminalConfigurationConfigurationResourceWifiConfigType: String, Codable, Sendable {
-    case enterpriseEapPeap = "enterprise_eap_peap"
-    case enterpriseEapTls = "enterprise_eap_tls"
-    case personalPsk = "personal_psk"
+public struct TerminalConfigurationConfigurationResourceWifiConfigType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var enterpriseEapPeap: Self { .init(rawValue: "enterprise_eap_peap") }
+    public static var enterpriseEapTls: Self { .init(rawValue: "enterprise_eap_tls") }
+    public static var personalPsk: Self { .init(rawValue: "personal_psk") }
 }
 
 public struct TerminalConfigurationConfigurationResourceWifiConfigList: Codable, Sendable {

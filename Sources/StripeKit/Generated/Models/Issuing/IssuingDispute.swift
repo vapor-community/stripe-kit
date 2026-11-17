@@ -63,41 +63,59 @@ public struct IssuingDispute: Codable, Sendable {
 
 /// The enum that describes the dispute loss outcome. If the dispute is not lost, this field will be
 /// absent. New enum values may be added in the future, so be sure to handle unknown values.
-public enum IssuingDisputeLossReason: String, Codable, Sendable {
-    case cardholderAuthenticationIssuerLiability = "cardholder_authentication_issuer_liability"
-    case eci5TokenTransactionWithTavv = "eci5_token_transaction_with_tavv"
-    case excessDisputesInTimeframe = "excess_disputes_in_timeframe"
-    case hasNotMetTheMinimumDisputeAmountRequirements = "has_not_met_the_minimum_dispute_amount_requirements"
-    case invalidDuplicateDispute = "invalid_duplicate_dispute"
-    case invalidIncorrectAmountDispute = "invalid_incorrect_amount_dispute"
-    case invalidNoAuthorization = "invalid_no_authorization"
-    case invalidUseOfDisputes = "invalid_use_of_disputes"
-    case merchandiseDeliveredOrShipped = "merchandise_delivered_or_shipped"
-    case merchandiseOrServiceAsDescribed = "merchandise_or_service_as_described"
-    case notCancelled = "not_cancelled"
-    case other
-    case refundIssued = "refund_issued"
-    case submittedBeyondAllowableTimeLimit = "submitted_beyond_allowable_time_limit"
-    case transaction3DsRequired = "transaction_3ds_required"
-    case transactionApprovedAfterPriorFraudDispute = "transaction_approved_after_prior_fraud_dispute"
-    case transactionAuthorized = "transaction_authorized"
-    case transactionElectronicallyRead = "transaction_electronically_read"
-    case transactionQualifiesForVisaEasyPaymentService = "transaction_qualifies_for_visa_easy_payment_service"
-    case transactionUnattended = "transaction_unattended"
+public struct IssuingDisputeLossReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cardholderAuthenticationIssuerLiability: Self { .init(rawValue: "cardholder_authentication_issuer_liability") }
+    public static var eci5TokenTransactionWithTavv: Self { .init(rawValue: "eci5_token_transaction_with_tavv") }
+    public static var excessDisputesInTimeframe: Self { .init(rawValue: "excess_disputes_in_timeframe") }
+    public static var hasNotMetTheMinimumDisputeAmountRequirements: Self { .init(rawValue: "has_not_met_the_minimum_dispute_amount_requirements") }
+    public static var invalidDuplicateDispute: Self { .init(rawValue: "invalid_duplicate_dispute") }
+    public static var invalidIncorrectAmountDispute: Self { .init(rawValue: "invalid_incorrect_amount_dispute") }
+    public static var invalidNoAuthorization: Self { .init(rawValue: "invalid_no_authorization") }
+    public static var invalidUseOfDisputes: Self { .init(rawValue: "invalid_use_of_disputes") }
+    public static var merchandiseDeliveredOrShipped: Self { .init(rawValue: "merchandise_delivered_or_shipped") }
+    public static var merchandiseOrServiceAsDescribed: Self { .init(rawValue: "merchandise_or_service_as_described") }
+    public static var notCancelled: Self { .init(rawValue: "not_cancelled") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var refundIssued: Self { .init(rawValue: "refund_issued") }
+    public static var submittedBeyondAllowableTimeLimit: Self { .init(rawValue: "submitted_beyond_allowable_time_limit") }
+    public static var transaction3DsRequired: Self { .init(rawValue: "transaction_3ds_required") }
+    public static var transactionApprovedAfterPriorFraudDispute: Self { .init(rawValue: "transaction_approved_after_prior_fraud_dispute") }
+    public static var transactionAuthorized: Self { .init(rawValue: "transaction_authorized") }
+    public static var transactionElectronicallyRead: Self { .init(rawValue: "transaction_electronically_read") }
+    public static var transactionQualifiesForVisaEasyPaymentService: Self { .init(rawValue: "transaction_qualifies_for_visa_easy_payment_service") }
+    public static var transactionUnattended: Self { .init(rawValue: "transaction_unattended") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum IssuingDisputeObject: String, Codable, Sendable {
-    case issuingDispute = "issuing.dispute"
+public struct IssuingDisputeObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var issuingDispute: Self { .init(rawValue: "issuing.dispute") }
 }
 
 /// Current status of the dispute.
-public enum IssuingDisputeStatus: String, Codable, Sendable {
-    case expired
-    case lost
-    case submitted
-    case unsubmitted
-    case won
+public struct IssuingDisputeStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var lost: Self { .init(rawValue: "lost") }
+    public static var submitted: Self { .init(rawValue: "submitted") }
+    public static var unsubmitted: Self { .init(rawValue: "unsubmitted") }
+    public static var won: Self { .init(rawValue: "won") }
 }
 
 public struct IssuingDisputeList: Codable, Sendable {

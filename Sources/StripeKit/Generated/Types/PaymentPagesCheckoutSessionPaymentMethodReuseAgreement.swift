@@ -17,9 +17,15 @@ public struct PaymentPagesCheckoutSessionPaymentMethodReuseAgreement: Codable, S
 /// Determines the position and visibility of the payment method reuse agreement in the UI. When set to
 /// `auto`, Stripe's defaults will be used. When set to `hidden`, the payment method reuse agreement
 /// text will always be hidden in the UI.
-public enum PaymentPagesCheckoutSessionPaymentMethodReuseAgreementPosition: String, Codable, Sendable {
-    case auto
-    case hidden
+public struct PaymentPagesCheckoutSessionPaymentMethodReuseAgreementPosition: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var hidden: Self { .init(rawValue: "hidden") }
 }
 
 public struct PaymentPagesCheckoutSessionPaymentMethodReuseAgreementList: Codable, Sendable {

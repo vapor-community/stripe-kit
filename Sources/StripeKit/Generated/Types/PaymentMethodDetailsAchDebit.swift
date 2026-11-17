@@ -33,9 +33,15 @@ public struct PaymentMethodDetailsAchDebit: Codable, Sendable {
 }
 
 /// Type of entity that holds the account. This can be either `individual` or `company`.
-public enum PaymentMethodDetailsAchDebitAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct PaymentMethodDetailsAchDebitAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 public struct PaymentMethodDetailsAchDebitList: Codable, Sendable {

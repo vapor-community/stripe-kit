@@ -29,9 +29,15 @@ public struct BankConnectionsResourceAccountholder: Codable, Sendable {
 }
 
 /// Type of account holder that this account belongs to.
-public enum BankConnectionsResourceAccountholderType: String, Codable, Sendable {
-    case account
-    case customer
+public struct BankConnectionsResourceAccountholderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var customer: Self { .init(rawValue: "customer") }
 }
 
 public struct BankConnectionsResourceAccountholderList: Codable, Sendable {

@@ -20,8 +20,15 @@ public struct PortalAfterExpiration: Codable, Sendable {
 }
 
 /// The behavior to apply when the session expires.
-public enum PortalAfterExpirationType: String, Codable, Sendable {
-    case customerLogin = "customer_login"
+public struct PortalAfterExpirationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Allow the customer to authenticate by email to create a replacement session.
+    public static var customerLogin: Self { .init(rawValue: "customer_login") }
 }
 
 public struct PortalAfterExpirationList: Codable, Sendable {

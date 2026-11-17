@@ -129,9 +129,15 @@ public struct PaymentSourceUpdateParams: StripeParams {
     }
 }
 
-public enum PaymentSourceUpdateAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct PaymentSourceUpdateAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 public struct PaymentSourceUpdateOwner: StripeParams {

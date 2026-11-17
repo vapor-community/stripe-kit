@@ -138,15 +138,27 @@ public struct Source: Codable, Sendable {
 /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
 /// method can be shown as a saved payment method in a checkout flow. The field defaults to
 /// “unspecified”.
-public enum SourceAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct SourceAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum SourceObject: String, Codable, Sendable {
-    case source
+public struct SourceObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var source: Self { .init(rawValue: "source") }
 }
 
 /// The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`,
@@ -154,26 +166,32 @@ public enum SourceObject: String, Codable, Sendable {
 /// `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the
 /// source with a name matching this value. It contains additional information specific to the [payment
 /// method](https://docs.stripe.com/sources) used.
-public enum SourceType: String, Codable, Sendable {
-    case achCreditTransfer = "ach_credit_transfer"
-    case achDebit = "ach_debit"
-    case acssDebit = "acss_debit"
-    case alipay
-    case auBecsDebit = "au_becs_debit"
-    case bancontact
-    case card
-    case cardPresent = "card_present"
-    case eps
-    case giropay
-    case ideal
-    case klarna
-    case multibanco
-    case p24
-    case sepaCreditTransfer = "sepa_credit_transfer"
-    case sepaDebit = "sepa_debit"
-    case sofort
-    case threeDSecure = "three_d_secure"
-    case wechat
+public struct SourceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var achCreditTransfer: Self { .init(rawValue: "ach_credit_transfer") }
+    public static var achDebit: Self { .init(rawValue: "ach_debit") }
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cardPresent: Self { .init(rawValue: "card_present") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var sepaCreditTransfer: Self { .init(rawValue: "sepa_credit_transfer") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var threeDSecure: Self { .init(rawValue: "three_d_secure") }
+    public static var wechat: Self { .init(rawValue: "wechat") }
 }
 
 public struct SourceList: Codable, Sendable {

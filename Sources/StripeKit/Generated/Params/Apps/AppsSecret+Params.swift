@@ -121,9 +121,15 @@ public struct AppsSecretCreateScope: StripeParams {
     }
 }
 
-public enum AppsSecretCreateScopeType: String, Codable, Sendable {
-    case account
-    case user
+public struct AppsSecretCreateScopeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var user: Self { .init(rawValue: "user") }
 }
 
 /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
@@ -141,9 +147,15 @@ public struct AppsSecretDeleteWhereScope: StripeParams {
     }
 }
 
-public enum AppsSecretDeleteWhereScopeType: String, Codable, Sendable {
-    case account
-    case user
+public struct AppsSecretDeleteWhereScopeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var user: Self { .init(rawValue: "user") }
 }
 
 /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
@@ -161,9 +173,15 @@ public struct AppsSecretFindScope: StripeParams {
     }
 }
 
-public enum AppsSecretFindScopeType: String, Codable, Sendable {
-    case account
-    case user
+public struct AppsSecretFindScopeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var user: Self { .init(rawValue: "user") }
 }
 
 /// Specifies the scoping of the secret. Requests originating from UI extensions can only access
@@ -181,7 +199,13 @@ public struct AppsSecretListScope: StripeParams {
     }
 }
 
-public enum AppsSecretListScopeType: String, Codable, Sendable {
-    case account
-    case user
+public struct AppsSecretListScopeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var user: Self { .init(rawValue: "user") }
 }

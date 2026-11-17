@@ -23,9 +23,15 @@ public struct PaymentPagesCheckoutSessionPermissions: Codable, Sendable {
 /// Checkout client will automatically update the shipping details. If set to `server_only`, only your
 /// server is allowed to update the shipping details. This parameter is only supported when
 /// `ui_mode=elements`.
-public enum PaymentPagesCheckoutSessionPermissionsUpdateShippingDetails: String, Codable, Sendable {
-    case clientOnly = "client_only"
-    case serverOnly = "server_only"
+public struct PaymentPagesCheckoutSessionPermissionsUpdateShippingDetails: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var clientOnly: Self { .init(rawValue: "client_only") }
+    public static var serverOnly: Self { .init(rawValue: "server_only") }
 }
 
 public struct PaymentPagesCheckoutSessionPermissionsList: Codable, Sendable {

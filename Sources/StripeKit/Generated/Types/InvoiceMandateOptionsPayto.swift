@@ -24,24 +24,36 @@ public struct InvoiceMandateOptionsPayto: Codable, Sendable {
 }
 
 /// Only `maximum` is supported.
-public enum InvoiceMandateOptionsPaytoAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct InvoiceMandateOptionsPaytoAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 /// The purpose for which payments are made. Has a default value based on your merchant category code.
-public enum InvoiceMandateOptionsPaytoPurpose: String, Codable, Sendable {
-    case dependantSupport = "dependant_support"
-    case government
-    case loan
-    case mortgage
-    case other
-    case pension
-    case personal
-    case retail
-    case salary
-    case tax
-    case utility
+public struct InvoiceMandateOptionsPaytoPurpose: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dependantSupport: Self { .init(rawValue: "dependant_support") }
+    public static var government: Self { .init(rawValue: "government") }
+    public static var loan: Self { .init(rawValue: "loan") }
+    public static var mortgage: Self { .init(rawValue: "mortgage") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var pension: Self { .init(rawValue: "pension") }
+    public static var personal: Self { .init(rawValue: "personal") }
+    public static var retail: Self { .init(rawValue: "retail") }
+    public static var salary: Self { .init(rawValue: "salary") }
+    public static var tax: Self { .init(rawValue: "tax") }
+    public static var utility: Self { .init(rawValue: "utility") }
 }
 
 public struct InvoiceMandateOptionsPaytoList: Codable, Sendable {

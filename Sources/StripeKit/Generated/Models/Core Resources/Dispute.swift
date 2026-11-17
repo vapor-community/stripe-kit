@@ -85,32 +85,68 @@ public struct Dispute: Codable, Sendable {
 }
 
 /// Intended submission method for the dispute.
-public enum DisputeIntendedSubmissionMethod: String, Codable, Sendable {
-    case manual
-    case preferManual = "prefer_manual"
-    case preferSmartDisputes = "prefer_smart_disputes"
-    case smartDisputes = "smart_disputes"
+public struct DisputeIntendedSubmissionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// You'll submit the manual packet if you upload evidence and won't ever use Smart Disputes to respond
+    /// to the dispute.
+    public static var manual: Self { .init(rawValue: "manual") }
+    /// You'll submit the manual packet if you upload evidence, but use Smart Disputes if you have no
+    /// evidence to add to the dispute response.
+    public static var preferManual: Self { .init(rawValue: "prefer_manual") }
+    /// You'll let Smart Disputes submit the dispute response if it detects Stripe evidence, but use the
+    /// manual packet otherwise.
+    public static var preferSmartDisputes: Self { .init(rawValue: "prefer_smart_disputes") }
+    /// You'll let Smart Disputes submit the dispute response if it detects Stripe evidence, and won't use
+    /// the manual packet.
+    public static var smartDisputes: Self { .init(rawValue: "smart_disputes") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DisputeObject: String, Codable, Sendable {
-    case dispute
+public struct DisputeObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dispute: Self { .init(rawValue: "dispute") }
 }
 
 /// The current status of a dispute. Possible values include:`warning_needs_response`,
 /// `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `appeal_needs_response`,
 /// `appeal_under_review`, `won`, `lost`, or `prevented`.
-public enum DisputeStatus: String, Codable, Sendable {
-    case appealNeedsResponse = "appeal_needs_response"
-    case appealUnderReview = "appeal_under_review"
-    case lost
-    case needsResponse = "needs_response"
-    case prevented
-    case underReview = "under_review"
-    case warningClosed = "warning_closed"
-    case warningNeedsResponse = "warning_needs_response"
-    case warningUnderReview = "warning_under_review"
-    case won
+public struct DisputeStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// A dispute that requires a response to an appeal.
+    public static var appealNeedsResponse: Self { .init(rawValue: "appeal_needs_response") }
+    /// A dispute under review after appeal evidence is submitted.
+    public static var appealUnderReview: Self { .init(rawValue: "appeal_under_review") }
+    /// A dispute resolved in the customer's favor.
+    public static var lost: Self { .init(rawValue: "lost") }
+    /// A dispute that requires a response.
+    public static var needsResponse: Self { .init(rawValue: "needs_response") }
+    /// A dispute that was prevented from becoming a formal chargeback.
+    public static var prevented: Self { .init(rawValue: "prevented") }
+    /// A dispute under review after evidence submission.
+    public static var underReview: Self { .init(rawValue: "under_review") }
+    /// An inquiry closed without becoming a formal dispute.
+    public static var warningClosed: Self { .init(rawValue: "warning_closed") }
+    /// An inquiry that requires a response.
+    public static var warningNeedsResponse: Self { .init(rawValue: "warning_needs_response") }
+    /// An inquiry under review after evidence submission.
+    public static var warningUnderReview: Self { .init(rawValue: "warning_under_review") }
+    /// A dispute resolved in the merchant's favor.
+    public static var won: Self { .init(rawValue: "won") }
 }
 
 public struct DisputeList: Codable, Sendable {

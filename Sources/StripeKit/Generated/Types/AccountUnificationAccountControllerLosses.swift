@@ -13,9 +13,15 @@ public struct AccountUnificationAccountControllerLosses: Codable, Sendable {
 }
 
 /// A value indicating who is liable when this account can't pay back negative balances from payments.
-public enum AccountUnificationAccountControllerLossesPayments: String, Codable, Sendable {
-    case application
-    case stripe
+public struct AccountUnificationAccountControllerLossesPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var application: Self { .init(rawValue: "application") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 public struct AccountUnificationAccountControllerLossesList: Codable, Sendable {

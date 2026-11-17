@@ -20,15 +20,27 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsRe
 
 /// For `fixed_count` installment plans, this is the interval between installment payments your customer
 /// will make to their credit card. One of `month`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlanInterval: String, Codable, Sendable {
-    case month
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlanInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var month: Self { .init(rawValue: "month") }
 }
 
 /// Type of installment plan, one of `fixed_count`, `revolving`, or `bonus`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlanType: String, Codable, Sendable {
-    case bonus
-    case fixedCount = "fixed_count"
-    case revolving
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlanType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bonus: Self { .init(rawValue: "bonus") }
+    public static var fixedCount: Self { .init(rawValue: "fixed_count") }
+    public static var revolving: Self { .init(rawValue: "revolving") }
 }
 
 public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceInstallmentPlanList: Codable, Sendable {

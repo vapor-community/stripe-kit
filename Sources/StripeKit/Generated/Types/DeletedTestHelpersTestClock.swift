@@ -17,8 +17,14 @@ public struct DeletedTestHelpersTestClock: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DeletedTestHelpersTestClockObject: String, Codable, Sendable {
-    case testHelpersTestClock = "test_helpers.test_clock"
+public struct DeletedTestHelpersTestClockObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var testHelpersTestClock: Self { .init(rawValue: "test_helpers.test_clock") }
 }
 
 public struct DeletedTestHelpersTestClockList: Codable, Sendable {

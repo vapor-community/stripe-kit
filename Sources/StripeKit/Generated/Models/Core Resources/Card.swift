@@ -160,21 +160,39 @@ public struct Card: Codable, Sendable {
 /// flow. Stripe products such as Checkout and Elements use this field to determine whether a payment
 /// method can be shown as a saved payment method in a checkout flow. The field defaults to
 /// “unspecified”.
-public enum CardAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct CardAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CardObject: String, Codable, Sendable {
-    case card
+public struct CardObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
 }
 
 /// Status of a card based on the card issuer.
-public enum CardRegulatedStatus: String, Codable, Sendable {
-    case regulated
-    case unregulated
+public struct CardRegulatedStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var regulated: Self { .init(rawValue: "regulated") }
+    public static var unregulated: Self { .init(rawValue: "unregulated") }
 }
 
 public struct CardList: Codable, Sendable {

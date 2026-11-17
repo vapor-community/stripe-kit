@@ -31,18 +31,30 @@ public struct TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaym
 }
 
 /// Set when `type` is `balance`.
-public enum TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetailsBalance: String, Codable, Sendable {
-    case payments
+public struct TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetailsBalance: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var payments: Self { .init(rawValue: "payments") }
 }
 
 /// Polymorphic type matching the originating money movement's source. This can be an external account,
 /// a Stripe balance, or a FinancialAccount.
-public enum TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetailsType: String, Codable, Sendable {
-    case balance
-    case financialAccount = "financial_account"
-    case issuingCard = "issuing_card"
-    case stripe
-    case usBankAccount = "us_bank_account"
+public struct TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balance: Self { .init(rawValue: "balance") }
+    public static var financialAccount: Self { .init(rawValue: "financial_account") }
+    public static var issuingCard: Self { .init(rawValue: "issuing_card") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
 }
 
 public struct TreasurySharedResourceInitiatingPaymentMethodDetailsInitiatingPaymentMethodDetailsList: Codable, Sendable {

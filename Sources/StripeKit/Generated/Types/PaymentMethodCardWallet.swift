@@ -40,14 +40,20 @@ public struct PaymentMethodCardWallet: Codable, Sendable {
 /// `masterpass`, `samsung_pay`, `visa_checkout`, or `link`. An additional hash is included on the
 /// Wallet subhash with a name matching this value. It contains additional information specific to the
 /// card wallet type.
-public enum PaymentMethodCardWalletType: String, Codable, Sendable {
-    case amexExpressCheckout = "amex_express_checkout"
-    case applePay = "apple_pay"
-    case googlePay = "google_pay"
-    case link
-    case masterpass
-    case samsungPay = "samsung_pay"
-    case visaCheckout = "visa_checkout"
+public struct PaymentMethodCardWalletType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var amexExpressCheckout: Self { .init(rawValue: "amex_express_checkout") }
+    public static var applePay: Self { .init(rawValue: "apple_pay") }
+    public static var googlePay: Self { .init(rawValue: "google_pay") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var masterpass: Self { .init(rawValue: "masterpass") }
+    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
+    public static var visaCheckout: Self { .init(rawValue: "visa_checkout") }
 }
 
 public struct PaymentMethodCardWalletList: Codable, Sendable {

@@ -33,33 +33,39 @@ public struct PaymentMethodDetailsP24: Codable, Sendable {
 /// `noble_pay`, `ideabank`, `envelobank`, `santander_przelew24`, `nest_przelew`, `mbank_mtransfer`,
 /// `inteligo`, `pbac_z_ipko`, `bnp_paribas`, `credit_agricole`, `toyota_bank`, `bank_pekao_sa`,
 /// `volkswagen_bank`, `bank_millennium`, `alior_bank`, or `boz`.
-public enum PaymentMethodDetailsP24Bank: String, Codable, Sendable {
-    case aliorBank = "alior_bank"
-    case bankMillennium = "bank_millennium"
-    case bankNowyBfgSa = "bank_nowy_bfg_sa"
-    case bankPekaoSa = "bank_pekao_sa"
-    case bankiSpbdzielcze = "banki_spbdzielcze"
-    case blik
-    case bnpParibas = "bnp_paribas"
-    case boz
-    case citiHandlowy = "citi_handlowy"
-    case creditAgricole = "credit_agricole"
-    case envelobank
-    case etransferPocztowy24 = "etransfer_pocztowy24"
-    case getinBank = "getin_bank"
-    case ideabank
-    case ing
-    case inteligo
-    case mbankMtransfer = "mbank_mtransfer"
-    case nestPrzelew = "nest_przelew"
-    case noblePay = "noble_pay"
-    case pbacZIpko = "pbac_z_ipko"
-    case plusBank = "plus_bank"
-    case santanderPrzelew24 = "santander_przelew24"
-    case tmobileUsbugiBankowe = "tmobile_usbugi_bankowe"
-    case toyotaBank = "toyota_bank"
-    case velobank
-    case volkswagenBank = "volkswagen_bank"
+public struct PaymentMethodDetailsP24Bank: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var aliorBank: Self { .init(rawValue: "alior_bank") }
+    public static var bankMillennium: Self { .init(rawValue: "bank_millennium") }
+    public static var bankNowyBfgSa: Self { .init(rawValue: "bank_nowy_bfg_sa") }
+    public static var bankPekaoSa: Self { .init(rawValue: "bank_pekao_sa") }
+    public static var bankiSpbdzielcze: Self { .init(rawValue: "banki_spbdzielcze") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var bnpParibas: Self { .init(rawValue: "bnp_paribas") }
+    public static var boz: Self { .init(rawValue: "boz") }
+    public static var citiHandlowy: Self { .init(rawValue: "citi_handlowy") }
+    public static var creditAgricole: Self { .init(rawValue: "credit_agricole") }
+    public static var envelobank: Self { .init(rawValue: "envelobank") }
+    public static var etransferPocztowy24: Self { .init(rawValue: "etransfer_pocztowy24") }
+    public static var getinBank: Self { .init(rawValue: "getin_bank") }
+    public static var ideabank: Self { .init(rawValue: "ideabank") }
+    public static var ing: Self { .init(rawValue: "ing") }
+    public static var inteligo: Self { .init(rawValue: "inteligo") }
+    public static var mbankMtransfer: Self { .init(rawValue: "mbank_mtransfer") }
+    public static var nestPrzelew: Self { .init(rawValue: "nest_przelew") }
+    public static var noblePay: Self { .init(rawValue: "noble_pay") }
+    public static var pbacZIpko: Self { .init(rawValue: "pbac_z_ipko") }
+    public static var plusBank: Self { .init(rawValue: "plus_bank") }
+    public static var santanderPrzelew24: Self { .init(rawValue: "santander_przelew24") }
+    public static var tmobileUsbugiBankowe: Self { .init(rawValue: "tmobile_usbugi_bankowe") }
+    public static var toyotaBank: Self { .init(rawValue: "toyota_bank") }
+    public static var velobank: Self { .init(rawValue: "velobank") }
+    public static var volkswagenBank: Self { .init(rawValue: "volkswagen_bank") }
 }
 
 public struct PaymentMethodDetailsP24List: Codable, Sendable {

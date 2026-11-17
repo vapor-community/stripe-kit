@@ -30,8 +30,14 @@ public struct PaymentMethodOptionsCashapp: Codable, Sendable {
 }
 
 /// Controls when the funds will be captured from the customer's account.
-public enum PaymentMethodOptionsCashappCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct PaymentMethodOptionsCashappCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -45,10 +51,16 @@ public enum PaymentMethodOptionsCashappCaptureMethod: String, Codable, Sendable 
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum PaymentMethodOptionsCashappSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct PaymentMethodOptionsCashappSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 public struct PaymentMethodOptionsCashappList: Codable, Sendable {

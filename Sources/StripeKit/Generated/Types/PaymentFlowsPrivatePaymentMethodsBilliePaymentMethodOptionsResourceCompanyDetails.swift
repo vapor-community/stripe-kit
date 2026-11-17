@@ -28,21 +28,27 @@ public struct PaymentFlowsPrivatePaymentMethodsBilliePaymentMethodOptionsResourc
 }
 
 /// Type of registration the company or entity holds in their registered country.
-public enum PaymentFlowsPrivatePaymentMethodsBilliePaymentMethodOptionsResourceCompanyDetailsRegistrationType: String, Codable, Sendable {
-    case chEin = "ch_ein"
-    case deHrb = "de_hrb"
-    case dkCvr = "dk_cvr"
-    case esCif = "es_cif"
-    case fiTunnus = "fi_tunnus"
-    case frSiren = "fr_siren"
-    case frSiret = "fr_siret"
-    case itRea = "it_rea"
-    case nlKvk = "nl_kvk"
-    case noOrgNumber = "no_org_number"
-    case noPno = "no_pno"
-    case seOrgNumber = "se_org_number"
-    case sePno = "se_pno"
-    case ukCrn = "uk_crn"
+public struct PaymentFlowsPrivatePaymentMethodsBilliePaymentMethodOptionsResourceCompanyDetailsRegistrationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chEin: Self { .init(rawValue: "ch_ein") }
+    public static var deHrb: Self { .init(rawValue: "de_hrb") }
+    public static var dkCvr: Self { .init(rawValue: "dk_cvr") }
+    public static var esCif: Self { .init(rawValue: "es_cif") }
+    public static var fiTunnus: Self { .init(rawValue: "fi_tunnus") }
+    public static var frSiren: Self { .init(rawValue: "fr_siren") }
+    public static var frSiret: Self { .init(rawValue: "fr_siret") }
+    public static var itRea: Self { .init(rawValue: "it_rea") }
+    public static var nlKvk: Self { .init(rawValue: "nl_kvk") }
+    public static var noOrgNumber: Self { .init(rawValue: "no_org_number") }
+    public static var noPno: Self { .init(rawValue: "no_pno") }
+    public static var seOrgNumber: Self { .init(rawValue: "se_org_number") }
+    public static var sePno: Self { .init(rawValue: "se_pno") }
+    public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
 
 public struct PaymentFlowsPrivatePaymentMethodsBilliePaymentMethodOptionsResourceCompanyDetailsList: Codable, Sendable {

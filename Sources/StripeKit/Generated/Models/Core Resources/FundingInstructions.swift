@@ -36,13 +36,25 @@ public struct FundingInstructions: Codable, Sendable {
 }
 
 /// The `funding_type` of the returned instructions
-public enum FundingInstructionsFundingType: String, Codable, Sendable {
-    case bankTransfer = "bank_transfer"
+public struct FundingInstructionsFundingType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankTransfer: Self { .init(rawValue: "bank_transfer") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum FundingInstructionsObject: String, Codable, Sendable {
-    case fundingInstructions = "funding_instructions"
+public struct FundingInstructionsObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fundingInstructions: Self { .init(rawValue: "funding_instructions") }
 }
 
 public struct FundingInstructionsList: Codable, Sendable {

@@ -46,21 +46,39 @@ public struct Mandate: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum MandateObject: String, Codable, Sendable {
-    case mandate
+public struct MandateObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var mandate: Self { .init(rawValue: "mandate") }
 }
 
 /// The mandate status indicates whether or not you can use it to initiate a payment.
-public enum MandateStatus: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct MandateStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The type of the mandate.
-public enum MandateType: String, Codable, Sendable {
-    case multiUse = "multi_use"
-    case singleUse = "single_use"
+public struct MandateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var multiUse: Self { .init(rawValue: "multi_use") }
+    public static var singleUse: Self { .init(rawValue: "single_use") }
 }
 
 public struct MandateList: Codable, Sendable {

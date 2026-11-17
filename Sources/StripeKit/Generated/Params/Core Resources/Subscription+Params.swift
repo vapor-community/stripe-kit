@@ -695,9 +695,15 @@ public struct SubscriptionCreateAddInvoiceItemsPeriodEnd: StripeParams {
     }
 }
 
-public enum SubscriptionCreateAddInvoiceItemsPeriodEndType: String, Codable, Sendable {
-    case minItemPeriodEnd = "min_item_period_end"
-    case timestamp
+public struct SubscriptionCreateAddInvoiceItemsPeriodEndType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var minItemPeriodEnd: Self { .init(rawValue: "min_item_period_end") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Start of the invoice item period.
@@ -714,10 +720,16 @@ public struct SubscriptionCreateAddInvoiceItemsPeriodStart: StripeParams {
     }
 }
 
-public enum SubscriptionCreateAddInvoiceItemsPeriodStartType: String, Codable, Sendable {
-    case maxItemPeriodStart = "max_item_period_start"
-    case now
-    case timestamp
+public struct SubscriptionCreateAddInvoiceItemsPeriodStartType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var maxItemPeriodStart: Self { .init(rawValue: "max_item_period_start") }
+    public static var now: Self { .init(rawValue: "now") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
@@ -759,10 +771,16 @@ public struct SubscriptionCreateAddInvoiceItemsPriceData: StripeParams {
     }
 }
 
-public enum SubscriptionCreateAddInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct SubscriptionCreateAddInvoiceItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Automatic tax settings for this subscription.
@@ -796,9 +814,15 @@ public struct SubscriptionCreateAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum SubscriptionCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct SubscriptionCreateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 /// Mutually exclusive with billing_cycle_anchor and only valid with monthly and yearly price intervals.
@@ -847,9 +871,15 @@ public struct SubscriptionCreateBillingMode: StripeParams {
     }
 }
 
-public enum SubscriptionCreateBillingModeType: String, Codable, Sendable {
-    case classic
-    case flexible
+public struct SubscriptionCreateBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var classic: Self { .init(rawValue: "classic") }
+    public static var flexible: Self { .init(rawValue: "flexible") }
 }
 
 /// Configure behavior for flexible billing mode.
@@ -866,9 +896,17 @@ public struct SubscriptionCreateBillingModeFlexible: StripeParams {
     }
 }
 
-public enum SubscriptionCreateBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
-    case included
-    case itemized
+public struct SubscriptionCreateBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Amounts are net of discounts, and discount amounts are zero.
+    public static var included: Self { .init(rawValue: "included") }
+    /// Amounts are gross of discounts, and discount amounts are accurate.
+    public static var itemized: Self { .init(rawValue: "itemized") }
 }
 
 public struct SubscriptionCreateBillingSchedules: StripeParams {
@@ -911,9 +949,15 @@ public struct SubscriptionCreateBillingSchedulesBillUntil: StripeParams {
     }
 }
 
-public enum SubscriptionCreateBillingSchedulesBillUntilType: String, Codable, Sendable {
-    case duration
-    case timestamp
+public struct SubscriptionCreateBillingSchedulesBillUntilType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duration: Self { .init(rawValue: "duration") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Specifies the billing period.
@@ -934,11 +978,17 @@ public struct SubscriptionCreateBillingSchedulesBillUntilDuration: StripeParams 
     }
 }
 
-public enum SubscriptionCreateBillingSchedulesBillUntilDurationInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct SubscriptionCreateBillingSchedulesBillUntilDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 public struct SubscriptionCreateBillingSchedulesAppliesTo: StripeParams {
@@ -953,8 +1003,14 @@ public struct SubscriptionCreateBillingSchedulesAppliesTo: StripeParams {
     }
 }
 
-public enum SubscriptionCreateBillingSchedulesAppliesToType: String, Codable, Sendable {
-    case price
+public struct SubscriptionCreateBillingSchedulesAppliesToType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var price: Self { .init(rawValue: "price") }
 }
 
 public struct SubscriptionCreateBillingThresholds: StripeParams {
@@ -1020,9 +1076,15 @@ public enum SubscriptionCreateCancelAt: Codable, Sendable, ExpressibleByIntegerL
     }
 }
 
-public enum SubscriptionCreateCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct SubscriptionCreateCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 public struct SubscriptionCreateDiscounts: StripeParams {
@@ -1104,9 +1166,15 @@ public struct SubscriptionCreateInvoiceSettingsIssuer: StripeParams {
     }
 }
 
-public enum SubscriptionCreateInvoiceSettingsIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct SubscriptionCreateInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct SubscriptionCreateItems: StripeParams {
@@ -1272,24 +1340,61 @@ public struct SubscriptionCreateItemsPriceDataRecurring: StripeParams {
     }
 }
 
-public enum SubscriptionCreateItemsPriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct SubscriptionCreateItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum SubscriptionCreateItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct SubscriptionCreateItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum SubscriptionCreatePaymentBehavior: String, Codable, Sendable {
-    case allowIncomplete = "allow_incomplete"
-    case defaultIncomplete = "default_incomplete"
-    case errorIfIncomplete = "error_if_incomplete"
-    case pendingIfIncomplete = "pending_if_incomplete"
+public struct SubscriptionCreatePaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// This is the default behavior since
+    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails). If
+    /// payment fails, the Subscription is created with `status=incomplete`, otherwise `status=active`. This
+    /// behavior allows you to manage scenarios where additional customer actions are needed to pay the
+    /// Invoice. For example, SCA regulations might require 3DS authentication to complete payment. See the
+    /// [SCA Migration Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for
+    /// Billing to learn more.
+    public static var allowIncomplete: Self { .init(rawValue: "allow_incomplete") }
+    /// When the first invoice requires payment, creates a Subscription with `status=incomplete` without
+    /// attempting payment, otherwise `status=active`. You must request explicit confirmation of the
+    /// Invoice's PaymentIntent to activate the subscription. The resulting Invoice has
+    /// [auto_advance=false](https://docs.stripe.com/api/invoices/object#invoice_object-auto_advance), so
+    /// Stripe doesn't automatically attempt payment, retry payment, or finalize the subscription.
+    public static var defaultIncomplete: Self { .init(rawValue: "default_incomplete") }
+    /// If payment fails, return an HTTP `402` status code and don't create the subscription. This behavior
+    /// doesn't support payments that require user action, such as 3DS authentication, because it returns an
+    /// error instead of creating a PaymentIntent with `status=requires_action`. To handle payments that
+    /// require action, use `allow_incomplete` or `default_incomplete` instead. This behavior was the
+    /// default for API versions before
+    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails).
+    public static var errorIfIncomplete: Self { .init(rawValue: "error_if_incomplete") }
+    /// This behavior is exclusive to Subscription updates and cannot be used for creation.
+    public static var pendingIfIncomplete: Self { .init(rawValue: "pending_if_incomplete") }
 }
 
 /// Payment settings to pass to invoices created by the subscription.
@@ -1420,15 +1525,27 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsAcssDebitMand
     }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
-    case business
-    case personal
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var business: Self { .init(rawValue: "business") }
+    public static var personal: Self { .init(rawValue: "personal") }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBancontact: StripeParams {
@@ -1444,11 +1561,17 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBancontact: S
     }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
-    case de
-    case en
-    case fr
-    case nl
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var de: Self { .init(rawValue: "de") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var nl: Self { .init(rawValue: "nl") }
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBillie: StripeParams {
@@ -1526,21 +1649,27 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBillieCompany
     }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
-    case chEin = "ch_ein"
-    case deHrb = "de_hrb"
-    case dkCvr = "dk_cvr"
-    case esCif = "es_cif"
-    case fiTunnus = "fi_tunnus"
-    case frSiren = "fr_siren"
-    case frSiret = "fr_siret"
-    case itRea = "it_rea"
-    case nlKvk = "nl_kvk"
-    case noOrgNumber = "no_org_number"
-    case noPno = "no_pno"
-    case seOrgNumber = "se_org_number"
-    case sePno = "se_pno"
-    case ukCrn = "uk_crn"
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chEin: Self { .init(rawValue: "ch_ein") }
+    public static var deHrb: Self { .init(rawValue: "de_hrb") }
+    public static var dkCvr: Self { .init(rawValue: "dk_cvr") }
+    public static var esCif: Self { .init(rawValue: "es_cif") }
+    public static var fiTunnus: Self { .init(rawValue: "fi_tunnus") }
+    public static var frSiren: Self { .init(rawValue: "fr_siren") }
+    public static var frSiret: Self { .init(rawValue: "fr_siret") }
+    public static var itRea: Self { .init(rawValue: "it_rea") }
+    public static var nlKvk: Self { .init(rawValue: "nl_kvk") }
+    public static var noOrgNumber: Self { .init(rawValue: "no_org_number") }
+    public static var noPno: Self { .init(rawValue: "no_pno") }
+    public static var seOrgNumber: Self { .init(rawValue: "se_org_number") }
+    public static var sePno: Self { .init(rawValue: "se_pno") }
+    public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsBlik: StripeParams {
@@ -1623,31 +1752,49 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardMandateOp
     }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardNetwork: String, Codable, Sendable {
-    case amex
-    case cartesBancaires = "cartes_bancaires"
-    case diners
-    case discover
-    case eftposAu = "eftpos_au"
-    case girocard
-    case interac
-    case jcb
-    case link
-    case mastercard
-    case unionpay
-    case unknown
-    case visa
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var amex: Self { .init(rawValue: "amex") }
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var diners: Self { .init(rawValue: "diners") }
+    public static var discover: Self { .init(rawValue: "discover") }
+    public static var eftposAu: Self { .init(rawValue: "eftpos_au") }
+    public static var girocard: Self { .init(rawValue: "girocard") }
+    public static var interac: Self { .init(rawValue: "interac") }
+    public static var jcb: Self { .init(rawValue: "jcb") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var unionpay: Self { .init(rawValue: "unionpay") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
-    case any
-    case automatic
-    case challenge
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var any: Self { .init(rawValue: "any") }
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var challenge: Self { .init(rawValue: "challenge") }
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsCustomerBalance: StripeParams {
@@ -1725,18 +1872,24 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsPaytoMandateO
     }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
-    case dependantSupport = "dependant_support"
-    case government
-    case loan
-    case mortgage
-    case other
-    case pension
-    case personal
-    case retail
-    case salary
-    case tax
-    case utility
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dependantSupport: Self { .init(rawValue: "dependant_support") }
+    public static var government: Self { .init(rawValue: "government") }
+    public static var loan: Self { .init(rawValue: "loan") }
+    public static var mortgage: Self { .init(rawValue: "mortgage") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var pension: Self { .init(rawValue: "pension") }
+    public static var personal: Self { .init(rawValue: "personal") }
+    public static var retail: Self { .init(rawValue: "retail") }
+    public static var salary: Self { .init(rawValue: "salary") }
+    public static var tax: Self { .init(rawValue: "tax") }
+    public static var utility: Self { .init(rawValue: "utility") }
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsPix: StripeParams {
@@ -1785,17 +1938,29 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsPixMandateOpt
     }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsPixMandateOptionsAmountIncludesIof: String, Codable, Sendable {
-    case always
-    case never
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsPixMandateOptionsAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsPixMandateOptionsPaymentSchedule: String, Codable, Sendable {
-    case halfyearly
-    case monthly
-    case quarterly
-    case weekly
-    case yearly
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsPixMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var halfyearly: Self { .init(rawValue: "halfyearly") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var quarterly: Self { .init(rawValue: "quarterly") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
+    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpi: StripeParams {
@@ -1839,9 +2004,15 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpiMandateOpt
     }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccount: StripeParams {
@@ -1894,87 +2065,123 @@ public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccount
     }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
-    case checking
-    case savings
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
-    case balances
-    case ownership
-    case paymentMethod = "payment_method"
-    case transactions
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
-    case balances
-    case ownership
-    case transactions
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct SubscriptionCreatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
-public enum SubscriptionCreatePaymentSettingsPaymentMethodTypes: String, Codable, Sendable {
-    case achCreditTransfer = "ach_credit_transfer"
-    case achDebit = "ach_debit"
-    case acssDebit = "acss_debit"
-    case affirm
-    case alipay
-    case amazonPay = "amazon_pay"
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case crypto
-    case custom
-    case customerBalance = "customer_balance"
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case jpCreditTransfer = "jp_credit_transfer"
-    case kakaoPay = "kakao_pay"
-    case klarna
-    case konbini
-    case krCard = "kr_card"
-    case link
-    case mbWay = "mb_way"
-    case multibanco
-    case naverPay = "naver_pay"
-    case nzBankAccount = "nz_bank_account"
-    case p24
-    case payByBank = "pay_by_bank"
-    case payco
-    case paynow
-    case paypal
-    case payto
-    case pix
-    case promptpay
-    case revolutPay = "revolut_pay"
-    case satispay
-    case sepaCreditTransfer = "sepa_credit_transfer"
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
+public struct SubscriptionCreatePaymentSettingsPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var achCreditTransfer: Self { .init(rawValue: "ach_credit_transfer") }
+    public static var achDebit: Self { .init(rawValue: "ach_debit") }
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var crypto: Self { .init(rawValue: "crypto") }
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var jpCreditTransfer: Self { .init(rawValue: "jp_credit_transfer") }
+    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var krCard: Self { .init(rawValue: "kr_card") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var naverPay: Self { .init(rawValue: "naver_pay") }
+    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var payco: Self { .init(rawValue: "payco") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var sepaCreditTransfer: Self { .init(rawValue: "sepa_credit_transfer") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
 }
 
-public enum SubscriptionCreatePaymentSettingsSaveDefaultPaymentMethod: String, Codable, Sendable {
-    case off
-    case onSubscription = "on_subscription"
+public struct SubscriptionCreatePaymentSettingsSaveDefaultPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var off: Self { .init(rawValue: "off") }
+    public static var onSubscription: Self { .init(rawValue: "on_subscription") }
 }
 
 public struct SubscriptionCreatePendingInvoiceItemInterval: StripeParams {
@@ -1995,17 +2202,29 @@ public struct SubscriptionCreatePendingInvoiceItemInterval: StripeParams {
     }
 }
 
-public enum SubscriptionCreatePendingInvoiceItemIntervalInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct SubscriptionCreatePendingInvoiceItemIntervalInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum SubscriptionCreateProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct SubscriptionCreateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// If specified, the funds from the subscription's invoices will be transferred to the destination and
@@ -2094,15 +2313,30 @@ public struct SubscriptionCreateTrialSettingsEndBehavior: StripeParams {
     }
 }
 
-public enum SubscriptionCreateTrialSettingsEndBehaviorBillingCycleAnchor: String, Codable, Sendable {
-    case now
-    case unchanged
+public struct SubscriptionCreateTrialSettingsEndBehaviorBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Reset the subscription's billing cycle anchor to the end of the trial.
+    public static var now: Self { .init(rawValue: "now") }
+    /// Keep the subscription's existing billing cycle anchor unchanged. This value is unsupported for
+    /// trials initiated through `trial_end`, `trial_period_days`, or a plan trial.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
-public enum SubscriptionCreateTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
-    case cancel
-    case createInvoice = "create_invoice"
-    case pause
+public struct SubscriptionCreateTrialSettingsEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
+    public static var createInvoice: Self { .init(rawValue: "create_invoice") }
+    public static var pause: Self { .init(rawValue: "pause") }
 }
 
 /// Filter subscriptions by their automatic tax settings.
@@ -2116,22 +2350,34 @@ public struct SubscriptionListAutomaticTax: StripeParams {
     }
 }
 
-public enum SubscriptionListCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct SubscriptionListCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
-public enum SubscriptionListStatus: String, Codable, Sendable {
-    case active
-    case all
-    case canceled
-    case ended
-    case incomplete
-    case incompleteExpired = "incomplete_expired"
-    case pastDue = "past_due"
-    case paused
-    case trialing
-    case unpaid
+public struct SubscriptionListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var all: Self { .init(rawValue: "all") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var ended: Self { .init(rawValue: "ended") }
+    public static var incomplete: Self { .init(rawValue: "incomplete") }
+    public static var incompleteExpired: Self { .init(rawValue: "incomplete_expired") }
+    public static var pastDue: Self { .init(rawValue: "past_due") }
+    public static var paused: Self { .init(rawValue: "paused") }
+    public static var trialing: Self { .init(rawValue: "trialing") }
+    public static var unpaid: Self { .init(rawValue: "unpaid") }
 }
 
 /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
@@ -2147,8 +2393,14 @@ public struct SubscriptionMigrateBillingMode: StripeParams {
     }
 }
 
-public enum SubscriptionMigrateBillingModeType: String, Codable, Sendable {
-    case flexible
+public struct SubscriptionMigrateBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var flexible: Self { .init(rawValue: "flexible") }
 }
 
 /// Configure behavior for flexible billing mode.
@@ -2165,9 +2417,17 @@ public struct SubscriptionMigrateBillingModeFlexible: StripeParams {
     }
 }
 
-public enum SubscriptionMigrateBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
-    case included
-    case itemized
+public struct SubscriptionMigrateBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Amounts are net of discounts, and discount amounts are zero.
+    public static var included: Self { .init(rawValue: "included") }
+    /// Amounts are gross of discounts, and discount amounts are accurate.
+    public static var itemized: Self { .init(rawValue: "itemized") }
 }
 
 /// Controls what to bill for when pausing the subscription.
@@ -2198,9 +2458,17 @@ public struct SubscriptionPauseBillForOutstandingUsageThrough: StripeParams {
     }
 }
 
-public enum SubscriptionPauseBillForOutstandingUsageThroughType: String, Codable, Sendable {
-    case none
-    case now
+public struct SubscriptionPauseBillForOutstandingUsageThroughType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Don't bill for metered usage in the current period.
+    public static var none: Self { .init(rawValue: "none") }
+    /// Bill for metered usage in the current period, from current period start to pause time (default).
+    public static var now: Self { .init(rawValue: "now") }
 }
 
 /// Controls when to credit for unused time on licensed items. Defaults to `{ type: "now" }`.
@@ -2213,19 +2481,44 @@ public struct SubscriptionPauseBillForUnusedTimeFrom: StripeParams {
     }
 }
 
-public enum SubscriptionPauseBillForUnusedTimeFromType: String, Codable, Sendable {
-    case itemCurrentPeriodStart = "item_current_period_start"
-    case none
-    case now
+public struct SubscriptionPauseBillForUnusedTimeFromType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Credit unused time from each item's current period start to period end.
+    public static var itemCurrentPeriodStart: Self { .init(rawValue: "item_current_period_start") }
+    /// Don't credit for unused time.
+    public static var none: Self { .init(rawValue: "none") }
+    /// Credit unused time from pause time to period end (default).
+    public static var now: Self { .init(rawValue: "now") }
 }
 
-public enum SubscriptionPauseInvoicingBehavior: String, Codable, Sendable {
-    case invoice
-    case pendingInvoiceItem = "pending_invoice_item"
+public struct SubscriptionPauseInvoicingBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Invoices immediately for debits and credits in the current period. If pausing doesn't create any
+    /// invoice items, Stripe doesn't generate an invoice.
+    public static var invoice: Self { .init(rawValue: "invoice") }
+    /// Creates pending invoice items for debits and credits in the current period.
+    public static var pendingInvoiceItem: Self { .init(rawValue: "pending_invoice_item") }
 }
 
-public enum SubscriptionPauseType: String, Codable, Sendable {
-    case subscription
+public struct SubscriptionPauseType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Pauses collection, billing, and servicing.
+    public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
 /// The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`.
@@ -2240,20 +2533,48 @@ public struct SubscriptionResumeBillingCycleAnchor: StripeParams {
     }
 }
 
-public enum SubscriptionResumeBillingCycleAnchorType: String, Codable, Sendable {
-    case now
-    case unchanged
+public struct SubscriptionResumeBillingCycleAnchorType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var now: Self { .init(rawValue: "now") }
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
-public enum SubscriptionResumePaymentBehavior: String, Codable, Sendable {
-    case resumeOnPaymentAttempt = "resume_on_payment_attempt"
-    case resumeOnPaymentSuccess = "resume_on_payment_success"
+public struct SubscriptionResumePaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// If you create a resumption invoice, Stripe finalizes the invoice immediately but doesn't attempt
+    /// payment. You can then manually attempt payment on the invoice using the [Pay invoice
+    /// endpoint](/api/invoices/pay). If the payment attempt succeeds, the subscription becomes `active`. If
+    /// the payment attempt fails, the subscription becomes `past_due`. If the invoice has no payment
+    /// attempts after 23 hours, Stripe voids the invoice and the subscription remains `paused`.
+    public static var resumeOnPaymentAttempt: Self { .init(rawValue: "resume_on_payment_attempt") }
+    /// If you create a resumption invoice, Stripe finalizes and attempts payment on the invoice
+    /// immediately. If that payment attempt succeeds, the subscription becomes `active`. If that payment
+    /// attempt fails, the subscription remains `paused`. You can then manually attempt payment on the
+    /// invoice using the [Pay invoice endpoint](/api/invoices/pay). If the invoice isn't paid successfully
+    /// within 1 year of its creation, Stripe voids the invoice and the subscription remains `paused`.
+    public static var resumeOnPaymentSuccess: Self { .init(rawValue: "resume_on_payment_success") }
 }
 
-public enum SubscriptionResumeProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct SubscriptionResumeProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct SubscriptionUpdateAddInvoiceItems: StripeParams {
@@ -2351,9 +2672,15 @@ public struct SubscriptionUpdateAddInvoiceItemsPeriodEnd: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateAddInvoiceItemsPeriodEndType: String, Codable, Sendable {
-    case minItemPeriodEnd = "min_item_period_end"
-    case timestamp
+public struct SubscriptionUpdateAddInvoiceItemsPeriodEndType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var minItemPeriodEnd: Self { .init(rawValue: "min_item_period_end") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Start of the invoice item period.
@@ -2370,10 +2697,16 @@ public struct SubscriptionUpdateAddInvoiceItemsPeriodStart: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateAddInvoiceItemsPeriodStartType: String, Codable, Sendable {
-    case maxItemPeriodStart = "max_item_period_start"
-    case now
-    case timestamp
+public struct SubscriptionUpdateAddInvoiceItemsPeriodStartType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var maxItemPeriodStart: Self { .init(rawValue: "max_item_period_start") }
+    public static var now: Self { .init(rawValue: "now") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of
@@ -2415,10 +2748,16 @@ public struct SubscriptionUpdateAddInvoiceItemsPriceData: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateAddInvoiceItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct SubscriptionUpdateAddInvoiceItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Automatic tax settings for this subscription. We recommend you only include this parameter when the
@@ -2453,9 +2792,15 @@ public struct SubscriptionUpdateAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct SubscriptionUpdateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 /// Controls how the subscription's billing cycle anchor changes. Set `type` to `now` to reset the
@@ -2471,9 +2816,18 @@ public struct SubscriptionUpdateBillingCycleAnchor: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateBillingCycleAnchorType: String, Codable, Sendable {
-    case now
-    case unchanged
+public struct SubscriptionUpdateBillingCycleAnchorType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Reset the subscription's billing cycle anchor to the current time (in UTC) and start a new billing
+    /// period.
+    public static var now: Self { .init(rawValue: "now") }
+    /// Keep the subscription's existing billing cycle anchor unchanged.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
 public struct SubscriptionUpdateBillingSchedules: StripeParams {
@@ -2511,8 +2865,14 @@ public struct SubscriptionUpdateBillingSchedulesAppliesTo: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateBillingSchedulesAppliesToType: String, Codable, Sendable {
-    case price
+public struct SubscriptionUpdateBillingSchedulesAppliesToType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var price: Self { .init(rawValue: "price") }
 }
 
 /// The end date for the billing schedule. You must not set this earlier than current period end for
@@ -2532,9 +2892,15 @@ public struct SubscriptionUpdateBillingSchedulesBillUntil: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateBillingSchedulesBillUntilType: String, Codable, Sendable {
-    case duration
-    case timestamp
+public struct SubscriptionUpdateBillingSchedulesBillUntilType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duration: Self { .init(rawValue: "duration") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 /// Specifies the billing period.
@@ -2555,11 +2921,17 @@ public struct SubscriptionUpdateBillingSchedulesBillUntilDuration: StripeParams 
     }
 }
 
-public enum SubscriptionUpdateBillingSchedulesBillUntilDurationInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct SubscriptionUpdateBillingSchedulesBillUntilDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 public struct SubscriptionUpdateBillingThresholds: StripeParams {
@@ -2650,20 +3022,32 @@ public struct SubscriptionUpdateCancellationDetails: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateCancellationDetailsFeedback: String, Codable, Sendable {
-    case customerService = "customer_service"
-    case lowQuality = "low_quality"
-    case missingFeatures = "missing_features"
-    case other
-    case switchedService = "switched_service"
-    case tooComplex = "too_complex"
-    case tooExpensive = "too_expensive"
-    case unused
+public struct SubscriptionUpdateCancellationDetailsFeedback: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerService: Self { .init(rawValue: "customer_service") }
+    public static var lowQuality: Self { .init(rawValue: "low_quality") }
+    public static var missingFeatures: Self { .init(rawValue: "missing_features") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var switchedService: Self { .init(rawValue: "switched_service") }
+    public static var tooComplex: Self { .init(rawValue: "too_complex") }
+    public static var tooExpensive: Self { .init(rawValue: "too_expensive") }
+    public static var unused: Self { .init(rawValue: "unused") }
 }
 
-public enum SubscriptionUpdateCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct SubscriptionUpdateCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 public struct SubscriptionUpdateDiscounts: StripeParams {
@@ -2745,9 +3129,15 @@ public struct SubscriptionUpdateInvoiceSettingsIssuer: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateInvoiceSettingsIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct SubscriptionUpdateInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct SubscriptionUpdateItems: StripeParams {
@@ -2935,17 +3325,29 @@ public struct SubscriptionUpdateItemsPriceDataRecurring: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateItemsPriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct SubscriptionUpdateItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum SubscriptionUpdateItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct SubscriptionUpdateItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 public struct SubscriptionUpdatePauseCollection: StripeParams {
@@ -2965,17 +3367,57 @@ public struct SubscriptionUpdatePauseCollection: StripeParams {
     }
 }
 
-public enum SubscriptionUpdatePauseCollectionBehavior: String, Codable, Sendable {
-    case keepAsDraft = "keep_as_draft"
-    case markUncollectible = "mark_uncollectible"
-    case void
+public struct SubscriptionUpdatePauseCollectionBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Keep all invoices as `draft` while collection is paused.
+    public static var keepAsDraft: Self { .init(rawValue: "keep_as_draft") }
+    /// Mark all invoices as `uncollectible` while collection is paused.
+    public static var markUncollectible: Self { .init(rawValue: "mark_uncollectible") }
+    /// Void all invoices while collection is paused.
+    public static var void: Self { .init(rawValue: "void") }
 }
 
-public enum SubscriptionUpdatePaymentBehavior: String, Codable, Sendable {
-    case allowIncomplete = "allow_incomplete"
-    case defaultIncomplete = "default_incomplete"
-    case errorIfIncomplete = "error_if_incomplete"
-    case pendingIfIncomplete = "pending_if_incomplete"
+public struct SubscriptionUpdatePaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// This is the default behavior since
+    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails).
+    /// Transition the subscription to `status=past_due` if payment fails. If you have payment retries
+    /// configured, Stripe automatically retries the payment. If the payment requires action, you receive an
+    /// `invoice.payment_action_required` webhook and must manage additional user actions. For example, SCA
+    /// regulations might require 3DS authentication to complete payment. See the [SCA Migration
+    /// Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for Billing to
+    /// learn more.
+    public static var allowIncomplete: Self { .init(rawValue: "allow_incomplete") }
+    /// When payment is required, transition the subscription to `status=past_due` without attempting
+    /// payment. You must request explicit confirmation of the Invoice's PaymentIntent. The resulting
+    /// Invoice has
+    /// [auto_advance=false](https://docs.stripe.com/api/invoices/object#invoice_object-auto_advance), so
+    /// Stripe doesn't automatically attempt payment, retry payment, or finalize the subscription.
+    public static var defaultIncomplete: Self { .init(rawValue: "default_incomplete") }
+    /// If payment fails, return an HTTP `402` status code and don't update the subscription. This behavior
+    /// doesn't support payments that require user action, such as 3DS authentication, because it returns an
+    /// error instead of creating a PaymentIntent with `status=requires_action`. To handle payments that
+    /// require action, use `allow_incomplete` or `default_incomplete` instead. This behavior was the
+    /// default for API versions before
+    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails).
+    public static var errorIfIncomplete: Self { .init(rawValue: "error_if_incomplete") }
+    /// If payment fails, Stripe creates a [pending
+    /// update](https://docs.stripe.com/billing/subscriptions/pending-updates), which applies only if the
+    /// payment eventually succeeds. This behavior doesn't support all [attributes and payment
+    /// methods](https://docs.stripe.com/billing/pending-updates-reference#supported-attributes). This
+    /// option is the simplest way to ensure the customer completes payment before Stripe applies the
+    /// update.
+    public static var pendingIfIncomplete: Self { .init(rawValue: "pending_if_incomplete") }
 }
 
 /// Payment settings to pass to invoices created by the subscription.
@@ -3106,15 +3548,27 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMand
     }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
-    case business
-    case personal
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var business: Self { .init(rawValue: "business") }
+    public static var personal: Self { .init(rawValue: "personal") }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBancontact: StripeParams {
@@ -3130,11 +3584,17 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBancontact: S
     }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
-    case de
-    case en
-    case fr
-    case nl
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var de: Self { .init(rawValue: "de") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var nl: Self { .init(rawValue: "nl") }
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBillie: StripeParams {
@@ -3212,21 +3672,27 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBillieCompany
     }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
-    case chEin = "ch_ein"
-    case deHrb = "de_hrb"
-    case dkCvr = "dk_cvr"
-    case esCif = "es_cif"
-    case fiTunnus = "fi_tunnus"
-    case frSiren = "fr_siren"
-    case frSiret = "fr_siret"
-    case itRea = "it_rea"
-    case nlKvk = "nl_kvk"
-    case noOrgNumber = "no_org_number"
-    case noPno = "no_pno"
-    case seOrgNumber = "se_org_number"
-    case sePno = "se_pno"
-    case ukCrn = "uk_crn"
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBillieCompanyDetailsRegistrationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chEin: Self { .init(rawValue: "ch_ein") }
+    public static var deHrb: Self { .init(rawValue: "de_hrb") }
+    public static var dkCvr: Self { .init(rawValue: "dk_cvr") }
+    public static var esCif: Self { .init(rawValue: "es_cif") }
+    public static var fiTunnus: Self { .init(rawValue: "fi_tunnus") }
+    public static var frSiren: Self { .init(rawValue: "fr_siren") }
+    public static var frSiret: Self { .init(rawValue: "fr_siret") }
+    public static var itRea: Self { .init(rawValue: "it_rea") }
+    public static var nlKvk: Self { .init(rawValue: "nl_kvk") }
+    public static var noOrgNumber: Self { .init(rawValue: "no_org_number") }
+    public static var noPno: Self { .init(rawValue: "no_pno") }
+    public static var seOrgNumber: Self { .init(rawValue: "se_org_number") }
+    public static var sePno: Self { .init(rawValue: "se_pno") }
+    public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsBlik: StripeParams {
@@ -3309,31 +3775,49 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardMandateOp
     }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardNetwork: String, Codable, Sendable {
-    case amex
-    case cartesBancaires = "cartes_bancaires"
-    case diners
-    case discover
-    case eftposAu = "eftpos_au"
-    case girocard
-    case interac
-    case jcb
-    case link
-    case mastercard
-    case unionpay
-    case unknown
-    case visa
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var amex: Self { .init(rawValue: "amex") }
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var diners: Self { .init(rawValue: "diners") }
+    public static var discover: Self { .init(rawValue: "discover") }
+    public static var eftposAu: Self { .init(rawValue: "eftpos_au") }
+    public static var girocard: Self { .init(rawValue: "girocard") }
+    public static var interac: Self { .init(rawValue: "interac") }
+    public static var jcb: Self { .init(rawValue: "jcb") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var unionpay: Self { .init(rawValue: "unionpay") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
-    case any
-    case automatic
-    case challenge
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var any: Self { .init(rawValue: "any") }
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var challenge: Self { .init(rawValue: "challenge") }
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsCustomerBalance: StripeParams {
@@ -3411,18 +3895,24 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateO
     }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
-    case dependantSupport = "dependant_support"
-    case government
-    case loan
-    case mortgage
-    case other
-    case pension
-    case personal
-    case retail
-    case salary
-    case tax
-    case utility
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPaytoMandateOptionsPurpose: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dependantSupport: Self { .init(rawValue: "dependant_support") }
+    public static var government: Self { .init(rawValue: "government") }
+    public static var loan: Self { .init(rawValue: "loan") }
+    public static var mortgage: Self { .init(rawValue: "mortgage") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var pension: Self { .init(rawValue: "pension") }
+    public static var personal: Self { .init(rawValue: "personal") }
+    public static var retail: Self { .init(rawValue: "retail") }
+    public static var salary: Self { .init(rawValue: "salary") }
+    public static var tax: Self { .init(rawValue: "tax") }
+    public static var utility: Self { .init(rawValue: "utility") }
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPix: StripeParams {
@@ -3471,17 +3961,29 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPixMandateOpt
     }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPixMandateOptionsAmountIncludesIof: String, Codable, Sendable {
-    case always
-    case never
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPixMandateOptionsAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPixMandateOptionsPaymentSchedule: String, Codable, Sendable {
-    case halfyearly
-    case monthly
-    case quarterly
-    case weekly
-    case yearly
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsPixMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var halfyearly: Self { .init(rawValue: "halfyearly") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var quarterly: Self { .init(rawValue: "quarterly") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
+    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpi: StripeParams {
@@ -3525,9 +4027,15 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOpt
     }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccount: StripeParams {
@@ -3580,87 +4088,123 @@ public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccount
     }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: String, Codable, Sendable {
-    case checking
-    case savings
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
-    case balances
-    case ownership
-    case paymentMethod = "payment_method"
-    case transactions
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
-    case balances
-    case ownership
-    case transactions
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
-public enum SubscriptionUpdatePaymentSettingsPaymentMethodTypes: String, Codable, Sendable {
-    case achCreditTransfer = "ach_credit_transfer"
-    case achDebit = "ach_debit"
-    case acssDebit = "acss_debit"
-    case affirm
-    case alipay
-    case amazonPay = "amazon_pay"
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case crypto
-    case custom
-    case customerBalance = "customer_balance"
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case jpCreditTransfer = "jp_credit_transfer"
-    case kakaoPay = "kakao_pay"
-    case klarna
-    case konbini
-    case krCard = "kr_card"
-    case link
-    case mbWay = "mb_way"
-    case multibanco
-    case naverPay = "naver_pay"
-    case nzBankAccount = "nz_bank_account"
-    case p24
-    case payByBank = "pay_by_bank"
-    case payco
-    case paynow
-    case paypal
-    case payto
-    case pix
-    case promptpay
-    case revolutPay = "revolut_pay"
-    case satispay
-    case sepaCreditTransfer = "sepa_credit_transfer"
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
+public struct SubscriptionUpdatePaymentSettingsPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var achCreditTransfer: Self { .init(rawValue: "ach_credit_transfer") }
+    public static var achDebit: Self { .init(rawValue: "ach_debit") }
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var crypto: Self { .init(rawValue: "crypto") }
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var jpCreditTransfer: Self { .init(rawValue: "jp_credit_transfer") }
+    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var krCard: Self { .init(rawValue: "kr_card") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var naverPay: Self { .init(rawValue: "naver_pay") }
+    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var payco: Self { .init(rawValue: "payco") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var sepaCreditTransfer: Self { .init(rawValue: "sepa_credit_transfer") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
 }
 
-public enum SubscriptionUpdatePaymentSettingsSaveDefaultPaymentMethod: String, Codable, Sendable {
-    case off
-    case onSubscription = "on_subscription"
+public struct SubscriptionUpdatePaymentSettingsSaveDefaultPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var off: Self { .init(rawValue: "off") }
+    public static var onSubscription: Self { .init(rawValue: "on_subscription") }
 }
 
 public struct SubscriptionUpdatePendingInvoiceItemInterval: StripeParams {
@@ -3681,17 +4225,29 @@ public struct SubscriptionUpdatePendingInvoiceItemInterval: StripeParams {
     }
 }
 
-public enum SubscriptionUpdatePendingInvoiceItemIntervalInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct SubscriptionUpdatePendingInvoiceItemIntervalInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum SubscriptionUpdateProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct SubscriptionUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct SubscriptionUpdateTransferData: StripeParams {
@@ -3778,13 +4334,28 @@ public struct SubscriptionUpdateTrialSettingsEndBehavior: StripeParams {
     }
 }
 
-public enum SubscriptionUpdateTrialSettingsEndBehaviorBillingCycleAnchor: String, Codable, Sendable {
-    case now
-    case unchanged
+public struct SubscriptionUpdateTrialSettingsEndBehaviorBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Reset the subscription's billing cycle anchor to the end of the trial.
+    public static var now: Self { .init(rawValue: "now") }
+    /// Keep the subscription's existing billing cycle anchor unchanged. This value is unsupported for
+    /// trials initiated through `trial_end`, `trial_period_days`, or a plan trial.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
-public enum SubscriptionUpdateTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
-    case cancel
-    case createInvoice = "create_invoice"
-    case pause
+public struct SubscriptionUpdateTrialSettingsEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
+    public static var createInvoice: Self { .init(rawValue: "create_invoice") }
+    public static var pause: Self { .init(rawValue: "pause") }
 }

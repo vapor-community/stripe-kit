@@ -19,8 +19,14 @@ public struct DeletedApplication: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DeletedApplicationObject: String, Codable, Sendable {
-    case application
+public struct DeletedApplicationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var application: Self { .init(rawValue: "application") }
 }
 
 public struct DeletedApplicationList: Codable, Sendable {

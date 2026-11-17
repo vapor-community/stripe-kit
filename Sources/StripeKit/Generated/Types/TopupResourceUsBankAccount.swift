@@ -13,8 +13,14 @@ public struct TopupResourceUsBankAccount: Codable, Sendable {
 }
 
 /// The US bank transfer network used for this top-up. The default is `ach`.
-public enum TopupResourceUsBankAccountNetwork: String, Codable, Sendable {
-    case ach
+public struct TopupResourceUsBankAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
 }
 
 public struct TopupResourceUsBankAccountList: Codable, Sendable {

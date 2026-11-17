@@ -50,8 +50,14 @@ public struct PaymentMethodDomain: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PaymentMethodDomainObject: String, Codable, Sendable {
-    case paymentMethodDomain = "payment_method_domain"
+public struct PaymentMethodDomainObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentMethodDomain: Self { .init(rawValue: "payment_method_domain") }
 }
 
 public struct PaymentMethodDomainList: Codable, Sendable {

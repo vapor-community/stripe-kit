@@ -83,15 +83,27 @@ public struct Coupon: Codable, Sendable {
 
 /// One of `forever`, `once`, or `repeating`. Describes how long a customer who applies this coupon will
 /// get the discount.
-public enum CouponDuration: String, Codable, Sendable {
-    case forever
-    case once
-    case repeating
+public struct CouponDuration: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var forever: Self { .init(rawValue: "forever") }
+    public static var once: Self { .init(rawValue: "once") }
+    public static var repeating: Self { .init(rawValue: "repeating") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CouponObject: String, Codable, Sendable {
-    case coupon
+public struct CouponObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var coupon: Self { .init(rawValue: "coupon") }
 }
 
 public struct CouponList: Codable, Sendable {

@@ -34,10 +34,16 @@ public struct DisputeEvidenceDetails: Codable, Sendable {
 }
 
 /// Whether the dispute was submitted manually, with Smart Disputes, or not submitted.
-public enum DisputeEvidenceDetailsSubmissionMethod: String, Codable, Sendable {
-    case manual
-    case notSubmitted = "not_submitted"
-    case smartDisputes = "smart_disputes"
+public struct DisputeEvidenceDetailsSubmissionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var notSubmitted: Self { .init(rawValue: "not_submitted") }
+    public static var smartDisputes: Self { .init(rawValue: "smart_disputes") }
 }
 
 public struct DisputeEvidenceDetailsList: Codable, Sendable {

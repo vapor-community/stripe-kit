@@ -33,8 +33,14 @@ public struct TreasuryFinancialAccountFeatures: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TreasuryFinancialAccountFeaturesObject: String, Codable, Sendable {
-    case treasuryFinancialAccountFeatures = "treasury.financial_account_features"
+public struct TreasuryFinancialAccountFeaturesObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var treasuryFinancialAccountFeatures: Self { .init(rawValue: "treasury.financial_account_features") }
 }
 
 public struct TreasuryFinancialAccountFeaturesList: Codable, Sendable {

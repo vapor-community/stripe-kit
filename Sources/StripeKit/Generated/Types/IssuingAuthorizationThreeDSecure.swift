@@ -13,11 +13,17 @@ public struct IssuingAuthorizationThreeDSecure: Codable, Sendable {
 }
 
 /// The outcome of the 3D Secure authentication request.
-public enum IssuingAuthorizationThreeDSecureResult: String, Codable, Sendable {
-    case attemptAcknowledged = "attempt_acknowledged"
-    case authenticated
-    case failed
-    case required
+public struct IssuingAuthorizationThreeDSecureResult: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var attemptAcknowledged: Self { .init(rawValue: "attempt_acknowledged") }
+    public static var authenticated: Self { .init(rawValue: "authenticated") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 public struct IssuingAuthorizationThreeDSecureList: Codable, Sendable {

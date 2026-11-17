@@ -21,9 +21,15 @@ public struct CustomerBalanceCustomerBalanceSettings: Codable, Sendable {
 }
 
 /// The configuration for how funds that land in the customer cash balance are reconciled.
-public enum CustomerBalanceCustomerBalanceSettingsReconciliationMode: String, Codable, Sendable {
-    case automatic
-    case manual
+public struct CustomerBalanceCustomerBalanceSettingsReconciliationMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 public struct CustomerBalanceCustomerBalanceSettingsList: Codable, Sendable {

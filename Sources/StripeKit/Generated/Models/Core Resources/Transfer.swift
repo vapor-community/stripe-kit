@@ -85,8 +85,14 @@ public struct Transfer: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TransferObject: String, Codable, Sendable {
-    case transfer
+public struct TransferObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var transfer: Self { .init(rawValue: "transfer") }
 }
 
 public struct TransferList: Codable, Sendable {

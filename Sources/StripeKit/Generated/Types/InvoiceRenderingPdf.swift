@@ -19,10 +19,16 @@ public struct InvoiceRenderingPdf: Codable, Sendable {
 
 /// Page size of invoice pdf. Options include a4, letter, and auto. If set to auto, page size will be
 /// switched to a4 or letter based on customer locale.
-public enum InvoiceRenderingPdfPageSize: String, Codable, Sendable {
-    case a4
-    case auto
-    case letter
+public struct InvoiceRenderingPdfPageSize: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var a4: Self { .init(rawValue: "a4") }
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var letter: Self { .init(rawValue: "letter") }
 }
 
 public struct InvoiceRenderingPdfList: Codable, Sendable {

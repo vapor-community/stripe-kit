@@ -71,26 +71,55 @@ public struct AppsInstall: Codable, Sendable {
 }
 
 /// The distribution channel associated with the app install.
-public enum AppsInstallChannel: String, Codable, Sendable {
-    case privateLive = "private_live"
-    case privateTest = "private_test"
-    case `public` = "public"
-    case review
-    case testing
+public struct AppsInstallChannel: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// A private app installed in live mode.
+    public static var privateLive: Self { .init(rawValue: "private_live") }
+    /// A private app installed in test mode.
+    public static var privateTest: Self { .init(rawValue: "private_test") }
+    /// The published version of the app.
+    public static var `public`: Self { .init(rawValue: "public") }
+    /// The app as installed by Stripe for app review.
+    public static var review: Self { .init(rawValue: "review") }
+    /// A pre-release version of the app installed for external testing.
+    public static var testing: Self { .init(rawValue: "testing") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum AppsInstallObject: String, Codable, Sendable {
-    case appsInstall = "apps.install"
+public struct AppsInstallObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var appsInstall: Self { .init(rawValue: "apps.install") }
 }
 
 /// The status of the app install.
-public enum AppsInstallStatus: String, Codable, Sendable {
-    case installFailed = "install_failed"
-    case installed
-    case installing
-    case uninstallFailed = "uninstall_failed"
-    case uninstalling
+public struct AppsInstallStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The install did not complete. The app cannot be used.
+    public static var installFailed: Self { .init(rawValue: "install_failed") }
+    /// The app is installed and can be used. Access that the installer has not authorized yet is listed in
+    /// the pending fields.
+    public static var installed: Self { .init(rawValue: "installed") }
+    /// The install is in progress.
+    public static var installing: Self { .init(rawValue: "installing") }
+    /// The uninstall did not complete.
+    public static var uninstallFailed: Self { .init(rawValue: "uninstall_failed") }
+    /// The uninstall is in progress.
+    public static var uninstalling: Self { .init(rawValue: "uninstalling") }
 }
 
 public struct AppsInstallList: Codable, Sendable {

@@ -16,9 +16,15 @@ public struct GelatoPhoneReportError: Codable, Sendable {
 }
 
 /// A short machine-readable string giving the reason for the verification failure.
-public enum GelatoPhoneReportErrorCode: String, Codable, Sendable {
-    case phoneUnverifiedOther = "phone_unverified_other"
-    case phoneVerificationDeclined = "phone_verification_declined"
+public struct GelatoPhoneReportErrorCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var phoneUnverifiedOther: Self { .init(rawValue: "phone_unverified_other") }
+    public static var phoneVerificationDeclined: Self { .init(rawValue: "phone_verification_declined") }
 }
 
 public struct GelatoPhoneReportErrorList: Codable, Sendable {

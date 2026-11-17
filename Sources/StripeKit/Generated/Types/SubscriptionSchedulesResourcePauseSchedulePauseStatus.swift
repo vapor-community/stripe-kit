@@ -14,10 +14,19 @@ public struct SubscriptionSchedulesResourcePauseSchedulePauseStatus: Codable, Se
 }
 
 /// The lifecycle state of the pause operation.
-public enum SubscriptionSchedulesResourcePauseSchedulePauseStatusType: String, Codable, Sendable {
-    case error
-    case scheduled
-    case succeeded
+public struct SubscriptionSchedulesResourcePauseSchedulePauseStatusType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The pause failed. See `error` for details.
+    public static var error: Self { .init(rawValue: "error") }
+    /// The subscription hasn't been paused yet.
+    public static var scheduled: Self { .init(rawValue: "scheduled") }
+    /// The subscription was paused successfully.
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct SubscriptionSchedulesResourcePauseSchedulePauseStatusList: Codable, Sendable {

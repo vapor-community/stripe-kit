@@ -46,15 +46,27 @@ public struct IssuingDisputeCanceledEvidence: Codable, Sendable {
 }
 
 /// Whether the product was a merchandise or service.
-public enum IssuingDisputeCanceledEvidenceProductType: String, Codable, Sendable {
-    case merchandise
-    case service
+public struct IssuingDisputeCanceledEvidenceProductType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var service: Self { .init(rawValue: "service") }
 }
 
 /// Result of cardholder's attempt to return the product.
-public enum IssuingDisputeCanceledEvidenceReturnStatus: String, Codable, Sendable {
-    case merchantRejected = "merchant_rejected"
-    case successful
+public struct IssuingDisputeCanceledEvidenceReturnStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchantRejected: Self { .init(rawValue: "merchant_rejected") }
+    public static var successful: Self { .init(rawValue: "successful") }
 }
 
 public struct IssuingDisputeCanceledEvidenceList: Codable, Sendable {

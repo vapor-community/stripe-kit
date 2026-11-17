@@ -23,8 +23,14 @@ public struct BillingBillResourceInvoicingPricingPricing: Codable, Sendable {
 }
 
 /// The type of the pricing details.
-public enum BillingBillResourceInvoicingPricingPricingType: String, Codable, Sendable {
-    case priceDetails = "price_details"
+public struct BillingBillResourceInvoicingPricingPricingType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var priceDetails: Self { .init(rawValue: "price_details") }
 }
 
 public struct BillingBillResourceInvoicingPricingPricingList: Codable, Sendable {

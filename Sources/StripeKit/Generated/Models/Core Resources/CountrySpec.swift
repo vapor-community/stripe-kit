@@ -44,8 +44,14 @@ public struct CountrySpec: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CountrySpecObject: String, Codable, Sendable {
-    case countrySpec = "country_spec"
+public struct CountrySpecObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var countrySpec: Self { .init(rawValue: "country_spec") }
 }
 
 public struct CountrySpecList: Codable, Sendable {

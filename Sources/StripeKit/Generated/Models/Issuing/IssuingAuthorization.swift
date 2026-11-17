@@ -133,31 +133,57 @@ public struct IssuingAuthorization: Codable, Sendable {
 }
 
 /// How the card details were provided.
-public enum IssuingAuthorizationAuthorizationMethod: String, Codable, Sendable {
-    case chip
-    case contactless
-    case keyedIn = "keyed_in"
-    case online
-    case swipe
+public struct IssuingAuthorizationAuthorizationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chip: Self { .init(rawValue: "chip") }
+    public static var contactless: Self { .init(rawValue: "contactless") }
+    public static var keyedIn: Self { .init(rawValue: "keyed_in") }
+    public static var online: Self { .init(rawValue: "online") }
+    public static var swipe: Self { .init(rawValue: "swipe") }
 }
 
 /// Whether the card was present at the point of sale for the authorization.
-public enum IssuingAuthorizationCardPresence: String, Codable, Sendable {
-    case notPresent = "not_present"
-    case present
+public struct IssuingAuthorizationCardPresence: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The card was not present at the point of sale.
+    public static var notPresent: Self { .init(rawValue: "not_present") }
+    /// The card was present at the point of sale.
+    public static var present: Self { .init(rawValue: "present") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum IssuingAuthorizationObject: String, Codable, Sendable {
-    case issuingAuthorization = "issuing.authorization"
+public struct IssuingAuthorizationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var issuingAuthorization: Self { .init(rawValue: "issuing.authorization") }
 }
 
 /// The current status of the authorization in its lifecycle.
-public enum IssuingAuthorizationStatus: String, Codable, Sendable {
-    case closed
-    case expired
-    case pending
-    case reversed
+public struct IssuingAuthorizationStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var closed: Self { .init(rawValue: "closed") }
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var reversed: Self { .init(rawValue: "reversed") }
 }
 
 public struct IssuingAuthorizationList: Codable, Sendable {

@@ -20,8 +20,14 @@ public struct BillingBillResourceInvoiceItemParentsInvoiceItemParent: Codable, S
 }
 
 /// The type of parent that generated this invoice item
-public enum BillingBillResourceInvoiceItemParentsInvoiceItemParentType: String, Codable, Sendable {
-    case subscriptionDetails = "subscription_details"
+public struct BillingBillResourceInvoiceItemParentsInvoiceItemParentType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var subscriptionDetails: Self { .init(rawValue: "subscription_details") }
 }
 
 public struct BillingBillResourceInvoiceItemParentsInvoiceItemParentList: Codable, Sendable {

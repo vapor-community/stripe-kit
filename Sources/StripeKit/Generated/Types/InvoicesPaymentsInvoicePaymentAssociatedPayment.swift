@@ -32,10 +32,16 @@ public struct InvoicesPaymentsInvoicePaymentAssociatedPayment: Codable, Sendable
 }
 
 /// Type of payment object associated with this invoice payment.
-public enum InvoicesPaymentsInvoicePaymentAssociatedPaymentType: String, Codable, Sendable {
-    case charge
-    case paymentIntent = "payment_intent"
-    case paymentRecord = "payment_record"
+public struct InvoicesPaymentsInvoicePaymentAssociatedPaymentType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var charge: Self { .init(rawValue: "charge") }
+    public static var paymentIntent: Self { .init(rawValue: "payment_intent") }
+    public static var paymentRecord: Self { .init(rawValue: "payment_record") }
 }
 
 public struct InvoicesPaymentsInvoicePaymentAssociatedPaymentList: Codable, Sendable {

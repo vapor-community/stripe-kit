@@ -211,10 +211,16 @@ public struct IdentityVerificationSessionCreateOptionsDocument: StripeParams {
     }
 }
 
-public enum IdentityVerificationSessionCreateOptionsDocumentAllowedTypes: String, Codable, Sendable {
-    case drivingLicense = "driving_license"
-    case idCard = "id_card"
-    case passport
+public struct IdentityVerificationSessionCreateOptionsDocumentAllowedTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var drivingLicense: Self { .init(rawValue: "driving_license") }
+    public static var idCard: Self { .init(rawValue: "id_card") }
+    public static var passport: Self { .init(rawValue: "passport") }
 }
 
 /// Details provided about the user being verified. These details might be shown to the user.
@@ -244,16 +250,28 @@ public struct IdentityVerificationSessionCreateRelatedPerson: StripeParams {
     }
 }
 
-public enum IdentityVerificationSessionCreateType: String, Codable, Sendable {
-    case document
-    case idNumber = "id_number"
+public struct IdentityVerificationSessionCreateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var document: Self { .init(rawValue: "document") }
+    public static var idNumber: Self { .init(rawValue: "id_number") }
 }
 
-public enum IdentityVerificationSessionListStatus: String, Codable, Sendable {
-    case canceled
-    case processing
-    case requiresInput = "requires_input"
-    case verified
+public struct IdentityVerificationSessionListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var processing: Self { .init(rawValue: "processing") }
+    public static var requiresInput: Self { .init(rawValue: "requires_input") }
+    public static var verified: Self { .init(rawValue: "verified") }
 }
 
 /// A set of options for the session’s verification checks.
@@ -297,10 +315,16 @@ public struct IdentityVerificationSessionUpdateOptionsDocument: StripeParams {
     }
 }
 
-public enum IdentityVerificationSessionUpdateOptionsDocumentAllowedTypes: String, Codable, Sendable {
-    case drivingLicense = "driving_license"
-    case idCard = "id_card"
-    case passport
+public struct IdentityVerificationSessionUpdateOptionsDocumentAllowedTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var drivingLicense: Self { .init(rawValue: "driving_license") }
+    public static var idCard: Self { .init(rawValue: "id_card") }
+    public static var passport: Self { .init(rawValue: "passport") }
 }
 
 /// Details provided about the user being verified. These details may be shown to the user.
@@ -316,7 +340,13 @@ public struct IdentityVerificationSessionUpdateProvidedDetails: StripeParams {
     }
 }
 
-public enum IdentityVerificationSessionUpdateType: String, Codable, Sendable {
-    case document
-    case idNumber = "id_number"
+public struct IdentityVerificationSessionUpdateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var document: Self { .init(rawValue: "document") }
+    public static var idNumber: Self { .init(rawValue: "id_number") }
 }

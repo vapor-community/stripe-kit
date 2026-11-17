@@ -47,26 +47,32 @@ public struct FileListParams: StripeParams {
     }
 }
 
-public enum FileListPurpose: String, Codable, Sendable {
-    case accountRequirement = "account_requirement"
-    case additionalVerification = "additional_verification"
-    case businessIcon = "business_icon"
-    case businessLogo = "business_logo"
-    case customerSignature = "customer_signature"
-    case disputeEvidence = "dispute_evidence"
-    case documentProviderIdentityDocument = "document_provider_identity_document"
-    case financeReportRun = "finance_report_run"
-    case financialAccountStatement = "financial_account_statement"
-    case identityDocument = "identity_document"
-    case identityDocumentDownloadable = "identity_document_downloadable"
-    case issuingRegulatoryReporting = "issuing_regulatory_reporting"
-    case pciDocument = "pci_document"
-    case platformTermsOfService = "platform_terms_of_service"
-    case selfie
-    case sigmaScheduledQuery = "sigma_scheduled_query"
-    case taxDocumentUserUpload = "tax_document_user_upload"
-    case terminalAndroidApk = "terminal_android_apk"
-    case terminalReaderSplashscreen = "terminal_reader_splashscreen"
-    case terminalWifiCertificate = "terminal_wifi_certificate"
-    case terminalWifiPrivateKey = "terminal_wifi_private_key"
+public struct FileListPurpose: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountRequirement: Self { .init(rawValue: "account_requirement") }
+    public static var additionalVerification: Self { .init(rawValue: "additional_verification") }
+    public static var businessIcon: Self { .init(rawValue: "business_icon") }
+    public static var businessLogo: Self { .init(rawValue: "business_logo") }
+    public static var customerSignature: Self { .init(rawValue: "customer_signature") }
+    public static var disputeEvidence: Self { .init(rawValue: "dispute_evidence") }
+    public static var documentProviderIdentityDocument: Self { .init(rawValue: "document_provider_identity_document") }
+    public static var financeReportRun: Self { .init(rawValue: "finance_report_run") }
+    public static var financialAccountStatement: Self { .init(rawValue: "financial_account_statement") }
+    public static var identityDocument: Self { .init(rawValue: "identity_document") }
+    public static var identityDocumentDownloadable: Self { .init(rawValue: "identity_document_downloadable") }
+    public static var issuingRegulatoryReporting: Self { .init(rawValue: "issuing_regulatory_reporting") }
+    public static var pciDocument: Self { .init(rawValue: "pci_document") }
+    public static var platformTermsOfService: Self { .init(rawValue: "platform_terms_of_service") }
+    public static var selfie: Self { .init(rawValue: "selfie") }
+    public static var sigmaScheduledQuery: Self { .init(rawValue: "sigma_scheduled_query") }
+    public static var taxDocumentUserUpload: Self { .init(rawValue: "tax_document_user_upload") }
+    public static var terminalAndroidApk: Self { .init(rawValue: "terminal_android_apk") }
+    public static var terminalReaderSplashscreen: Self { .init(rawValue: "terminal_reader_splashscreen") }
+    public static var terminalWifiCertificate: Self { .init(rawValue: "terminal_wifi_certificate") }
+    public static var terminalWifiPrivateKey: Self { .init(rawValue: "terminal_wifi_private_key") }
 }

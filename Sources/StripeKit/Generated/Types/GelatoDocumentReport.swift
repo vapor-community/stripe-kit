@@ -60,24 +60,42 @@ public struct GelatoDocumentReport: Codable, Sendable {
 }
 
 /// Sex of the person in the document.
-public enum GelatoDocumentReportSex: String, Codable, Sendable {
-    case redacted = "[redacted]"
-    case female
-    case male
-    case unknown
+public struct GelatoDocumentReportSex: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var redacted: Self { .init(rawValue: "[redacted]") }
+    public static var female: Self { .init(rawValue: "female") }
+    public static var male: Self { .init(rawValue: "male") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
 }
 
 /// Status of this `document` check.
-public enum GelatoDocumentReportStatus: String, Codable, Sendable {
-    case unverified
-    case verified
+public struct GelatoDocumentReportStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var unverified: Self { .init(rawValue: "unverified") }
+    public static var verified: Self { .init(rawValue: "verified") }
 }
 
 /// Type of the document.
-public enum GelatoDocumentReportType: String, Codable, Sendable {
-    case drivingLicense = "driving_license"
-    case idCard = "id_card"
-    case passport
+public struct GelatoDocumentReportType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var drivingLicense: Self { .init(rawValue: "driving_license") }
+    public static var idCard: Self { .init(rawValue: "id_card") }
+    public static var passport: Self { .init(rawValue: "passport") }
 }
 
 public struct GelatoDocumentReportList: Codable, Sendable {

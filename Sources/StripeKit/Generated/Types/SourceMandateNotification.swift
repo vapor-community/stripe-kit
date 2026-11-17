@@ -54,8 +54,14 @@ public struct SourceMandateNotification: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum SourceMandateNotificationObject: String, Codable, Sendable {
-    case sourceMandateNotification = "source_mandate_notification"
+public struct SourceMandateNotificationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var sourceMandateNotification: Self { .init(rawValue: "source_mandate_notification") }
 }
 
 public struct SourceMandateNotificationList: Codable, Sendable {

@@ -15,9 +15,15 @@ public struct QuotesResourceSubscriptionDataBillingMode: Codable, Sendable {
 }
 
 /// Controls how prorations and invoices for subscriptions are calculated and orchestrated.
-public enum QuotesResourceSubscriptionDataBillingModeType: String, Codable, Sendable {
-    case classic
-    case flexible
+public struct QuotesResourceSubscriptionDataBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var classic: Self { .init(rawValue: "classic") }
+    public static var flexible: Self { .init(rawValue: "flexible") }
 }
 
 public struct QuotesResourceSubscriptionDataBillingModeList: Codable, Sendable {

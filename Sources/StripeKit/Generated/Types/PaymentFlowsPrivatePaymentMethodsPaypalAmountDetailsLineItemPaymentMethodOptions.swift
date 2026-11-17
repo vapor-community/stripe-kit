@@ -24,10 +24,16 @@ public struct PaymentFlowsPrivatePaymentMethodsPaypalAmountDetailsLineItemPaymen
 }
 
 /// Type of the line item.
-public enum PaymentFlowsPrivatePaymentMethodsPaypalAmountDetailsLineItemPaymentMethodOptionsCategory: String, Codable, Sendable {
-    case digitalGoods = "digital_goods"
-    case donation
-    case physicalGoods = "physical_goods"
+public struct PaymentFlowsPrivatePaymentMethodsPaypalAmountDetailsLineItemPaymentMethodOptionsCategory: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var digitalGoods: Self { .init(rawValue: "digital_goods") }
+    public static var donation: Self { .init(rawValue: "donation") }
+    public static var physicalGoods: Self { .init(rawValue: "physical_goods") }
 }
 
 public struct PaymentFlowsPrivatePaymentMethodsPaypalAmountDetailsLineItemPaymentMethodOptionsList: Codable, Sendable {

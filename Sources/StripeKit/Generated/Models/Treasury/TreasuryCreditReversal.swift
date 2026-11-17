@@ -69,21 +69,39 @@ public struct TreasuryCreditReversal: Codable, Sendable {
 }
 
 /// The rails used to reverse the funds.
-public enum TreasuryCreditReversalNetwork: String, Codable, Sendable {
-    case ach
-    case stripe
+public struct TreasuryCreditReversalNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TreasuryCreditReversalObject: String, Codable, Sendable {
-    case treasuryCreditReversal = "treasury.credit_reversal"
+public struct TreasuryCreditReversalObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var treasuryCreditReversal: Self { .init(rawValue: "treasury.credit_reversal") }
 }
 
 /// Status of the CreditReversal
-public enum TreasuryCreditReversalStatus: String, Codable, Sendable {
-    case canceled
-    case posted
-    case processing
+public struct TreasuryCreditReversalStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var posted: Self { .init(rawValue: "posted") }
+    public static var processing: Self { .init(rawValue: "processing") }
 }
 
 public struct TreasuryCreditReversalList: Codable, Sendable {

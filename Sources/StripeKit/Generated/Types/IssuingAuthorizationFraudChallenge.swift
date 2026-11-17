@@ -23,23 +23,41 @@ public struct IssuingAuthorizationFraudChallenge: Codable, Sendable {
 }
 
 /// The method by which the fraud challenge was delivered to the cardholder.
-public enum IssuingAuthorizationFraudChallengeChannel: String, Codable, Sendable {
-    case sms
+public struct IssuingAuthorizationFraudChallengeChannel: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var sms: Self { .init(rawValue: "sms") }
 }
 
 /// The status of the fraud challenge.
-public enum IssuingAuthorizationFraudChallengeStatus: String, Codable, Sendable {
-    case expired
-    case pending
-    case rejected
-    case undeliverable
-    case verified
+public struct IssuingAuthorizationFraudChallengeStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var rejected: Self { .init(rawValue: "rejected") }
+    public static var undeliverable: Self { .init(rawValue: "undeliverable") }
+    public static var verified: Self { .init(rawValue: "verified") }
 }
 
 /// If the challenge is not deliverable, the reason why.
-public enum IssuingAuthorizationFraudChallengeUndeliverableReason: String, Codable, Sendable {
-    case noPhoneNumber = "no_phone_number"
-    case unsupportedPhoneNumber = "unsupported_phone_number"
+public struct IssuingAuthorizationFraudChallengeUndeliverableReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var noPhoneNumber: Self { .init(rawValue: "no_phone_number") }
+    public static var unsupportedPhoneNumber: Self { .init(rawValue: "unsupported_phone_number") }
 }
 
 public struct IssuingAuthorizationFraudChallengeList: Codable, Sendable {

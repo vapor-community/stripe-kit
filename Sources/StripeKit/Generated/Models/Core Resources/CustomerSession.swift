@@ -47,8 +47,14 @@ public struct CustomerSession: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CustomerSessionObject: String, Codable, Sendable {
-    case customerSession = "customer_session"
+public struct CustomerSessionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerSession: Self { .init(rawValue: "customer_session") }
 }
 
 public struct CustomerSessionList: Codable, Sendable {

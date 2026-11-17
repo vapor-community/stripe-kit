@@ -34,8 +34,14 @@ public struct CheckoutCustomerBalancePaymentMethodOptions: Codable, Sendable {
 
 /// The funding method type to be used when there are not enough funds in the customer balance.
 /// Permitted values include: `bank_transfer`.
-public enum CheckoutCustomerBalancePaymentMethodOptionsFundingType: String, Codable, Sendable {
-    case bankTransfer = "bank_transfer"
+public struct CheckoutCustomerBalancePaymentMethodOptionsFundingType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankTransfer: Self { .init(rawValue: "bank_transfer") }
 }
 
 /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -49,8 +55,14 @@ public enum CheckoutCustomerBalancePaymentMethodOptionsFundingType: String, Coda
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum CheckoutCustomerBalancePaymentMethodOptionsSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutCustomerBalancePaymentMethodOptionsSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct CheckoutCustomerBalancePaymentMethodOptionsList: Codable, Sendable {

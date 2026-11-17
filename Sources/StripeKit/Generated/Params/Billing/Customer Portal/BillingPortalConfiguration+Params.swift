@@ -192,13 +192,19 @@ public struct BillingPortalConfigurationCreateFeaturesCustomerUpdate: StripePara
     }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesCustomerUpdateAllowedUpdates: String, Codable, Sendable {
-    case address
-    case email
-    case name
-    case phone
-    case shipping
-    case taxId = "tax_id"
+public struct BillingPortalConfigurationCreateFeaturesCustomerUpdateAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var address: Self { .init(rawValue: "address") }
+    public static var email: Self { .init(rawValue: "email") }
+    public static var name: Self { .init(rawValue: "name") }
+    public static var phone: Self { .init(rawValue: "phone") }
+    public static var shipping: Self { .init(rawValue: "shipping") }
+    public static var taxId: Self { .init(rawValue: "tax_id") }
 }
 
 /// Information about showing the billing history in the portal.
@@ -285,26 +291,44 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancella
     }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReasonOptions: String, Codable, Sendable {
-    case customerService = "customer_service"
-    case lowQuality = "low_quality"
-    case missingFeatures = "missing_features"
-    case other
-    case switchedService = "switched_service"
-    case tooComplex = "too_complex"
-    case tooExpensive = "too_expensive"
-    case unused
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelCancellationReasonOptions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerService: Self { .init(rawValue: "customer_service") }
+    public static var lowQuality: Self { .init(rawValue: "low_quality") }
+    public static var missingFeatures: Self { .init(rawValue: "missing_features") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var switchedService: Self { .init(rawValue: "switched_service") }
+    public static var tooComplex: Self { .init(rawValue: "too_complex") }
+    public static var tooExpensive: Self { .init(rawValue: "too_expensive") }
+    public static var unused: Self { .init(rawValue: "unused") }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionCancelMode: String, Codable, Sendable {
-    case atPeriodEnd = "at_period_end"
-    case immediately
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var atPeriodEnd: Self { .init(rawValue: "at_period_end") }
+    public static var immediately: Self { .init(rawValue: "immediately") }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionCancelProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionCancelProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Information about pausing subscriptions in the portal.
@@ -341,9 +365,17 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDuration:
     }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationType: String, Codable, Sendable {
-    case indefinite
-    case intervalOptions = "interval_options"
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Allow subscriptions to be paused indefinitely.
+    public static var indefinite: Self { .init(rawValue: "indefinite") }
+    /// Require customers to choose from configured pause duration options.
+    public static var intervalOptions: Self { .init(rawValue: "interval_options") }
 }
 
 public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptions: StripeParams {
@@ -363,11 +395,17 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationI
     }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptionsInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionPauseDurationIntervalOptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 /// Information about updating subscriptions in the portal.
@@ -413,15 +451,29 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdate: Stripe
     }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateBillingCycleAnchor: String, Codable, Sendable {
-    case now
-    case unchanged
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Resets the subscription's billing cycle anchor to the current time.
+    public static var now: Self { .init(rawValue: "now") }
+    /// Keeps the subscription's billing cycle anchor unchanged.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateDefaultAllowedUpdates: String, Codable, Sendable {
-    case price
-    case promotionCode = "promotion_code"
-    case quantity
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateDefaultAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var price: Self { .init(rawValue: "price") }
+    public static var promotionCode: Self { .init(rawValue: "promotion_code") }
+    public static var quantity: Self { .init(rawValue: "quantity") }
 }
 
 public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts: StripeParams {
@@ -461,10 +513,16 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProducts
     }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Setting to control when an update should be scheduled at the end of the period instead of applying
@@ -488,14 +546,26 @@ public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateSchedule
     }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType: String, Codable, Sendable {
-    case decreasingItemAmount = "decreasing_item_amount"
-    case shorteningInterval = "shortening_interval"
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var decreasingItemAmount: Self { .init(rawValue: "decreasing_item_amount") }
+    public static var shorteningInterval: Self { .init(rawValue: "shortening_interval") }
 }
 
-public enum BillingPortalConfigurationCreateFeaturesSubscriptionUpdateTrialUpdateBehavior: String, Codable, Sendable {
-    case continueTrial = "continue_trial"
-    case endTrial = "end_trial"
+public struct BillingPortalConfigurationCreateFeaturesSubscriptionUpdateTrialUpdateBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var continueTrial: Self { .init(rawValue: "continue_trial") }
+    public static var endTrial: Self { .init(rawValue: "end_trial") }
 }
 
 /// The business information shown to customers in the portal.
@@ -607,13 +677,19 @@ public struct BillingPortalConfigurationUpdateFeaturesCustomerUpdate: StripePara
     }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesCustomerUpdateAllowedUpdates: String, Codable, Sendable {
-    case address
-    case email
-    case name
-    case phone
-    case shipping
-    case taxId = "tax_id"
+public struct BillingPortalConfigurationUpdateFeaturesCustomerUpdateAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var address: Self { .init(rawValue: "address") }
+    public static var email: Self { .init(rawValue: "email") }
+    public static var name: Self { .init(rawValue: "name") }
+    public static var phone: Self { .init(rawValue: "phone") }
+    public static var shipping: Self { .init(rawValue: "shipping") }
+    public static var taxId: Self { .init(rawValue: "tax_id") }
 }
 
 /// Information about showing the billing history in the portal.
@@ -700,26 +776,44 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancella
     }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReasonOptions: String, Codable, Sendable {
-    case customerService = "customer_service"
-    case lowQuality = "low_quality"
-    case missingFeatures = "missing_features"
-    case other
-    case switchedService = "switched_service"
-    case tooComplex = "too_complex"
-    case tooExpensive = "too_expensive"
-    case unused
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelCancellationReasonOptions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerService: Self { .init(rawValue: "customer_service") }
+    public static var lowQuality: Self { .init(rawValue: "low_quality") }
+    public static var missingFeatures: Self { .init(rawValue: "missing_features") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var switchedService: Self { .init(rawValue: "switched_service") }
+    public static var tooComplex: Self { .init(rawValue: "too_complex") }
+    public static var tooExpensive: Self { .init(rawValue: "too_expensive") }
+    public static var unused: Self { .init(rawValue: "unused") }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionCancelMode: String, Codable, Sendable {
-    case atPeriodEnd = "at_period_end"
-    case immediately
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var atPeriodEnd: Self { .init(rawValue: "at_period_end") }
+    public static var immediately: Self { .init(rawValue: "immediately") }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionCancelProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionCancelProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Information about pausing subscriptions in the portal.
@@ -756,9 +850,17 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDuration:
     }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationType: String, Codable, Sendable {
-    case indefinite
-    case intervalOptions = "interval_options"
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Allow subscriptions to be paused indefinitely.
+    public static var indefinite: Self { .init(rawValue: "indefinite") }
+    /// Require customers to choose from configured pause duration options.
+    public static var intervalOptions: Self { .init(rawValue: "interval_options") }
 }
 
 public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptions: StripeParams {
@@ -778,11 +880,17 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationI
     }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptionsInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionPauseDurationIntervalOptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 /// Information about updating subscriptions in the portal.
@@ -828,15 +936,29 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdate: Stripe
     }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateBillingCycleAnchor: String, Codable, Sendable {
-    case now
-    case unchanged
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Resets the subscription's billing cycle anchor to the current time.
+    public static var now: Self { .init(rawValue: "now") }
+    /// Keeps the subscription's billing cycle anchor unchanged.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateDefaultAllowedUpdates: String, Codable, Sendable {
-    case price
-    case promotionCode = "promotion_code"
-    case quantity
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateDefaultAllowedUpdates: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var price: Self { .init(rawValue: "price") }
+    public static var promotionCode: Self { .init(rawValue: "promotion_code") }
+    public static var quantity: Self { .init(rawValue: "quantity") }
 }
 
 public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProducts: StripeParams {
@@ -876,10 +998,16 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProducts
     }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Setting to control when an update should be scheduled at the end of the period instead of applying
@@ -903,14 +1031,26 @@ public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateSchedule
     }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType: String, Codable, Sendable {
-    case decreasingItemAmount = "decreasing_item_amount"
-    case shorteningInterval = "shortening_interval"
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateScheduleAtPeriodEndConditionsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var decreasingItemAmount: Self { .init(rawValue: "decreasing_item_amount") }
+    public static var shorteningInterval: Self { .init(rawValue: "shortening_interval") }
 }
 
-public enum BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateTrialUpdateBehavior: String, Codable, Sendable {
-    case continueTrial = "continue_trial"
-    case endTrial = "end_trial"
+public struct BillingPortalConfigurationUpdateFeaturesSubscriptionUpdateTrialUpdateBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var continueTrial: Self { .init(rawValue: "continue_trial") }
+    public static var endTrial: Self { .init(rawValue: "end_trial") }
 }
 
 /// The hosted login page for this configuration. Learn more about the portal login page in our

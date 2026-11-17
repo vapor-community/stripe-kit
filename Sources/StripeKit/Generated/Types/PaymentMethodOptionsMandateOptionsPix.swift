@@ -38,24 +38,42 @@ public struct PaymentMethodOptionsMandateOptionsPix: Codable, Sendable {
 }
 
 /// Determines if the amount includes the IOF tax.
-public enum PaymentMethodOptionsMandateOptionsPixAmountIncludesIof: String, Codable, Sendable {
-    case always
-    case never
+public struct PaymentMethodOptionsMandateOptionsPixAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Type of amount.
-public enum PaymentMethodOptionsMandateOptionsPixAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct PaymentMethodOptionsMandateOptionsPixAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 /// Schedule at which the future payments will be charged.
-public enum PaymentMethodOptionsMandateOptionsPixPaymentSchedule: String, Codable, Sendable {
-    case halfyearly
-    case monthly
-    case quarterly
-    case weekly
-    case yearly
+public struct PaymentMethodOptionsMandateOptionsPixPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var halfyearly: Self { .init(rawValue: "halfyearly") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var quarterly: Self { .init(rawValue: "quarterly") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
+    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
 public struct PaymentMethodOptionsMandateOptionsPixList: Codable, Sendable {

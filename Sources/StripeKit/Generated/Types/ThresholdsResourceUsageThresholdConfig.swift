@@ -23,8 +23,14 @@ public struct ThresholdsResourceUsageThresholdConfig: Codable, Sendable {
 }
 
 /// Defines how the alert will behave.
-public enum ThresholdsResourceUsageThresholdConfigRecurrence: String, Codable, Sendable {
-    case oneTime = "one_time"
+public struct ThresholdsResourceUsageThresholdConfigRecurrence: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var oneTime: Self { .init(rawValue: "one_time") }
 }
 
 public struct ThresholdsResourceUsageThresholdConfigList: Codable, Sendable {

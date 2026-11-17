@@ -63,18 +63,30 @@ public struct SubscriptionSchedulesResourceDefaultSettings: Codable, Sendable {
 /// billing cycle anchor is automatically modified as needed when entering the phase. For more
 /// information, see the billing cycle
 /// [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
-public enum SubscriptionSchedulesResourceDefaultSettingsBillingCycleAnchor: String, Codable, Sendable {
-    case automatic
-    case phaseStart = "phase_start"
+public struct SubscriptionSchedulesResourceDefaultSettingsBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var phaseStart: Self { .init(rawValue: "phase_start") }
 }
 
 /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
 /// to pay the underlying subscription at the end of each billing cycle using the default source
 /// attached to the customer. When sending an invoice, Stripe will email your customer an invoice with
 /// payment instructions and mark the subscription as `active`.
-public enum SubscriptionSchedulesResourceDefaultSettingsCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct SubscriptionSchedulesResourceDefaultSettingsCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 public struct SubscriptionSchedulesResourceDefaultSettingsList: Codable, Sendable {

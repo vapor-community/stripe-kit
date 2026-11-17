@@ -55,29 +55,53 @@ public struct IssuingToken: Codable, Sendable {
 }
 
 /// The token service provider / card network associated with the token.
-public enum IssuingTokenNetwork: String, Codable, Sendable {
-    case mastercard
-    case visa
+public struct IssuingTokenNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum IssuingTokenObject: String, Codable, Sendable {
-    case issuingToken = "issuing.token"
+public struct IssuingTokenObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var issuingToken: Self { .init(rawValue: "issuing.token") }
 }
 
 /// The usage state of the token.
-public enum IssuingTokenStatus: String, Codable, Sendable {
-    case active
-    case deleted
-    case requested
-    case suspended
+public struct IssuingTokenStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var deleted: Self { .init(rawValue: "deleted") }
+    public static var requested: Self { .init(rawValue: "requested") }
+    public static var suspended: Self { .init(rawValue: "suspended") }
 }
 
 /// The digital wallet for this token, if one was used.
-public enum IssuingTokenWalletProvider: String, Codable, Sendable {
-    case applePay = "apple_pay"
-    case googlePay = "google_pay"
-    case samsungPay = "samsung_pay"
+public struct IssuingTokenWalletProvider: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var applePay: Self { .init(rawValue: "apple_pay") }
+    public static var googlePay: Self { .init(rawValue: "google_pay") }
+    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
 }
 
 public struct IssuingTokenList: Codable, Sendable {

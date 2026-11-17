@@ -90,54 +90,90 @@ public struct PaymentIntentPaymentMethodOptionsCard: Codable, Sendable {
 }
 
 /// Controls when the funds will be captured from the customer's account.
-public enum PaymentIntentPaymentMethodOptionsCardCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct PaymentIntentPaymentMethodOptionsCardCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// Selected network to process this payment intent on. Depends on the available networks of the card
 /// attached to the payment intent. Can be only set confirm-time.
-public enum PaymentIntentPaymentMethodOptionsCardNetwork: String, Codable, Sendable {
-    case amex
-    case cartesBancaires = "cartes_bancaires"
-    case diners
-    case discover
-    case eftposAu = "eftpos_au"
-    case girocard
-    case interac
-    case jcb
-    case link
-    case mastercard
-    case unionpay
-    case unknown
-    case visa
+public struct PaymentIntentPaymentMethodOptionsCardNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var amex: Self { .init(rawValue: "amex") }
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var diners: Self { .init(rawValue: "diners") }
+    public static var discover: Self { .init(rawValue: "discover") }
+    public static var eftposAu: Self { .init(rawValue: "eftpos_au") }
+    public static var girocard: Self { .init(rawValue: "girocard") }
+    public static var interac: Self { .init(rawValue: "interac") }
+    public static var jcb: Self { .init(rawValue: "jcb") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var unionpay: Self { .init(rawValue: "unionpay") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 /// Request ability to [capture beyond the standard authorization validity
 /// window](https://docs.stripe.com/payments/extended-authorization) for this PaymentIntent.
-public enum PaymentIntentPaymentMethodOptionsCardRequestExtendedAuthorization: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct PaymentIntentPaymentMethodOptionsCardRequestExtendedAuthorization: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Request ability to [increment the
 /// authorization](https://docs.stripe.com/payments/incremental-authorization) for this PaymentIntent.
-public enum PaymentIntentPaymentMethodOptionsCardRequestIncrementalAuthorization: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct PaymentIntentPaymentMethodOptionsCardRequestIncrementalAuthorization: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Request ability to make [multiple captures](https://docs.stripe.com/payments/multicapture) for this
 /// PaymentIntent.
-public enum PaymentIntentPaymentMethodOptionsCardRequestMulticapture: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct PaymentIntentPaymentMethodOptionsCardRequestMulticapture: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Request ability to [overcapture](https://docs.stripe.com/payments/overcapture) for this
 /// PaymentIntent.
-public enum PaymentIntentPaymentMethodOptionsCardRequestOvercapture: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct PaymentIntentPaymentMethodOptionsCardRequestOvercapture: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for
@@ -147,17 +183,39 @@ public enum PaymentIntentPaymentMethodOptionsCardRequestOvercapture: String, Cod
 /// this value defaults to `automatic`. Read our guide on [manually requesting 3D
 /// Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more
 /// information on how this configuration interacts with Radar and our SCA Engine.
-public enum PaymentIntentPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
-    case any
-    case automatic
-    case challenge
+public struct PaymentIntentPaymentMethodOptionsCardRequestThreeDSecure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var any: Self { .init(rawValue: "any") }
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var challenge: Self { .init(rawValue: "challenge") }
 }
 
 /// Set to indicate the future transaction type usage for the card being set up.
-public enum PaymentIntentPaymentMethodOptionsCardSetupCredentialUsage: String, Codable, Sendable {
-    case installment
-    case recurring
-    case unscheduled
+public struct PaymentIntentPaymentMethodOptionsCardSetupCredentialUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Use `installment` if the payment method will be used for future off-session installment payments
+    /// that you manage. This is distinct from
+    /// [`payment_method_options.card.installments`](/api/payment_intents/create#create_payment_intent-payment_method_options-card-installments),
+    /// which is used for issuer installments like [Mexico
+    /// installments](/payments/meses-sin-intereses/accept-a-payment) and [Japan
+    /// installments](/payments/jp-installments/accept-a-payment).
+    public static var installment: Self { .init(rawValue: "installment") }
+    /// Use `recurring` if the payment method will be used for off-session payment that occurs at regularly
+    /// scheduled intervals.
+    public static var recurring: Self { .init(rawValue: "recurring") }
+    /// Use `unscheduled` if the payment method will be used for off-session payment that does not occur at
+    /// regular intervals on a scheduled date.
+    public static var unscheduled: Self { .init(rawValue: "unscheduled") }
 }
 
 /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -171,17 +229,29 @@ public enum PaymentIntentPaymentMethodOptionsCardSetupCredentialUsage: String, C
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum PaymentIntentPaymentMethodOptionsCardSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct PaymentIntentPaymentMethodOptionsCardSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// Selected usage to indicate the transaction type of the off-session payment.
-public enum PaymentIntentPaymentMethodOptionsCardStoredCredentialUsage: String, Codable, Sendable {
-    case installment
-    case recurring
-    case unscheduled
+public struct PaymentIntentPaymentMethodOptionsCardStoredCredentialUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var installment: Self { .init(rawValue: "installment") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
+    public static var unscheduled: Self { .init(rawValue: "unscheduled") }
 }
 
 public struct PaymentIntentPaymentMethodOptionsCardList: Codable, Sendable {

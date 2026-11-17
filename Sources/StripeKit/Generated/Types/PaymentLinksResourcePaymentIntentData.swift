@@ -40,16 +40,28 @@ public struct PaymentLinksResourcePaymentIntentData: Codable, Sendable {
 }
 
 /// Indicates when the funds will be captured from the customer's account.
-public enum PaymentLinksResourcePaymentIntentDataCaptureMethod: String, Codable, Sendable {
-    case automatic
-    case automaticAsync = "automatic_async"
-    case manual
+public struct PaymentLinksResourcePaymentIntentDataCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var automaticAsync: Self { .init(rawValue: "automatic_async") }
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// Indicates that you intend to make future payments with the payment method collected during checkout.
-public enum PaymentLinksResourcePaymentIntentDataSetupFutureUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct PaymentLinksResourcePaymentIntentDataSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 public struct PaymentLinksResourcePaymentIntentDataList: Codable, Sendable {

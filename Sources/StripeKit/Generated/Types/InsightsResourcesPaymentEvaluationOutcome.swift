@@ -27,12 +27,18 @@ public struct InsightsResourcesPaymentEvaluationOutcome: Codable, Sendable {
 }
 
 /// Indicates the outcome of the payment evaluation.
-public enum InsightsResourcesPaymentEvaluationOutcomeType: String, Codable, Sendable {
-    case failed
-    case merchantBlocked = "merchant_blocked"
-    case rejected
-    case rerouted
-    case succeeded
+public struct InsightsResourcesPaymentEvaluationOutcomeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var merchantBlocked: Self { .init(rawValue: "merchant_blocked") }
+    public static var rejected: Self { .init(rawValue: "rejected") }
+    public static var rerouted: Self { .init(rawValue: "rerouted") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct InsightsResourcesPaymentEvaluationOutcomeList: Codable, Sendable {

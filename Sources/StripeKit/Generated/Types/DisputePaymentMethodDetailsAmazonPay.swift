@@ -17,9 +17,15 @@ public struct DisputePaymentMethodDetailsAmazonPay: Codable, Sendable {
 }
 
 /// The AmazonPay dispute type, chargeback or claim
-public enum DisputePaymentMethodDetailsAmazonPayDisputeType: String, Codable, Sendable {
-    case chargeback
-    case claim
+public struct DisputePaymentMethodDetailsAmazonPayDisputeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeback: Self { .init(rawValue: "chargeback") }
+    public static var claim: Self { .init(rawValue: "claim") }
 }
 
 public struct DisputePaymentMethodDetailsAmazonPayList: Codable, Sendable {

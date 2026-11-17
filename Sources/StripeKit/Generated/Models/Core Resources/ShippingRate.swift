@@ -59,21 +59,39 @@ public struct ShippingRate: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ShippingRateObject: String, Codable, Sendable {
-    case shippingRate = "shipping_rate"
+public struct ShippingRateObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var shippingRate: Self { .init(rawValue: "shipping_rate") }
 }
 
 /// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of
 /// `inclusive`, `exclusive`, or `unspecified`.
-public enum ShippingRateTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct ShippingRateTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// The type of calculation to use on the shipping rate.
-public enum ShippingRateType: String, Codable, Sendable {
-    case fixedAmount = "fixed_amount"
+public struct ShippingRateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixedAmount: Self { .init(rawValue: "fixed_amount") }
 }
 
 public struct ShippingRateList: Codable, Sendable {

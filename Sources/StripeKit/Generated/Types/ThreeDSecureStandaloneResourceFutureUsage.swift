@@ -16,10 +16,16 @@ public struct ThreeDSecureStandaloneResourceFutureUsage: Codable, Sendable {
 }
 
 /// The type of future usage declared for this 3DS Authentication.
-public enum ThreeDSecureStandaloneResourceFutureUsageType: String, Codable, Sendable {
-    case cardOnFile = "card_on_file"
-    case installment
-    case recurring
+public struct ThreeDSecureStandaloneResourceFutureUsageType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cardOnFile: Self { .init(rawValue: "card_on_file") }
+    public static var installment: Self { .init(rawValue: "installment") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
 }
 
 public struct ThreeDSecureStandaloneResourceFutureUsageList: Codable, Sendable {

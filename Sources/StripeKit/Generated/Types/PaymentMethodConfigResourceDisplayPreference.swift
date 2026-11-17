@@ -18,16 +18,28 @@ public struct PaymentMethodConfigResourceDisplayPreference: Codable, Sendable {
 }
 
 /// The account's display preference.
-public enum PaymentMethodConfigResourceDisplayPreferencePreference: String, Codable, Sendable {
-    case none
-    case off
-    case on
+public struct PaymentMethodConfigResourceDisplayPreferencePreference: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 /// The effective display preference value.
-public enum PaymentMethodConfigResourceDisplayPreferenceValue: String, Codable, Sendable {
-    case off
-    case on
+public struct PaymentMethodConfigResourceDisplayPreferenceValue: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var off: Self { .init(rawValue: "off") }
+    public static var on: Self { .init(rawValue: "on") }
 }
 
 public struct PaymentMethodConfigResourceDisplayPreferenceList: Codable, Sendable {

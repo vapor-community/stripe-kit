@@ -34,12 +34,18 @@ public struct PaymentIntentNextActionDisplayBankTransferInstructions: Codable, S
 }
 
 /// Type of bank transfer
-public enum PaymentIntentNextActionDisplayBankTransferInstructionsType: String, Codable, Sendable {
-    case euBankTransfer = "eu_bank_transfer"
-    case gbBankTransfer = "gb_bank_transfer"
-    case jpBankTransfer = "jp_bank_transfer"
-    case mxBankTransfer = "mx_bank_transfer"
-    case usBankTransfer = "us_bank_transfer"
+public struct PaymentIntentNextActionDisplayBankTransferInstructionsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var euBankTransfer: Self { .init(rawValue: "eu_bank_transfer") }
+    public static var gbBankTransfer: Self { .init(rawValue: "gb_bank_transfer") }
+    public static var jpBankTransfer: Self { .init(rawValue: "jp_bank_transfer") }
+    public static var mxBankTransfer: Self { .init(rawValue: "mx_bank_transfer") }
+    public static var usBankTransfer: Self { .init(rawValue: "us_bank_transfer") }
 }
 
 public struct PaymentIntentNextActionDisplayBankTransferInstructionsList: Codable, Sendable {

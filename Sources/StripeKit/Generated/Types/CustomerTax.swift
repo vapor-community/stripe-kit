@@ -27,20 +27,32 @@ public struct CustomerTax: Codable, Sendable {
 }
 
 /// Surfaces if automatic tax computation is possible given the current customer location information.
-public enum CustomerTaxAutomaticTax: String, Codable, Sendable {
-    case failed
-    case notCollecting = "not_collecting"
-    case supported
-    case unrecognizedLocation = "unrecognized_location"
+public struct CustomerTaxAutomaticTax: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var notCollecting: Self { .init(rawValue: "not_collecting") }
+    public static var supported: Self { .init(rawValue: "supported") }
+    public static var unrecognizedLocation: Self { .init(rawValue: "unrecognized_location") }
 }
 
 /// The tax calculation provider used for location resolution. Defaults to `stripe` when not using a
 /// [third-party provider](/tax/third-party-apps).
-public enum CustomerTaxProvider: String, Codable, Sendable {
-    case anrok
-    case avalara
-    case sphere
-    case stripe
+public struct CustomerTaxProvider: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var anrok: Self { .init(rawValue: "anrok") }
+    public static var avalara: Self { .init(rawValue: "avalara") }
+    public static var sphere: Self { .init(rawValue: "sphere") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 public struct CustomerTaxList: Codable, Sendable {

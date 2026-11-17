@@ -29,11 +29,17 @@ public struct QuotesResourceRecurring: Codable, Sendable {
 }
 
 /// The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
-public enum QuotesResourceRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct QuotesResourceRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 public struct QuotesResourceRecurringList: Codable, Sendable {

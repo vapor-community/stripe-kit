@@ -27,16 +27,28 @@ public struct MandateAcssDebit: Codable, Sendable {
 }
 
 /// Payment schedule for the mandate.
-public enum MandateAcssDebitPaymentSchedule: String, Codable, Sendable {
-    case combined
-    case interval
-    case sporadic
+public struct MandateAcssDebitPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var combined: Self { .init(rawValue: "combined") }
+    public static var interval: Self { .init(rawValue: "interval") }
+    public static var sporadic: Self { .init(rawValue: "sporadic") }
 }
 
 /// Transaction type of the mandate.
-public enum MandateAcssDebitTransactionType: String, Codable, Sendable {
-    case business
-    case personal
+public struct MandateAcssDebitTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var business: Self { .init(rawValue: "business") }
+    public static var personal: Self { .init(rawValue: "personal") }
 }
 
 public struct MandateAcssDebitList: Codable, Sendable {

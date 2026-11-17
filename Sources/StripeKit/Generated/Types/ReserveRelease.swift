@@ -64,28 +64,56 @@ public struct ReserveRelease: Codable, Sendable {
 }
 
 /// Indicates which party created this ReserveRelease.
-public enum ReserveReleaseCreatedBy: String, Codable, Sendable {
-    case application
-    case stripe
+public struct ReserveReleaseCreatedBy: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var application: Self { .init(rawValue: "application") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 /// The balance destination to which the released funds are sent.
-public enum ReserveReleaseDestination: String, Codable, Sendable {
-    case other
-    case payments
+public struct ReserveReleaseDestination: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var other: Self { .init(rawValue: "other") }
+    public static var payments: Self { .init(rawValue: "payments") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ReserveReleaseObject: String, Codable, Sendable {
-    case reserveRelease = "reserve.release"
+public struct ReserveReleaseObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var reserveRelease: Self { .init(rawValue: "reserve.release") }
 }
 
 /// The reason for the ReserveRelease, indicating why the funds were released.
-public enum ReserveReleaseReason: String, Codable, Sendable {
-    case holdExpired = "hold_expired"
-    case holdReleasedEarly = "hold_released_early"
-    case holdReversed = "hold_reversed"
-    case planDisabled = "plan_disabled"
+public struct ReserveReleaseReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The ReserveHold expired automatically according to its schedule.
+    public static var holdExpired: Self { .init(rawValue: "hold_expired") }
+    /// The ReserveHold was manually released before its scheduled release.
+    public static var holdReleasedEarly: Self { .init(rawValue: "hold_released_early") }
+    /// The ReserveHold was reversed due to a refund or dispute.
+    public static var holdReversed: Self { .init(rawValue: "hold_reversed") }
+    /// The ReserveHold was released due to its associated plan being disabled.
+    public static var planDisabled: Self { .init(rawValue: "plan_disabled") }
 }
 
 public struct ReserveReleaseList: Codable, Sendable {

@@ -56,8 +56,14 @@ public struct Token: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TokenObject: String, Codable, Sendable {
-    case token
+public struct TokenObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var token: Self { .init(rawValue: "token") }
 }
 
 public struct TokenList: Codable, Sendable {

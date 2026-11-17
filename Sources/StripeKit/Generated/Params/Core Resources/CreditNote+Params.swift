@@ -331,9 +331,15 @@ public struct CreditNoteVoidCreditNoteParams: StripeParams {
     }
 }
 
-public enum CreditNoteCreateEmailType: String, Codable, Sendable {
-    case creditNote = "credit_note"
-    case none
+public struct CreditNoteCreateEmailType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditNote: Self { .init(rawValue: "credit_note") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct CreditNoteCreateLines: StripeParams {
@@ -395,9 +401,15 @@ public struct CreditNoteCreateLines: StripeParams {
     }
 }
 
-public enum CreditNoteCreateLinesType: String, Codable, Sendable {
-    case customLineItem = "custom_line_item"
-    case invoiceLineItem = "invoice_line_item"
+public struct CreditNoteCreateLinesType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customLineItem: Self { .init(rawValue: "custom_line_item") }
+    public static var invoiceLineItem: Self { .init(rawValue: "invoice_line_item") }
 }
 
 public struct CreditNoteCreateLinesTaxAmounts: StripeParams {
@@ -422,11 +434,17 @@ public struct CreditNoteCreateLinesTaxAmounts: StripeParams {
     }
 }
 
-public enum CreditNoteCreateReason: String, Codable, Sendable {
-    case duplicate
-    case fraudulent
-    case orderChange = "order_change"
-    case productUnsatisfactory = "product_unsatisfactory"
+public struct CreditNoteCreateReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var orderChange: Self { .init(rawValue: "order_change") }
+    public static var productUnsatisfactory: Self { .init(rawValue: "product_unsatisfactory") }
 }
 
 public struct CreditNoteCreateRefunds: StripeParams {
@@ -477,9 +495,15 @@ public struct CreditNoteCreateRefundsPaymentRecordRefund: StripeParams {
     }
 }
 
-public enum CreditNoteCreateRefundsType: String, Codable, Sendable {
-    case paymentRecordRefund = "payment_record_refund"
-    case refund
+public struct CreditNoteCreateRefundsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentRecordRefund: Self { .init(rawValue: "payment_record_refund") }
+    public static var refund: Self { .init(rawValue: "refund") }
 }
 
 /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
@@ -497,9 +521,15 @@ public struct CreditNoteCreateShippingCost: StripeParams {
     }
 }
 
-public enum CreditNotePreviewEmailType: String, Codable, Sendable {
-    case creditNote = "credit_note"
-    case none
+public struct CreditNotePreviewEmailType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditNote: Self { .init(rawValue: "credit_note") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct CreditNotePreviewLines: StripeParams {
@@ -561,9 +591,15 @@ public struct CreditNotePreviewLines: StripeParams {
     }
 }
 
-public enum CreditNotePreviewLinesType: String, Codable, Sendable {
-    case customLineItem = "custom_line_item"
-    case invoiceLineItem = "invoice_line_item"
+public struct CreditNotePreviewLinesType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customLineItem: Self { .init(rawValue: "custom_line_item") }
+    public static var invoiceLineItem: Self { .init(rawValue: "invoice_line_item") }
 }
 
 public struct CreditNotePreviewLinesTaxAmounts: StripeParams {
@@ -588,11 +624,17 @@ public struct CreditNotePreviewLinesTaxAmounts: StripeParams {
     }
 }
 
-public enum CreditNotePreviewReason: String, Codable, Sendable {
-    case duplicate
-    case fraudulent
-    case orderChange = "order_change"
-    case productUnsatisfactory = "product_unsatisfactory"
+public struct CreditNotePreviewReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var orderChange: Self { .init(rawValue: "order_change") }
+    public static var productUnsatisfactory: Self { .init(rawValue: "product_unsatisfactory") }
 }
 
 public struct CreditNotePreviewRefunds: StripeParams {
@@ -643,9 +685,15 @@ public struct CreditNotePreviewRefundsPaymentRecordRefund: StripeParams {
     }
 }
 
-public enum CreditNotePreviewRefundsType: String, Codable, Sendable {
-    case paymentRecordRefund = "payment_record_refund"
-    case refund
+public struct CreditNotePreviewRefundsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentRecordRefund: Self { .init(rawValue: "payment_record_refund") }
+    public static var refund: Self { .init(rawValue: "refund") }
 }
 
 /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the
@@ -663,9 +711,15 @@ public struct CreditNotePreviewShippingCost: StripeParams {
     }
 }
 
-public enum CreditNotePreviewLinesEmailType: String, Codable, Sendable {
-    case creditNote = "credit_note"
-    case none
+public struct CreditNotePreviewLinesEmailType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditNote: Self { .init(rawValue: "credit_note") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct CreditNotePreviewLinesLines: StripeParams {
@@ -727,9 +781,15 @@ public struct CreditNotePreviewLinesLines: StripeParams {
     }
 }
 
-public enum CreditNotePreviewLinesLinesType: String, Codable, Sendable {
-    case customLineItem = "custom_line_item"
-    case invoiceLineItem = "invoice_line_item"
+public struct CreditNotePreviewLinesLinesType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customLineItem: Self { .init(rawValue: "custom_line_item") }
+    public static var invoiceLineItem: Self { .init(rawValue: "invoice_line_item") }
 }
 
 public struct CreditNotePreviewLinesLinesTaxAmounts: StripeParams {
@@ -754,11 +814,17 @@ public struct CreditNotePreviewLinesLinesTaxAmounts: StripeParams {
     }
 }
 
-public enum CreditNotePreviewLinesReason: String, Codable, Sendable {
-    case duplicate
-    case fraudulent
-    case orderChange = "order_change"
-    case productUnsatisfactory = "product_unsatisfactory"
+public struct CreditNotePreviewLinesReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var orderChange: Self { .init(rawValue: "order_change") }
+    public static var productUnsatisfactory: Self { .init(rawValue: "product_unsatisfactory") }
 }
 
 public struct CreditNotePreviewLinesRefunds: StripeParams {
@@ -809,9 +875,15 @@ public struct CreditNotePreviewLinesRefundsPaymentRecordRefund: StripeParams {
     }
 }
 
-public enum CreditNotePreviewLinesRefundsType: String, Codable, Sendable {
-    case paymentRecordRefund = "payment_record_refund"
-    case refund
+public struct CreditNotePreviewLinesRefundsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentRecordRefund: Self { .init(rawValue: "payment_record_refund") }
+    public static var refund: Self { .init(rawValue: "refund") }
 }
 
 /// When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the

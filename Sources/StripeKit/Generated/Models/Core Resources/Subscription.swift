@@ -238,14 +238,26 @@ public struct Subscription: Codable, Sendable {
 /// to pay this subscription at the end of the cycle using the default source attached to the customer.
 /// When sending an invoice, Stripe will email your customer an invoice with payment instructions and
 /// mark the subscription as `active`.
-public enum SubscriptionCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct SubscriptionCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum SubscriptionObject: String, Codable, Sendable {
-    case subscription
+public struct SubscriptionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
 /// Possible values are `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`,
@@ -272,15 +284,21 @@ public enum SubscriptionObject: String, Codable, Sendable {
 /// subsequent invoices will be attempted (invoices will be created, but then immediately automatically
 /// closed). After receiving updated payment information from a customer, you may choose to reopen and
 /// pay their closed invoices.
-public enum SubscriptionStatus: String, Codable, Sendable {
-    case active
-    case canceled
-    case incomplete
-    case incompleteExpired = "incomplete_expired"
-    case pastDue = "past_due"
-    case paused
-    case trialing
-    case unpaid
+public struct SubscriptionStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var incomplete: Self { .init(rawValue: "incomplete") }
+    public static var incompleteExpired: Self { .init(rawValue: "incomplete_expired") }
+    public static var pastDue: Self { .init(rawValue: "past_due") }
+    public static var paused: Self { .init(rawValue: "paused") }
+    public static var trialing: Self { .init(rawValue: "trialing") }
+    public static var unpaid: Self { .init(rawValue: "unpaid") }
 }
 
 public struct SubscriptionList: Codable, Sendable {

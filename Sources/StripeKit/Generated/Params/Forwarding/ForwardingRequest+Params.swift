@@ -77,12 +77,18 @@ public struct ForwardingRequestListParams: StripeParams {
     }
 }
 
-public enum ForwardingRequestCreateReplacements: String, Codable, Sendable {
-    case cardCvc = "card_cvc"
-    case cardExpiry = "card_expiry"
-    case cardNumber = "card_number"
-    case cardholderName = "cardholder_name"
-    case requestSignature = "request_signature"
+public struct ForwardingRequestCreateReplacements: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cardCvc: Self { .init(rawValue: "card_cvc") }
+    public static var cardExpiry: Self { .init(rawValue: "card_expiry") }
+    public static var cardNumber: Self { .init(rawValue: "card_number") }
+    public static var cardholderName: Self { .init(rawValue: "cardholder_name") }
+    public static var requestSignature: Self { .init(rawValue: "request_signature") }
 }
 
 /// The request body and headers to be sent to the destination endpoint.

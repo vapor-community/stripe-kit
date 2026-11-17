@@ -96,8 +96,14 @@ public struct TreasuryOutboundTransfer: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TreasuryOutboundTransferObject: String, Codable, Sendable {
-    case treasuryOutboundTransfer = "treasury.outbound_transfer"
+public struct TreasuryOutboundTransferObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var treasuryOutboundTransfer: Self { .init(rawValue: "treasury.outbound_transfer") }
 }
 
 /// Current status of the OutboundTransfer: `processing`, `failed`, `canceled`, `posted`, `returned`. An
@@ -105,12 +111,18 @@ public enum TreasuryOutboundTransferObject: String, Codable, Sendable {
 /// `posted` once the OutboundTransfer has been "confirmed" and funds have left the account, or to
 /// `failed` or `canceled`. If an OutboundTransfer fails to arrive at its destination, its status will
 /// change to `returned`.
-public enum TreasuryOutboundTransferStatus: String, Codable, Sendable {
-    case canceled
-    case failed
-    case posted
-    case processing
-    case returned
+public struct TreasuryOutboundTransferStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var posted: Self { .init(rawValue: "posted") }
+    public static var processing: Self { .init(rawValue: "processing") }
+    public static var returned: Self { .init(rawValue: "returned") }
 }
 
 public struct TreasuryOutboundTransferList: Codable, Sendable {

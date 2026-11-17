@@ -55,9 +55,15 @@ public struct BillingCreditBalanceSummaryRetrieveFilter: StripeParams {
     }
 }
 
-public enum BillingCreditBalanceSummaryRetrieveFilterType: String, Codable, Sendable {
-    case applicabilityScope = "applicability_scope"
-    case creditGrant = "credit_grant"
+public struct BillingCreditBalanceSummaryRetrieveFilterType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var applicabilityScope: Self { .init(rawValue: "applicability_scope") }
+    public static var creditGrant: Self { .init(rawValue: "credit_grant") }
 }
 
 /// The billing credit applicability scope for which to fetch credit balance summary.
@@ -80,8 +86,14 @@ public struct BillingCreditBalanceSummaryRetrieveFilterApplicabilityScope: Strip
     }
 }
 
-public enum BillingCreditBalanceSummaryRetrieveFilterApplicabilityScopePriceType: String, Codable, Sendable {
-    case metered
+public struct BillingCreditBalanceSummaryRetrieveFilterApplicabilityScopePriceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var metered: Self { .init(rawValue: "metered") }
 }
 
 public struct BillingCreditBalanceSummaryRetrieveFilterApplicabilityScopePrices: StripeParams {

@@ -18,11 +18,17 @@ public struct InsightsResourcesPaymentEvaluationEarlyFraudWarningReceived: Codab
 }
 
 /// The type of fraud labeled by the issuer.
-public enum InsightsResourcesPaymentEvaluationEarlyFraudWarningReceivedFraudType: String, Codable, Sendable {
-    case madeWithLostCard = "made_with_lost_card"
-    case madeWithStolenCard = "made_with_stolen_card"
-    case other
-    case unauthorizedUseOfCard = "unauthorized_use_of_card"
+public struct InsightsResourcesPaymentEvaluationEarlyFraudWarningReceivedFraudType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var madeWithLostCard: Self { .init(rawValue: "made_with_lost_card") }
+    public static var madeWithStolenCard: Self { .init(rawValue: "made_with_stolen_card") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var unauthorizedUseOfCard: Self { .init(rawValue: "unauthorized_use_of_card") }
 }
 
 public struct InsightsResourcesPaymentEvaluationEarlyFraudWarningReceivedList: Codable, Sendable {

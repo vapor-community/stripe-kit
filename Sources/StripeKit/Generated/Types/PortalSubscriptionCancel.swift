@@ -26,17 +26,29 @@ public struct PortalSubscriptionCancel: Codable, Sendable {
 }
 
 /// Whether to cancel subscriptions immediately or at the end of the billing period.
-public enum PortalSubscriptionCancelMode: String, Codable, Sendable {
-    case atPeriodEnd = "at_period_end"
-    case immediately
+public struct PortalSubscriptionCancelMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var atPeriodEnd: Self { .init(rawValue: "at_period_end") }
+    public static var immediately: Self { .init(rawValue: "immediately") }
 }
 
 /// Whether to create prorations when canceling subscriptions. Possible values are `none` and
 /// `create_prorations`.
-public enum PortalSubscriptionCancelProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct PortalSubscriptionCancelProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct PortalSubscriptionCancelList: Codable, Sendable {

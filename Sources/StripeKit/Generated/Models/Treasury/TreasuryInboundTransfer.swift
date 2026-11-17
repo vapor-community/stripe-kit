@@ -92,19 +92,31 @@ public struct TreasuryInboundTransfer: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TreasuryInboundTransferObject: String, Codable, Sendable {
-    case treasuryInboundTransfer = "treasury.inbound_transfer"
+public struct TreasuryInboundTransferObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var treasuryInboundTransfer: Self { .init(rawValue: "treasury.inbound_transfer") }
 }
 
 /// Status of the InboundTransfer: `processing`, `succeeded`, `failed`, and `canceled`. An
 /// InboundTransfer is `processing` if it is created and pending. The status changes to `succeeded` once
 /// the funds have been "confirmed" and a `transaction` is created and posted. The status changes to
 /// `failed` if the transfer fails.
-public enum TreasuryInboundTransferStatus: String, Codable, Sendable {
-    case canceled
-    case failed
-    case processing
-    case succeeded
+public struct TreasuryInboundTransferStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var processing: Self { .init(rawValue: "processing") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct TreasuryInboundTransferList: Codable, Sendable {

@@ -17,8 +17,14 @@ public struct DeletedWebhookEndpoint: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DeletedWebhookEndpointObject: String, Codable, Sendable {
-    case webhookEndpoint = "webhook_endpoint"
+public struct DeletedWebhookEndpointObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var webhookEndpoint: Self { .init(rawValue: "webhook_endpoint") }
 }
 
 public struct DeletedWebhookEndpointList: Codable, Sendable {

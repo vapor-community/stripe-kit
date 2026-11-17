@@ -36,8 +36,14 @@ public struct CashBalanceUpdateSettings: StripeParams {
     }
 }
 
-public enum CashBalanceUpdateSettingsReconciliationMode: String, Codable, Sendable {
-    case automatic
-    case manual
-    case merchantDefault = "merchant_default"
+public struct CashBalanceUpdateSettingsReconciliationMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var merchantDefault: Self { .init(rawValue: "merchant_default") }
 }

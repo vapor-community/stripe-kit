@@ -54,48 +54,72 @@ public struct ThreeDSecureStandaloneResourceOutcomeDetails: Codable, Sendable {
 }
 
 /// TransStatus field on the ARes
-public enum ThreeDSecureStandaloneResourceOutcomeDetailsAresTransStatus: String, Codable, Sendable {
-    case a = "A"
-    case c = "C"
-    case d = "D"
-    case i = "I"
-    case n = "N"
-    case r = "R"
-    case s = "S"
-    case u = "U"
-    case y = "Y"
+public struct ThreeDSecureStandaloneResourceOutcomeDetailsAresTransStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var a: Self { .init(rawValue: "A") }
+    public static var c: Self { .init(rawValue: "C") }
+    public static var d: Self { .init(rawValue: "D") }
+    public static var i: Self { .init(rawValue: "I") }
+    public static var n: Self { .init(rawValue: "N") }
+    public static var r: Self { .init(rawValue: "R") }
+    public static var s: Self { .init(rawValue: "S") }
+    public static var u: Self { .init(rawValue: "U") }
+    public static var y: Self { .init(rawValue: "Y") }
 }
 
 /// The 3DS protocol version used for this 3DS Authentication.
-public enum ThreeDSecureStandaloneResourceOutcomeDetailsProtocolVersion: String, Codable, Sendable {
-    case v210 = "2.1.0"
-    case v220 = "2.2.0"
-    case v231 = "2.3.1"
+public struct ThreeDSecureStandaloneResourceOutcomeDetailsProtocolVersion: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var v210: Self { .init(rawValue: "2.1.0") }
+    public static var v220: Self { .init(rawValue: "2.2.0") }
+    public static var v231: Self { .init(rawValue: "2.3.1") }
 }
 
 /// The indicator provided to the issuer by Stripe in the AReq that indicates whether a challenge is
 /// requested for this Authentication. This indicator should match the flow_preference you specified but
 /// may be overridden (for compliance reasons for example).
-public enum ThreeDSecureStandaloneResourceOutcomeDetailsRequestorChallengeIndicator: String, Codable, Sendable {
-    case v01 = "01"
-    case v02 = "02"
-    case v03 = "03"
-    case v04 = "04"
-    case v05 = "05"
-    case v06 = "06"
+public struct ThreeDSecureStandaloneResourceOutcomeDetailsRequestorChallengeIndicator: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var v01: Self { .init(rawValue: "01") }
+    public static var v02: Self { .init(rawValue: "02") }
+    public static var v03: Self { .init(rawValue: "03") }
+    public static var v04: Self { .init(rawValue: "04") }
+    public static var v05: Self { .init(rawValue: "05") }
+    public static var v06: Self { .init(rawValue: "06") }
 }
 
 /// TransStatus field on the RReq
-public enum ThreeDSecureStandaloneResourceOutcomeDetailsRreqTransStatus: String, Codable, Sendable {
-    case a = "A"
-    case c = "C"
-    case d = "D"
-    case i = "I"
-    case n = "N"
-    case r = "R"
-    case s = "S"
-    case u = "U"
-    case y = "Y"
+public struct ThreeDSecureStandaloneResourceOutcomeDetailsRreqTransStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var a: Self { .init(rawValue: "A") }
+    public static var c: Self { .init(rawValue: "C") }
+    public static var d: Self { .init(rawValue: "D") }
+    public static var i: Self { .init(rawValue: "I") }
+    public static var n: Self { .init(rawValue: "N") }
+    public static var r: Self { .init(rawValue: "R") }
+    public static var s: Self { .init(rawValue: "S") }
+    public static var u: Self { .init(rawValue: "U") }
+    public static var y: Self { .init(rawValue: "Y") }
 }
 
 public struct ThreeDSecureStandaloneResourceOutcomeDetailsList: Codable, Sendable {

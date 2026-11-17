@@ -13,12 +13,18 @@ public struct TaxProductResourceTaxAssociationTransactionAttemptsResourceErrored
 }
 
 /// Details on why we couldn't commit the tax transaction.
-public enum TaxProductResourceTaxAssociationTransactionAttemptsResourceErroredReason: String, Codable, Sendable {
-    case anotherPaymentAssociatedWithCalculation = "another_payment_associated_with_calculation"
-    case calculationExpired = "calculation_expired"
-    case currencyMismatch = "currency_mismatch"
-    case originalTransactionVoided = "original_transaction_voided"
-    case uniqueReferenceViolation = "unique_reference_violation"
+public struct TaxProductResourceTaxAssociationTransactionAttemptsResourceErroredReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var anotherPaymentAssociatedWithCalculation: Self { .init(rawValue: "another_payment_associated_with_calculation") }
+    public static var calculationExpired: Self { .init(rawValue: "calculation_expired") }
+    public static var currencyMismatch: Self { .init(rawValue: "currency_mismatch") }
+    public static var originalTransactionVoided: Self { .init(rawValue: "original_transaction_voided") }
+    public static var uniqueReferenceViolation: Self { .init(rawValue: "unique_reference_violation") }
 }
 
 public struct TaxProductResourceTaxAssociationTransactionAttemptsResourceErroredList: Codable, Sendable {

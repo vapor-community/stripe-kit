@@ -17,8 +17,14 @@ public struct SubscriptionsResourceBillingSchedulesAppliesTo: Codable, Sendable 
 }
 
 /// Controls which subscription items the billing schedule applies to.
-public enum SubscriptionsResourceBillingSchedulesAppliesToType: String, Codable, Sendable {
-    case price
+public struct SubscriptionsResourceBillingSchedulesAppliesToType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var price: Self { .init(rawValue: "price") }
 }
 
 public struct SubscriptionsResourceBillingSchedulesAppliesToList: Codable, Sendable {

@@ -17,11 +17,17 @@ public struct InvoicePaymentMethodOptionsBancontact: Codable, Sendable {
 }
 
 /// Preferred language of the Bancontact authorization page that the customer is redirected to.
-public enum InvoicePaymentMethodOptionsBancontactPreferredLanguage: String, Codable, Sendable {
-    case de
-    case en
-    case fr
-    case nl
+public struct InvoicePaymentMethodOptionsBancontactPreferredLanguage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var de: Self { .init(rawValue: "de") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var nl: Self { .init(rawValue: "nl") }
 }
 
 public struct InvoicePaymentMethodOptionsBancontactList: Codable, Sendable {

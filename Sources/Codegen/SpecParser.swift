@@ -286,7 +286,7 @@ struct SpecParser {
         switch property.type {
         case "string":
             if let enumCases = property.enum {
-                return .enum(cases: enumCases)
+                return .enum(cases: enumCases, descriptions: property.enumDescriptions ?? [:])
             }
             return .string
         case "integer":
@@ -369,7 +369,7 @@ struct SpecParser {
         // If only a string variant exists, it's a string
         if variants.count == 1, variants.first?.type == "string" {
             if let enumCases = variants.first?.enum {
-                return .enum(cases: enumCases)
+                return .enum(cases: enumCases, descriptions: variants.first?.enumDescriptions ?? [:])
             }
             return .string
         }

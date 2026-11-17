@@ -140,15 +140,27 @@ public struct CustomerSessionCreateComponentsCustomerSheetFeatures: StripeParams
     }
 }
 
-public enum CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodAllowRedisplayFilters: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodRemove: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionCreateComponentsCustomerSheetFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// Configuration for the mobile payment element.
@@ -210,31 +222,61 @@ public struct CustomerSessionCreateComponentsMobilePaymentElementFeatures: Strip
     }
 }
 
-public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodAllowRedisplayFilters: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRedisplay: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRemove: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSave: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public enum CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSaveAllowRedisplayOverride: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct CustomerSessionCreateComponentsMobilePaymentElementFeaturesPaymentMethodSaveAllowRedisplayOverride: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Configuration for the Payment Element.
@@ -305,30 +347,60 @@ public struct CustomerSessionCreateComponentsPaymentElementFeatures: StripeParam
     }
 }
 
-public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRedisplay: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRemove: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSave: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public enum CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSaveUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CustomerSessionCreateComponentsPaymentElementFeaturesPaymentMethodSaveUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// Configuration for the pricing table.

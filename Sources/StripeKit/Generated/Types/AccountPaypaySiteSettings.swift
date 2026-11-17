@@ -23,10 +23,16 @@ public struct AccountPaypaySiteSettings: Codable, Sendable {
 }
 
 /// The status of your business's website.
-public enum AccountPaypaySiteSettingsType: String, Codable, Sendable {
-    case accessible
-    case inDevelopment = "in_development"
-    case restricted
+public struct AccountPaypaySiteSettingsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accessible: Self { .init(rawValue: "accessible") }
+    public static var inDevelopment: Self { .init(rawValue: "in_development") }
+    public static var restricted: Self { .init(rawValue: "restricted") }
 }
 
 public struct AccountPaypaySiteSettingsList: Codable, Sendable {

@@ -28,9 +28,15 @@ public struct IssuingDisputeOtherEvidence: Codable, Sendable {
 }
 
 /// Whether the product was a merchandise or service.
-public enum IssuingDisputeOtherEvidenceProductType: String, Codable, Sendable {
-    case merchandise
-    case service
+public struct IssuingDisputeOtherEvidenceProductType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var service: Self { .init(rawValue: "service") }
 }
 
 public struct IssuingDisputeOtherEvidenceList: Codable, Sendable {

@@ -59,7 +59,13 @@ public struct BillingMeterEventSummaryListParams: StripeParams {
     }
 }
 
-public enum BillingMeterEventSummaryListValueGroupingWindow: String, Codable, Sendable {
-    case day
-    case hour
+public struct BillingMeterEventSummaryListValueGroupingWindow: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
 }

@@ -26,17 +26,29 @@ public struct BankConnectionsResourceAccountNumberDetails: Codable, Sendable {
 }
 
 /// The type of account number associated with the account.
-public enum BankConnectionsResourceAccountNumberDetailsIdentifierType: String, Codable, Sendable {
-    case accountNumber = "account_number"
-    case tokenizedAccountNumber = "tokenized_account_number"
+public struct BankConnectionsResourceAccountNumberDetailsIdentifierType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountNumber: Self { .init(rawValue: "account_number") }
+    public static var tokenizedAccountNumber: Self { .init(rawValue: "tokenized_account_number") }
 }
 
 /// Whether the account number is currently active and usable for transactions.
-public enum BankConnectionsResourceAccountNumberDetailsStatus: String, Codable, Sendable {
-    case deactivated
-    case expired
-    case pending
-    case transactable
+public struct BankConnectionsResourceAccountNumberDetailsStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var deactivated: Self { .init(rawValue: "deactivated") }
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var transactable: Self { .init(rawValue: "transactable") }
 }
 
 public struct BankConnectionsResourceAccountNumberDetailsList: Codable, Sendable {

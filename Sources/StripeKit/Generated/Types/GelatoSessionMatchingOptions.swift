@@ -15,15 +15,27 @@ public struct GelatoSessionMatchingOptions: Codable, Sendable {
 }
 
 /// Strictness of the DOB matching policy to apply.
-public enum GelatoSessionMatchingOptionsDob: String, Codable, Sendable {
-    case none
-    case similar
+public struct GelatoSessionMatchingOptionsDob: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var similar: Self { .init(rawValue: "similar") }
 }
 
 /// Strictness of the name matching policy to apply.
-public enum GelatoSessionMatchingOptionsName: String, Codable, Sendable {
-    case none
-    case similar
+public struct GelatoSessionMatchingOptionsName: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var similar: Self { .init(rawValue: "similar") }
 }
 
 public struct GelatoSessionMatchingOptionsList: Codable, Sendable {

@@ -50,10 +50,16 @@ public struct TerminalReaderReaderResourceRefundPaymentAction: Codable, Sendable
 }
 
 /// The reason for the refund.
-public enum TerminalReaderReaderResourceRefundPaymentActionReason: String, Codable, Sendable {
-    case duplicate
-    case fraudulent
-    case requestedByCustomer = "requested_by_customer"
+public struct TerminalReaderReaderResourceRefundPaymentActionReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var requestedByCustomer: Self { .init(rawValue: "requested_by_customer") }
 }
 
 public struct TerminalReaderReaderResourceRefundPaymentActionList: Codable, Sendable {

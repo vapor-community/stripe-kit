@@ -23,8 +23,15 @@ public struct SubscriptionsResourcePausedStatusDetailsPublic: Codable, Sendable 
 }
 
 /// The type of pause.
-public enum SubscriptionsResourcePausedStatusDetailsPublicType: String, Codable, Sendable {
-    case subscription
+public struct SubscriptionsResourcePausedStatusDetailsPublicType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Collection, billing, and servicing are paused.
+    public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
 public struct SubscriptionsResourcePausedStatusDetailsPublicList: Codable, Sendable {

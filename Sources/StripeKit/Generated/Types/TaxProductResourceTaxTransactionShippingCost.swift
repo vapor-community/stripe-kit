@@ -38,9 +38,15 @@ public struct TaxProductResourceTaxTransactionShippingCost: Codable, Sendable {
 
 /// Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes
 /// taxes.
-public enum TaxProductResourceTaxTransactionShippingCostTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
+public struct TaxProductResourceTaxTransactionShippingCostTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
 }
 
 public struct TaxProductResourceTaxTransactionShippingCostList: Codable, Sendable {

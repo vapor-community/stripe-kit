@@ -20,8 +20,14 @@ public struct BillingMeterResourceCustomerMappingSettings: Codable, Sendable {
 }
 
 /// The method for mapping a meter event to a customer.
-public enum BillingMeterResourceCustomerMappingSettingsType: String, Codable, Sendable {
-    case byId = "by_id"
+public struct BillingMeterResourceCustomerMappingSettingsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var byId: Self { .init(rawValue: "by_id") }
 }
 
 public struct BillingMeterResourceCustomerMappingSettingsList: Codable, Sendable {

@@ -54,20 +54,38 @@ public struct BillingMeter: Codable, Sendable {
 }
 
 /// The time window which meter events have been pre-aggregated for, if any.
-public enum BillingMeterEventTimeWindow: String, Codable, Sendable {
-    case day
-    case hour
+public struct BillingMeterEventTimeWindow: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingMeterObject: String, Codable, Sendable {
-    case billingMeter = "billing.meter"
+public struct BillingMeterObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingMeter: Self { .init(rawValue: "billing.meter") }
 }
 
 /// The meter's status.
-public enum BillingMeterStatus: String, Codable, Sendable {
-    case active
-    case inactive
+public struct BillingMeterStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
 public struct BillingMeterList: Codable, Sendable {

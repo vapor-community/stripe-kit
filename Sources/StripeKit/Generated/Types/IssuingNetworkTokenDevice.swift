@@ -33,10 +33,16 @@ public struct IssuingNetworkTokenDevice: Codable, Sendable {
 }
 
 /// The type of device used for tokenization.
-public enum IssuingNetworkTokenDeviceType: String, Codable, Sendable {
-    case other
-    case phone
-    case watch
+public struct IssuingNetworkTokenDeviceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var other: Self { .init(rawValue: "other") }
+    public static var phone: Self { .init(rawValue: "phone") }
+    public static var watch: Self { .init(rawValue: "watch") }
 }
 
 public struct IssuingNetworkTokenDeviceList: Codable, Sendable {

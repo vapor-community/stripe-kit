@@ -42,8 +42,14 @@ public struct BillingMeterEvent: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingMeterEventObject: String, Codable, Sendable {
-    case billingMeterEvent = "billing.meter_event"
+public struct BillingMeterEventObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingMeterEvent: Self { .init(rawValue: "billing.meter_event") }
 }
 
 public struct BillingMeterEventList: Codable, Sendable {

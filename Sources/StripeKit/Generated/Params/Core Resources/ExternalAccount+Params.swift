@@ -150,21 +150,39 @@ public struct ExternalAccountUpdateParams: StripeParams {
     }
 }
 
-public enum ExternalAccountListObject: String, Codable, Sendable {
-    case bankAccount = "bank_account"
-    case card
+public struct ExternalAccountListObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankAccount: Self { .init(rawValue: "bank_account") }
+    public static var card: Self { .init(rawValue: "card") }
 }
 
-public enum ExternalAccountUpdateAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct ExternalAccountUpdateAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public enum ExternalAccountUpdateAccountType: String, Codable, Sendable {
-    case checking
-    case futsu
-    case savings
-    case toza
+public struct ExternalAccountUpdateAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var futsu: Self { .init(rawValue: "futsu") }
+    public static var savings: Self { .init(rawValue: "savings") }
+    public static var toza: Self { .init(rawValue: "toza") }
 }
 
 /// Documents that may be submitted to satisfy various informational requests.

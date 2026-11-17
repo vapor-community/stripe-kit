@@ -21,8 +21,14 @@ public struct InsightsResourcesPaymentEvaluationMoneyMovementDetails: Codable, S
 }
 
 /// Describes the type of money movement.
-public enum InsightsResourcesPaymentEvaluationMoneyMovementDetailsMoneyMovementType: String, Codable, Sendable {
-    case card
+public struct InsightsResourcesPaymentEvaluationMoneyMovementDetailsMoneyMovementType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
 }
 
 public struct InsightsResourcesPaymentEvaluationMoneyMovementDetailsList: Codable, Sendable {

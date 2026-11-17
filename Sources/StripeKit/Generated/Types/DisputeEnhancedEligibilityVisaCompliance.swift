@@ -13,9 +13,15 @@ public struct DisputeEnhancedEligibilityVisaCompliance: Codable, Sendable {
 }
 
 /// Visa compliance eligibility status.
-public enum DisputeEnhancedEligibilityVisaComplianceStatus: String, Codable, Sendable {
-    case feeAcknowledged = "fee_acknowledged"
-    case requiresFeeAcknowledgement = "requires_fee_acknowledgement"
+public struct DisputeEnhancedEligibilityVisaComplianceStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var feeAcknowledged: Self { .init(rawValue: "fee_acknowledged") }
+    public static var requiresFeeAcknowledgement: Self { .init(rawValue: "requires_fee_acknowledgement") }
 }
 
 public struct DisputeEnhancedEligibilityVisaComplianceList: Codable, Sendable {

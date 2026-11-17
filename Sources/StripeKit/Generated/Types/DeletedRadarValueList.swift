@@ -17,8 +17,14 @@ public struct DeletedRadarValueList: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DeletedRadarValueListObject: String, Codable, Sendable {
-    case radarValueList = "radar.value_list"
+public struct DeletedRadarValueListObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var radarValueList: Self { .init(rawValue: "radar.value_list") }
 }
 
 public struct DeletedRadarValueListList: Codable, Sendable {

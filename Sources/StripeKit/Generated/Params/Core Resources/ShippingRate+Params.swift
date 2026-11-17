@@ -159,12 +159,18 @@ public struct ShippingRateCreateDeliveryEstimateMaximum: StripeParams {
     }
 }
 
-public enum ShippingRateCreateDeliveryEstimateMaximumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct ShippingRateCreateDeliveryEstimateMaximumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// The lower bound of the estimated range. If empty, represents no lower bound.
@@ -180,12 +186,18 @@ public struct ShippingRateCreateDeliveryEstimateMinimum: StripeParams {
     }
 }
 
-public enum ShippingRateCreateDeliveryEstimateMinimumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct ShippingRateCreateDeliveryEstimateMinimumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -231,20 +243,38 @@ public struct ShippingRateCreateFixedAmountCurrencyOptions: StripeParams {
     }
 }
 
-public enum ShippingRateCreateFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct ShippingRateCreateFixedAmountCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum ShippingRateCreateTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct ShippingRateCreateTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum ShippingRateCreateType: String, Codable, Sendable {
-    case fixedAmount = "fixed_amount"
+public struct ShippingRateCreateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixedAmount: Self { .init(rawValue: "fixed_amount") }
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -281,14 +311,26 @@ public struct ShippingRateUpdateFixedAmountCurrencyOptions: StripeParams {
     }
 }
 
-public enum ShippingRateUpdateFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct ShippingRateUpdateFixedAmountCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum ShippingRateUpdateTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct ShippingRateUpdateTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }

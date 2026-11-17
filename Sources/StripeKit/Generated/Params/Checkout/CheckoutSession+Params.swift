@@ -506,63 +506,69 @@ public struct CheckoutSessionCreateAfterExpirationRecovery: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateAllowedPaymentMethodTypes: String, Codable, Sendable {
-    case acssDebit = "acss_debit"
-    case affirm
-    case afterpayClearpay = "afterpay_clearpay"
-    case alipay
-    case alma
-    case amazonPay = "amazon_pay"
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case bizum
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case crypto
-    case customerBalance = "customer_balance"
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case kakaoPay = "kakao_pay"
-    case klarna
-    case konbini
-    case krCard = "kr_card"
-    case link
-    case mbWay = "mb_way"
-    case mobilepay
-    case multibanco
-    case naverPay = "naver_pay"
-    case nzBankAccount = "nz_bank_account"
-    case oxxo
-    case p24
-    case payByBank = "pay_by_bank"
-    case payco
-    case paynow
-    case paypal
-    case paypay
-    case payto
-    case pix
-    case promptpay
-    case revolutPay = "revolut_pay"
-    case samsungPay = "samsung_pay"
-    case satispay
-    case scalapay
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case sunbit
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
-    case zip
+public struct CheckoutSessionCreateAllowedPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var alma: Self { .init(rawValue: "alma") }
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var bizum: Self { .init(rawValue: "bizum") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var crypto: Self { .init(rawValue: "crypto") }
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var krCard: Self { .init(rawValue: "kr_card") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var naverPay: Self { .init(rawValue: "naver_pay") }
+    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
+    public static var oxxo: Self { .init(rawValue: "oxxo") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var payco: Self { .init(rawValue: "payco") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var paypay: Self { .init(rawValue: "paypay") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
+    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var scalapay: Self { .init(rawValue: "scalapay") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var sunbit: Self { .init(rawValue: "sunbit") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
+    public static var zip: Self { .init(rawValue: "zip") }
 }
 
 /// Settings for automatic tax lookup for this session and resulting payments, invoices, and
@@ -598,14 +604,26 @@ public struct CheckoutSessionCreateAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct CheckoutSessionCreateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum CheckoutSessionCreateBillingAddressCollection: String, Codable, Sendable {
-    case auto
-    case required
+public struct CheckoutSessionCreateBillingAddressCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 /// The branding settings for the Checkout Session. This parameter is not allowed if ui_mode is
@@ -649,39 +667,51 @@ public struct CheckoutSessionCreateBrandingSettings: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateBrandingSettingsBorderStyle: String, Codable, Sendable {
-    case pill
-    case rectangular
-    case rounded
+public struct CheckoutSessionCreateBrandingSettingsBorderStyle: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var pill: Self { .init(rawValue: "pill") }
+    public static var rectangular: Self { .init(rawValue: "rectangular") }
+    public static var rounded: Self { .init(rawValue: "rounded") }
 }
 
-public enum CheckoutSessionCreateBrandingSettingsFontFamily: String, Codable, Sendable {
-    case beVietnamPro = "be_vietnam_pro"
-    case bitter
-    case chakraPetch = "chakra_petch"
-    case `default` = "default"
-    case hahmlet
-    case inconsolata
-    case inter
-    case lato
-    case lora
-    case mPlus1Code = "m_plus_1_code"
-    case montserrat
-    case notoSans = "noto_sans"
-    case notoSansJp = "noto_sans_jp"
-    case notoSerif = "noto_serif"
-    case nunito
-    case openSans = "open_sans"
-    case pridi
-    case ptSans = "pt_sans"
-    case ptSerif = "pt_serif"
-    case raleway
-    case roboto
-    case robotoSlab = "roboto_slab"
-    case sourceSansPro = "source_sans_pro"
-    case titilliumWeb = "titillium_web"
-    case ubuntuMono = "ubuntu_mono"
-    case zenMaruGothic = "zen_maru_gothic"
+public struct CheckoutSessionCreateBrandingSettingsFontFamily: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var beVietnamPro: Self { .init(rawValue: "be_vietnam_pro") }
+    public static var bitter: Self { .init(rawValue: "bitter") }
+    public static var chakraPetch: Self { .init(rawValue: "chakra_petch") }
+    public static var `default`: Self { .init(rawValue: "default") }
+    public static var hahmlet: Self { .init(rawValue: "hahmlet") }
+    public static var inconsolata: Self { .init(rawValue: "inconsolata") }
+    public static var inter: Self { .init(rawValue: "inter") }
+    public static var lato: Self { .init(rawValue: "lato") }
+    public static var lora: Self { .init(rawValue: "lora") }
+    public static var mPlus1Code: Self { .init(rawValue: "m_plus_1_code") }
+    public static var montserrat: Self { .init(rawValue: "montserrat") }
+    public static var notoSans: Self { .init(rawValue: "noto_sans") }
+    public static var notoSansJp: Self { .init(rawValue: "noto_sans_jp") }
+    public static var notoSerif: Self { .init(rawValue: "noto_serif") }
+    public static var nunito: Self { .init(rawValue: "nunito") }
+    public static var openSans: Self { .init(rawValue: "open_sans") }
+    public static var pridi: Self { .init(rawValue: "pridi") }
+    public static var ptSans: Self { .init(rawValue: "pt_sans") }
+    public static var ptSerif: Self { .init(rawValue: "pt_serif") }
+    public static var raleway: Self { .init(rawValue: "raleway") }
+    public static var roboto: Self { .init(rawValue: "roboto") }
+    public static var robotoSlab: Self { .init(rawValue: "roboto_slab") }
+    public static var sourceSansPro: Self { .init(rawValue: "source_sans_pro") }
+    public static var titilliumWeb: Self { .init(rawValue: "titillium_web") }
+    public static var ubuntuMono: Self { .init(rawValue: "ubuntu_mono") }
+    public static var zenMaruGothic: Self { .init(rawValue: "zen_maru_gothic") }
 }
 
 /// The icon for the Checkout Session. For best results, use a square image.
@@ -701,9 +731,15 @@ public struct CheckoutSessionCreateBrandingSettingsIcon: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateBrandingSettingsIconType: String, Codable, Sendable {
-    case file
-    case url
+public struct CheckoutSessionCreateBrandingSettingsIconType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var file: Self { .init(rawValue: "file") }
+    public static var url: Self { .init(rawValue: "url") }
 }
 
 /// The logo for the Checkout Session.
@@ -723,9 +759,15 @@ public struct CheckoutSessionCreateBrandingSettingsLogo: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateBrandingSettingsLogoType: String, Codable, Sendable {
-    case file
-    case url
+public struct CheckoutSessionCreateBrandingSettingsLogoType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var file: Self { .init(rawValue: "file") }
+    public static var url: Self { .init(rawValue: "url") }
 }
 
 /// Configure fields for the Checkout Session to gather active consent from customers.
@@ -769,19 +811,37 @@ public struct CheckoutSessionCreateConsentCollectionPaymentMethodReuseAgreement:
     }
 }
 
-public enum CheckoutSessionCreateConsentCollectionPaymentMethodReuseAgreementPosition: String, Codable, Sendable {
-    case auto
-    case hidden
+public struct CheckoutSessionCreateConsentCollectionPaymentMethodReuseAgreementPosition: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var hidden: Self { .init(rawValue: "hidden") }
 }
 
-public enum CheckoutSessionCreateConsentCollectionPromotions: String, Codable, Sendable {
-    case auto
-    case none
+public struct CheckoutSessionCreateConsentCollectionPromotions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
-public enum CheckoutSessionCreateConsentCollectionTermsOfService: String, Codable, Sendable {
-    case none
-    case required
+public struct CheckoutSessionCreateConsentCollectionTermsOfService: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 public struct CheckoutSessionCreateCustomFields: StripeParams {
@@ -826,14 +886,26 @@ public struct CheckoutSessionCreateCustomFieldsLabel: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateCustomFieldsLabelType: String, Codable, Sendable {
-    case custom
+public struct CheckoutSessionCreateCustomFieldsLabelType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
 }
 
-public enum CheckoutSessionCreateCustomFieldsType: String, Codable, Sendable {
-    case dropdown
-    case numeric
-    case text
+public struct CheckoutSessionCreateCustomFieldsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dropdown: Self { .init(rawValue: "dropdown") }
+    public static var numeric: Self { .init(rawValue: "numeric") }
+    public static var text: Self { .init(rawValue: "text") }
 }
 
 /// Configuration for `type=dropdown` fields.
@@ -975,9 +1047,15 @@ public struct CheckoutSessionCreateCustomTextTermsOfServiceAcceptance: StripePar
     }
 }
 
-public enum CheckoutSessionCreateCustomerCreation: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct CheckoutSessionCreateCustomerCreation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 /// Controls what fields on Customer can be updated by the Checkout Session. Can only be provided when
@@ -999,19 +1077,37 @@ public struct CheckoutSessionCreateCustomerUpdate: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateCustomerUpdateAddress: String, Codable, Sendable {
-    case auto
-    case never
+public struct CheckoutSessionCreateCustomerUpdateAddress: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum CheckoutSessionCreateCustomerUpdateName: String, Codable, Sendable {
-    case auto
-    case never
+public struct CheckoutSessionCreateCustomerUpdateName: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum CheckoutSessionCreateCustomerUpdateShipping: String, Codable, Sendable {
-    case auto
-    case never
+public struct CheckoutSessionCreateCustomerUpdateShipping: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct CheckoutSessionCreateDiscounts: StripeParams {
@@ -1031,62 +1127,68 @@ public struct CheckoutSessionCreateDiscounts: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateExcludedPaymentMethodTypes: String, Codable, Sendable {
-    case acssDebit = "acss_debit"
-    case affirm
-    case afterpayClearpay = "afterpay_clearpay"
-    case alipay
-    case alma
-    case amazonPay = "amazon_pay"
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case bizum
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case crypto
-    case customerBalance = "customer_balance"
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case kakaoPay = "kakao_pay"
-    case klarna
-    case konbini
-    case krCard = "kr_card"
-    case mbWay = "mb_way"
-    case mobilepay
-    case multibanco
-    case naverPay = "naver_pay"
-    case nzBankAccount = "nz_bank_account"
-    case oxxo
-    case p24
-    case payByBank = "pay_by_bank"
-    case payco
-    case paynow
-    case paypal
-    case paypay
-    case payto
-    case pix
-    case promptpay
-    case revolutPay = "revolut_pay"
-    case samsungPay = "samsung_pay"
-    case satispay
-    case scalapay
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case sunbit
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
-    case zip
+public struct CheckoutSessionCreateExcludedPaymentMethodTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var alma: Self { .init(rawValue: "alma") }
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var bizum: Self { .init(rawValue: "bizum") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var crypto: Self { .init(rawValue: "crypto") }
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var krCard: Self { .init(rawValue: "kr_card") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var naverPay: Self { .init(rawValue: "naver_pay") }
+    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
+    public static var oxxo: Self { .init(rawValue: "oxxo") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var payco: Self { .init(rawValue: "payco") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var paypay: Self { .init(rawValue: "paypay") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
+    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var scalapay: Self { .init(rawValue: "scalapay") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var sunbit: Self { .init(rawValue: "sunbit") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
+    public static var zip: Self { .init(rawValue: "zip") }
 }
 
 /// Generate a post-purchase Invoice for one-time payments.
@@ -1175,9 +1277,15 @@ public struct CheckoutSessionCreateInvoiceCreationInvoiceDataIssuer: StripeParam
     }
 }
 
-public enum CheckoutSessionCreateInvoiceCreationInvoiceDataIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct CheckoutSessionCreateInvoiceCreationInvoiceDataIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct CheckoutSessionCreateInvoiceCreationInvoiceDataRenderingOptions: StripeParams {
@@ -1200,9 +1308,15 @@ public struct CheckoutSessionCreateInvoiceCreationInvoiceDataRenderingOptions: S
     }
 }
 
-public enum CheckoutSessionCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
-    case excludeTax = "exclude_tax"
-    case includeInclusiveTax = "include_inclusive_tax"
+public struct CheckoutSessionCreateInvoiceCreationInvoiceDataRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var excludeTax: Self { .init(rawValue: "exclude_tax") }
+    public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
 }
 
 public struct CheckoutSessionCreateLineItems: StripeParams {
@@ -1403,62 +1517,80 @@ public struct CheckoutSessionCreateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct CheckoutSessionCreateLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum CheckoutSessionCreateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct CheckoutSessionCreateLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CheckoutSessionCreateLocale: String, Codable, Sendable {
-    case auto
-    case bg
-    case cs
-    case da
-    case de
-    case el
-    case en
-    case enGb = "en-GB"
-    case es
-    case es419 = "es-419"
-    case et
-    case fi
-    case fil
-    case fr
-    case frCa = "fr-CA"
-    case hiIn = "hi-IN"
-    case hr
-    case hu
-    case id
-    case it
-    case ja
-    case ko
-    case lt
-    case lv
-    case ms
-    case mt
-    case nb
-    case nl
-    case pl
-    case pt
-    case ptBr = "pt-BR"
-    case ro
-    case ru
-    case sk
-    case sl
-    case sv
-    case th
-    case tr
-    case vi
-    case zh
-    case zhHk = "zh-HK"
-    case zhTw = "zh-TW"
+public struct CheckoutSessionCreateLocale: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var bg: Self { .init(rawValue: "bg") }
+    public static var cs: Self { .init(rawValue: "cs") }
+    public static var da: Self { .init(rawValue: "da") }
+    public static var de: Self { .init(rawValue: "de") }
+    public static var el: Self { .init(rawValue: "el") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var enGb: Self { .init(rawValue: "en-GB") }
+    public static var es: Self { .init(rawValue: "es") }
+    public static var es419: Self { .init(rawValue: "es-419") }
+    public static var et: Self { .init(rawValue: "et") }
+    public static var fi: Self { .init(rawValue: "fi") }
+    public static var fil: Self { .init(rawValue: "fil") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var frCa: Self { .init(rawValue: "fr-CA") }
+    public static var hiIn: Self { .init(rawValue: "hi-IN") }
+    public static var hr: Self { .init(rawValue: "hr") }
+    public static var hu: Self { .init(rawValue: "hu") }
+    public static var id: Self { .init(rawValue: "id") }
+    public static var it: Self { .init(rawValue: "it") }
+    public static var ja: Self { .init(rawValue: "ja") }
+    public static var ko: Self { .init(rawValue: "ko") }
+    public static var lt: Self { .init(rawValue: "lt") }
+    public static var lv: Self { .init(rawValue: "lv") }
+    public static var ms: Self { .init(rawValue: "ms") }
+    public static var mt: Self { .init(rawValue: "mt") }
+    public static var nb: Self { .init(rawValue: "nb") }
+    public static var nl: Self { .init(rawValue: "nl") }
+    public static var pl: Self { .init(rawValue: "pl") }
+    public static var pt: Self { .init(rawValue: "pt") }
+    public static var ptBr: Self { .init(rawValue: "pt-BR") }
+    public static var ro: Self { .init(rawValue: "ro") }
+    public static var ru: Self { .init(rawValue: "ru") }
+    public static var sk: Self { .init(rawValue: "sk") }
+    public static var sl: Self { .init(rawValue: "sl") }
+    public static var sv: Self { .init(rawValue: "sv") }
+    public static var th: Self { .init(rawValue: "th") }
+    public static var tr: Self { .init(rawValue: "tr") }
+    public static var vi: Self { .init(rawValue: "vi") }
+    public static var zh: Self { .init(rawValue: "zh") }
+    public static var zhHk: Self { .init(rawValue: "zh-HK") }
+    public static var zhTw: Self { .init(rawValue: "zh-TW") }
 }
 
 /// Settings for Managed Payments for this Checkout Session and resulting
@@ -1474,10 +1606,16 @@ public struct CheckoutSessionCreateManagedPayments: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateMode: String, Codable, Sendable {
-    case payment
-    case setup
-    case subscription
+public struct CheckoutSessionCreateMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var payment: Self { .init(rawValue: "payment") }
+    public static var setup: Self { .init(rawValue: "setup") }
+    public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
 /// Controls name collection settings for the session. You can configure Checkout to collect your
@@ -1568,9 +1706,15 @@ public struct CheckoutSessionCreateOptionalItemsAdjustableQuantity: StripeParams
     }
 }
 
-public enum CheckoutSessionCreateOriginContext: String, Codable, Sendable {
-    case mobileApp = "mobile_app"
-    case web
+public struct CheckoutSessionCreateOriginContext: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var mobileApp: Self { .init(rawValue: "mobile_app") }
+    public static var web: Self { .init(rawValue: "web") }
 }
 
 /// A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment`
@@ -1662,15 +1806,27 @@ public struct CheckoutSessionCreatePaymentIntentData: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentIntentDataCaptureMethod: String, Codable, Sendable {
-    case automatic
-    case automaticAsync = "automatic_async"
-    case manual
+public struct CheckoutSessionCreatePaymentIntentDataCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var automaticAsync: Self { .init(rawValue: "automatic_async") }
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentIntentDataSetupFutureUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionCreatePaymentIntentDataSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// Shipping information for this payment.
@@ -1755,9 +1911,17 @@ public struct CheckoutSessionCreatePaymentIntentDataTransferData: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodCollection: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct CheckoutSessionCreatePaymentMethodCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The Checkout Session will always collect a PaymentMethod.
+    public static var always: Self { .init(rawValue: "always") }
+    /// The Checkout Session will only collect a PaymentMethod if there is an amount due.
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 /// This parameter allows you to set some attributes on the payment method created during a Checkout
@@ -1777,10 +1941,16 @@ public struct CheckoutSessionCreatePaymentMethodData: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodDataAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct CheckoutSessionCreatePaymentMethodDataAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Payment-method-specific configuration.
@@ -2043,9 +2213,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebit: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitCurrency: String, Codable, Sendable {
-    case cad
-    case usd
+public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebitCurrency: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cad: Self { .init(rawValue: "cad") }
+    public static var usd: Self { .init(rawValue: "usd") }
 }
 
 /// Additional fields for Mandate creation
@@ -2082,32 +2258,62 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptions: 
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptionsDefaultFor: String, Codable, Sendable {
-    case invoice
-    case subscription
+public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptionsDefaultFor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var invoice: Self { .init(rawValue: "invoice") }
+    public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: String, Codable, Sendable {
-    case combined
-    case interval
-    case sporadic
+public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var combined: Self { .init(rawValue: "combined") }
+    public static var interval: Self { .init(rawValue: "interval") }
+    public static var sporadic: Self { .init(rawValue: "sporadic") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
-    case business
-    case personal
+public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var business: Self { .init(rawValue: "business") }
+    public static var personal: Self { .init(rawValue: "personal") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebitSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct CheckoutSessionCreatePaymentMethodOptionsAcssDebitVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
 /// contains details about the Affirm payment method options.
@@ -2138,12 +2344,24 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAffirm: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAffirmCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsAffirmCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAffirmSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsAffirmSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Afterpay Clearpay payment method options.
@@ -2174,12 +2392,24 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAfterpayClearpay: StripeP
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAfterpayClearpayCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsAfterpayClearpayCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAfterpayClearpaySetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsAfterpayClearpaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Alipay payment method options.
@@ -2206,8 +2436,16 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAlipay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAlipaySetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsAlipaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Use `none` if you do not intend to reuse this payment method and want to override the top-level
+    /// `setup_future_usage` value for this payment method.
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Alma payment method options.
@@ -2224,8 +2462,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAlma: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAlmaCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsAlmaCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// contains details about the AmazonPay payment method options.
@@ -2256,13 +2500,25 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAmazonPay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAmazonPayCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsAmazonPayCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAmazonPaySetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsAmazonPaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the AU Becs Debit payment method options.
@@ -2295,8 +2551,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsAuBecsDebit: StripeParams
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsAuBecsDebitSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsAuBecsDebitSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Bacs Debit payment method options.
@@ -2349,10 +2611,16 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBacsDebitMandateOptions: 
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsBacsDebitSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsBacsDebitSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// contains details about the Bancontact payment method options.
@@ -2379,9 +2647,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBancontact: StripeParams 
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsBancontactSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsBancontactSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the Billie payment method options.
@@ -2398,8 +2672,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBillie: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsBillieCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsBillieCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// contains details about the BLIK payment method options.
@@ -2434,9 +2714,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBlikMandateOptions: Strip
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsBlikSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsBlikSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the Boleto payment method options.
@@ -2469,10 +2755,16 @@ public struct CheckoutSessionCreatePaymentMethodOptionsBoleto: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsBoletoSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsBoletoSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// contains details about the Card payment method options.
@@ -2556,8 +2848,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCard: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCardCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsCardCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// Installment options for card payments
@@ -2571,30 +2869,60 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCardInstallments: StripeP
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestExtendedAuthorization: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct CheckoutSessionCreatePaymentMethodOptionsCardRequestExtendedAuthorization: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestIncrementalAuthorization: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct CheckoutSessionCreatePaymentMethodOptionsCardRequestIncrementalAuthorization: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestMulticapture: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct CheckoutSessionCreatePaymentMethodOptionsCardRequestMulticapture: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestOvercapture: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct CheckoutSessionCreatePaymentMethodOptionsCardRequestOvercapture: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
-    case any
-    case automatic
-    case challenge
+public struct CheckoutSessionCreatePaymentMethodOptionsCardRequestThreeDSecure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var any: Self { .init(rawValue: "any") }
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var challenge: Self { .init(rawValue: "challenge") }
 }
 
 /// Restrictions to apply to the card payment method. For example, you can block specific card brands.
@@ -2618,22 +2946,40 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCardRestrictions: StripeP
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked: String, Codable, Sendable {
-    case americanExpress = "american_express"
-    case discoverGlobalNetwork = "discover_global_network"
-    case mastercard
-    case visa
+public struct CheckoutSessionCreatePaymentMethodOptionsCardRestrictionsBrandsBlocked: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var americanExpress: Self { .init(rawValue: "american_express") }
+    public static var discoverGlobalNetwork: Self { .init(rawValue: "discover_global_network") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCardRestrictionsFundingTypesBlocked: String, Codable, Sendable {
-    case credit
-    case debit
-    case prepaid
+public struct CheckoutSessionCreatePaymentMethodOptionsCardRestrictionsFundingTypesBlocked: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var credit: Self { .init(rawValue: "credit") }
+    public static var debit: Self { .init(rawValue: "debit") }
+    public static var prepaid: Self { .init(rawValue: "prepaid") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCardSetupFutureUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsCardSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// contains details about the Cashapp Pay payment method options.
@@ -2664,14 +3010,26 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCashapp: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCashappCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsCashappCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCashappSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsCashappSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// contains details about the Crypto payment method options.
@@ -2698,8 +3056,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCrypto: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCryptoSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsCryptoSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Customer Balance payment method options.
@@ -2759,12 +3123,18 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransf
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransferType: String, Codable, Sendable {
-    case euBankTransfer = "eu_bank_transfer"
-    case gbBankTransfer = "gb_bank_transfer"
-    case jpBankTransfer = "jp_bank_transfer"
-    case mxBankTransfer = "mx_bank_transfer"
-    case usBankTransfer = "us_bank_transfer"
+public struct CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransferType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var euBankTransfer: Self { .init(rawValue: "eu_bank_transfer") }
+    public static var gbBankTransfer: Self { .init(rawValue: "gb_bank_transfer") }
+    public static var jpBankTransfer: Self { .init(rawValue: "jp_bank_transfer") }
+    public static var mxBankTransfer: Self { .init(rawValue: "mx_bank_transfer") }
+    public static var usBankTransfer: Self { .init(rawValue: "us_bank_transfer") }
 }
 
 /// Configuration for eu_bank_transfer funding type.
@@ -2778,22 +3148,40 @@ public struct CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransf
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransferRequestedAddressTypes: String, Codable, Sendable {
-    case aba
-    case iban
-    case sepa
-    case sortCode = "sort_code"
-    case spei
-    case swift
-    case zengin
+public struct CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceBankTransferRequestedAddressTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var aba: Self { .init(rawValue: "aba") }
+    public static var iban: Self { .init(rawValue: "iban") }
+    public static var sepa: Self { .init(rawValue: "sepa") }
+    public static var sortCode: Self { .init(rawValue: "sort_code") }
+    public static var spei: Self { .init(rawValue: "spei") }
+    public static var swift: Self { .init(rawValue: "swift") }
+    public static var zengin: Self { .init(rawValue: "zengin") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceFundingType: String, Codable, Sendable {
-    case bankTransfer = "bank_transfer"
+public struct CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceFundingType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankTransfer: Self { .init(rawValue: "bank_transfer") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsCustomerBalanceSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the DemoPay payment method options.
@@ -2820,9 +3208,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsDemoPay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsDemoPaySetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsDemoPaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the EPS payment method options.
@@ -2849,8 +3243,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsEps: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsEpsSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsEpsSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the FPX payment method options.
@@ -2877,8 +3277,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsFpx: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsFpxSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsFpxSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Giropay payment method options.
@@ -2905,8 +3311,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsGiropay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsGiropaySetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsGiropaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Grabpay payment method options.
@@ -2933,8 +3345,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsGrabpay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsGrabpaySetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsGrabpaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Ideal payment method options.
@@ -2961,8 +3379,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsIdeal: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsIdealSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsIdealSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Kakao Pay payment method options.
@@ -2993,13 +3417,25 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKakaoPay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsKakaoPayCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsKakaoPayCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsKakaoPaySetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsKakaoPaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the Klarna payment method options.
@@ -3034,12 +3470,24 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKlarna: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsKlarnaCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsKlarnaCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsKlarnaSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsKlarnaSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct CheckoutSessionCreatePaymentMethodOptionsKlarnaSubscriptions: StripeParams {
@@ -3073,11 +3521,17 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKlarnaSubscriptions: Stri
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsKlarnaSubscriptionsInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct CheckoutSessionCreatePaymentMethodOptionsKlarnaSubscriptionsInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 /// Describes the upcoming charge for this subscription.
@@ -3123,8 +3577,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKonbini: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsKonbiniSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsKonbiniSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Korean card payment method options.
@@ -3155,13 +3615,25 @@ public struct CheckoutSessionCreatePaymentMethodOptionsKrCard: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsKrCardCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsKrCardCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsKrCardSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsKrCardSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the Link payment method options (Link is also known as Onelink in the UK).
@@ -3192,13 +3664,25 @@ public struct CheckoutSessionCreatePaymentMethodOptionsLink: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsLinkCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsLinkCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsLinkSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsLinkSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the Mobilepay payment method options.
@@ -3229,12 +3713,24 @@ public struct CheckoutSessionCreatePaymentMethodOptionsMobilepay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsMobilepayCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsMobilepayCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsMobilepaySetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsMobilepaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Multibanco payment method options.
@@ -3261,8 +3757,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsMultibanco: StripeParams 
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsMultibancoSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsMultibancoSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Naver Pay payment method options.
@@ -3293,13 +3795,25 @@ public struct CheckoutSessionCreatePaymentMethodOptionsNaverPay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsNaverPayCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsNaverPayCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsNaverPaySetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsNaverPaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the OXXO payment method options.
@@ -3332,8 +3846,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsOxxo: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsOxxoSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsOxxoSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the P24 payment method options.
@@ -3364,8 +3884,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsP24: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsP24SetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsP24SetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the PAYCO payment method options.
@@ -3396,12 +3922,24 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPayco: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaycoCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsPaycoCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaycoSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsPaycoSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the PayNow payment method options.
@@ -3428,8 +3966,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPaynow: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaynowSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsPaynowSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the PayPal payment method options.
@@ -3477,37 +4021,55 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPaypal: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaypalCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsPaypalCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaypalPreferredLocale: String, Codable, Sendable {
-    case csCz = "cs-CZ"
-    case daDk = "da-DK"
-    case deAt = "de-AT"
-    case deDe = "de-DE"
-    case deLu = "de-LU"
-    case elGr = "el-GR"
-    case enGb = "en-GB"
-    case enUs = "en-US"
-    case esEs = "es-ES"
-    case fiFi = "fi-FI"
-    case frBe = "fr-BE"
-    case frFr = "fr-FR"
-    case frLu = "fr-LU"
-    case huHu = "hu-HU"
-    case itIt = "it-IT"
-    case nlBe = "nl-BE"
-    case nlNl = "nl-NL"
-    case plPl = "pl-PL"
-    case ptPt = "pt-PT"
-    case skSk = "sk-SK"
-    case svSe = "sv-SE"
+public struct CheckoutSessionCreatePaymentMethodOptionsPaypalPreferredLocale: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var csCz: Self { .init(rawValue: "cs-CZ") }
+    public static var daDk: Self { .init(rawValue: "da-DK") }
+    public static var deAt: Self { .init(rawValue: "de-AT") }
+    public static var deDe: Self { .init(rawValue: "de-DE") }
+    public static var deLu: Self { .init(rawValue: "de-LU") }
+    public static var elGr: Self { .init(rawValue: "el-GR") }
+    public static var enGb: Self { .init(rawValue: "en-GB") }
+    public static var enUs: Self { .init(rawValue: "en-US") }
+    public static var esEs: Self { .init(rawValue: "es-ES") }
+    public static var fiFi: Self { .init(rawValue: "fi-FI") }
+    public static var frBe: Self { .init(rawValue: "fr-BE") }
+    public static var frFr: Self { .init(rawValue: "fr-FR") }
+    public static var frLu: Self { .init(rawValue: "fr-LU") }
+    public static var huHu: Self { .init(rawValue: "hu-HU") }
+    public static var itIt: Self { .init(rawValue: "it-IT") }
+    public static var nlBe: Self { .init(rawValue: "nl-BE") }
+    public static var nlNl: Self { .init(rawValue: "nl-NL") }
+    public static var plPl: Self { .init(rawValue: "pl-PL") }
+    public static var ptPt: Self { .init(rawValue: "pt-PT") }
+    public static var skSk: Self { .init(rawValue: "sk-SK") }
+    public static var svSe: Self { .init(rawValue: "sv-SE") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaypalSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsPaypalSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the PayTo payment method options.
@@ -3578,39 +4140,63 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptions: Stri
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: String, Codable, Sendable {
-    case adhoc
-    case annual
-    case daily
-    case fortnightly
-    case monthly
-    case quarterly
-    case semiAnnual = "semi_annual"
-    case weekly
+public struct CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var adhoc: Self { .init(rawValue: "adhoc") }
+    public static var annual: Self { .init(rawValue: "annual") }
+    public static var daily: Self { .init(rawValue: "daily") }
+    public static var fortnightly: Self { .init(rawValue: "fortnightly") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var quarterly: Self { .init(rawValue: "quarterly") }
+    public static var semiAnnual: Self { .init(rawValue: "semi_annual") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptionsPurpose: String, Codable, Sendable {
-    case dependantSupport = "dependant_support"
-    case government
-    case loan
-    case mortgage
-    case other
-    case pension
-    case personal
-    case retail
-    case salary
-    case tax
-    case utility
+public struct CheckoutSessionCreatePaymentMethodOptionsPaytoMandateOptionsPurpose: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dependantSupport: Self { .init(rawValue: "dependant_support") }
+    public static var government: Self { .init(rawValue: "government") }
+    public static var loan: Self { .init(rawValue: "loan") }
+    public static var mortgage: Self { .init(rawValue: "mortgage") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var pension: Self { .init(rawValue: "pension") }
+    public static var personal: Self { .init(rawValue: "personal") }
+    public static var retail: Self { .init(rawValue: "retail") }
+    public static var salary: Self { .init(rawValue: "salary") }
+    public static var tax: Self { .init(rawValue: "tax") }
+    public static var utility: Self { .init(rawValue: "utility") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPaytoSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsPaytoSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the Pix payment method options.
@@ -3650,9 +4236,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPix: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPixAmountIncludesIof: String, Codable, Sendable {
-    case always
-    case never
+public struct CheckoutSessionCreatePaymentMethodOptionsPixAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Additional fields for mandate creation.
@@ -3702,27 +4294,51 @@ public struct CheckoutSessionCreatePaymentMethodOptionsPixMandateOptions: Stripe
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof: String, Codable, Sendable {
-    case always
-    case never
+public struct CheckoutSessionCreatePaymentMethodOptionsPixMandateOptionsAmountIncludesIof: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPixMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct CheckoutSessionCreatePaymentMethodOptionsPixMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPixMandateOptionsPaymentSchedule: String, Codable, Sendable {
-    case halfyearly
-    case monthly
-    case quarterly
-    case weekly
-    case yearly
+public struct CheckoutSessionCreatePaymentMethodOptionsPixMandateOptionsPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var halfyearly: Self { .init(rawValue: "halfyearly") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var quarterly: Self { .init(rawValue: "quarterly") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
+    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsPixSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsPixSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the RevolutPay payment method options.
@@ -3753,13 +4369,28 @@ public struct CheckoutSessionCreatePaymentMethodOptionsRevolutPay: StripeParams 
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsRevolutPayCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsRevolutPayCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsRevolutPaySetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsRevolutPaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Use `none` if you do not intend to reuse this payment method and want to override the top-level
+    /// `setup_future_usage` value for this payment method.
+    public static var none: Self { .init(rawValue: "none") }
+    /// Use `off_session` if your customer may or may not be present in your checkout flow.
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the Samsung Pay payment method options.
@@ -3790,12 +4421,24 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSamsungPay: StripeParams 
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsSamsungPayCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsSamsungPayCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsSamsungPaySetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsSamsungPaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Satispay payment method options.
@@ -3812,8 +4455,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSatispay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsSatispayCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsSatispayCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// contains details about the Scalapay payment method options.
@@ -3830,8 +4479,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsScalapay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsScalapayCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsScalapayCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// contains details about the Sepa Debit payment method options.
@@ -3884,10 +4539,16 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSepaDebitMandateOptions: 
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsSepaDebitSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsSepaDebitSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// contains details about the SeQura payment method options.
@@ -3904,8 +4565,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSequra: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsSequraCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsSequraCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// contains details about the Sofort payment method options.
@@ -3932,8 +4599,14 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSofort: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsSofortSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsSofortSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Sunbit payment method options.
@@ -3964,12 +4637,24 @@ public struct CheckoutSessionCreatePaymentMethodOptionsSunbit: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsSunbitCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutSessionCreatePaymentMethodOptionsSunbitCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsSunbitSetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsSunbitSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// contains details about the Swish payment method options.
@@ -4007,9 +4692,15 @@ public struct CheckoutSessionCreatePaymentMethodOptionsTwint: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsTwintSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsTwintSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 /// contains details about the UPI payment method options.
@@ -4057,15 +4748,27 @@ public struct CheckoutSessionCreatePaymentMethodOptionsUpiMandateOptions: Stripe
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsUpiMandateOptionsAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct CheckoutSessionCreatePaymentMethodOptionsUpiMandateOptionsAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsUpiSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsUpiSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// contains details about the Us Bank Account payment method options.
@@ -4121,28 +4824,52 @@ public struct CheckoutSessionCreatePaymentMethodOptionsUsBankAccountFinancialCon
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: String, Codable, Sendable {
-    case balances
-    case ownership
-    case paymentMethod = "payment_method"
-    case transactions
+public struct CheckoutSessionCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var paymentMethod: Self { .init(rawValue: "payment_method") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: String, Codable, Sendable {
-    case balances
-    case ownership
-    case transactions
+public struct CheckoutSessionCreatePaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balances: Self { .init(rawValue: "balances") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsUsBankAccountSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionCreatePaymentMethodOptionsUsBankAccountSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsUsBankAccountVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
+public struct CheckoutSessionCreatePaymentMethodOptionsUsBankAccountVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
 }
 
 /// contains details about the WeChat Pay payment method options.
@@ -4177,14 +4904,31 @@ public struct CheckoutSessionCreatePaymentMethodOptionsWechatPay: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsWechatPayClient: String, Codable, Sendable {
-    case android
-    case ios
-    case web
+public struct CheckoutSessionCreatePaymentMethodOptionsWechatPayClient: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The end customer will pay from an Android app
+    public static var android: Self { .init(rawValue: "android") }
+    /// The end customer will pay from an iOS app
+    public static var ios: Self { .init(rawValue: "ios") }
+    /// The end customer will pay from web browser
+    public static var web: Self { .init(rawValue: "web") }
 }
 
-public enum CheckoutSessionCreatePaymentMethodOptionsWechatPaySetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct CheckoutSessionCreatePaymentMethodOptionsWechatPaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Use `none` if you do not intend to reuse this payment method and want to override the top-level
+    /// `setup_future_usage` value for this payment method.
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// This property is used to set up permissions for various actions (for example, update) on the
@@ -4207,9 +4951,15 @@ public struct CheckoutSessionCreatePermissions: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreatePermissionsUpdateShippingDetails: String, Codable, Sendable {
-    case clientOnly = "client_only"
-    case serverOnly = "server_only"
+public struct CheckoutSessionCreatePermissionsUpdateShippingDetails: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var clientOnly: Self { .init(rawValue: "client_only") }
+    public static var serverOnly: Self { .init(rawValue: "server_only") }
 }
 
 /// Controls phone number collection settings for the session. We recommend that you review your privacy
@@ -4225,10 +4975,16 @@ public struct CheckoutSessionCreatePhoneNumberCollection: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateRedirectOnCompletion: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
-    case never
+public struct CheckoutSessionCreateRedirectOnCompletion: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Controls saved payment method settings for the session. Only available in `payment` and
@@ -4257,20 +5013,38 @@ public struct CheckoutSessionCreateSavedPaymentMethodOptions: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateSavedPaymentMethodOptionsAllowRedisplayFilters: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct CheckoutSessionCreateSavedPaymentMethodOptionsAllowRedisplayFilters: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CheckoutSessionCreateSavedPaymentMethodOptionsPaymentMethodRemove: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CheckoutSessionCreateSavedPaymentMethodOptionsPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
-public enum CheckoutSessionCreateSavedPaymentMethodOptionsPaymentMethodSave: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CheckoutSessionCreateSavedPaymentMethodOptionsPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
@@ -4313,245 +5087,251 @@ public struct CheckoutSessionCreateShippingAddressCollection: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateShippingAddressCollectionAllowedCountries: String, Codable, Sendable {
-    case ac = "AC"
-    case ad = "AD"
-    case ae = "AE"
-    case af = "AF"
-    case ag = "AG"
-    case ai = "AI"
-    case al = "AL"
-    case am = "AM"
-    case ao = "AO"
-    case aq = "AQ"
-    case ar = "AR"
-    case at = "AT"
-    case au = "AU"
-    case aw = "AW"
-    case ax = "AX"
-    case az = "AZ"
-    case ba = "BA"
-    case bb = "BB"
-    case bd = "BD"
-    case be = "BE"
-    case bf = "BF"
-    case bg = "BG"
-    case bh = "BH"
-    case bi = "BI"
-    case bj = "BJ"
-    case bl = "BL"
-    case bm = "BM"
-    case bn = "BN"
-    case bo = "BO"
-    case bq = "BQ"
-    case br = "BR"
-    case bs = "BS"
-    case bt = "BT"
-    case bv = "BV"
-    case bw = "BW"
-    case by = "BY"
-    case bz = "BZ"
-    case ca = "CA"
-    case cd = "CD"
-    case cf = "CF"
-    case cg = "CG"
-    case ch = "CH"
-    case ci = "CI"
-    case ck = "CK"
-    case cl = "CL"
-    case cm = "CM"
-    case cn = "CN"
-    case co = "CO"
-    case cr = "CR"
-    case cv = "CV"
-    case cw = "CW"
-    case cy = "CY"
-    case cz = "CZ"
-    case de = "DE"
-    case dj = "DJ"
-    case dk = "DK"
-    case dm = "DM"
-    case `do` = "DO"
-    case dz = "DZ"
-    case ec = "EC"
-    case ee = "EE"
-    case eg = "EG"
-    case eh = "EH"
-    case er = "ER"
-    case es = "ES"
-    case et = "ET"
-    case fi = "FI"
-    case fj = "FJ"
-    case fk = "FK"
-    case fo = "FO"
-    case fr = "FR"
-    case ga = "GA"
-    case gb = "GB"
-    case gd = "GD"
-    case ge = "GE"
-    case gf = "GF"
-    case gg = "GG"
-    case gh = "GH"
-    case gi = "GI"
-    case gl = "GL"
-    case gm = "GM"
-    case gn = "GN"
-    case gp = "GP"
-    case gq = "GQ"
-    case gr = "GR"
-    case gs = "GS"
-    case gt = "GT"
-    case gu = "GU"
-    case gw = "GW"
-    case gy = "GY"
-    case hk = "HK"
-    case hn = "HN"
-    case hr = "HR"
-    case ht = "HT"
-    case hu = "HU"
-    case id = "ID"
-    case ie = "IE"
-    case il = "IL"
-    case im = "IM"
-    case `in` = "IN"
-    case io = "IO"
-    case iq = "IQ"
-    case `is` = "IS"
-    case it = "IT"
-    case je = "JE"
-    case jm = "JM"
-    case jo = "JO"
-    case jp = "JP"
-    case ke = "KE"
-    case kg = "KG"
-    case kh = "KH"
-    case ki = "KI"
-    case km = "KM"
-    case kn = "KN"
-    case kr = "KR"
-    case kw = "KW"
-    case ky = "KY"
-    case kz = "KZ"
-    case la = "LA"
-    case lb = "LB"
-    case lc = "LC"
-    case li = "LI"
-    case lk = "LK"
-    case lr = "LR"
-    case ls = "LS"
-    case lt = "LT"
-    case lu = "LU"
-    case lv = "LV"
-    case ly = "LY"
-    case ma = "MA"
-    case mc = "MC"
-    case md = "MD"
-    case me = "ME"
-    case mf = "MF"
-    case mg = "MG"
-    case mk = "MK"
-    case ml = "ML"
-    case mm = "MM"
-    case mn = "MN"
-    case mo = "MO"
-    case mq = "MQ"
-    case mr = "MR"
-    case ms = "MS"
-    case mt = "MT"
-    case mu = "MU"
-    case mv = "MV"
-    case mw = "MW"
-    case mx = "MX"
-    case my = "MY"
-    case mz = "MZ"
-    case na = "NA"
-    case nc = "NC"
-    case ne = "NE"
-    case ng = "NG"
-    case ni = "NI"
-    case nl = "NL"
-    case no = "NO"
-    case np = "NP"
-    case nr = "NR"
-    case nu = "NU"
-    case nz = "NZ"
-    case om = "OM"
-    case pa = "PA"
-    case pe = "PE"
-    case pf = "PF"
-    case pg = "PG"
-    case ph = "PH"
-    case pk = "PK"
-    case pl = "PL"
-    case pm = "PM"
-    case pn = "PN"
-    case pr = "PR"
-    case ps = "PS"
-    case pt = "PT"
-    case py = "PY"
-    case qa = "QA"
-    case re = "RE"
-    case ro = "RO"
-    case rs = "RS"
-    case ru = "RU"
-    case rw = "RW"
-    case sa = "SA"
-    case sb = "SB"
-    case sc = "SC"
-    case sd = "SD"
-    case se = "SE"
-    case sg = "SG"
-    case sh = "SH"
-    case si = "SI"
-    case sj = "SJ"
-    case sk = "SK"
-    case sl = "SL"
-    case sm = "SM"
-    case sn = "SN"
-    case so = "SO"
-    case sr = "SR"
-    case ss = "SS"
-    case st = "ST"
-    case sv = "SV"
-    case sx = "SX"
-    case sz = "SZ"
-    case ta = "TA"
-    case tc = "TC"
-    case td = "TD"
-    case tf = "TF"
-    case tg = "TG"
-    case th = "TH"
-    case tj = "TJ"
-    case tk = "TK"
-    case tl = "TL"
-    case tm = "TM"
-    case tn = "TN"
-    case to = "TO"
-    case tr = "TR"
-    case tt = "TT"
-    case tv = "TV"
-    case tw = "TW"
-    case tz = "TZ"
-    case ua = "UA"
-    case ug = "UG"
-    case us = "US"
-    case uy = "UY"
-    case uz = "UZ"
-    case va = "VA"
-    case vc = "VC"
-    case ve = "VE"
-    case vg = "VG"
-    case vn = "VN"
-    case vu = "VU"
-    case wf = "WF"
-    case ws = "WS"
-    case xk = "XK"
-    case ye = "YE"
-    case yt = "YT"
-    case za = "ZA"
-    case zm = "ZM"
-    case zw = "ZW"
-    case zz = "ZZ"
+public struct CheckoutSessionCreateShippingAddressCollectionAllowedCountries: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ac: Self { .init(rawValue: "AC") }
+    public static var ad: Self { .init(rawValue: "AD") }
+    public static var ae: Self { .init(rawValue: "AE") }
+    public static var af: Self { .init(rawValue: "AF") }
+    public static var ag: Self { .init(rawValue: "AG") }
+    public static var ai: Self { .init(rawValue: "AI") }
+    public static var al: Self { .init(rawValue: "AL") }
+    public static var am: Self { .init(rawValue: "AM") }
+    public static var ao: Self { .init(rawValue: "AO") }
+    public static var aq: Self { .init(rawValue: "AQ") }
+    public static var ar: Self { .init(rawValue: "AR") }
+    public static var at: Self { .init(rawValue: "AT") }
+    public static var au: Self { .init(rawValue: "AU") }
+    public static var aw: Self { .init(rawValue: "AW") }
+    public static var ax: Self { .init(rawValue: "AX") }
+    public static var az: Self { .init(rawValue: "AZ") }
+    public static var ba: Self { .init(rawValue: "BA") }
+    public static var bb: Self { .init(rawValue: "BB") }
+    public static var bd: Self { .init(rawValue: "BD") }
+    public static var be: Self { .init(rawValue: "BE") }
+    public static var bf: Self { .init(rawValue: "BF") }
+    public static var bg: Self { .init(rawValue: "BG") }
+    public static var bh: Self { .init(rawValue: "BH") }
+    public static var bi: Self { .init(rawValue: "BI") }
+    public static var bj: Self { .init(rawValue: "BJ") }
+    public static var bl: Self { .init(rawValue: "BL") }
+    public static var bm: Self { .init(rawValue: "BM") }
+    public static var bn: Self { .init(rawValue: "BN") }
+    public static var bo: Self { .init(rawValue: "BO") }
+    public static var bq: Self { .init(rawValue: "BQ") }
+    public static var br: Self { .init(rawValue: "BR") }
+    public static var bs: Self { .init(rawValue: "BS") }
+    public static var bt: Self { .init(rawValue: "BT") }
+    public static var bv: Self { .init(rawValue: "BV") }
+    public static var bw: Self { .init(rawValue: "BW") }
+    public static var by: Self { .init(rawValue: "BY") }
+    public static var bz: Self { .init(rawValue: "BZ") }
+    public static var ca: Self { .init(rawValue: "CA") }
+    public static var cd: Self { .init(rawValue: "CD") }
+    public static var cf: Self { .init(rawValue: "CF") }
+    public static var cg: Self { .init(rawValue: "CG") }
+    public static var ch: Self { .init(rawValue: "CH") }
+    public static var ci: Self { .init(rawValue: "CI") }
+    public static var ck: Self { .init(rawValue: "CK") }
+    public static var cl: Self { .init(rawValue: "CL") }
+    public static var cm: Self { .init(rawValue: "CM") }
+    public static var cn: Self { .init(rawValue: "CN") }
+    public static var co: Self { .init(rawValue: "CO") }
+    public static var cr: Self { .init(rawValue: "CR") }
+    public static var cv: Self { .init(rawValue: "CV") }
+    public static var cw: Self { .init(rawValue: "CW") }
+    public static var cy: Self { .init(rawValue: "CY") }
+    public static var cz: Self { .init(rawValue: "CZ") }
+    public static var de: Self { .init(rawValue: "DE") }
+    public static var dj: Self { .init(rawValue: "DJ") }
+    public static var dk: Self { .init(rawValue: "DK") }
+    public static var dm: Self { .init(rawValue: "DM") }
+    public static var `do`: Self { .init(rawValue: "DO") }
+    public static var dz: Self { .init(rawValue: "DZ") }
+    public static var ec: Self { .init(rawValue: "EC") }
+    public static var ee: Self { .init(rawValue: "EE") }
+    public static var eg: Self { .init(rawValue: "EG") }
+    public static var eh: Self { .init(rawValue: "EH") }
+    public static var er: Self { .init(rawValue: "ER") }
+    public static var es: Self { .init(rawValue: "ES") }
+    public static var et: Self { .init(rawValue: "ET") }
+    public static var fi: Self { .init(rawValue: "FI") }
+    public static var fj: Self { .init(rawValue: "FJ") }
+    public static var fk: Self { .init(rawValue: "FK") }
+    public static var fo: Self { .init(rawValue: "FO") }
+    public static var fr: Self { .init(rawValue: "FR") }
+    public static var ga: Self { .init(rawValue: "GA") }
+    public static var gb: Self { .init(rawValue: "GB") }
+    public static var gd: Self { .init(rawValue: "GD") }
+    public static var ge: Self { .init(rawValue: "GE") }
+    public static var gf: Self { .init(rawValue: "GF") }
+    public static var gg: Self { .init(rawValue: "GG") }
+    public static var gh: Self { .init(rawValue: "GH") }
+    public static var gi: Self { .init(rawValue: "GI") }
+    public static var gl: Self { .init(rawValue: "GL") }
+    public static var gm: Self { .init(rawValue: "GM") }
+    public static var gn: Self { .init(rawValue: "GN") }
+    public static var gp: Self { .init(rawValue: "GP") }
+    public static var gq: Self { .init(rawValue: "GQ") }
+    public static var gr: Self { .init(rawValue: "GR") }
+    public static var gs: Self { .init(rawValue: "GS") }
+    public static var gt: Self { .init(rawValue: "GT") }
+    public static var gu: Self { .init(rawValue: "GU") }
+    public static var gw: Self { .init(rawValue: "GW") }
+    public static var gy: Self { .init(rawValue: "GY") }
+    public static var hk: Self { .init(rawValue: "HK") }
+    public static var hn: Self { .init(rawValue: "HN") }
+    public static var hr: Self { .init(rawValue: "HR") }
+    public static var ht: Self { .init(rawValue: "HT") }
+    public static var hu: Self { .init(rawValue: "HU") }
+    public static var id: Self { .init(rawValue: "ID") }
+    public static var ie: Self { .init(rawValue: "IE") }
+    public static var il: Self { .init(rawValue: "IL") }
+    public static var im: Self { .init(rawValue: "IM") }
+    public static var `in`: Self { .init(rawValue: "IN") }
+    public static var io: Self { .init(rawValue: "IO") }
+    public static var iq: Self { .init(rawValue: "IQ") }
+    public static var `is`: Self { .init(rawValue: "IS") }
+    public static var it: Self { .init(rawValue: "IT") }
+    public static var je: Self { .init(rawValue: "JE") }
+    public static var jm: Self { .init(rawValue: "JM") }
+    public static var jo: Self { .init(rawValue: "JO") }
+    public static var jp: Self { .init(rawValue: "JP") }
+    public static var ke: Self { .init(rawValue: "KE") }
+    public static var kg: Self { .init(rawValue: "KG") }
+    public static var kh: Self { .init(rawValue: "KH") }
+    public static var ki: Self { .init(rawValue: "KI") }
+    public static var km: Self { .init(rawValue: "KM") }
+    public static var kn: Self { .init(rawValue: "KN") }
+    public static var kr: Self { .init(rawValue: "KR") }
+    public static var kw: Self { .init(rawValue: "KW") }
+    public static var ky: Self { .init(rawValue: "KY") }
+    public static var kz: Self { .init(rawValue: "KZ") }
+    public static var la: Self { .init(rawValue: "LA") }
+    public static var lb: Self { .init(rawValue: "LB") }
+    public static var lc: Self { .init(rawValue: "LC") }
+    public static var li: Self { .init(rawValue: "LI") }
+    public static var lk: Self { .init(rawValue: "LK") }
+    public static var lr: Self { .init(rawValue: "LR") }
+    public static var ls: Self { .init(rawValue: "LS") }
+    public static var lt: Self { .init(rawValue: "LT") }
+    public static var lu: Self { .init(rawValue: "LU") }
+    public static var lv: Self { .init(rawValue: "LV") }
+    public static var ly: Self { .init(rawValue: "LY") }
+    public static var ma: Self { .init(rawValue: "MA") }
+    public static var mc: Self { .init(rawValue: "MC") }
+    public static var md: Self { .init(rawValue: "MD") }
+    public static var me: Self { .init(rawValue: "ME") }
+    public static var mf: Self { .init(rawValue: "MF") }
+    public static var mg: Self { .init(rawValue: "MG") }
+    public static var mk: Self { .init(rawValue: "MK") }
+    public static var ml: Self { .init(rawValue: "ML") }
+    public static var mm: Self { .init(rawValue: "MM") }
+    public static var mn: Self { .init(rawValue: "MN") }
+    public static var mo: Self { .init(rawValue: "MO") }
+    public static var mq: Self { .init(rawValue: "MQ") }
+    public static var mr: Self { .init(rawValue: "MR") }
+    public static var ms: Self { .init(rawValue: "MS") }
+    public static var mt: Self { .init(rawValue: "MT") }
+    public static var mu: Self { .init(rawValue: "MU") }
+    public static var mv: Self { .init(rawValue: "MV") }
+    public static var mw: Self { .init(rawValue: "MW") }
+    public static var mx: Self { .init(rawValue: "MX") }
+    public static var my: Self { .init(rawValue: "MY") }
+    public static var mz: Self { .init(rawValue: "MZ") }
+    public static var na: Self { .init(rawValue: "NA") }
+    public static var nc: Self { .init(rawValue: "NC") }
+    public static var ne: Self { .init(rawValue: "NE") }
+    public static var ng: Self { .init(rawValue: "NG") }
+    public static var ni: Self { .init(rawValue: "NI") }
+    public static var nl: Self { .init(rawValue: "NL") }
+    public static var no: Self { .init(rawValue: "NO") }
+    public static var np: Self { .init(rawValue: "NP") }
+    public static var nr: Self { .init(rawValue: "NR") }
+    public static var nu: Self { .init(rawValue: "NU") }
+    public static var nz: Self { .init(rawValue: "NZ") }
+    public static var om: Self { .init(rawValue: "OM") }
+    public static var pa: Self { .init(rawValue: "PA") }
+    public static var pe: Self { .init(rawValue: "PE") }
+    public static var pf: Self { .init(rawValue: "PF") }
+    public static var pg: Self { .init(rawValue: "PG") }
+    public static var ph: Self { .init(rawValue: "PH") }
+    public static var pk: Self { .init(rawValue: "PK") }
+    public static var pl: Self { .init(rawValue: "PL") }
+    public static var pm: Self { .init(rawValue: "PM") }
+    public static var pn: Self { .init(rawValue: "PN") }
+    public static var pr: Self { .init(rawValue: "PR") }
+    public static var ps: Self { .init(rawValue: "PS") }
+    public static var pt: Self { .init(rawValue: "PT") }
+    public static var py: Self { .init(rawValue: "PY") }
+    public static var qa: Self { .init(rawValue: "QA") }
+    public static var re: Self { .init(rawValue: "RE") }
+    public static var ro: Self { .init(rawValue: "RO") }
+    public static var rs: Self { .init(rawValue: "RS") }
+    public static var ru: Self { .init(rawValue: "RU") }
+    public static var rw: Self { .init(rawValue: "RW") }
+    public static var sa: Self { .init(rawValue: "SA") }
+    public static var sb: Self { .init(rawValue: "SB") }
+    public static var sc: Self { .init(rawValue: "SC") }
+    public static var sd: Self { .init(rawValue: "SD") }
+    public static var se: Self { .init(rawValue: "SE") }
+    public static var sg: Self { .init(rawValue: "SG") }
+    public static var sh: Self { .init(rawValue: "SH") }
+    public static var si: Self { .init(rawValue: "SI") }
+    public static var sj: Self { .init(rawValue: "SJ") }
+    public static var sk: Self { .init(rawValue: "SK") }
+    public static var sl: Self { .init(rawValue: "SL") }
+    public static var sm: Self { .init(rawValue: "SM") }
+    public static var sn: Self { .init(rawValue: "SN") }
+    public static var so: Self { .init(rawValue: "SO") }
+    public static var sr: Self { .init(rawValue: "SR") }
+    public static var ss: Self { .init(rawValue: "SS") }
+    public static var st: Self { .init(rawValue: "ST") }
+    public static var sv: Self { .init(rawValue: "SV") }
+    public static var sx: Self { .init(rawValue: "SX") }
+    public static var sz: Self { .init(rawValue: "SZ") }
+    public static var ta: Self { .init(rawValue: "TA") }
+    public static var tc: Self { .init(rawValue: "TC") }
+    public static var td: Self { .init(rawValue: "TD") }
+    public static var tf: Self { .init(rawValue: "TF") }
+    public static var tg: Self { .init(rawValue: "TG") }
+    public static var th: Self { .init(rawValue: "TH") }
+    public static var tj: Self { .init(rawValue: "TJ") }
+    public static var tk: Self { .init(rawValue: "TK") }
+    public static var tl: Self { .init(rawValue: "TL") }
+    public static var tm: Self { .init(rawValue: "TM") }
+    public static var tn: Self { .init(rawValue: "TN") }
+    public static var to: Self { .init(rawValue: "TO") }
+    public static var tr: Self { .init(rawValue: "TR") }
+    public static var tt: Self { .init(rawValue: "TT") }
+    public static var tv: Self { .init(rawValue: "TV") }
+    public static var tw: Self { .init(rawValue: "TW") }
+    public static var tz: Self { .init(rawValue: "TZ") }
+    public static var ua: Self { .init(rawValue: "UA") }
+    public static var ug: Self { .init(rawValue: "UG") }
+    public static var us: Self { .init(rawValue: "US") }
+    public static var uy: Self { .init(rawValue: "UY") }
+    public static var uz: Self { .init(rawValue: "UZ") }
+    public static var va: Self { .init(rawValue: "VA") }
+    public static var vc: Self { .init(rawValue: "VC") }
+    public static var ve: Self { .init(rawValue: "VE") }
+    public static var vg: Self { .init(rawValue: "VG") }
+    public static var vn: Self { .init(rawValue: "VN") }
+    public static var vu: Self { .init(rawValue: "VU") }
+    public static var wf: Self { .init(rawValue: "WF") }
+    public static var ws: Self { .init(rawValue: "WS") }
+    public static var xk: Self { .init(rawValue: "XK") }
+    public static var ye: Self { .init(rawValue: "YE") }
+    public static var yt: Self { .init(rawValue: "YT") }
+    public static var za: Self { .init(rawValue: "ZA") }
+    public static var zm: Self { .init(rawValue: "ZM") }
+    public static var zw: Self { .init(rawValue: "ZW") }
+    public static var zz: Self { .init(rawValue: "ZZ") }
 }
 
 public struct CheckoutSessionCreateShippingOptions: StripeParams {
@@ -4643,12 +5423,18 @@ public struct CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstima
     }
 }
 
-public enum CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstimateMaximumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstimateMaximumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// The lower bound of the estimated range. If empty, represents no lower bound.
@@ -4664,12 +5450,18 @@ public struct CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstima
     }
 }
 
-public enum CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstimateMinimumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct CheckoutSessionCreateShippingOptionsShippingRateDataDeliveryEstimateMinimumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -4715,28 +5507,52 @@ public struct CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCur
     }
 }
 
-public enum CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct CheckoutSessionCreateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CheckoutSessionCreateShippingOptionsShippingRateDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct CheckoutSessionCreateShippingOptionsShippingRateDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CheckoutSessionCreateShippingOptionsShippingRateDataType: String, Codable, Sendable {
-    case fixedAmount = "fixed_amount"
+public struct CheckoutSessionCreateShippingOptionsShippingRateDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixedAmount: Self { .init(rawValue: "fixed_amount") }
 }
 
-public enum CheckoutSessionCreateSubmitType: String, Codable, Sendable {
-    case auto
-    case book
-    case donate
-    case pay
-    case subscribe
+public struct CheckoutSessionCreateSubmitType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var book: Self { .init(rawValue: "book") }
+    public static var donate: Self { .init(rawValue: "donate") }
+    public static var pay: Self { .init(rawValue: "pay") }
+    public static var subscribe: Self { .init(rawValue: "subscribe") }
 }
 
 /// A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription`
@@ -4873,9 +5689,15 @@ public struct CheckoutSessionCreateSubscriptionDataBillingMode: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateSubscriptionDataBillingModeType: String, Codable, Sendable {
-    case classic
-    case flexible
+public struct CheckoutSessionCreateSubscriptionDataBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var classic: Self { .init(rawValue: "classic") }
+    public static var flexible: Self { .init(rawValue: "flexible") }
 }
 
 /// Configure behavior for flexible billing mode.
@@ -4892,9 +5714,17 @@ public struct CheckoutSessionCreateSubscriptionDataBillingModeFlexible: StripePa
     }
 }
 
-public enum CheckoutSessionCreateSubscriptionDataBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
-    case included
-    case itemized
+public struct CheckoutSessionCreateSubscriptionDataBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Amounts are net of discounts, and discount amounts are zero.
+    public static var included: Self { .init(rawValue: "included") }
+    /// Amounts are gross of discounts, and discount amounts are accurate.
+    public static var itemized: Self { .init(rawValue: "itemized") }
 }
 
 /// All invoices will be billed using the specified settings.
@@ -4955,9 +5785,15 @@ public struct CheckoutSessionCreateSubscriptionDataInvoiceSettingsIssuer: Stripe
     }
 }
 
-public enum CheckoutSessionCreateSubscriptionDataInvoiceSettingsIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct CheckoutSessionCreateSubscriptionDataInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 /// Specifies an interval for how often to bill for any pending invoice items. It is analogous to
@@ -4981,16 +5817,28 @@ public struct CheckoutSessionCreateSubscriptionDataPendingInvoiceItemInterval: S
     }
 }
 
-public enum CheckoutSessionCreateSubscriptionDataPendingInvoiceItemIntervalInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct CheckoutSessionCreateSubscriptionDataPendingInvoiceItemIntervalInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum CheckoutSessionCreateSubscriptionDataProrationBehavior: String, Codable, Sendable {
-    case createProrations = "create_prorations"
-    case none
+public struct CheckoutSessionCreateSubscriptionDataProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// If specified, the funds from the subscription's invoices will be transferred to the destination and
@@ -5043,10 +5891,16 @@ public struct CheckoutSessionCreateSubscriptionDataTrialSettingsEndBehavior: Str
     }
 }
 
-public enum CheckoutSessionCreateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
-    case cancel
-    case createInvoice = "create_invoice"
-    case pause
+public struct CheckoutSessionCreateSubscriptionDataTrialSettingsEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
+    public static var createInvoice: Self { .init(rawValue: "create_invoice") }
+    public static var pause: Self { .init(rawValue: "pause") }
 }
 
 /// Controls tax ID collection during checkout.
@@ -5063,16 +5917,28 @@ public struct CheckoutSessionCreateTaxIdCollection: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateTaxIdCollectionRequired: String, Codable, Sendable {
-    case ifSupported = "if_supported"
-    case never
+public struct CheckoutSessionCreateTaxIdCollectionRequired: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifSupported: Self { .init(rawValue: "if_supported") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum CheckoutSessionCreateUiMode: String, Codable, Sendable {
-    case elements
-    case embeddedPage = "embedded_page"
-    case form
-    case hostedPage = "hosted_page"
+public struct CheckoutSessionCreateUiMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var elements: Self { .init(rawValue: "elements") }
+    public static var embeddedPage: Self { .init(rawValue: "embedded_page") }
+    public static var form: Self { .init(rawValue: "form") }
+    public static var hostedPage: Self { .init(rawValue: "hosted_page") }
 }
 
 /// Wallet-specific configuration.
@@ -5097,9 +5963,15 @@ public struct CheckoutSessionCreateWalletOptionsLink: StripeParams {
     }
 }
 
-public enum CheckoutSessionCreateWalletOptionsLinkDisplay: String, Codable, Sendable {
-    case auto
-    case never
+public struct CheckoutSessionCreateWalletOptionsLinkDisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Only return the Checkout Sessions for the Customer details specified.
@@ -5112,10 +5984,19 @@ public struct CheckoutSessionListCustomerDetails: StripeParams {
     }
 }
 
-public enum CheckoutSessionListStatus: String, Codable, Sendable {
-    case complete
-    case expired
-    case `open` = "open"
+public struct CheckoutSessionListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The checkout session is complete. Payment processing may still be in progress
+    public static var complete: Self { .init(rawValue: "complete") }
+    /// The checkout session has expired. No further processing will occur
+    public static var expired: Self { .init(rawValue: "expired") }
+    /// The checkout session is still in progress. Payment processing has not started
+    public static var `open`: Self { .init(rawValue: "open") }
 }
 
 /// Information about the customer collected within the Checkout Session. Can only be set when updating
@@ -5383,17 +6264,29 @@ public struct CheckoutSessionUpdateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
-public enum CheckoutSessionUpdateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct CheckoutSessionUpdateLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum CheckoutSessionUpdateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct CheckoutSessionUpdateLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// A subset of parameters to apply to the PaymentIntent for Checkout Sessions in `payment` mode. You
@@ -5457,9 +6350,15 @@ public struct CheckoutSessionUpdatePaymentIntentData: StripeParams {
     }
 }
 
-public enum CheckoutSessionUpdatePaymentIntentDataSetupFutureUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutSessionUpdatePaymentIntentDataSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 public struct CheckoutSessionUpdateShippingOptions: StripeParams {
@@ -5551,12 +6450,18 @@ public struct CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstima
     }
 }
 
-public enum CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstimateMaximumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstimateMaximumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// The lower bound of the estimated range. If empty, represents no lower bound.
@@ -5572,12 +6477,18 @@ public struct CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstima
     }
 }
 
-public enum CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstimateMinimumUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct CheckoutSessionUpdateShippingOptionsShippingRateDataDeliveryEstimateMinimumUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 /// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
@@ -5623,18 +6534,36 @@ public struct CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCur
     }
 }
 
-public enum CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct CheckoutSessionUpdateShippingOptionsShippingRateDataFixedAmountCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CheckoutSessionUpdateShippingOptionsShippingRateDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct CheckoutSessionUpdateShippingOptionsShippingRateDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CheckoutSessionUpdateShippingOptionsShippingRateDataType: String, Codable, Sendable {
-    case fixedAmount = "fixed_amount"
+public struct CheckoutSessionUpdateShippingOptionsShippingRateDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixedAmount: Self { .init(rawValue: "fixed_amount") }
 }

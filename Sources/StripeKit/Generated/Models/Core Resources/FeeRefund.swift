@@ -46,8 +46,14 @@ public struct FeeRefund: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum FeeRefundObject: String, Codable, Sendable {
-    case feeRefund = "fee_refund"
+public struct FeeRefundObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var feeRefund: Self { .init(rawValue: "fee_refund") }
 }
 
 public struct FeeRefundList: Codable, Sendable {

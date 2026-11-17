@@ -124,8 +124,14 @@ public struct TransferUpdateParams: StripeParams {
     }
 }
 
-public enum TransferCreateSourceType: String, Codable, Sendable {
-    case bankAccount = "bank_account"
-    case card
-    case fpx
+public struct TransferCreateSourceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankAccount: Self { .init(rawValue: "bank_account") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
 }

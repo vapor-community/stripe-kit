@@ -94,24 +94,42 @@ public struct Account: Codable, Sendable {
 }
 
 /// The business type.
-public enum AccountBusinessType: String, Codable, Sendable {
-    case company
-    case governmentEntity = "government_entity"
-    case individual
-    case nonProfit = "non_profit"
+public struct AccountBusinessType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var governmentEntity: Self { .init(rawValue: "government_entity") }
+    public static var individual: Self { .init(rawValue: "individual") }
+    public static var nonProfit: Self { .init(rawValue: "non_profit") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum AccountObject: String, Codable, Sendable {
-    case account
+public struct AccountObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
 }
 
 /// The Stripe account type. Can be `standard`, `express`, `custom`, or `none`.
-public enum AccountType: String, Codable, Sendable {
-    case custom
-    case express
-    case none
-    case standard
+public struct AccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var express: Self { .init(rawValue: "express") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 public struct AccountList: Codable, Sendable {

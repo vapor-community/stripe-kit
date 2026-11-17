@@ -144,36 +144,66 @@ public struct PaymentLink: Codable, Sendable {
 }
 
 /// Configuration for collecting the customer's billing address. Defaults to `auto`.
-public enum PaymentLinkBillingAddressCollection: String, Codable, Sendable {
-    case auto
-    case required
+public struct PaymentLinkBillingAddressCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 /// Configuration for Customer creation during checkout.
-public enum PaymentLinkCustomerCreation: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct PaymentLinkCustomerCreation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PaymentLinkObject: String, Codable, Sendable {
-    case paymentLink = "payment_link"
+public struct PaymentLinkObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentLink: Self { .init(rawValue: "payment_link") }
 }
 
 /// Configuration for collecting a payment method during checkout. Defaults to `always`.
-public enum PaymentLinkPaymentMethodCollection: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct PaymentLinkPaymentMethodCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 /// Indicates the type of transaction being performed which customizes relevant text on the page, such
 /// as the submit button.
-public enum PaymentLinkSubmitType: String, Codable, Sendable {
-    case auto
-    case book
-    case donate
-    case pay
-    case subscribe
+public struct PaymentLinkSubmitType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var book: Self { .init(rawValue: "book") }
+    public static var donate: Self { .init(rawValue: "donate") }
+    public static var pay: Self { .init(rawValue: "pay") }
+    public static var subscribe: Self { .init(rawValue: "subscribe") }
 }
 
 public struct PaymentLinkList: Codable, Sendable {

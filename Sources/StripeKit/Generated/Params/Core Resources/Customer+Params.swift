@@ -443,10 +443,16 @@ public struct CustomerCreateCashBalanceSettings: StripeParams {
     }
 }
 
-public enum CustomerCreateCashBalanceSettingsReconciliationMode: String, Codable, Sendable {
-    case automatic
-    case manual
-    case merchantDefault = "merchant_default"
+public struct CustomerCreateCashBalanceSettingsReconciliationMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var merchantDefault: Self { .init(rawValue: "merchant_default") }
 }
 
 /// Default invoice settings for this customer.
@@ -509,9 +515,15 @@ public struct CustomerCreateInvoiceSettingsRenderingOptions: StripeParams {
     }
 }
 
-public enum CustomerCreateInvoiceSettingsRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
-    case excludeTax = "exclude_tax"
-    case includeInclusiveTax = "include_inclusive_tax"
+public struct CustomerCreateInvoiceSettingsRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var excludeTax: Self { .init(rawValue: "exclude_tax") }
+    public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
 }
 
 public struct CustomerCreateShipping: StripeParams {
@@ -586,15 +598,27 @@ public struct CustomerCreateTax: StripeParams {
     }
 }
 
-public enum CustomerCreateTaxValidateLocation: String, Codable, Sendable {
-    case deferred
-    case immediately
+public struct CustomerCreateTaxValidateLocation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var deferred: Self { .init(rawValue: "deferred") }
+    public static var immediately: Self { .init(rawValue: "immediately") }
 }
 
-public enum CustomerCreateTaxExempt: String, Codable, Sendable {
-    case exempt
-    case none
-    case reverse
+public struct CustomerCreateTaxExempt: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exempt: Self { .init(rawValue: "exempt") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var reverse: Self { .init(rawValue: "reverse") }
 }
 
 public struct CustomerCreateTaxIdData: StripeParams {
@@ -623,142 +647,148 @@ public struct CustomerCreateTaxIdData: StripeParams {
     }
 }
 
-public enum CustomerCreateTaxIdDataType: String, Codable, Sendable {
-    case adNrt = "ad_nrt"
-    case aeTrn = "ae_trn"
-    case alTin = "al_tin"
-    case amTin = "am_tin"
-    case aoTin = "ao_tin"
-    case arCuit = "ar_cuit"
-    case auAbn = "au_abn"
-    case auAcn = "au_acn"
-    case auArn = "au_arn"
-    case auWpn = "au_wpn"
-    case awTin = "aw_tin"
-    case azTin = "az_tin"
-    case baTin = "ba_tin"
-    case bbTin = "bb_tin"
-    case bdBin = "bd_bin"
-    case bfIfu = "bf_ifu"
-    case bgUic = "bg_uic"
-    case bhVat = "bh_vat"
-    case bjIfu = "bj_ifu"
-    case boTin = "bo_tin"
-    case brCnpj = "br_cnpj"
-    case brCpf = "br_cpf"
-    case bsTin = "bs_tin"
-    case bwVat = "bw_vat"
-    case byTin = "by_tin"
-    case caBn = "ca_bn"
-    case caGstHst = "ca_gst_hst"
-    case caPstBc = "ca_pst_bc"
-    case caPstMb = "ca_pst_mb"
-    case caPstSk = "ca_pst_sk"
-    case caQst = "ca_qst"
-    case cdNif = "cd_nif"
-    case chUid = "ch_uid"
-    case chVat = "ch_vat"
-    case ciVat = "ci_vat"
-    case clTin = "cl_tin"
-    case cmNiu = "cm_niu"
-    case cnTin = "cn_tin"
-    case coNit = "co_nit"
-    case crTin = "cr_tin"
-    case cvNif = "cv_nif"
-    case czDic = "cz_dic"
-    case deStn = "de_stn"
-    case doRcn = "do_rcn"
-    case ecRuc = "ec_ruc"
-    case egTin = "eg_tin"
-    case esCif = "es_cif"
-    case etTin = "et_tin"
-    case euOssVat = "eu_oss_vat"
-    case euVat = "eu_vat"
-    case foVat = "fo_vat"
-    case frSiren = "fr_siren"
-    case frSiret = "fr_siret"
-    case frSpi = "fr_spi"
-    case gbVat = "gb_vat"
-    case geVat = "ge_vat"
-    case ghTin = "gh_tin"
-    case giTin = "gi_tin"
-    case gnNif = "gn_nif"
-    case hkBr = "hk_br"
-    case hrOib = "hr_oib"
-    case huTin = "hu_tin"
-    case icNif = "ic_nif"
-    case idNpwp = "id_npwp"
-    case ilVat = "il_vat"
-    case inGst = "in_gst"
-    case isKt = "is_kt"
-    case isVat = "is_vat"
-    case itCf = "it_cf"
-    case jpCn = "jp_cn"
-    case jpRn = "jp_rn"
-    case jpTrn = "jp_trn"
-    case kePin = "ke_pin"
-    case kgTin = "kg_tin"
-    case khTin = "kh_tin"
-    case krBrn = "kr_brn"
-    case kzBin = "kz_bin"
-    case laTin = "la_tin"
-    case liUid = "li_uid"
-    case liVat = "li_vat"
-    case lkVat = "lk_vat"
-    case maVat = "ma_vat"
-    case mdCf = "md_cf"
-    case mdVat = "md_vat"
-    case mePib = "me_pib"
-    case mkVat = "mk_vat"
-    case mrNif = "mr_nif"
-    case muVat = "mu_vat"
-    case mxRfc = "mx_rfc"
-    case myFrp = "my_frp"
-    case myItn = "my_itn"
-    case mySst = "my_sst"
-    case mzNuit = "mz_nuit"
-    case ngTin = "ng_tin"
-    case noVat = "no_vat"
-    case noVoec = "no_voec"
-    case npPan = "np_pan"
-    case nzBn = "nz_bn"
-    case nzGst = "nz_gst"
-    case omVat = "om_vat"
-    case peRuc = "pe_ruc"
-    case phTin = "ph_tin"
-    case plNip = "pl_nip"
-    case ptNif = "pt_nif"
-    case pyRuc = "py_ruc"
-    case roTin = "ro_tin"
-    case rsPib = "rs_pib"
-    case ruInn = "ru_inn"
-    case ruKpp = "ru_kpp"
-    case saVat = "sa_vat"
-    case sgGst = "sg_gst"
-    case sgUen = "sg_uen"
-    case siTin = "si_tin"
-    case smCoe = "sm_coe"
-    case snNinea = "sn_ninea"
-    case srFin = "sr_fin"
-    case svNit = "sv_nit"
-    case thVat = "th_vat"
-    case tjTin = "tj_tin"
-    case trTin = "tr_tin"
-    case ttBir = "tt_bir"
-    case ttVat = "tt_vat"
-    case twVat = "tw_vat"
-    case tzVat = "tz_vat"
-    case uaVat = "ua_vat"
-    case ugTin = "ug_tin"
-    case usEin = "us_ein"
-    case uyRuc = "uy_ruc"
-    case uzTin = "uz_tin"
-    case uzVat = "uz_vat"
-    case veRif = "ve_rif"
-    case vnTin = "vn_tin"
-    case zaVat = "za_vat"
-    case zmTin = "zm_tin"
-    case zwTin = "zw_tin"
+public struct CustomerCreateTaxIdDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var adNrt: Self { .init(rawValue: "ad_nrt") }
+    public static var aeTrn: Self { .init(rawValue: "ae_trn") }
+    public static var alTin: Self { .init(rawValue: "al_tin") }
+    public static var amTin: Self { .init(rawValue: "am_tin") }
+    public static var aoTin: Self { .init(rawValue: "ao_tin") }
+    public static var arCuit: Self { .init(rawValue: "ar_cuit") }
+    public static var auAbn: Self { .init(rawValue: "au_abn") }
+    public static var auAcn: Self { .init(rawValue: "au_acn") }
+    public static var auArn: Self { .init(rawValue: "au_arn") }
+    public static var auWpn: Self { .init(rawValue: "au_wpn") }
+    public static var awTin: Self { .init(rawValue: "aw_tin") }
+    public static var azTin: Self { .init(rawValue: "az_tin") }
+    public static var baTin: Self { .init(rawValue: "ba_tin") }
+    public static var bbTin: Self { .init(rawValue: "bb_tin") }
+    public static var bdBin: Self { .init(rawValue: "bd_bin") }
+    public static var bfIfu: Self { .init(rawValue: "bf_ifu") }
+    public static var bgUic: Self { .init(rawValue: "bg_uic") }
+    public static var bhVat: Self { .init(rawValue: "bh_vat") }
+    public static var bjIfu: Self { .init(rawValue: "bj_ifu") }
+    public static var boTin: Self { .init(rawValue: "bo_tin") }
+    public static var brCnpj: Self { .init(rawValue: "br_cnpj") }
+    public static var brCpf: Self { .init(rawValue: "br_cpf") }
+    public static var bsTin: Self { .init(rawValue: "bs_tin") }
+    public static var bwVat: Self { .init(rawValue: "bw_vat") }
+    public static var byTin: Self { .init(rawValue: "by_tin") }
+    public static var caBn: Self { .init(rawValue: "ca_bn") }
+    public static var caGstHst: Self { .init(rawValue: "ca_gst_hst") }
+    public static var caPstBc: Self { .init(rawValue: "ca_pst_bc") }
+    public static var caPstMb: Self { .init(rawValue: "ca_pst_mb") }
+    public static var caPstSk: Self { .init(rawValue: "ca_pst_sk") }
+    public static var caQst: Self { .init(rawValue: "ca_qst") }
+    public static var cdNif: Self { .init(rawValue: "cd_nif") }
+    public static var chUid: Self { .init(rawValue: "ch_uid") }
+    public static var chVat: Self { .init(rawValue: "ch_vat") }
+    public static var ciVat: Self { .init(rawValue: "ci_vat") }
+    public static var clTin: Self { .init(rawValue: "cl_tin") }
+    public static var cmNiu: Self { .init(rawValue: "cm_niu") }
+    public static var cnTin: Self { .init(rawValue: "cn_tin") }
+    public static var coNit: Self { .init(rawValue: "co_nit") }
+    public static var crTin: Self { .init(rawValue: "cr_tin") }
+    public static var cvNif: Self { .init(rawValue: "cv_nif") }
+    public static var czDic: Self { .init(rawValue: "cz_dic") }
+    public static var deStn: Self { .init(rawValue: "de_stn") }
+    public static var doRcn: Self { .init(rawValue: "do_rcn") }
+    public static var ecRuc: Self { .init(rawValue: "ec_ruc") }
+    public static var egTin: Self { .init(rawValue: "eg_tin") }
+    public static var esCif: Self { .init(rawValue: "es_cif") }
+    public static var etTin: Self { .init(rawValue: "et_tin") }
+    public static var euOssVat: Self { .init(rawValue: "eu_oss_vat") }
+    public static var euVat: Self { .init(rawValue: "eu_vat") }
+    public static var foVat: Self { .init(rawValue: "fo_vat") }
+    public static var frSiren: Self { .init(rawValue: "fr_siren") }
+    public static var frSiret: Self { .init(rawValue: "fr_siret") }
+    public static var frSpi: Self { .init(rawValue: "fr_spi") }
+    public static var gbVat: Self { .init(rawValue: "gb_vat") }
+    public static var geVat: Self { .init(rawValue: "ge_vat") }
+    public static var ghTin: Self { .init(rawValue: "gh_tin") }
+    public static var giTin: Self { .init(rawValue: "gi_tin") }
+    public static var gnNif: Self { .init(rawValue: "gn_nif") }
+    public static var hkBr: Self { .init(rawValue: "hk_br") }
+    public static var hrOib: Self { .init(rawValue: "hr_oib") }
+    public static var huTin: Self { .init(rawValue: "hu_tin") }
+    public static var icNif: Self { .init(rawValue: "ic_nif") }
+    public static var idNpwp: Self { .init(rawValue: "id_npwp") }
+    public static var ilVat: Self { .init(rawValue: "il_vat") }
+    public static var inGst: Self { .init(rawValue: "in_gst") }
+    public static var isKt: Self { .init(rawValue: "is_kt") }
+    public static var isVat: Self { .init(rawValue: "is_vat") }
+    public static var itCf: Self { .init(rawValue: "it_cf") }
+    public static var jpCn: Self { .init(rawValue: "jp_cn") }
+    public static var jpRn: Self { .init(rawValue: "jp_rn") }
+    public static var jpTrn: Self { .init(rawValue: "jp_trn") }
+    public static var kePin: Self { .init(rawValue: "ke_pin") }
+    public static var kgTin: Self { .init(rawValue: "kg_tin") }
+    public static var khTin: Self { .init(rawValue: "kh_tin") }
+    public static var krBrn: Self { .init(rawValue: "kr_brn") }
+    public static var kzBin: Self { .init(rawValue: "kz_bin") }
+    public static var laTin: Self { .init(rawValue: "la_tin") }
+    public static var liUid: Self { .init(rawValue: "li_uid") }
+    public static var liVat: Self { .init(rawValue: "li_vat") }
+    public static var lkVat: Self { .init(rawValue: "lk_vat") }
+    public static var maVat: Self { .init(rawValue: "ma_vat") }
+    public static var mdCf: Self { .init(rawValue: "md_cf") }
+    public static var mdVat: Self { .init(rawValue: "md_vat") }
+    public static var mePib: Self { .init(rawValue: "me_pib") }
+    public static var mkVat: Self { .init(rawValue: "mk_vat") }
+    public static var mrNif: Self { .init(rawValue: "mr_nif") }
+    public static var muVat: Self { .init(rawValue: "mu_vat") }
+    public static var mxRfc: Self { .init(rawValue: "mx_rfc") }
+    public static var myFrp: Self { .init(rawValue: "my_frp") }
+    public static var myItn: Self { .init(rawValue: "my_itn") }
+    public static var mySst: Self { .init(rawValue: "my_sst") }
+    public static var mzNuit: Self { .init(rawValue: "mz_nuit") }
+    public static var ngTin: Self { .init(rawValue: "ng_tin") }
+    public static var noVat: Self { .init(rawValue: "no_vat") }
+    public static var noVoec: Self { .init(rawValue: "no_voec") }
+    public static var npPan: Self { .init(rawValue: "np_pan") }
+    public static var nzBn: Self { .init(rawValue: "nz_bn") }
+    public static var nzGst: Self { .init(rawValue: "nz_gst") }
+    public static var omVat: Self { .init(rawValue: "om_vat") }
+    public static var peRuc: Self { .init(rawValue: "pe_ruc") }
+    public static var phTin: Self { .init(rawValue: "ph_tin") }
+    public static var plNip: Self { .init(rawValue: "pl_nip") }
+    public static var ptNif: Self { .init(rawValue: "pt_nif") }
+    public static var pyRuc: Self { .init(rawValue: "py_ruc") }
+    public static var roTin: Self { .init(rawValue: "ro_tin") }
+    public static var rsPib: Self { .init(rawValue: "rs_pib") }
+    public static var ruInn: Self { .init(rawValue: "ru_inn") }
+    public static var ruKpp: Self { .init(rawValue: "ru_kpp") }
+    public static var saVat: Self { .init(rawValue: "sa_vat") }
+    public static var sgGst: Self { .init(rawValue: "sg_gst") }
+    public static var sgUen: Self { .init(rawValue: "sg_uen") }
+    public static var siTin: Self { .init(rawValue: "si_tin") }
+    public static var smCoe: Self { .init(rawValue: "sm_coe") }
+    public static var snNinea: Self { .init(rawValue: "sn_ninea") }
+    public static var srFin: Self { .init(rawValue: "sr_fin") }
+    public static var svNit: Self { .init(rawValue: "sv_nit") }
+    public static var thVat: Self { .init(rawValue: "th_vat") }
+    public static var tjTin: Self { .init(rawValue: "tj_tin") }
+    public static var trTin: Self { .init(rawValue: "tr_tin") }
+    public static var ttBir: Self { .init(rawValue: "tt_bir") }
+    public static var ttVat: Self { .init(rawValue: "tt_vat") }
+    public static var twVat: Self { .init(rawValue: "tw_vat") }
+    public static var tzVat: Self { .init(rawValue: "tz_vat") }
+    public static var uaVat: Self { .init(rawValue: "ua_vat") }
+    public static var ugTin: Self { .init(rawValue: "ug_tin") }
+    public static var usEin: Self { .init(rawValue: "us_ein") }
+    public static var uyRuc: Self { .init(rawValue: "uy_ruc") }
+    public static var uzTin: Self { .init(rawValue: "uz_tin") }
+    public static var uzVat: Self { .init(rawValue: "uz_vat") }
+    public static var veRif: Self { .init(rawValue: "ve_rif") }
+    public static var vnTin: Self { .init(rawValue: "vn_tin") }
+    public static var zaVat: Self { .init(rawValue: "za_vat") }
+    public static var zmTin: Self { .init(rawValue: "zm_tin") }
+    public static var zwTin: Self { .init(rawValue: "zw_tin") }
 }
 
 /// Additional parameters for `bank_transfer` funding types
@@ -785,12 +815,18 @@ public struct CustomerCreateFundingInstructionsBankTransfer: StripeParams {
     }
 }
 
-public enum CustomerCreateFundingInstructionsBankTransferType: String, Codable, Sendable {
-    case euBankTransfer = "eu_bank_transfer"
-    case gbBankTransfer = "gb_bank_transfer"
-    case jpBankTransfer = "jp_bank_transfer"
-    case mxBankTransfer = "mx_bank_transfer"
-    case usBankTransfer = "us_bank_transfer"
+public struct CustomerCreateFundingInstructionsBankTransferType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var euBankTransfer: Self { .init(rawValue: "eu_bank_transfer") }
+    public static var gbBankTransfer: Self { .init(rawValue: "gb_bank_transfer") }
+    public static var jpBankTransfer: Self { .init(rawValue: "jp_bank_transfer") }
+    public static var mxBankTransfer: Self { .init(rawValue: "mx_bank_transfer") }
+    public static var usBankTransfer: Self { .init(rawValue: "us_bank_transfer") }
 }
 
 /// Configuration for eu_bank_transfer funding type.
@@ -804,81 +840,105 @@ public struct CustomerCreateFundingInstructionsBankTransferEuBankTransfer: Strip
     }
 }
 
-public enum CustomerCreateFundingInstructionsBankTransferRequestedAddressTypes: String, Codable, Sendable {
-    case iban
-    case sortCode = "sort_code"
-    case spei
-    case zengin
+public struct CustomerCreateFundingInstructionsBankTransferRequestedAddressTypes: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var iban: Self { .init(rawValue: "iban") }
+    public static var sortCode: Self { .init(rawValue: "sort_code") }
+    public static var spei: Self { .init(rawValue: "spei") }
+    public static var zengin: Self { .init(rawValue: "zengin") }
 }
 
-public enum CustomerCreateFundingInstructionsFundingType: String, Codable, Sendable {
-    case bankTransfer = "bank_transfer"
+public struct CustomerCreateFundingInstructionsFundingType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankTransfer: Self { .init(rawValue: "bank_transfer") }
 }
 
-public enum CustomerListPaymentMethodsAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct CustomerListPaymentMethodsAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum CustomerListPaymentMethodsType: String, Codable, Sendable {
-    case acssDebit = "acss_debit"
-    case affirm
-    case afterpayClearpay = "afterpay_clearpay"
-    case alipay
-    case alma
-    case amazonPay = "amazon_pay"
-    case auBecsDebit = "au_becs_debit"
-    case bacsDebit = "bacs_debit"
-    case bancontact
-    case billie
-    case bizum
-    case blik
-    case boleto
-    case card
-    case cashapp
-    case crypto
-    case custom
-    case customerBalance = "customer_balance"
-    case eps
-    case fpx
-    case giropay
-    case grabpay
-    case ideal
-    case kakaoPay = "kakao_pay"
-    case klarna
-    case konbini
-    case krCard = "kr_card"
-    case link
-    case mbWay = "mb_way"
-    case mobilepay
-    case multibanco
-    case naverPay = "naver_pay"
-    case nzBankAccount = "nz_bank_account"
-    case oxxo
-    case p24
-    case payByBank = "pay_by_bank"
-    case payco
-    case paynow
-    case paypal
-    case paypay
-    case payto
-    case pix
-    case promptpay
-    case revolutPay = "revolut_pay"
-    case samsungPay = "samsung_pay"
-    case satispay
-    case scalapay
-    case sepaDebit = "sepa_debit"
-    case sequra
-    case sofort
-    case sunbit
-    case swish
-    case twint
-    case upi
-    case usBankAccount = "us_bank_account"
-    case wechatPay = "wechat_pay"
-    case zip
+public struct CustomerListPaymentMethodsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acssDebit: Self { .init(rawValue: "acss_debit") }
+    public static var affirm: Self { .init(rawValue: "affirm") }
+    public static var afterpayClearpay: Self { .init(rawValue: "afterpay_clearpay") }
+    public static var alipay: Self { .init(rawValue: "alipay") }
+    public static var alma: Self { .init(rawValue: "alma") }
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var auBecsDebit: Self { .init(rawValue: "au_becs_debit") }
+    public static var bacsDebit: Self { .init(rawValue: "bacs_debit") }
+    public static var bancontact: Self { .init(rawValue: "bancontact") }
+    public static var billie: Self { .init(rawValue: "billie") }
+    public static var bizum: Self { .init(rawValue: "bizum") }
+    public static var blik: Self { .init(rawValue: "blik") }
+    public static var boleto: Self { .init(rawValue: "boleto") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cashapp: Self { .init(rawValue: "cashapp") }
+    public static var crypto: Self { .init(rawValue: "crypto") }
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
+    public static var eps: Self { .init(rawValue: "eps") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
+    public static var giropay: Self { .init(rawValue: "giropay") }
+    public static var grabpay: Self { .init(rawValue: "grabpay") }
+    public static var ideal: Self { .init(rawValue: "ideal") }
+    public static var kakaoPay: Self { .init(rawValue: "kakao_pay") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var konbini: Self { .init(rawValue: "konbini") }
+    public static var krCard: Self { .init(rawValue: "kr_card") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mbWay: Self { .init(rawValue: "mb_way") }
+    public static var mobilepay: Self { .init(rawValue: "mobilepay") }
+    public static var multibanco: Self { .init(rawValue: "multibanco") }
+    public static var naverPay: Self { .init(rawValue: "naver_pay") }
+    public static var nzBankAccount: Self { .init(rawValue: "nz_bank_account") }
+    public static var oxxo: Self { .init(rawValue: "oxxo") }
+    public static var p24: Self { .init(rawValue: "p24") }
+    public static var payByBank: Self { .init(rawValue: "pay_by_bank") }
+    public static var payco: Self { .init(rawValue: "payco") }
+    public static var paynow: Self { .init(rawValue: "paynow") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
+    public static var paypay: Self { .init(rawValue: "paypay") }
+    public static var payto: Self { .init(rawValue: "payto") }
+    public static var pix: Self { .init(rawValue: "pix") }
+    public static var promptpay: Self { .init(rawValue: "promptpay") }
+    public static var revolutPay: Self { .init(rawValue: "revolut_pay") }
+    public static var samsungPay: Self { .init(rawValue: "samsung_pay") }
+    public static var satispay: Self { .init(rawValue: "satispay") }
+    public static var scalapay: Self { .init(rawValue: "scalapay") }
+    public static var sepaDebit: Self { .init(rawValue: "sepa_debit") }
+    public static var sequra: Self { .init(rawValue: "sequra") }
+    public static var sofort: Self { .init(rawValue: "sofort") }
+    public static var sunbit: Self { .init(rawValue: "sunbit") }
+    public static var swish: Self { .init(rawValue: "swish") }
+    public static var twint: Self { .init(rawValue: "twint") }
+    public static var upi: Self { .init(rawValue: "upi") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
+    public static var wechatPay: Self { .init(rawValue: "wechat_pay") }
+    public static var zip: Self { .init(rawValue: "zip") }
 }
 
 public struct CustomerUpdateAddress: StripeParams {
@@ -945,10 +1005,16 @@ public struct CustomerUpdateCashBalanceSettings: StripeParams {
     }
 }
 
-public enum CustomerUpdateCashBalanceSettingsReconciliationMode: String, Codable, Sendable {
-    case automatic
-    case manual
-    case merchantDefault = "merchant_default"
+public struct CustomerUpdateCashBalanceSettingsReconciliationMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var merchantDefault: Self { .init(rawValue: "merchant_default") }
 }
 
 /// Default invoice settings for this customer.
@@ -1011,9 +1077,15 @@ public struct CustomerUpdateInvoiceSettingsRenderingOptions: StripeParams {
     }
 }
 
-public enum CustomerUpdateInvoiceSettingsRenderingOptionsAmountTaxDisplay: String, Codable, Sendable {
-    case excludeTax = "exclude_tax"
-    case includeInclusiveTax = "include_inclusive_tax"
+public struct CustomerUpdateInvoiceSettingsRenderingOptionsAmountTaxDisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var excludeTax: Self { .init(rawValue: "exclude_tax") }
+    public static var includeInclusiveTax: Self { .init(rawValue: "include_inclusive_tax") }
 }
 
 public struct CustomerUpdateShipping: StripeParams {
@@ -1088,14 +1160,26 @@ public struct CustomerUpdateTax: StripeParams {
     }
 }
 
-public enum CustomerUpdateTaxValidateLocation: String, Codable, Sendable {
-    case auto
-    case deferred
-    case immediately
+public struct CustomerUpdateTaxValidateLocation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var deferred: Self { .init(rawValue: "deferred") }
+    public static var immediately: Self { .init(rawValue: "immediately") }
 }
 
-public enum CustomerUpdateTaxExempt: String, Codable, Sendable {
-    case exempt
-    case none
-    case reverse
+public struct CustomerUpdateTaxExempt: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exempt: Self { .init(rawValue: "exempt") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var reverse: Self { .init(rawValue: "reverse") }
 }

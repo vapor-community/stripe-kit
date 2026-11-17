@@ -19,14 +19,20 @@ public struct CardMandatePaymentMethodDetailsIndia: Codable, Sendable {
 
 /// The reason why the mandate has an `inactive` status. This field is only populated if the mandate is
 /// inactive.
-public enum CardMandatePaymentMethodDetailsIndiaInactiveReason: String, Codable, Sendable {
-    case canceled
-    case cardNotSupported = "card_not_supported"
-    case currencyNotSupported = "currency_not_supported"
-    case expired
-    case issuerNotSupported = "issuer_not_supported"
-    case processingError = "processing_error"
-    case undetermined
+public struct CardMandatePaymentMethodDetailsIndiaInactiveReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var cardNotSupported: Self { .init(rawValue: "card_not_supported") }
+    public static var currencyNotSupported: Self { .init(rawValue: "currency_not_supported") }
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var issuerNotSupported: Self { .init(rawValue: "issuer_not_supported") }
+    public static var processingError: Self { .init(rawValue: "processing_error") }
+    public static var undetermined: Self { .init(rawValue: "undetermined") }
 }
 
 public struct CardMandatePaymentMethodDetailsIndiaList: Codable, Sendable {

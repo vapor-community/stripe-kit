@@ -13,9 +13,19 @@ public struct DisputeEnhancedEligibilityMastercardCompliance: Codable, Sendable 
 }
 
 /// Mastercard compliance eligibility status.
-public enum DisputeEnhancedEligibilityMastercardComplianceStatus: String, Codable, Sendable {
-    case feeAcknowledged = "fee_acknowledged"
-    case requiresFeeAcknowledgement = "requires_fee_acknowledgement"
+public struct DisputeEnhancedEligibilityMastercardComplianceStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The network fee for submitting evidence for Mastercard compliance disputes has been acknowledged.
+    /// Submitting evidence for this dispute is permitted.
+    public static var feeAcknowledged: Self { .init(rawValue: "fee_acknowledged") }
+    /// The network fee for submitting evidence for Mastercard compliance disputes has not been
+    /// acknowledged. Submitting evidence for this dispute is not permitted.
+    public static var requiresFeeAcknowledgement: Self { .init(rawValue: "requires_fee_acknowledgement") }
 }
 
 public struct DisputeEnhancedEligibilityMastercardComplianceList: Codable, Sendable {

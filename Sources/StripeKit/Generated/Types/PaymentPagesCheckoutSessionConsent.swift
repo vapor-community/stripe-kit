@@ -22,14 +22,26 @@ public struct PaymentPagesCheckoutSessionConsent: Codable, Sendable {
 
 /// If `opt_in`, the customer consents to receiving promotional communications from the merchant about
 /// this Checkout Session.
-public enum PaymentPagesCheckoutSessionConsentPromotions: String, Codable, Sendable {
-    case optIn = "opt_in"
-    case optOut = "opt_out"
+public struct PaymentPagesCheckoutSessionConsentPromotions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var optIn: Self { .init(rawValue: "opt_in") }
+    public static var optOut: Self { .init(rawValue: "opt_out") }
 }
 
 /// If `accepted`, the customer in this Checkout Session has agreed to the merchant's terms of service.
-public enum PaymentPagesCheckoutSessionConsentTermsOfService: String, Codable, Sendable {
-    case accepted
+public struct PaymentPagesCheckoutSessionConsentTermsOfService: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accepted: Self { .init(rawValue: "accepted") }
 }
 
 public struct PaymentPagesCheckoutSessionConsentList: Codable, Sendable {

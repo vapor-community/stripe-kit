@@ -37,16 +37,28 @@ public struct ClimateSupplier: Codable, Sendable {
 }
 
 /// String representing the object’s type. Objects of the same type share the same value.
-public enum ClimateSupplierObject: String, Codable, Sendable {
-    case climateSupplier = "climate.supplier"
+public struct ClimateSupplierObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var climateSupplier: Self { .init(rawValue: "climate.supplier") }
 }
 
 /// The scientific pathway used for carbon removal.
-public enum ClimateSupplierRemovalPathway: String, Codable, Sendable {
-    case biomassCarbonRemovalAndStorage = "biomass_carbon_removal_and_storage"
-    case directAirCapture = "direct_air_capture"
-    case enhancedWeathering = "enhanced_weathering"
-    case marineCarbonRemoval = "marine_carbon_removal"
+public struct ClimateSupplierRemovalPathway: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var biomassCarbonRemovalAndStorage: Self { .init(rawValue: "biomass_carbon_removal_and_storage") }
+    public static var directAirCapture: Self { .init(rawValue: "direct_air_capture") }
+    public static var enhancedWeathering: Self { .init(rawValue: "enhanced_weathering") }
+    public static var marineCarbonRemoval: Self { .init(rawValue: "marine_carbon_removal") }
 }
 
 public struct ClimateSupplierList: Codable, Sendable {

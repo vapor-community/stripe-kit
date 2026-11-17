@@ -39,16 +39,28 @@ public struct Capability: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CapabilityObject: String, Codable, Sendable {
-    case capability
+public struct CapabilityObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var capability: Self { .init(rawValue: "capability") }
 }
 
 /// The status of the capability.
-public enum CapabilityStatus: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
-    case unrequested
+public struct CapabilityStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var unrequested: Self { .init(rawValue: "unrequested") }
 }
 
 public struct CapabilityList: Codable, Sendable {

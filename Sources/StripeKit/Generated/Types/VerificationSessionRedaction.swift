@@ -13,10 +13,16 @@ public struct VerificationSessionRedaction: Codable, Sendable {
 }
 
 /// Indicates whether this object and its related objects have been redacted or not.
-public enum VerificationSessionRedactionStatus: String, Codable, Sendable {
-    case processing
-    case redacted
-    case validated
+public struct VerificationSessionRedactionStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var processing: Self { .init(rawValue: "processing") }
+    public static var redacted: Self { .init(rawValue: "redacted") }
+    public static var validated: Self { .init(rawValue: "validated") }
 }
 
 public struct VerificationSessionRedactionList: Codable, Sendable {

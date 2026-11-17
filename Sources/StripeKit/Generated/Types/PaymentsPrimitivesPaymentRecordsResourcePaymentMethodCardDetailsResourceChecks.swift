@@ -26,28 +26,46 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsRe
 
 /// If you provide a value for `address.line1`, the check result is one of `pass`, `fail`,
 /// `unavailable`, or `unchecked`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceChecksAddressLine1Check: String, Codable, Sendable {
-    case fail
-    case pass
-    case unavailable
-    case unchecked
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceChecksAddressLine1Check: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fail: Self { .init(rawValue: "fail") }
+    public static var pass: Self { .init(rawValue: "pass") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
 
 /// If you provide a address postal code, the check result is one of `pass`, `fail`, `unavailable`, or
 /// `unchecked`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceChecksAddressPostalCodeCheck: String, Codable, Sendable {
-    case fail
-    case pass
-    case unavailable
-    case unchecked
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceChecksAddressPostalCodeCheck: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fail: Self { .init(rawValue: "fail") }
+    public static var pass: Self { .init(rawValue: "pass") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
 
 /// If you provide a CVC, the check results is one of `pass`, `fail`, `unavailable`, or `unchecked`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceChecksCvcCheck: String, Codable, Sendable {
-    case fail
-    case pass
-    case unavailable
-    case unchecked
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceChecksCvcCheck: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fail: Self { .init(rawValue: "fail") }
+    public static var pass: Self { .init(rawValue: "pass") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
 
 public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceChecksList: Codable, Sendable {

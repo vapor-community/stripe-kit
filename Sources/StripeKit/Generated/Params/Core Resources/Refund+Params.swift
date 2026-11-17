@@ -184,12 +184,24 @@ public struct RefundUpdateParams: StripeParams {
     }
 }
 
-public enum RefundCreateOrigin: String, Codable, Sendable {
-    case customerBalance = "customer_balance"
+public struct RefundCreateOrigin: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerBalance: Self { .init(rawValue: "customer_balance") }
 }
 
-public enum RefundCreateReason: String, Codable, Sendable {
-    case duplicate
-    case fraudulent
-    case requestedByCustomer = "requested_by_customer"
+public struct RefundCreateReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var requestedByCustomer: Self { .init(rawValue: "requested_by_customer") }
 }

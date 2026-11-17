@@ -20,10 +20,16 @@ public struct PaypalSellerProtection: Codable, Sendable {
 }
 
 /// Indicates whether the transaction is eligible for PayPal's seller protection.
-public enum PaypalSellerProtectionStatus: String, Codable, Sendable {
-    case eligible
-    case notEligible = "not_eligible"
-    case partiallyEligible = "partially_eligible"
+public struct PaypalSellerProtectionStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var eligible: Self { .init(rawValue: "eligible") }
+    public static var notEligible: Self { .init(rawValue: "not_eligible") }
+    public static var partiallyEligible: Self { .init(rawValue: "partially_eligible") }
 }
 
 public struct PaypalSellerProtectionList: Codable, Sendable {

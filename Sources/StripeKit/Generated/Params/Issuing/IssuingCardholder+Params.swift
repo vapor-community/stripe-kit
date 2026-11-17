@@ -358,12 +358,18 @@ public struct IssuingCardholderCreateIndividualVerificationDocument: StripeParam
     }
 }
 
-public enum IssuingCardholderCreatePreferredLocales: String, Codable, Sendable {
-    case de
-    case en
-    case es
-    case fr
-    case it
+public struct IssuingCardholderCreatePreferredLocales: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var de: Self { .init(rawValue: "de") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var es: Self { .init(rawValue: "es") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var it: Self { .init(rawValue: "it") }
 }
 
 /// Rules that control spending across this cardholder's cards. Refer to our
@@ -424,610 +430,634 @@ public struct IssuingCardholderCreateSpendingControls: StripeParams {
     }
 }
 
-public enum IssuingCardholderCreateSpendingControlsAllowedCardPresences: String, Codable, Sendable {
-    case notPresent = "not_present"
-    case present
+public struct IssuingCardholderCreateSpendingControlsAllowedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var notPresent: Self { .init(rawValue: "not_present") }
+    public static var present: Self { .init(rawValue: "present") }
 }
 
-public enum IssuingCardholderCreateSpendingControlsAllowedCategories: String, Codable, Sendable {
-    case acRefrigerationRepair = "ac_refrigeration_repair"
-    case accountingBookkeepingServices = "accounting_bookkeeping_services"
-    case advertisingServices = "advertising_services"
-    case agriculturalCooperative = "agricultural_cooperative"
-    case airlinesAirCarriers = "airlines_air_carriers"
-    case airportsFlyingFields = "airports_flying_fields"
-    case ambulanceServices = "ambulance_services"
-    case amusementParksCarnivals = "amusement_parks_carnivals"
-    case antiqueReproductions = "antique_reproductions"
-    case antiqueShops = "antique_shops"
-    case aquariums
-    case architecturalSurveyingServices = "architectural_surveying_services"
-    case artDealersAndGalleries = "art_dealers_and_galleries"
-    case artistsSupplyAndCraftShops = "artists_supply_and_craft_shops"
-    case autoAndHomeSupplyStores = "auto_and_home_supply_stores"
-    case autoBodyRepairShops = "auto_body_repair_shops"
-    case autoPaintShops = "auto_paint_shops"
-    case autoServiceShops = "auto_service_shops"
-    case automatedCashDisburse = "automated_cash_disburse"
-    case automatedFuelDispensers = "automated_fuel_dispensers"
-    case automobileAssociations = "automobile_associations"
-    case automotivePartsAndAccessoriesStores = "automotive_parts_and_accessories_stores"
-    case automotiveTireStores = "automotive_tire_stores"
-    case bailAndBondPayments = "bail_and_bond_payments"
-    case bakeries
-    case bandsOrchestras = "bands_orchestras"
-    case barberAndBeautyShops = "barber_and_beauty_shops"
-    case bettingCasinoGambling = "betting_casino_gambling"
-    case bicycleShops = "bicycle_shops"
-    case billiardPoolEstablishments = "billiard_pool_establishments"
-    case boatDealers = "boat_dealers"
-    case boatRentalsAndLeases = "boat_rentals_and_leases"
-    case bookStores = "book_stores"
-    case booksPeriodicalsAndNewspapers = "books_periodicals_and_newspapers"
-    case bowlingAlleys = "bowling_alleys"
-    case busLines = "bus_lines"
-    case businessSecretarialSchools = "business_secretarial_schools"
-    case buyingShoppingServices = "buying_shopping_services"
-    case cableSatelliteAndOtherPayTelevisionAndRadio = "cable_satellite_and_other_pay_television_and_radio"
-    case cameraAndPhotographicSupplyStores = "camera_and_photographic_supply_stores"
-    case candyNutAndConfectioneryStores = "candy_nut_and_confectionery_stores"
-    case carAndTruckDealersNewUsed = "car_and_truck_dealers_new_used"
-    case carAndTruckDealersUsedOnly = "car_and_truck_dealers_used_only"
-    case carRentalAgencies = "car_rental_agencies"
-    case carWashes = "car_washes"
-    case carpentryServices = "carpentry_services"
-    case carpetUpholsteryCleaning = "carpet_upholstery_cleaning"
-    case caterers
-    case charitableAndSocialServiceOrganizationsFundraising = "charitable_and_social_service_organizations_fundraising"
-    case chemicalsAndAlliedProducts = "chemicals_and_allied_products"
-    case childCareServices = "child_care_services"
-    case childrensAndInfantsWearStores = "childrens_and_infants_wear_stores"
-    case chiropodistsPodiatrists = "chiropodists_podiatrists"
-    case chiropractors
-    case cigarStoresAndStands = "cigar_stores_and_stands"
-    case civicSocialFraternalAssociations = "civic_social_fraternal_associations"
-    case cleaningAndMaintenance = "cleaning_and_maintenance"
-    case clothingRental = "clothing_rental"
-    case collegesUniversities = "colleges_universities"
-    case commercialEquipment = "commercial_equipment"
-    case commercialFootwear = "commercial_footwear"
-    case commercialPhotographyArtAndGraphics = "commercial_photography_art_and_graphics"
-    case commuterTransportAndFerries = "commuter_transport_and_ferries"
-    case computerNetworkServices = "computer_network_services"
-    case computerProgramming = "computer_programming"
-    case computerRepair = "computer_repair"
-    case computerSoftwareStores = "computer_software_stores"
-    case computersPeripheralsAndSoftware = "computers_peripherals_and_software"
-    case concreteWorkServices = "concrete_work_services"
-    case constructionMaterials = "construction_materials"
-    case consultingPublicRelations = "consulting_public_relations"
-    case correspondenceSchools = "correspondence_schools"
-    case cosmeticStores = "cosmetic_stores"
-    case counselingServices = "counseling_services"
-    case countryClubs = "country_clubs"
-    case courierServices = "courier_services"
-    case courtCosts = "court_costs"
-    case creditReportingAgencies = "credit_reporting_agencies"
-    case cruiseLines = "cruise_lines"
-    case dairyProductsStores = "dairy_products_stores"
-    case danceHallStudiosSchools = "dance_hall_studios_schools"
-    case datingEscortServices = "dating_escort_services"
-    case dentistsOrthodontists = "dentists_orthodontists"
-    case departmentStores = "department_stores"
-    case detectiveAgencies = "detective_agencies"
-    case digitalGoodsApplications = "digital_goods_applications"
-    case digitalGoodsGames = "digital_goods_games"
-    case digitalGoodsLargeVolume = "digital_goods_large_volume"
-    case digitalGoodsMedia = "digital_goods_media"
-    case directMarketingCatalogMerchant = "direct_marketing_catalog_merchant"
-    case directMarketingCombinationCatalogAndRetailMerchant = "direct_marketing_combination_catalog_and_retail_merchant"
-    case directMarketingInboundTelemarketing = "direct_marketing_inbound_telemarketing"
-    case directMarketingInsuranceServices = "direct_marketing_insurance_services"
-    case directMarketingOther = "direct_marketing_other"
-    case directMarketingOutboundTelemarketing = "direct_marketing_outbound_telemarketing"
-    case directMarketingSubscription = "direct_marketing_subscription"
-    case directMarketingTravel = "direct_marketing_travel"
-    case discountStores = "discount_stores"
-    case doctors
-    case doorToDoorSales = "door_to_door_sales"
-    case draperyWindowCoveringAndUpholsteryStores = "drapery_window_covering_and_upholstery_stores"
-    case drinkingPlaces = "drinking_places"
-    case drugStoresAndPharmacies = "drug_stores_and_pharmacies"
-    case drugsDrugProprietariesAndDruggistSundries = "drugs_drug_proprietaries_and_druggist_sundries"
-    case dryCleaners = "dry_cleaners"
-    case durableGoods = "durable_goods"
-    case dutyFreeStores = "duty_free_stores"
-    case eatingPlacesRestaurants = "eating_places_restaurants"
-    case educationalServices = "educational_services"
-    case electricRazorStores = "electric_razor_stores"
-    case electricVehicleCharging = "electric_vehicle_charging"
-    case electricalPartsAndEquipment = "electrical_parts_and_equipment"
-    case electricalServices = "electrical_services"
-    case electronicsRepairShops = "electronics_repair_shops"
-    case electronicsStores = "electronics_stores"
-    case elementarySecondarySchools = "elementary_secondary_schools"
-    case emergencyServicesGcasVisaUseOnly = "emergency_services_gcas_visa_use_only"
-    case employmentTempAgencies = "employment_temp_agencies"
-    case equipmentRental = "equipment_rental"
-    case exterminatingServices = "exterminating_services"
-    case familyClothingStores = "family_clothing_stores"
-    case fastFoodRestaurants = "fast_food_restaurants"
-    case financialInstitutions = "financial_institutions"
-    case finesGovernmentAdministrativeEntities = "fines_government_administrative_entities"
-    case fireplaceFireplaceScreensAndAccessoriesStores = "fireplace_fireplace_screens_and_accessories_stores"
-    case floorCoveringStores = "floor_covering_stores"
-    case florists
-    case floristsSuppliesNurseryStockAndFlowers = "florists_supplies_nursery_stock_and_flowers"
-    case freezerAndLockerMeatProvisioners = "freezer_and_locker_meat_provisioners"
-    case fuelDealersNonAutomotive = "fuel_dealers_non_automotive"
-    case funeralServicesCrematories = "funeral_services_crematories"
-    case furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances = "furniture_home_furnishings_and_equipment_stores_except_appliances"
-    case furnitureRepairRefinishing = "furniture_repair_refinishing"
-    case furriersAndFurShops = "furriers_and_fur_shops"
-    case generalServices = "general_services"
-    case giftCardNoveltyAndSouvenirShops = "gift_card_novelty_and_souvenir_shops"
-    case glassPaintAndWallpaperStores = "glass_paint_and_wallpaper_stores"
-    case glasswareCrystalStores = "glassware_crystal_stores"
-    case golfCoursesPublic = "golf_courses_public"
-    case governmentLicensedHorseDogRacingUsRegionOnly = "government_licensed_horse_dog_racing_us_region_only"
-    case governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly = "government_licensed_online_casions_online_gambling_us_region_only"
-    case governmentOwnedLotteriesNonUsRegion = "government_owned_lotteries_non_us_region"
-    case governmentOwnedLotteriesUsRegionOnly = "government_owned_lotteries_us_region_only"
-    case governmentServices = "government_services"
-    case groceryStoresSupermarkets = "grocery_stores_supermarkets"
-    case hardwareEquipmentAndSupplies = "hardware_equipment_and_supplies"
-    case hardwareStores = "hardware_stores"
-    case healthAndBeautySpas = "health_and_beauty_spas"
-    case hearingAidsSalesAndSupplies = "hearing_aids_sales_and_supplies"
-    case heatingPlumbingAC = "heating_plumbing_a_c"
-    case hobbyToyAndGameShops = "hobby_toy_and_game_shops"
-    case homeSupplyWarehouseStores = "home_supply_warehouse_stores"
-    case hospitals
-    case hotelsMotelsAndResorts = "hotels_motels_and_resorts"
-    case householdApplianceStores = "household_appliance_stores"
-    case industrialSupplies = "industrial_supplies"
-    case informationRetrievalServices = "information_retrieval_services"
-    case insuranceDefault = "insurance_default"
-    case insuranceUnderwritingPremiums = "insurance_underwriting_premiums"
-    case intraCompanyPurchases = "intra_company_purchases"
-    case jewelryStoresWatchesClocksAndSilverwareStores = "jewelry_stores_watches_clocks_and_silverware_stores"
-    case landscapingServices = "landscaping_services"
-    case laundries
-    case laundryCleaningServices = "laundry_cleaning_services"
-    case legalServicesAttorneys = "legal_services_attorneys"
-    case luggageAndLeatherGoodsStores = "luggage_and_leather_goods_stores"
-    case lumberBuildingMaterialsStores = "lumber_building_materials_stores"
-    case manualCashDisburse = "manual_cash_disburse"
-    case marinasServiceAndSupplies = "marinas_service_and_supplies"
-    case marketplaces
-    case masonryStoneworkAndPlaster = "masonry_stonework_and_plaster"
-    case massageParlors = "massage_parlors"
-    case medicalAndDentalLabs = "medical_and_dental_labs"
-    case medicalDentalOphthalmicAndHospitalEquipmentAndSupplies = "medical_dental_ophthalmic_and_hospital_equipment_and_supplies"
-    case medicalServices = "medical_services"
-    case membershipOrganizations = "membership_organizations"
-    case mensAndBoysClothingAndAccessoriesStores = "mens_and_boys_clothing_and_accessories_stores"
-    case mensWomensClothingStores = "mens_womens_clothing_stores"
-    case metalServiceCenters = "metal_service_centers"
-    case miscellaneous
-    case miscellaneousApparelAndAccessoryShops = "miscellaneous_apparel_and_accessory_shops"
-    case miscellaneousAutoDealers = "miscellaneous_auto_dealers"
-    case miscellaneousBusinessServices = "miscellaneous_business_services"
-    case miscellaneousFoodStores = "miscellaneous_food_stores"
-    case miscellaneousGeneralMerchandise = "miscellaneous_general_merchandise"
-    case miscellaneousGeneralServices = "miscellaneous_general_services"
-    case miscellaneousHomeFurnishingSpecialtyStores = "miscellaneous_home_furnishing_specialty_stores"
-    case miscellaneousPublishingAndPrinting = "miscellaneous_publishing_and_printing"
-    case miscellaneousRecreationServices = "miscellaneous_recreation_services"
-    case miscellaneousRepairShops = "miscellaneous_repair_shops"
-    case miscellaneousSpecialtyRetail = "miscellaneous_specialty_retail"
-    case mobileHomeDealers = "mobile_home_dealers"
-    case motionPictureTheaters = "motion_picture_theaters"
-    case motorFreightCarriersAndTrucking = "motor_freight_carriers_and_trucking"
-    case motorHomesDealers = "motor_homes_dealers"
-    case motorVehicleSuppliesAndNewParts = "motor_vehicle_supplies_and_new_parts"
-    case motorcycleShopsAndDealers = "motorcycle_shops_and_dealers"
-    case motorcycleShopsDealers = "motorcycle_shops_dealers"
-    case musicStoresMusicalInstrumentsPianosAndSheetMusic = "music_stores_musical_instruments_pianos_and_sheet_music"
-    case newsDealersAndNewsstands = "news_dealers_and_newsstands"
-    case nonFiMoneyOrders = "non_fi_money_orders"
-    case nonFiStoredValueCardPurchaseLoad = "non_fi_stored_value_card_purchase_load"
-    case nondurableGoods = "nondurable_goods"
-    case nurseriesLawnAndGardenSupplyStores = "nurseries_lawn_and_garden_supply_stores"
-    case nursingPersonalCare = "nursing_personal_care"
-    case officeAndCommercialFurniture = "office_and_commercial_furniture"
-    case opticiansEyeglasses = "opticians_eyeglasses"
-    case optometristsOphthalmologist = "optometrists_ophthalmologist"
-    case orthopedicGoodsProstheticDevices = "orthopedic_goods_prosthetic_devices"
-    case osteopaths
-    case packageStoresBeerWineAndLiquor = "package_stores_beer_wine_and_liquor"
-    case paintsVarnishesAndSupplies = "paints_varnishes_and_supplies"
-    case parkingLotsGarages = "parking_lots_garages"
-    case passengerRailways = "passenger_railways"
-    case pawnShops = "pawn_shops"
-    case petShopsPetFoodAndSupplies = "pet_shops_pet_food_and_supplies"
-    case petroleumAndPetroleumProducts = "petroleum_and_petroleum_products"
-    case photoDeveloping = "photo_developing"
-    case photographicPhotocopyMicrofilmEquipmentAndSupplies = "photographic_photocopy_microfilm_equipment_and_supplies"
-    case photographicStudios = "photographic_studios"
-    case pictureVideoProduction = "picture_video_production"
-    case pieceGoodsNotionsAndOtherDryGoods = "piece_goods_notions_and_other_dry_goods"
-    case plumbingHeatingEquipmentAndSupplies = "plumbing_heating_equipment_and_supplies"
-    case politicalOrganizations = "political_organizations"
-    case postalServicesGovernmentOnly = "postal_services_government_only"
-    case preciousStonesAndMetalsWatchesAndJewelry = "precious_stones_and_metals_watches_and_jewelry"
-    case professionalServices = "professional_services"
-    case publicWarehousingAndStorage = "public_warehousing_and_storage"
-    case quickCopyReproAndBlueprint = "quick_copy_repro_and_blueprint"
-    case railroads
-    case realEstateAgentsAndManagersRentals = "real_estate_agents_and_managers_rentals"
-    case recordStores = "record_stores"
-    case recreationalVehicleRentals = "recreational_vehicle_rentals"
-    case religiousGoodsStores = "religious_goods_stores"
-    case religiousOrganizations = "religious_organizations"
-    case roofingSidingSheetMetal = "roofing_siding_sheet_metal"
-    case secretarialSupportServices = "secretarial_support_services"
-    case securityBrokersDealers = "security_brokers_dealers"
-    case serviceStations = "service_stations"
-    case sewingNeedleworkFabricAndPieceGoodsStores = "sewing_needlework_fabric_and_piece_goods_stores"
-    case shoeRepairHatCleaning = "shoe_repair_hat_cleaning"
-    case shoeStores = "shoe_stores"
-    case smallApplianceRepair = "small_appliance_repair"
-    case snowmobileDealers = "snowmobile_dealers"
-    case specialTradeServices = "special_trade_services"
-    case specialtyCleaning = "specialty_cleaning"
-    case sportingGoodsStores = "sporting_goods_stores"
-    case sportingRecreationCamps = "sporting_recreation_camps"
-    case sportsAndRidingApparelStores = "sports_and_riding_apparel_stores"
-    case sportsClubsFields = "sports_clubs_fields"
-    case stampAndCoinStores = "stamp_and_coin_stores"
-    case stationaryOfficeSuppliesPrintingAndWritingPaper = "stationary_office_supplies_printing_and_writing_paper"
-    case stationeryStoresOfficeAndSchoolSupplyStores = "stationery_stores_office_and_school_supply_stores"
-    case swimmingPoolsSales = "swimming_pools_sales"
-    case tUiTravelGermany = "t_ui_travel_germany"
-    case tailorsAlterations = "tailors_alterations"
-    case taxPaymentsGovernmentAgencies = "tax_payments_government_agencies"
-    case taxPreparationServices = "tax_preparation_services"
-    case taxicabsLimousines = "taxicabs_limousines"
-    case telecommunicationEquipmentAndTelephoneSales = "telecommunication_equipment_and_telephone_sales"
-    case telecommunicationServices = "telecommunication_services"
-    case telegraphServices = "telegraph_services"
-    case tentAndAwningShops = "tent_and_awning_shops"
-    case testingLaboratories = "testing_laboratories"
-    case theatricalTicketAgencies = "theatrical_ticket_agencies"
-    case timeshares
-    case tireRetreadingAndRepair = "tire_retreading_and_repair"
-    case tollsBridgeFees = "tolls_bridge_fees"
-    case touristAttractionsAndExhibits = "tourist_attractions_and_exhibits"
-    case towingServices = "towing_services"
-    case trailerParksCampgrounds = "trailer_parks_campgrounds"
-    case transportationServices = "transportation_services"
-    case travelAgenciesTourOperators = "travel_agencies_tour_operators"
-    case truckStopIteration = "truck_stop_iteration"
-    case truckUtilityTrailerRentals = "truck_utility_trailer_rentals"
-    case typesettingPlateMakingAndRelatedServices = "typesetting_plate_making_and_related_services"
-    case typewriterStores = "typewriter_stores"
-    case uSFederalGovernmentAgenciesOrDepartments = "u_s_federal_government_agencies_or_departments"
-    case uniformsCommercialClothing = "uniforms_commercial_clothing"
-    case usedMerchandiseAndSecondhandStores = "used_merchandise_and_secondhand_stores"
-    case utilities
-    case varietyStores = "variety_stores"
-    case veterinaryServices = "veterinary_services"
-    case videoAmusementGameSupplies = "video_amusement_game_supplies"
-    case videoGameArcades = "video_game_arcades"
-    case videoTapeRentalStores = "video_tape_rental_stores"
-    case vocationalTradeSchools = "vocational_trade_schools"
-    case watchJewelryRepair = "watch_jewelry_repair"
-    case weldingRepair = "welding_repair"
-    case wholesaleClubs = "wholesale_clubs"
-    case wigAndToupeeStores = "wig_and_toupee_stores"
-    case wiresMoneyOrders = "wires_money_orders"
-    case womensAccessoryAndSpecialtyShops = "womens_accessory_and_specialty_shops"
-    case womensReadyToWearStores = "womens_ready_to_wear_stores"
-    case wreckingAndSalvageYards = "wrecking_and_salvage_yards"
+public struct IssuingCardholderCreateSpendingControlsAllowedCategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
+    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
+    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
+    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
+    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
+    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
+    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
+    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
+    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
+    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
+    public static var aquariums: Self { .init(rawValue: "aquariums") }
+    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
+    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
+    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
+    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
+    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
+    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
+    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
+    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
+    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
+    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
+    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
+    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
+    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
+    public static var bakeries: Self { .init(rawValue: "bakeries") }
+    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
+    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
+    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
+    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
+    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
+    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
+    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
+    public static var bookStores: Self { .init(rawValue: "book_stores") }
+    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
+    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
+    public static var busLines: Self { .init(rawValue: "bus_lines") }
+    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
+    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
+    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
+    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
+    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
+    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
+    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
+    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
+    public static var carWashes: Self { .init(rawValue: "car_washes") }
+    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
+    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
+    public static var caterers: Self { .init(rawValue: "caterers") }
+    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
+    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
+    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
+    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
+    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
+    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
+    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
+    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
+    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
+    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
+    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
+    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
+    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
+    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
+    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
+    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
+    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
+    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
+    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
+    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
+    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
+    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
+    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
+    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
+    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
+    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
+    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
+    public static var courierServices: Self { .init(rawValue: "courier_services") }
+    public static var courtCosts: Self { .init(rawValue: "court_costs") }
+    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
+    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
+    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
+    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
+    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
+    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
+    public static var departmentStores: Self { .init(rawValue: "department_stores") }
+    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
+    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
+    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
+    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
+    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
+    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
+    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
+    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
+    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
+    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
+    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
+    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
+    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
+    public static var discountStores: Self { .init(rawValue: "discount_stores") }
+    public static var doctors: Self { .init(rawValue: "doctors") }
+    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
+    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
+    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
+    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
+    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
+    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
+    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
+    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
+    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
+    public static var educationalServices: Self { .init(rawValue: "educational_services") }
+    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
+    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
+    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
+    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
+    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
+    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
+    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
+    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
+    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
+    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
+    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
+    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
+    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
+    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
+    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
+    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
+    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
+    public static var florists: Self { .init(rawValue: "florists") }
+    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
+    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
+    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
+    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
+    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
+    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
+    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
+    public static var generalServices: Self { .init(rawValue: "general_services") }
+    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
+    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
+    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
+    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
+    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
+    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
+    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
+    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
+    public static var governmentServices: Self { .init(rawValue: "government_services") }
+    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
+    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
+    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
+    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
+    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
+    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
+    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
+    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
+    public static var hospitals: Self { .init(rawValue: "hospitals") }
+    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
+    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
+    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
+    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
+    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
+    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
+    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
+    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
+    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
+    public static var laundries: Self { .init(rawValue: "laundries") }
+    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
+    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
+    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
+    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
+    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
+    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
+    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
+    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
+    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
+    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
+    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
+    public static var medicalServices: Self { .init(rawValue: "medical_services") }
+    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
+    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
+    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
+    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
+    public static var miscellaneous: Self { .init(rawValue: "miscellaneous") }
+    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
+    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
+    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
+    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
+    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
+    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
+    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
+    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
+    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
+    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
+    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
+    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
+    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
+    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
+    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
+    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
+    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
+    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
+    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
+    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
+    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
+    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
+    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
+    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
+    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
+    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
+    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
+    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
+    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
+    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
+    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
+    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
+    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
+    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
+    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
+    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
+    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
+    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
+    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
+    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
+    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
+    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
+    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
+    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
+    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
+    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
+    public static var professionalServices: Self { .init(rawValue: "professional_services") }
+    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
+    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
+    public static var railroads: Self { .init(rawValue: "railroads") }
+    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
+    public static var recordStores: Self { .init(rawValue: "record_stores") }
+    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
+    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
+    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
+    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
+    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
+    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
+    public static var serviceStations: Self { .init(rawValue: "service_stations") }
+    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
+    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
+    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
+    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
+    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
+    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
+    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
+    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
+    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
+    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
+    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
+    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
+    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
+    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
+    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
+    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
+    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
+    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
+    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
+    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
+    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
+    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
+    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
+    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
+    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
+    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
+    public static var timeshares: Self { .init(rawValue: "timeshares") }
+    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
+    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
+    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
+    public static var towingServices: Self { .init(rawValue: "towing_services") }
+    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
+    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
+    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
+    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
+    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
+    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
+    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
+    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
+    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
+    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
+    public static var utilities: Self { .init(rawValue: "utilities") }
+    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
+    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
+    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
+    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
+    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
+    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
+    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
+    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
+    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
+    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
+    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
+    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
+    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
+    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
-public enum IssuingCardholderCreateSpendingControlsBlockedCardPresences: String, Codable, Sendable {
-    case notPresent = "not_present"
-    case present
+public struct IssuingCardholderCreateSpendingControlsBlockedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var notPresent: Self { .init(rawValue: "not_present") }
+    public static var present: Self { .init(rawValue: "present") }
 }
 
-public enum IssuingCardholderCreateSpendingControlsBlockedCategories: String, Codable, Sendable {
-    case acRefrigerationRepair = "ac_refrigeration_repair"
-    case accountingBookkeepingServices = "accounting_bookkeeping_services"
-    case advertisingServices = "advertising_services"
-    case agriculturalCooperative = "agricultural_cooperative"
-    case airlinesAirCarriers = "airlines_air_carriers"
-    case airportsFlyingFields = "airports_flying_fields"
-    case ambulanceServices = "ambulance_services"
-    case amusementParksCarnivals = "amusement_parks_carnivals"
-    case antiqueReproductions = "antique_reproductions"
-    case antiqueShops = "antique_shops"
-    case aquariums
-    case architecturalSurveyingServices = "architectural_surveying_services"
-    case artDealersAndGalleries = "art_dealers_and_galleries"
-    case artistsSupplyAndCraftShops = "artists_supply_and_craft_shops"
-    case autoAndHomeSupplyStores = "auto_and_home_supply_stores"
-    case autoBodyRepairShops = "auto_body_repair_shops"
-    case autoPaintShops = "auto_paint_shops"
-    case autoServiceShops = "auto_service_shops"
-    case automatedCashDisburse = "automated_cash_disburse"
-    case automatedFuelDispensers = "automated_fuel_dispensers"
-    case automobileAssociations = "automobile_associations"
-    case automotivePartsAndAccessoriesStores = "automotive_parts_and_accessories_stores"
-    case automotiveTireStores = "automotive_tire_stores"
-    case bailAndBondPayments = "bail_and_bond_payments"
-    case bakeries
-    case bandsOrchestras = "bands_orchestras"
-    case barberAndBeautyShops = "barber_and_beauty_shops"
-    case bettingCasinoGambling = "betting_casino_gambling"
-    case bicycleShops = "bicycle_shops"
-    case billiardPoolEstablishments = "billiard_pool_establishments"
-    case boatDealers = "boat_dealers"
-    case boatRentalsAndLeases = "boat_rentals_and_leases"
-    case bookStores = "book_stores"
-    case booksPeriodicalsAndNewspapers = "books_periodicals_and_newspapers"
-    case bowlingAlleys = "bowling_alleys"
-    case busLines = "bus_lines"
-    case businessSecretarialSchools = "business_secretarial_schools"
-    case buyingShoppingServices = "buying_shopping_services"
-    case cableSatelliteAndOtherPayTelevisionAndRadio = "cable_satellite_and_other_pay_television_and_radio"
-    case cameraAndPhotographicSupplyStores = "camera_and_photographic_supply_stores"
-    case candyNutAndConfectioneryStores = "candy_nut_and_confectionery_stores"
-    case carAndTruckDealersNewUsed = "car_and_truck_dealers_new_used"
-    case carAndTruckDealersUsedOnly = "car_and_truck_dealers_used_only"
-    case carRentalAgencies = "car_rental_agencies"
-    case carWashes = "car_washes"
-    case carpentryServices = "carpentry_services"
-    case carpetUpholsteryCleaning = "carpet_upholstery_cleaning"
-    case caterers
-    case charitableAndSocialServiceOrganizationsFundraising = "charitable_and_social_service_organizations_fundraising"
-    case chemicalsAndAlliedProducts = "chemicals_and_allied_products"
-    case childCareServices = "child_care_services"
-    case childrensAndInfantsWearStores = "childrens_and_infants_wear_stores"
-    case chiropodistsPodiatrists = "chiropodists_podiatrists"
-    case chiropractors
-    case cigarStoresAndStands = "cigar_stores_and_stands"
-    case civicSocialFraternalAssociations = "civic_social_fraternal_associations"
-    case cleaningAndMaintenance = "cleaning_and_maintenance"
-    case clothingRental = "clothing_rental"
-    case collegesUniversities = "colleges_universities"
-    case commercialEquipment = "commercial_equipment"
-    case commercialFootwear = "commercial_footwear"
-    case commercialPhotographyArtAndGraphics = "commercial_photography_art_and_graphics"
-    case commuterTransportAndFerries = "commuter_transport_and_ferries"
-    case computerNetworkServices = "computer_network_services"
-    case computerProgramming = "computer_programming"
-    case computerRepair = "computer_repair"
-    case computerSoftwareStores = "computer_software_stores"
-    case computersPeripheralsAndSoftware = "computers_peripherals_and_software"
-    case concreteWorkServices = "concrete_work_services"
-    case constructionMaterials = "construction_materials"
-    case consultingPublicRelations = "consulting_public_relations"
-    case correspondenceSchools = "correspondence_schools"
-    case cosmeticStores = "cosmetic_stores"
-    case counselingServices = "counseling_services"
-    case countryClubs = "country_clubs"
-    case courierServices = "courier_services"
-    case courtCosts = "court_costs"
-    case creditReportingAgencies = "credit_reporting_agencies"
-    case cruiseLines = "cruise_lines"
-    case dairyProductsStores = "dairy_products_stores"
-    case danceHallStudiosSchools = "dance_hall_studios_schools"
-    case datingEscortServices = "dating_escort_services"
-    case dentistsOrthodontists = "dentists_orthodontists"
-    case departmentStores = "department_stores"
-    case detectiveAgencies = "detective_agencies"
-    case digitalGoodsApplications = "digital_goods_applications"
-    case digitalGoodsGames = "digital_goods_games"
-    case digitalGoodsLargeVolume = "digital_goods_large_volume"
-    case digitalGoodsMedia = "digital_goods_media"
-    case directMarketingCatalogMerchant = "direct_marketing_catalog_merchant"
-    case directMarketingCombinationCatalogAndRetailMerchant = "direct_marketing_combination_catalog_and_retail_merchant"
-    case directMarketingInboundTelemarketing = "direct_marketing_inbound_telemarketing"
-    case directMarketingInsuranceServices = "direct_marketing_insurance_services"
-    case directMarketingOther = "direct_marketing_other"
-    case directMarketingOutboundTelemarketing = "direct_marketing_outbound_telemarketing"
-    case directMarketingSubscription = "direct_marketing_subscription"
-    case directMarketingTravel = "direct_marketing_travel"
-    case discountStores = "discount_stores"
-    case doctors
-    case doorToDoorSales = "door_to_door_sales"
-    case draperyWindowCoveringAndUpholsteryStores = "drapery_window_covering_and_upholstery_stores"
-    case drinkingPlaces = "drinking_places"
-    case drugStoresAndPharmacies = "drug_stores_and_pharmacies"
-    case drugsDrugProprietariesAndDruggistSundries = "drugs_drug_proprietaries_and_druggist_sundries"
-    case dryCleaners = "dry_cleaners"
-    case durableGoods = "durable_goods"
-    case dutyFreeStores = "duty_free_stores"
-    case eatingPlacesRestaurants = "eating_places_restaurants"
-    case educationalServices = "educational_services"
-    case electricRazorStores = "electric_razor_stores"
-    case electricVehicleCharging = "electric_vehicle_charging"
-    case electricalPartsAndEquipment = "electrical_parts_and_equipment"
-    case electricalServices = "electrical_services"
-    case electronicsRepairShops = "electronics_repair_shops"
-    case electronicsStores = "electronics_stores"
-    case elementarySecondarySchools = "elementary_secondary_schools"
-    case emergencyServicesGcasVisaUseOnly = "emergency_services_gcas_visa_use_only"
-    case employmentTempAgencies = "employment_temp_agencies"
-    case equipmentRental = "equipment_rental"
-    case exterminatingServices = "exterminating_services"
-    case familyClothingStores = "family_clothing_stores"
-    case fastFoodRestaurants = "fast_food_restaurants"
-    case financialInstitutions = "financial_institutions"
-    case finesGovernmentAdministrativeEntities = "fines_government_administrative_entities"
-    case fireplaceFireplaceScreensAndAccessoriesStores = "fireplace_fireplace_screens_and_accessories_stores"
-    case floorCoveringStores = "floor_covering_stores"
-    case florists
-    case floristsSuppliesNurseryStockAndFlowers = "florists_supplies_nursery_stock_and_flowers"
-    case freezerAndLockerMeatProvisioners = "freezer_and_locker_meat_provisioners"
-    case fuelDealersNonAutomotive = "fuel_dealers_non_automotive"
-    case funeralServicesCrematories = "funeral_services_crematories"
-    case furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances = "furniture_home_furnishings_and_equipment_stores_except_appliances"
-    case furnitureRepairRefinishing = "furniture_repair_refinishing"
-    case furriersAndFurShops = "furriers_and_fur_shops"
-    case generalServices = "general_services"
-    case giftCardNoveltyAndSouvenirShops = "gift_card_novelty_and_souvenir_shops"
-    case glassPaintAndWallpaperStores = "glass_paint_and_wallpaper_stores"
-    case glasswareCrystalStores = "glassware_crystal_stores"
-    case golfCoursesPublic = "golf_courses_public"
-    case governmentLicensedHorseDogRacingUsRegionOnly = "government_licensed_horse_dog_racing_us_region_only"
-    case governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly = "government_licensed_online_casions_online_gambling_us_region_only"
-    case governmentOwnedLotteriesNonUsRegion = "government_owned_lotteries_non_us_region"
-    case governmentOwnedLotteriesUsRegionOnly = "government_owned_lotteries_us_region_only"
-    case governmentServices = "government_services"
-    case groceryStoresSupermarkets = "grocery_stores_supermarkets"
-    case hardwareEquipmentAndSupplies = "hardware_equipment_and_supplies"
-    case hardwareStores = "hardware_stores"
-    case healthAndBeautySpas = "health_and_beauty_spas"
-    case hearingAidsSalesAndSupplies = "hearing_aids_sales_and_supplies"
-    case heatingPlumbingAC = "heating_plumbing_a_c"
-    case hobbyToyAndGameShops = "hobby_toy_and_game_shops"
-    case homeSupplyWarehouseStores = "home_supply_warehouse_stores"
-    case hospitals
-    case hotelsMotelsAndResorts = "hotels_motels_and_resorts"
-    case householdApplianceStores = "household_appliance_stores"
-    case industrialSupplies = "industrial_supplies"
-    case informationRetrievalServices = "information_retrieval_services"
-    case insuranceDefault = "insurance_default"
-    case insuranceUnderwritingPremiums = "insurance_underwriting_premiums"
-    case intraCompanyPurchases = "intra_company_purchases"
-    case jewelryStoresWatchesClocksAndSilverwareStores = "jewelry_stores_watches_clocks_and_silverware_stores"
-    case landscapingServices = "landscaping_services"
-    case laundries
-    case laundryCleaningServices = "laundry_cleaning_services"
-    case legalServicesAttorneys = "legal_services_attorneys"
-    case luggageAndLeatherGoodsStores = "luggage_and_leather_goods_stores"
-    case lumberBuildingMaterialsStores = "lumber_building_materials_stores"
-    case manualCashDisburse = "manual_cash_disburse"
-    case marinasServiceAndSupplies = "marinas_service_and_supplies"
-    case marketplaces
-    case masonryStoneworkAndPlaster = "masonry_stonework_and_plaster"
-    case massageParlors = "massage_parlors"
-    case medicalAndDentalLabs = "medical_and_dental_labs"
-    case medicalDentalOphthalmicAndHospitalEquipmentAndSupplies = "medical_dental_ophthalmic_and_hospital_equipment_and_supplies"
-    case medicalServices = "medical_services"
-    case membershipOrganizations = "membership_organizations"
-    case mensAndBoysClothingAndAccessoriesStores = "mens_and_boys_clothing_and_accessories_stores"
-    case mensWomensClothingStores = "mens_womens_clothing_stores"
-    case metalServiceCenters = "metal_service_centers"
-    case miscellaneous
-    case miscellaneousApparelAndAccessoryShops = "miscellaneous_apparel_and_accessory_shops"
-    case miscellaneousAutoDealers = "miscellaneous_auto_dealers"
-    case miscellaneousBusinessServices = "miscellaneous_business_services"
-    case miscellaneousFoodStores = "miscellaneous_food_stores"
-    case miscellaneousGeneralMerchandise = "miscellaneous_general_merchandise"
-    case miscellaneousGeneralServices = "miscellaneous_general_services"
-    case miscellaneousHomeFurnishingSpecialtyStores = "miscellaneous_home_furnishing_specialty_stores"
-    case miscellaneousPublishingAndPrinting = "miscellaneous_publishing_and_printing"
-    case miscellaneousRecreationServices = "miscellaneous_recreation_services"
-    case miscellaneousRepairShops = "miscellaneous_repair_shops"
-    case miscellaneousSpecialtyRetail = "miscellaneous_specialty_retail"
-    case mobileHomeDealers = "mobile_home_dealers"
-    case motionPictureTheaters = "motion_picture_theaters"
-    case motorFreightCarriersAndTrucking = "motor_freight_carriers_and_trucking"
-    case motorHomesDealers = "motor_homes_dealers"
-    case motorVehicleSuppliesAndNewParts = "motor_vehicle_supplies_and_new_parts"
-    case motorcycleShopsAndDealers = "motorcycle_shops_and_dealers"
-    case motorcycleShopsDealers = "motorcycle_shops_dealers"
-    case musicStoresMusicalInstrumentsPianosAndSheetMusic = "music_stores_musical_instruments_pianos_and_sheet_music"
-    case newsDealersAndNewsstands = "news_dealers_and_newsstands"
-    case nonFiMoneyOrders = "non_fi_money_orders"
-    case nonFiStoredValueCardPurchaseLoad = "non_fi_stored_value_card_purchase_load"
-    case nondurableGoods = "nondurable_goods"
-    case nurseriesLawnAndGardenSupplyStores = "nurseries_lawn_and_garden_supply_stores"
-    case nursingPersonalCare = "nursing_personal_care"
-    case officeAndCommercialFurniture = "office_and_commercial_furniture"
-    case opticiansEyeglasses = "opticians_eyeglasses"
-    case optometristsOphthalmologist = "optometrists_ophthalmologist"
-    case orthopedicGoodsProstheticDevices = "orthopedic_goods_prosthetic_devices"
-    case osteopaths
-    case packageStoresBeerWineAndLiquor = "package_stores_beer_wine_and_liquor"
-    case paintsVarnishesAndSupplies = "paints_varnishes_and_supplies"
-    case parkingLotsGarages = "parking_lots_garages"
-    case passengerRailways = "passenger_railways"
-    case pawnShops = "pawn_shops"
-    case petShopsPetFoodAndSupplies = "pet_shops_pet_food_and_supplies"
-    case petroleumAndPetroleumProducts = "petroleum_and_petroleum_products"
-    case photoDeveloping = "photo_developing"
-    case photographicPhotocopyMicrofilmEquipmentAndSupplies = "photographic_photocopy_microfilm_equipment_and_supplies"
-    case photographicStudios = "photographic_studios"
-    case pictureVideoProduction = "picture_video_production"
-    case pieceGoodsNotionsAndOtherDryGoods = "piece_goods_notions_and_other_dry_goods"
-    case plumbingHeatingEquipmentAndSupplies = "plumbing_heating_equipment_and_supplies"
-    case politicalOrganizations = "political_organizations"
-    case postalServicesGovernmentOnly = "postal_services_government_only"
-    case preciousStonesAndMetalsWatchesAndJewelry = "precious_stones_and_metals_watches_and_jewelry"
-    case professionalServices = "professional_services"
-    case publicWarehousingAndStorage = "public_warehousing_and_storage"
-    case quickCopyReproAndBlueprint = "quick_copy_repro_and_blueprint"
-    case railroads
-    case realEstateAgentsAndManagersRentals = "real_estate_agents_and_managers_rentals"
-    case recordStores = "record_stores"
-    case recreationalVehicleRentals = "recreational_vehicle_rentals"
-    case religiousGoodsStores = "religious_goods_stores"
-    case religiousOrganizations = "religious_organizations"
-    case roofingSidingSheetMetal = "roofing_siding_sheet_metal"
-    case secretarialSupportServices = "secretarial_support_services"
-    case securityBrokersDealers = "security_brokers_dealers"
-    case serviceStations = "service_stations"
-    case sewingNeedleworkFabricAndPieceGoodsStores = "sewing_needlework_fabric_and_piece_goods_stores"
-    case shoeRepairHatCleaning = "shoe_repair_hat_cleaning"
-    case shoeStores = "shoe_stores"
-    case smallApplianceRepair = "small_appliance_repair"
-    case snowmobileDealers = "snowmobile_dealers"
-    case specialTradeServices = "special_trade_services"
-    case specialtyCleaning = "specialty_cleaning"
-    case sportingGoodsStores = "sporting_goods_stores"
-    case sportingRecreationCamps = "sporting_recreation_camps"
-    case sportsAndRidingApparelStores = "sports_and_riding_apparel_stores"
-    case sportsClubsFields = "sports_clubs_fields"
-    case stampAndCoinStores = "stamp_and_coin_stores"
-    case stationaryOfficeSuppliesPrintingAndWritingPaper = "stationary_office_supplies_printing_and_writing_paper"
-    case stationeryStoresOfficeAndSchoolSupplyStores = "stationery_stores_office_and_school_supply_stores"
-    case swimmingPoolsSales = "swimming_pools_sales"
-    case tUiTravelGermany = "t_ui_travel_germany"
-    case tailorsAlterations = "tailors_alterations"
-    case taxPaymentsGovernmentAgencies = "tax_payments_government_agencies"
-    case taxPreparationServices = "tax_preparation_services"
-    case taxicabsLimousines = "taxicabs_limousines"
-    case telecommunicationEquipmentAndTelephoneSales = "telecommunication_equipment_and_telephone_sales"
-    case telecommunicationServices = "telecommunication_services"
-    case telegraphServices = "telegraph_services"
-    case tentAndAwningShops = "tent_and_awning_shops"
-    case testingLaboratories = "testing_laboratories"
-    case theatricalTicketAgencies = "theatrical_ticket_agencies"
-    case timeshares
-    case tireRetreadingAndRepair = "tire_retreading_and_repair"
-    case tollsBridgeFees = "tolls_bridge_fees"
-    case touristAttractionsAndExhibits = "tourist_attractions_and_exhibits"
-    case towingServices = "towing_services"
-    case trailerParksCampgrounds = "trailer_parks_campgrounds"
-    case transportationServices = "transportation_services"
-    case travelAgenciesTourOperators = "travel_agencies_tour_operators"
-    case truckStopIteration = "truck_stop_iteration"
-    case truckUtilityTrailerRentals = "truck_utility_trailer_rentals"
-    case typesettingPlateMakingAndRelatedServices = "typesetting_plate_making_and_related_services"
-    case typewriterStores = "typewriter_stores"
-    case uSFederalGovernmentAgenciesOrDepartments = "u_s_federal_government_agencies_or_departments"
-    case uniformsCommercialClothing = "uniforms_commercial_clothing"
-    case usedMerchandiseAndSecondhandStores = "used_merchandise_and_secondhand_stores"
-    case utilities
-    case varietyStores = "variety_stores"
-    case veterinaryServices = "veterinary_services"
-    case videoAmusementGameSupplies = "video_amusement_game_supplies"
-    case videoGameArcades = "video_game_arcades"
-    case videoTapeRentalStores = "video_tape_rental_stores"
-    case vocationalTradeSchools = "vocational_trade_schools"
-    case watchJewelryRepair = "watch_jewelry_repair"
-    case weldingRepair = "welding_repair"
-    case wholesaleClubs = "wholesale_clubs"
-    case wigAndToupeeStores = "wig_and_toupee_stores"
-    case wiresMoneyOrders = "wires_money_orders"
-    case womensAccessoryAndSpecialtyShops = "womens_accessory_and_specialty_shops"
-    case womensReadyToWearStores = "womens_ready_to_wear_stores"
-    case wreckingAndSalvageYards = "wrecking_and_salvage_yards"
+public struct IssuingCardholderCreateSpendingControlsBlockedCategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
+    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
+    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
+    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
+    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
+    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
+    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
+    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
+    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
+    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
+    public static var aquariums: Self { .init(rawValue: "aquariums") }
+    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
+    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
+    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
+    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
+    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
+    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
+    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
+    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
+    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
+    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
+    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
+    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
+    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
+    public static var bakeries: Self { .init(rawValue: "bakeries") }
+    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
+    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
+    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
+    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
+    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
+    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
+    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
+    public static var bookStores: Self { .init(rawValue: "book_stores") }
+    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
+    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
+    public static var busLines: Self { .init(rawValue: "bus_lines") }
+    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
+    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
+    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
+    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
+    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
+    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
+    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
+    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
+    public static var carWashes: Self { .init(rawValue: "car_washes") }
+    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
+    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
+    public static var caterers: Self { .init(rawValue: "caterers") }
+    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
+    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
+    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
+    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
+    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
+    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
+    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
+    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
+    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
+    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
+    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
+    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
+    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
+    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
+    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
+    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
+    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
+    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
+    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
+    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
+    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
+    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
+    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
+    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
+    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
+    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
+    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
+    public static var courierServices: Self { .init(rawValue: "courier_services") }
+    public static var courtCosts: Self { .init(rawValue: "court_costs") }
+    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
+    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
+    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
+    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
+    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
+    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
+    public static var departmentStores: Self { .init(rawValue: "department_stores") }
+    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
+    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
+    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
+    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
+    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
+    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
+    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
+    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
+    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
+    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
+    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
+    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
+    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
+    public static var discountStores: Self { .init(rawValue: "discount_stores") }
+    public static var doctors: Self { .init(rawValue: "doctors") }
+    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
+    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
+    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
+    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
+    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
+    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
+    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
+    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
+    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
+    public static var educationalServices: Self { .init(rawValue: "educational_services") }
+    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
+    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
+    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
+    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
+    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
+    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
+    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
+    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
+    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
+    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
+    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
+    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
+    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
+    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
+    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
+    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
+    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
+    public static var florists: Self { .init(rawValue: "florists") }
+    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
+    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
+    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
+    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
+    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
+    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
+    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
+    public static var generalServices: Self { .init(rawValue: "general_services") }
+    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
+    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
+    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
+    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
+    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
+    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
+    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
+    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
+    public static var governmentServices: Self { .init(rawValue: "government_services") }
+    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
+    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
+    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
+    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
+    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
+    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
+    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
+    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
+    public static var hospitals: Self { .init(rawValue: "hospitals") }
+    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
+    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
+    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
+    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
+    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
+    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
+    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
+    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
+    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
+    public static var laundries: Self { .init(rawValue: "laundries") }
+    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
+    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
+    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
+    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
+    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
+    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
+    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
+    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
+    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
+    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
+    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
+    public static var medicalServices: Self { .init(rawValue: "medical_services") }
+    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
+    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
+    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
+    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
+    public static var miscellaneous: Self { .init(rawValue: "miscellaneous") }
+    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
+    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
+    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
+    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
+    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
+    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
+    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
+    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
+    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
+    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
+    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
+    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
+    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
+    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
+    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
+    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
+    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
+    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
+    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
+    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
+    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
+    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
+    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
+    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
+    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
+    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
+    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
+    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
+    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
+    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
+    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
+    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
+    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
+    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
+    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
+    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
+    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
+    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
+    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
+    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
+    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
+    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
+    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
+    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
+    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
+    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
+    public static var professionalServices: Self { .init(rawValue: "professional_services") }
+    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
+    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
+    public static var railroads: Self { .init(rawValue: "railroads") }
+    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
+    public static var recordStores: Self { .init(rawValue: "record_stores") }
+    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
+    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
+    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
+    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
+    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
+    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
+    public static var serviceStations: Self { .init(rawValue: "service_stations") }
+    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
+    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
+    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
+    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
+    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
+    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
+    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
+    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
+    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
+    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
+    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
+    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
+    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
+    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
+    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
+    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
+    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
+    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
+    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
+    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
+    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
+    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
+    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
+    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
+    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
+    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
+    public static var timeshares: Self { .init(rawValue: "timeshares") }
+    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
+    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
+    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
+    public static var towingServices: Self { .init(rawValue: "towing_services") }
+    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
+    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
+    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
+    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
+    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
+    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
+    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
+    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
+    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
+    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
+    public static var utilities: Self { .init(rawValue: "utilities") }
+    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
+    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
+    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
+    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
+    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
+    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
+    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
+    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
+    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
+    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
+    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
+    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
+    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
+    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
 public struct IssuingCardholderCreateSpendingControlsSpendingLimits: StripeParams {
@@ -1047,332 +1077,368 @@ public struct IssuingCardholderCreateSpendingControlsSpendingLimits: StripeParam
     }
 }
 
-public enum IssuingCardholderCreateSpendingControlsSpendingLimitsInterval: String, Codable, Sendable {
-    case allTime = "all_time"
-    case daily
-    case monthly
-    case perAuthorization = "per_authorization"
-    case weekly
-    case yearly
+public struct IssuingCardholderCreateSpendingControlsSpendingLimitsInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var allTime: Self { .init(rawValue: "all_time") }
+    public static var daily: Self { .init(rawValue: "daily") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var perAuthorization: Self { .init(rawValue: "per_authorization") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
+    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
-public enum IssuingCardholderCreateSpendingControlsSpendingLimitsCategories: String, Codable, Sendable {
-    case acRefrigerationRepair = "ac_refrigeration_repair"
-    case accountingBookkeepingServices = "accounting_bookkeeping_services"
-    case advertisingServices = "advertising_services"
-    case agriculturalCooperative = "agricultural_cooperative"
-    case airlinesAirCarriers = "airlines_air_carriers"
-    case airportsFlyingFields = "airports_flying_fields"
-    case ambulanceServices = "ambulance_services"
-    case amusementParksCarnivals = "amusement_parks_carnivals"
-    case antiqueReproductions = "antique_reproductions"
-    case antiqueShops = "antique_shops"
-    case aquariums
-    case architecturalSurveyingServices = "architectural_surveying_services"
-    case artDealersAndGalleries = "art_dealers_and_galleries"
-    case artistsSupplyAndCraftShops = "artists_supply_and_craft_shops"
-    case autoAndHomeSupplyStores = "auto_and_home_supply_stores"
-    case autoBodyRepairShops = "auto_body_repair_shops"
-    case autoPaintShops = "auto_paint_shops"
-    case autoServiceShops = "auto_service_shops"
-    case automatedCashDisburse = "automated_cash_disburse"
-    case automatedFuelDispensers = "automated_fuel_dispensers"
-    case automobileAssociations = "automobile_associations"
-    case automotivePartsAndAccessoriesStores = "automotive_parts_and_accessories_stores"
-    case automotiveTireStores = "automotive_tire_stores"
-    case bailAndBondPayments = "bail_and_bond_payments"
-    case bakeries
-    case bandsOrchestras = "bands_orchestras"
-    case barberAndBeautyShops = "barber_and_beauty_shops"
-    case bettingCasinoGambling = "betting_casino_gambling"
-    case bicycleShops = "bicycle_shops"
-    case billiardPoolEstablishments = "billiard_pool_establishments"
-    case boatDealers = "boat_dealers"
-    case boatRentalsAndLeases = "boat_rentals_and_leases"
-    case bookStores = "book_stores"
-    case booksPeriodicalsAndNewspapers = "books_periodicals_and_newspapers"
-    case bowlingAlleys = "bowling_alleys"
-    case busLines = "bus_lines"
-    case businessSecretarialSchools = "business_secretarial_schools"
-    case buyingShoppingServices = "buying_shopping_services"
-    case cableSatelliteAndOtherPayTelevisionAndRadio = "cable_satellite_and_other_pay_television_and_radio"
-    case cameraAndPhotographicSupplyStores = "camera_and_photographic_supply_stores"
-    case candyNutAndConfectioneryStores = "candy_nut_and_confectionery_stores"
-    case carAndTruckDealersNewUsed = "car_and_truck_dealers_new_used"
-    case carAndTruckDealersUsedOnly = "car_and_truck_dealers_used_only"
-    case carRentalAgencies = "car_rental_agencies"
-    case carWashes = "car_washes"
-    case carpentryServices = "carpentry_services"
-    case carpetUpholsteryCleaning = "carpet_upholstery_cleaning"
-    case caterers
-    case charitableAndSocialServiceOrganizationsFundraising = "charitable_and_social_service_organizations_fundraising"
-    case chemicalsAndAlliedProducts = "chemicals_and_allied_products"
-    case childCareServices = "child_care_services"
-    case childrensAndInfantsWearStores = "childrens_and_infants_wear_stores"
-    case chiropodistsPodiatrists = "chiropodists_podiatrists"
-    case chiropractors
-    case cigarStoresAndStands = "cigar_stores_and_stands"
-    case civicSocialFraternalAssociations = "civic_social_fraternal_associations"
-    case cleaningAndMaintenance = "cleaning_and_maintenance"
-    case clothingRental = "clothing_rental"
-    case collegesUniversities = "colleges_universities"
-    case commercialEquipment = "commercial_equipment"
-    case commercialFootwear = "commercial_footwear"
-    case commercialPhotographyArtAndGraphics = "commercial_photography_art_and_graphics"
-    case commuterTransportAndFerries = "commuter_transport_and_ferries"
-    case computerNetworkServices = "computer_network_services"
-    case computerProgramming = "computer_programming"
-    case computerRepair = "computer_repair"
-    case computerSoftwareStores = "computer_software_stores"
-    case computersPeripheralsAndSoftware = "computers_peripherals_and_software"
-    case concreteWorkServices = "concrete_work_services"
-    case constructionMaterials = "construction_materials"
-    case consultingPublicRelations = "consulting_public_relations"
-    case correspondenceSchools = "correspondence_schools"
-    case cosmeticStores = "cosmetic_stores"
-    case counselingServices = "counseling_services"
-    case countryClubs = "country_clubs"
-    case courierServices = "courier_services"
-    case courtCosts = "court_costs"
-    case creditReportingAgencies = "credit_reporting_agencies"
-    case cruiseLines = "cruise_lines"
-    case dairyProductsStores = "dairy_products_stores"
-    case danceHallStudiosSchools = "dance_hall_studios_schools"
-    case datingEscortServices = "dating_escort_services"
-    case dentistsOrthodontists = "dentists_orthodontists"
-    case departmentStores = "department_stores"
-    case detectiveAgencies = "detective_agencies"
-    case digitalGoodsApplications = "digital_goods_applications"
-    case digitalGoodsGames = "digital_goods_games"
-    case digitalGoodsLargeVolume = "digital_goods_large_volume"
-    case digitalGoodsMedia = "digital_goods_media"
-    case directMarketingCatalogMerchant = "direct_marketing_catalog_merchant"
-    case directMarketingCombinationCatalogAndRetailMerchant = "direct_marketing_combination_catalog_and_retail_merchant"
-    case directMarketingInboundTelemarketing = "direct_marketing_inbound_telemarketing"
-    case directMarketingInsuranceServices = "direct_marketing_insurance_services"
-    case directMarketingOther = "direct_marketing_other"
-    case directMarketingOutboundTelemarketing = "direct_marketing_outbound_telemarketing"
-    case directMarketingSubscription = "direct_marketing_subscription"
-    case directMarketingTravel = "direct_marketing_travel"
-    case discountStores = "discount_stores"
-    case doctors
-    case doorToDoorSales = "door_to_door_sales"
-    case draperyWindowCoveringAndUpholsteryStores = "drapery_window_covering_and_upholstery_stores"
-    case drinkingPlaces = "drinking_places"
-    case drugStoresAndPharmacies = "drug_stores_and_pharmacies"
-    case drugsDrugProprietariesAndDruggistSundries = "drugs_drug_proprietaries_and_druggist_sundries"
-    case dryCleaners = "dry_cleaners"
-    case durableGoods = "durable_goods"
-    case dutyFreeStores = "duty_free_stores"
-    case eatingPlacesRestaurants = "eating_places_restaurants"
-    case educationalServices = "educational_services"
-    case electricRazorStores = "electric_razor_stores"
-    case electricVehicleCharging = "electric_vehicle_charging"
-    case electricalPartsAndEquipment = "electrical_parts_and_equipment"
-    case electricalServices = "electrical_services"
-    case electronicsRepairShops = "electronics_repair_shops"
-    case electronicsStores = "electronics_stores"
-    case elementarySecondarySchools = "elementary_secondary_schools"
-    case emergencyServicesGcasVisaUseOnly = "emergency_services_gcas_visa_use_only"
-    case employmentTempAgencies = "employment_temp_agencies"
-    case equipmentRental = "equipment_rental"
-    case exterminatingServices = "exterminating_services"
-    case familyClothingStores = "family_clothing_stores"
-    case fastFoodRestaurants = "fast_food_restaurants"
-    case financialInstitutions = "financial_institutions"
-    case finesGovernmentAdministrativeEntities = "fines_government_administrative_entities"
-    case fireplaceFireplaceScreensAndAccessoriesStores = "fireplace_fireplace_screens_and_accessories_stores"
-    case floorCoveringStores = "floor_covering_stores"
-    case florists
-    case floristsSuppliesNurseryStockAndFlowers = "florists_supplies_nursery_stock_and_flowers"
-    case freezerAndLockerMeatProvisioners = "freezer_and_locker_meat_provisioners"
-    case fuelDealersNonAutomotive = "fuel_dealers_non_automotive"
-    case funeralServicesCrematories = "funeral_services_crematories"
-    case furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances = "furniture_home_furnishings_and_equipment_stores_except_appliances"
-    case furnitureRepairRefinishing = "furniture_repair_refinishing"
-    case furriersAndFurShops = "furriers_and_fur_shops"
-    case generalServices = "general_services"
-    case giftCardNoveltyAndSouvenirShops = "gift_card_novelty_and_souvenir_shops"
-    case glassPaintAndWallpaperStores = "glass_paint_and_wallpaper_stores"
-    case glasswareCrystalStores = "glassware_crystal_stores"
-    case golfCoursesPublic = "golf_courses_public"
-    case governmentLicensedHorseDogRacingUsRegionOnly = "government_licensed_horse_dog_racing_us_region_only"
-    case governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly = "government_licensed_online_casions_online_gambling_us_region_only"
-    case governmentOwnedLotteriesNonUsRegion = "government_owned_lotteries_non_us_region"
-    case governmentOwnedLotteriesUsRegionOnly = "government_owned_lotteries_us_region_only"
-    case governmentServices = "government_services"
-    case groceryStoresSupermarkets = "grocery_stores_supermarkets"
-    case hardwareEquipmentAndSupplies = "hardware_equipment_and_supplies"
-    case hardwareStores = "hardware_stores"
-    case healthAndBeautySpas = "health_and_beauty_spas"
-    case hearingAidsSalesAndSupplies = "hearing_aids_sales_and_supplies"
-    case heatingPlumbingAC = "heating_plumbing_a_c"
-    case hobbyToyAndGameShops = "hobby_toy_and_game_shops"
-    case homeSupplyWarehouseStores = "home_supply_warehouse_stores"
-    case hospitals
-    case hotelsMotelsAndResorts = "hotels_motels_and_resorts"
-    case householdApplianceStores = "household_appliance_stores"
-    case industrialSupplies = "industrial_supplies"
-    case informationRetrievalServices = "information_retrieval_services"
-    case insuranceDefault = "insurance_default"
-    case insuranceUnderwritingPremiums = "insurance_underwriting_premiums"
-    case intraCompanyPurchases = "intra_company_purchases"
-    case jewelryStoresWatchesClocksAndSilverwareStores = "jewelry_stores_watches_clocks_and_silverware_stores"
-    case landscapingServices = "landscaping_services"
-    case laundries
-    case laundryCleaningServices = "laundry_cleaning_services"
-    case legalServicesAttorneys = "legal_services_attorneys"
-    case luggageAndLeatherGoodsStores = "luggage_and_leather_goods_stores"
-    case lumberBuildingMaterialsStores = "lumber_building_materials_stores"
-    case manualCashDisburse = "manual_cash_disburse"
-    case marinasServiceAndSupplies = "marinas_service_and_supplies"
-    case marketplaces
-    case masonryStoneworkAndPlaster = "masonry_stonework_and_plaster"
-    case massageParlors = "massage_parlors"
-    case medicalAndDentalLabs = "medical_and_dental_labs"
-    case medicalDentalOphthalmicAndHospitalEquipmentAndSupplies = "medical_dental_ophthalmic_and_hospital_equipment_and_supplies"
-    case medicalServices = "medical_services"
-    case membershipOrganizations = "membership_organizations"
-    case mensAndBoysClothingAndAccessoriesStores = "mens_and_boys_clothing_and_accessories_stores"
-    case mensWomensClothingStores = "mens_womens_clothing_stores"
-    case metalServiceCenters = "metal_service_centers"
-    case miscellaneous
-    case miscellaneousApparelAndAccessoryShops = "miscellaneous_apparel_and_accessory_shops"
-    case miscellaneousAutoDealers = "miscellaneous_auto_dealers"
-    case miscellaneousBusinessServices = "miscellaneous_business_services"
-    case miscellaneousFoodStores = "miscellaneous_food_stores"
-    case miscellaneousGeneralMerchandise = "miscellaneous_general_merchandise"
-    case miscellaneousGeneralServices = "miscellaneous_general_services"
-    case miscellaneousHomeFurnishingSpecialtyStores = "miscellaneous_home_furnishing_specialty_stores"
-    case miscellaneousPublishingAndPrinting = "miscellaneous_publishing_and_printing"
-    case miscellaneousRecreationServices = "miscellaneous_recreation_services"
-    case miscellaneousRepairShops = "miscellaneous_repair_shops"
-    case miscellaneousSpecialtyRetail = "miscellaneous_specialty_retail"
-    case mobileHomeDealers = "mobile_home_dealers"
-    case motionPictureTheaters = "motion_picture_theaters"
-    case motorFreightCarriersAndTrucking = "motor_freight_carriers_and_trucking"
-    case motorHomesDealers = "motor_homes_dealers"
-    case motorVehicleSuppliesAndNewParts = "motor_vehicle_supplies_and_new_parts"
-    case motorcycleShopsAndDealers = "motorcycle_shops_and_dealers"
-    case motorcycleShopsDealers = "motorcycle_shops_dealers"
-    case musicStoresMusicalInstrumentsPianosAndSheetMusic = "music_stores_musical_instruments_pianos_and_sheet_music"
-    case newsDealersAndNewsstands = "news_dealers_and_newsstands"
-    case nonFiMoneyOrders = "non_fi_money_orders"
-    case nonFiStoredValueCardPurchaseLoad = "non_fi_stored_value_card_purchase_load"
-    case nondurableGoods = "nondurable_goods"
-    case nurseriesLawnAndGardenSupplyStores = "nurseries_lawn_and_garden_supply_stores"
-    case nursingPersonalCare = "nursing_personal_care"
-    case officeAndCommercialFurniture = "office_and_commercial_furniture"
-    case opticiansEyeglasses = "opticians_eyeglasses"
-    case optometristsOphthalmologist = "optometrists_ophthalmologist"
-    case orthopedicGoodsProstheticDevices = "orthopedic_goods_prosthetic_devices"
-    case osteopaths
-    case packageStoresBeerWineAndLiquor = "package_stores_beer_wine_and_liquor"
-    case paintsVarnishesAndSupplies = "paints_varnishes_and_supplies"
-    case parkingLotsGarages = "parking_lots_garages"
-    case passengerRailways = "passenger_railways"
-    case pawnShops = "pawn_shops"
-    case petShopsPetFoodAndSupplies = "pet_shops_pet_food_and_supplies"
-    case petroleumAndPetroleumProducts = "petroleum_and_petroleum_products"
-    case photoDeveloping = "photo_developing"
-    case photographicPhotocopyMicrofilmEquipmentAndSupplies = "photographic_photocopy_microfilm_equipment_and_supplies"
-    case photographicStudios = "photographic_studios"
-    case pictureVideoProduction = "picture_video_production"
-    case pieceGoodsNotionsAndOtherDryGoods = "piece_goods_notions_and_other_dry_goods"
-    case plumbingHeatingEquipmentAndSupplies = "plumbing_heating_equipment_and_supplies"
-    case politicalOrganizations = "political_organizations"
-    case postalServicesGovernmentOnly = "postal_services_government_only"
-    case preciousStonesAndMetalsWatchesAndJewelry = "precious_stones_and_metals_watches_and_jewelry"
-    case professionalServices = "professional_services"
-    case publicWarehousingAndStorage = "public_warehousing_and_storage"
-    case quickCopyReproAndBlueprint = "quick_copy_repro_and_blueprint"
-    case railroads
-    case realEstateAgentsAndManagersRentals = "real_estate_agents_and_managers_rentals"
-    case recordStores = "record_stores"
-    case recreationalVehicleRentals = "recreational_vehicle_rentals"
-    case religiousGoodsStores = "religious_goods_stores"
-    case religiousOrganizations = "religious_organizations"
-    case roofingSidingSheetMetal = "roofing_siding_sheet_metal"
-    case secretarialSupportServices = "secretarial_support_services"
-    case securityBrokersDealers = "security_brokers_dealers"
-    case serviceStations = "service_stations"
-    case sewingNeedleworkFabricAndPieceGoodsStores = "sewing_needlework_fabric_and_piece_goods_stores"
-    case shoeRepairHatCleaning = "shoe_repair_hat_cleaning"
-    case shoeStores = "shoe_stores"
-    case smallApplianceRepair = "small_appliance_repair"
-    case snowmobileDealers = "snowmobile_dealers"
-    case specialTradeServices = "special_trade_services"
-    case specialtyCleaning = "specialty_cleaning"
-    case sportingGoodsStores = "sporting_goods_stores"
-    case sportingRecreationCamps = "sporting_recreation_camps"
-    case sportsAndRidingApparelStores = "sports_and_riding_apparel_stores"
-    case sportsClubsFields = "sports_clubs_fields"
-    case stampAndCoinStores = "stamp_and_coin_stores"
-    case stationaryOfficeSuppliesPrintingAndWritingPaper = "stationary_office_supplies_printing_and_writing_paper"
-    case stationeryStoresOfficeAndSchoolSupplyStores = "stationery_stores_office_and_school_supply_stores"
-    case swimmingPoolsSales = "swimming_pools_sales"
-    case tUiTravelGermany = "t_ui_travel_germany"
-    case tailorsAlterations = "tailors_alterations"
-    case taxPaymentsGovernmentAgencies = "tax_payments_government_agencies"
-    case taxPreparationServices = "tax_preparation_services"
-    case taxicabsLimousines = "taxicabs_limousines"
-    case telecommunicationEquipmentAndTelephoneSales = "telecommunication_equipment_and_telephone_sales"
-    case telecommunicationServices = "telecommunication_services"
-    case telegraphServices = "telegraph_services"
-    case tentAndAwningShops = "tent_and_awning_shops"
-    case testingLaboratories = "testing_laboratories"
-    case theatricalTicketAgencies = "theatrical_ticket_agencies"
-    case timeshares
-    case tireRetreadingAndRepair = "tire_retreading_and_repair"
-    case tollsBridgeFees = "tolls_bridge_fees"
-    case touristAttractionsAndExhibits = "tourist_attractions_and_exhibits"
-    case towingServices = "towing_services"
-    case trailerParksCampgrounds = "trailer_parks_campgrounds"
-    case transportationServices = "transportation_services"
-    case travelAgenciesTourOperators = "travel_agencies_tour_operators"
-    case truckStopIteration = "truck_stop_iteration"
-    case truckUtilityTrailerRentals = "truck_utility_trailer_rentals"
-    case typesettingPlateMakingAndRelatedServices = "typesetting_plate_making_and_related_services"
-    case typewriterStores = "typewriter_stores"
-    case uSFederalGovernmentAgenciesOrDepartments = "u_s_federal_government_agencies_or_departments"
-    case uniformsCommercialClothing = "uniforms_commercial_clothing"
-    case usedMerchandiseAndSecondhandStores = "used_merchandise_and_secondhand_stores"
-    case utilities
-    case varietyStores = "variety_stores"
-    case veterinaryServices = "veterinary_services"
-    case videoAmusementGameSupplies = "video_amusement_game_supplies"
-    case videoGameArcades = "video_game_arcades"
-    case videoTapeRentalStores = "video_tape_rental_stores"
-    case vocationalTradeSchools = "vocational_trade_schools"
-    case watchJewelryRepair = "watch_jewelry_repair"
-    case weldingRepair = "welding_repair"
-    case wholesaleClubs = "wholesale_clubs"
-    case wigAndToupeeStores = "wig_and_toupee_stores"
-    case wiresMoneyOrders = "wires_money_orders"
-    case womensAccessoryAndSpecialtyShops = "womens_accessory_and_specialty_shops"
-    case womensReadyToWearStores = "womens_ready_to_wear_stores"
-    case wreckingAndSalvageYards = "wrecking_and_salvage_yards"
+public struct IssuingCardholderCreateSpendingControlsSpendingLimitsCategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
+    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
+    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
+    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
+    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
+    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
+    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
+    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
+    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
+    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
+    public static var aquariums: Self { .init(rawValue: "aquariums") }
+    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
+    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
+    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
+    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
+    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
+    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
+    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
+    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
+    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
+    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
+    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
+    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
+    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
+    public static var bakeries: Self { .init(rawValue: "bakeries") }
+    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
+    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
+    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
+    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
+    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
+    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
+    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
+    public static var bookStores: Self { .init(rawValue: "book_stores") }
+    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
+    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
+    public static var busLines: Self { .init(rawValue: "bus_lines") }
+    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
+    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
+    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
+    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
+    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
+    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
+    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
+    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
+    public static var carWashes: Self { .init(rawValue: "car_washes") }
+    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
+    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
+    public static var caterers: Self { .init(rawValue: "caterers") }
+    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
+    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
+    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
+    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
+    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
+    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
+    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
+    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
+    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
+    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
+    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
+    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
+    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
+    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
+    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
+    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
+    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
+    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
+    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
+    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
+    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
+    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
+    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
+    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
+    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
+    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
+    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
+    public static var courierServices: Self { .init(rawValue: "courier_services") }
+    public static var courtCosts: Self { .init(rawValue: "court_costs") }
+    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
+    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
+    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
+    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
+    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
+    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
+    public static var departmentStores: Self { .init(rawValue: "department_stores") }
+    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
+    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
+    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
+    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
+    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
+    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
+    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
+    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
+    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
+    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
+    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
+    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
+    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
+    public static var discountStores: Self { .init(rawValue: "discount_stores") }
+    public static var doctors: Self { .init(rawValue: "doctors") }
+    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
+    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
+    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
+    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
+    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
+    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
+    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
+    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
+    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
+    public static var educationalServices: Self { .init(rawValue: "educational_services") }
+    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
+    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
+    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
+    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
+    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
+    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
+    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
+    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
+    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
+    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
+    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
+    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
+    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
+    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
+    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
+    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
+    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
+    public static var florists: Self { .init(rawValue: "florists") }
+    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
+    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
+    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
+    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
+    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
+    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
+    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
+    public static var generalServices: Self { .init(rawValue: "general_services") }
+    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
+    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
+    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
+    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
+    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
+    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
+    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
+    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
+    public static var governmentServices: Self { .init(rawValue: "government_services") }
+    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
+    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
+    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
+    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
+    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
+    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
+    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
+    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
+    public static var hospitals: Self { .init(rawValue: "hospitals") }
+    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
+    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
+    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
+    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
+    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
+    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
+    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
+    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
+    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
+    public static var laundries: Self { .init(rawValue: "laundries") }
+    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
+    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
+    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
+    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
+    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
+    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
+    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
+    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
+    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
+    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
+    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
+    public static var medicalServices: Self { .init(rawValue: "medical_services") }
+    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
+    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
+    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
+    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
+    public static var miscellaneous: Self { .init(rawValue: "miscellaneous") }
+    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
+    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
+    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
+    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
+    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
+    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
+    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
+    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
+    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
+    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
+    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
+    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
+    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
+    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
+    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
+    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
+    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
+    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
+    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
+    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
+    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
+    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
+    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
+    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
+    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
+    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
+    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
+    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
+    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
+    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
+    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
+    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
+    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
+    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
+    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
+    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
+    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
+    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
+    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
+    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
+    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
+    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
+    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
+    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
+    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
+    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
+    public static var professionalServices: Self { .init(rawValue: "professional_services") }
+    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
+    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
+    public static var railroads: Self { .init(rawValue: "railroads") }
+    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
+    public static var recordStores: Self { .init(rawValue: "record_stores") }
+    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
+    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
+    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
+    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
+    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
+    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
+    public static var serviceStations: Self { .init(rawValue: "service_stations") }
+    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
+    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
+    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
+    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
+    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
+    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
+    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
+    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
+    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
+    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
+    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
+    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
+    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
+    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
+    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
+    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
+    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
+    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
+    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
+    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
+    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
+    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
+    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
+    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
+    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
+    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
+    public static var timeshares: Self { .init(rawValue: "timeshares") }
+    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
+    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
+    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
+    public static var towingServices: Self { .init(rawValue: "towing_services") }
+    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
+    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
+    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
+    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
+    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
+    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
+    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
+    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
+    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
+    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
+    public static var utilities: Self { .init(rawValue: "utilities") }
+    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
+    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
+    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
+    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
+    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
+    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
+    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
+    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
+    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
+    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
+    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
+    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
+    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
+    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
-public enum IssuingCardholderCreateStatus: String, Codable, Sendable {
-    case active
-    case inactive
+public struct IssuingCardholderCreateStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
-public enum IssuingCardholderCreateType: String, Codable, Sendable {
-    case company
-    case individual
+public struct IssuingCardholderCreateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public enum IssuingCardholderListStatus: String, Codable, Sendable {
-    case active
-    case blocked
-    case inactive
+public struct IssuingCardholderListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var blocked: Self { .init(rawValue: "blocked") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
-public enum IssuingCardholderListType: String, Codable, Sendable {
-    case company
-    case individual
+public struct IssuingCardholderListType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 /// The cardholder's billing address.
@@ -1548,12 +1614,18 @@ public struct IssuingCardholderUpdateIndividualVerificationDocument: StripeParam
     }
 }
 
-public enum IssuingCardholderUpdatePreferredLocales: String, Codable, Sendable {
-    case de
-    case en
-    case es
-    case fr
-    case it
+public struct IssuingCardholderUpdatePreferredLocales: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var de: Self { .init(rawValue: "de") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var es: Self { .init(rawValue: "es") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var it: Self { .init(rawValue: "it") }
 }
 
 /// Rules that control spending across this cardholder's cards. Refer to our
@@ -1614,610 +1686,634 @@ public struct IssuingCardholderUpdateSpendingControls: StripeParams {
     }
 }
 
-public enum IssuingCardholderUpdateSpendingControlsAllowedCardPresences: String, Codable, Sendable {
-    case notPresent = "not_present"
-    case present
+public struct IssuingCardholderUpdateSpendingControlsAllowedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var notPresent: Self { .init(rawValue: "not_present") }
+    public static var present: Self { .init(rawValue: "present") }
 }
 
-public enum IssuingCardholderUpdateSpendingControlsAllowedCategories: String, Codable, Sendable {
-    case acRefrigerationRepair = "ac_refrigeration_repair"
-    case accountingBookkeepingServices = "accounting_bookkeeping_services"
-    case advertisingServices = "advertising_services"
-    case agriculturalCooperative = "agricultural_cooperative"
-    case airlinesAirCarriers = "airlines_air_carriers"
-    case airportsFlyingFields = "airports_flying_fields"
-    case ambulanceServices = "ambulance_services"
-    case amusementParksCarnivals = "amusement_parks_carnivals"
-    case antiqueReproductions = "antique_reproductions"
-    case antiqueShops = "antique_shops"
-    case aquariums
-    case architecturalSurveyingServices = "architectural_surveying_services"
-    case artDealersAndGalleries = "art_dealers_and_galleries"
-    case artistsSupplyAndCraftShops = "artists_supply_and_craft_shops"
-    case autoAndHomeSupplyStores = "auto_and_home_supply_stores"
-    case autoBodyRepairShops = "auto_body_repair_shops"
-    case autoPaintShops = "auto_paint_shops"
-    case autoServiceShops = "auto_service_shops"
-    case automatedCashDisburse = "automated_cash_disburse"
-    case automatedFuelDispensers = "automated_fuel_dispensers"
-    case automobileAssociations = "automobile_associations"
-    case automotivePartsAndAccessoriesStores = "automotive_parts_and_accessories_stores"
-    case automotiveTireStores = "automotive_tire_stores"
-    case bailAndBondPayments = "bail_and_bond_payments"
-    case bakeries
-    case bandsOrchestras = "bands_orchestras"
-    case barberAndBeautyShops = "barber_and_beauty_shops"
-    case bettingCasinoGambling = "betting_casino_gambling"
-    case bicycleShops = "bicycle_shops"
-    case billiardPoolEstablishments = "billiard_pool_establishments"
-    case boatDealers = "boat_dealers"
-    case boatRentalsAndLeases = "boat_rentals_and_leases"
-    case bookStores = "book_stores"
-    case booksPeriodicalsAndNewspapers = "books_periodicals_and_newspapers"
-    case bowlingAlleys = "bowling_alleys"
-    case busLines = "bus_lines"
-    case businessSecretarialSchools = "business_secretarial_schools"
-    case buyingShoppingServices = "buying_shopping_services"
-    case cableSatelliteAndOtherPayTelevisionAndRadio = "cable_satellite_and_other_pay_television_and_radio"
-    case cameraAndPhotographicSupplyStores = "camera_and_photographic_supply_stores"
-    case candyNutAndConfectioneryStores = "candy_nut_and_confectionery_stores"
-    case carAndTruckDealersNewUsed = "car_and_truck_dealers_new_used"
-    case carAndTruckDealersUsedOnly = "car_and_truck_dealers_used_only"
-    case carRentalAgencies = "car_rental_agencies"
-    case carWashes = "car_washes"
-    case carpentryServices = "carpentry_services"
-    case carpetUpholsteryCleaning = "carpet_upholstery_cleaning"
-    case caterers
-    case charitableAndSocialServiceOrganizationsFundraising = "charitable_and_social_service_organizations_fundraising"
-    case chemicalsAndAlliedProducts = "chemicals_and_allied_products"
-    case childCareServices = "child_care_services"
-    case childrensAndInfantsWearStores = "childrens_and_infants_wear_stores"
-    case chiropodistsPodiatrists = "chiropodists_podiatrists"
-    case chiropractors
-    case cigarStoresAndStands = "cigar_stores_and_stands"
-    case civicSocialFraternalAssociations = "civic_social_fraternal_associations"
-    case cleaningAndMaintenance = "cleaning_and_maintenance"
-    case clothingRental = "clothing_rental"
-    case collegesUniversities = "colleges_universities"
-    case commercialEquipment = "commercial_equipment"
-    case commercialFootwear = "commercial_footwear"
-    case commercialPhotographyArtAndGraphics = "commercial_photography_art_and_graphics"
-    case commuterTransportAndFerries = "commuter_transport_and_ferries"
-    case computerNetworkServices = "computer_network_services"
-    case computerProgramming = "computer_programming"
-    case computerRepair = "computer_repair"
-    case computerSoftwareStores = "computer_software_stores"
-    case computersPeripheralsAndSoftware = "computers_peripherals_and_software"
-    case concreteWorkServices = "concrete_work_services"
-    case constructionMaterials = "construction_materials"
-    case consultingPublicRelations = "consulting_public_relations"
-    case correspondenceSchools = "correspondence_schools"
-    case cosmeticStores = "cosmetic_stores"
-    case counselingServices = "counseling_services"
-    case countryClubs = "country_clubs"
-    case courierServices = "courier_services"
-    case courtCosts = "court_costs"
-    case creditReportingAgencies = "credit_reporting_agencies"
-    case cruiseLines = "cruise_lines"
-    case dairyProductsStores = "dairy_products_stores"
-    case danceHallStudiosSchools = "dance_hall_studios_schools"
-    case datingEscortServices = "dating_escort_services"
-    case dentistsOrthodontists = "dentists_orthodontists"
-    case departmentStores = "department_stores"
-    case detectiveAgencies = "detective_agencies"
-    case digitalGoodsApplications = "digital_goods_applications"
-    case digitalGoodsGames = "digital_goods_games"
-    case digitalGoodsLargeVolume = "digital_goods_large_volume"
-    case digitalGoodsMedia = "digital_goods_media"
-    case directMarketingCatalogMerchant = "direct_marketing_catalog_merchant"
-    case directMarketingCombinationCatalogAndRetailMerchant = "direct_marketing_combination_catalog_and_retail_merchant"
-    case directMarketingInboundTelemarketing = "direct_marketing_inbound_telemarketing"
-    case directMarketingInsuranceServices = "direct_marketing_insurance_services"
-    case directMarketingOther = "direct_marketing_other"
-    case directMarketingOutboundTelemarketing = "direct_marketing_outbound_telemarketing"
-    case directMarketingSubscription = "direct_marketing_subscription"
-    case directMarketingTravel = "direct_marketing_travel"
-    case discountStores = "discount_stores"
-    case doctors
-    case doorToDoorSales = "door_to_door_sales"
-    case draperyWindowCoveringAndUpholsteryStores = "drapery_window_covering_and_upholstery_stores"
-    case drinkingPlaces = "drinking_places"
-    case drugStoresAndPharmacies = "drug_stores_and_pharmacies"
-    case drugsDrugProprietariesAndDruggistSundries = "drugs_drug_proprietaries_and_druggist_sundries"
-    case dryCleaners = "dry_cleaners"
-    case durableGoods = "durable_goods"
-    case dutyFreeStores = "duty_free_stores"
-    case eatingPlacesRestaurants = "eating_places_restaurants"
-    case educationalServices = "educational_services"
-    case electricRazorStores = "electric_razor_stores"
-    case electricVehicleCharging = "electric_vehicle_charging"
-    case electricalPartsAndEquipment = "electrical_parts_and_equipment"
-    case electricalServices = "electrical_services"
-    case electronicsRepairShops = "electronics_repair_shops"
-    case electronicsStores = "electronics_stores"
-    case elementarySecondarySchools = "elementary_secondary_schools"
-    case emergencyServicesGcasVisaUseOnly = "emergency_services_gcas_visa_use_only"
-    case employmentTempAgencies = "employment_temp_agencies"
-    case equipmentRental = "equipment_rental"
-    case exterminatingServices = "exterminating_services"
-    case familyClothingStores = "family_clothing_stores"
-    case fastFoodRestaurants = "fast_food_restaurants"
-    case financialInstitutions = "financial_institutions"
-    case finesGovernmentAdministrativeEntities = "fines_government_administrative_entities"
-    case fireplaceFireplaceScreensAndAccessoriesStores = "fireplace_fireplace_screens_and_accessories_stores"
-    case floorCoveringStores = "floor_covering_stores"
-    case florists
-    case floristsSuppliesNurseryStockAndFlowers = "florists_supplies_nursery_stock_and_flowers"
-    case freezerAndLockerMeatProvisioners = "freezer_and_locker_meat_provisioners"
-    case fuelDealersNonAutomotive = "fuel_dealers_non_automotive"
-    case funeralServicesCrematories = "funeral_services_crematories"
-    case furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances = "furniture_home_furnishings_and_equipment_stores_except_appliances"
-    case furnitureRepairRefinishing = "furniture_repair_refinishing"
-    case furriersAndFurShops = "furriers_and_fur_shops"
-    case generalServices = "general_services"
-    case giftCardNoveltyAndSouvenirShops = "gift_card_novelty_and_souvenir_shops"
-    case glassPaintAndWallpaperStores = "glass_paint_and_wallpaper_stores"
-    case glasswareCrystalStores = "glassware_crystal_stores"
-    case golfCoursesPublic = "golf_courses_public"
-    case governmentLicensedHorseDogRacingUsRegionOnly = "government_licensed_horse_dog_racing_us_region_only"
-    case governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly = "government_licensed_online_casions_online_gambling_us_region_only"
-    case governmentOwnedLotteriesNonUsRegion = "government_owned_lotteries_non_us_region"
-    case governmentOwnedLotteriesUsRegionOnly = "government_owned_lotteries_us_region_only"
-    case governmentServices = "government_services"
-    case groceryStoresSupermarkets = "grocery_stores_supermarkets"
-    case hardwareEquipmentAndSupplies = "hardware_equipment_and_supplies"
-    case hardwareStores = "hardware_stores"
-    case healthAndBeautySpas = "health_and_beauty_spas"
-    case hearingAidsSalesAndSupplies = "hearing_aids_sales_and_supplies"
-    case heatingPlumbingAC = "heating_plumbing_a_c"
-    case hobbyToyAndGameShops = "hobby_toy_and_game_shops"
-    case homeSupplyWarehouseStores = "home_supply_warehouse_stores"
-    case hospitals
-    case hotelsMotelsAndResorts = "hotels_motels_and_resorts"
-    case householdApplianceStores = "household_appliance_stores"
-    case industrialSupplies = "industrial_supplies"
-    case informationRetrievalServices = "information_retrieval_services"
-    case insuranceDefault = "insurance_default"
-    case insuranceUnderwritingPremiums = "insurance_underwriting_premiums"
-    case intraCompanyPurchases = "intra_company_purchases"
-    case jewelryStoresWatchesClocksAndSilverwareStores = "jewelry_stores_watches_clocks_and_silverware_stores"
-    case landscapingServices = "landscaping_services"
-    case laundries
-    case laundryCleaningServices = "laundry_cleaning_services"
-    case legalServicesAttorneys = "legal_services_attorneys"
-    case luggageAndLeatherGoodsStores = "luggage_and_leather_goods_stores"
-    case lumberBuildingMaterialsStores = "lumber_building_materials_stores"
-    case manualCashDisburse = "manual_cash_disburse"
-    case marinasServiceAndSupplies = "marinas_service_and_supplies"
-    case marketplaces
-    case masonryStoneworkAndPlaster = "masonry_stonework_and_plaster"
-    case massageParlors = "massage_parlors"
-    case medicalAndDentalLabs = "medical_and_dental_labs"
-    case medicalDentalOphthalmicAndHospitalEquipmentAndSupplies = "medical_dental_ophthalmic_and_hospital_equipment_and_supplies"
-    case medicalServices = "medical_services"
-    case membershipOrganizations = "membership_organizations"
-    case mensAndBoysClothingAndAccessoriesStores = "mens_and_boys_clothing_and_accessories_stores"
-    case mensWomensClothingStores = "mens_womens_clothing_stores"
-    case metalServiceCenters = "metal_service_centers"
-    case miscellaneous
-    case miscellaneousApparelAndAccessoryShops = "miscellaneous_apparel_and_accessory_shops"
-    case miscellaneousAutoDealers = "miscellaneous_auto_dealers"
-    case miscellaneousBusinessServices = "miscellaneous_business_services"
-    case miscellaneousFoodStores = "miscellaneous_food_stores"
-    case miscellaneousGeneralMerchandise = "miscellaneous_general_merchandise"
-    case miscellaneousGeneralServices = "miscellaneous_general_services"
-    case miscellaneousHomeFurnishingSpecialtyStores = "miscellaneous_home_furnishing_specialty_stores"
-    case miscellaneousPublishingAndPrinting = "miscellaneous_publishing_and_printing"
-    case miscellaneousRecreationServices = "miscellaneous_recreation_services"
-    case miscellaneousRepairShops = "miscellaneous_repair_shops"
-    case miscellaneousSpecialtyRetail = "miscellaneous_specialty_retail"
-    case mobileHomeDealers = "mobile_home_dealers"
-    case motionPictureTheaters = "motion_picture_theaters"
-    case motorFreightCarriersAndTrucking = "motor_freight_carriers_and_trucking"
-    case motorHomesDealers = "motor_homes_dealers"
-    case motorVehicleSuppliesAndNewParts = "motor_vehicle_supplies_and_new_parts"
-    case motorcycleShopsAndDealers = "motorcycle_shops_and_dealers"
-    case motorcycleShopsDealers = "motorcycle_shops_dealers"
-    case musicStoresMusicalInstrumentsPianosAndSheetMusic = "music_stores_musical_instruments_pianos_and_sheet_music"
-    case newsDealersAndNewsstands = "news_dealers_and_newsstands"
-    case nonFiMoneyOrders = "non_fi_money_orders"
-    case nonFiStoredValueCardPurchaseLoad = "non_fi_stored_value_card_purchase_load"
-    case nondurableGoods = "nondurable_goods"
-    case nurseriesLawnAndGardenSupplyStores = "nurseries_lawn_and_garden_supply_stores"
-    case nursingPersonalCare = "nursing_personal_care"
-    case officeAndCommercialFurniture = "office_and_commercial_furniture"
-    case opticiansEyeglasses = "opticians_eyeglasses"
-    case optometristsOphthalmologist = "optometrists_ophthalmologist"
-    case orthopedicGoodsProstheticDevices = "orthopedic_goods_prosthetic_devices"
-    case osteopaths
-    case packageStoresBeerWineAndLiquor = "package_stores_beer_wine_and_liquor"
-    case paintsVarnishesAndSupplies = "paints_varnishes_and_supplies"
-    case parkingLotsGarages = "parking_lots_garages"
-    case passengerRailways = "passenger_railways"
-    case pawnShops = "pawn_shops"
-    case petShopsPetFoodAndSupplies = "pet_shops_pet_food_and_supplies"
-    case petroleumAndPetroleumProducts = "petroleum_and_petroleum_products"
-    case photoDeveloping = "photo_developing"
-    case photographicPhotocopyMicrofilmEquipmentAndSupplies = "photographic_photocopy_microfilm_equipment_and_supplies"
-    case photographicStudios = "photographic_studios"
-    case pictureVideoProduction = "picture_video_production"
-    case pieceGoodsNotionsAndOtherDryGoods = "piece_goods_notions_and_other_dry_goods"
-    case plumbingHeatingEquipmentAndSupplies = "plumbing_heating_equipment_and_supplies"
-    case politicalOrganizations = "political_organizations"
-    case postalServicesGovernmentOnly = "postal_services_government_only"
-    case preciousStonesAndMetalsWatchesAndJewelry = "precious_stones_and_metals_watches_and_jewelry"
-    case professionalServices = "professional_services"
-    case publicWarehousingAndStorage = "public_warehousing_and_storage"
-    case quickCopyReproAndBlueprint = "quick_copy_repro_and_blueprint"
-    case railroads
-    case realEstateAgentsAndManagersRentals = "real_estate_agents_and_managers_rentals"
-    case recordStores = "record_stores"
-    case recreationalVehicleRentals = "recreational_vehicle_rentals"
-    case religiousGoodsStores = "religious_goods_stores"
-    case religiousOrganizations = "religious_organizations"
-    case roofingSidingSheetMetal = "roofing_siding_sheet_metal"
-    case secretarialSupportServices = "secretarial_support_services"
-    case securityBrokersDealers = "security_brokers_dealers"
-    case serviceStations = "service_stations"
-    case sewingNeedleworkFabricAndPieceGoodsStores = "sewing_needlework_fabric_and_piece_goods_stores"
-    case shoeRepairHatCleaning = "shoe_repair_hat_cleaning"
-    case shoeStores = "shoe_stores"
-    case smallApplianceRepair = "small_appliance_repair"
-    case snowmobileDealers = "snowmobile_dealers"
-    case specialTradeServices = "special_trade_services"
-    case specialtyCleaning = "specialty_cleaning"
-    case sportingGoodsStores = "sporting_goods_stores"
-    case sportingRecreationCamps = "sporting_recreation_camps"
-    case sportsAndRidingApparelStores = "sports_and_riding_apparel_stores"
-    case sportsClubsFields = "sports_clubs_fields"
-    case stampAndCoinStores = "stamp_and_coin_stores"
-    case stationaryOfficeSuppliesPrintingAndWritingPaper = "stationary_office_supplies_printing_and_writing_paper"
-    case stationeryStoresOfficeAndSchoolSupplyStores = "stationery_stores_office_and_school_supply_stores"
-    case swimmingPoolsSales = "swimming_pools_sales"
-    case tUiTravelGermany = "t_ui_travel_germany"
-    case tailorsAlterations = "tailors_alterations"
-    case taxPaymentsGovernmentAgencies = "tax_payments_government_agencies"
-    case taxPreparationServices = "tax_preparation_services"
-    case taxicabsLimousines = "taxicabs_limousines"
-    case telecommunicationEquipmentAndTelephoneSales = "telecommunication_equipment_and_telephone_sales"
-    case telecommunicationServices = "telecommunication_services"
-    case telegraphServices = "telegraph_services"
-    case tentAndAwningShops = "tent_and_awning_shops"
-    case testingLaboratories = "testing_laboratories"
-    case theatricalTicketAgencies = "theatrical_ticket_agencies"
-    case timeshares
-    case tireRetreadingAndRepair = "tire_retreading_and_repair"
-    case tollsBridgeFees = "tolls_bridge_fees"
-    case touristAttractionsAndExhibits = "tourist_attractions_and_exhibits"
-    case towingServices = "towing_services"
-    case trailerParksCampgrounds = "trailer_parks_campgrounds"
-    case transportationServices = "transportation_services"
-    case travelAgenciesTourOperators = "travel_agencies_tour_operators"
-    case truckStopIteration = "truck_stop_iteration"
-    case truckUtilityTrailerRentals = "truck_utility_trailer_rentals"
-    case typesettingPlateMakingAndRelatedServices = "typesetting_plate_making_and_related_services"
-    case typewriterStores = "typewriter_stores"
-    case uSFederalGovernmentAgenciesOrDepartments = "u_s_federal_government_agencies_or_departments"
-    case uniformsCommercialClothing = "uniforms_commercial_clothing"
-    case usedMerchandiseAndSecondhandStores = "used_merchandise_and_secondhand_stores"
-    case utilities
-    case varietyStores = "variety_stores"
-    case veterinaryServices = "veterinary_services"
-    case videoAmusementGameSupplies = "video_amusement_game_supplies"
-    case videoGameArcades = "video_game_arcades"
-    case videoTapeRentalStores = "video_tape_rental_stores"
-    case vocationalTradeSchools = "vocational_trade_schools"
-    case watchJewelryRepair = "watch_jewelry_repair"
-    case weldingRepair = "welding_repair"
-    case wholesaleClubs = "wholesale_clubs"
-    case wigAndToupeeStores = "wig_and_toupee_stores"
-    case wiresMoneyOrders = "wires_money_orders"
-    case womensAccessoryAndSpecialtyShops = "womens_accessory_and_specialty_shops"
-    case womensReadyToWearStores = "womens_ready_to_wear_stores"
-    case wreckingAndSalvageYards = "wrecking_and_salvage_yards"
+public struct IssuingCardholderUpdateSpendingControlsAllowedCategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
+    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
+    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
+    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
+    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
+    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
+    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
+    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
+    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
+    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
+    public static var aquariums: Self { .init(rawValue: "aquariums") }
+    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
+    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
+    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
+    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
+    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
+    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
+    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
+    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
+    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
+    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
+    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
+    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
+    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
+    public static var bakeries: Self { .init(rawValue: "bakeries") }
+    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
+    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
+    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
+    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
+    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
+    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
+    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
+    public static var bookStores: Self { .init(rawValue: "book_stores") }
+    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
+    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
+    public static var busLines: Self { .init(rawValue: "bus_lines") }
+    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
+    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
+    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
+    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
+    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
+    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
+    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
+    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
+    public static var carWashes: Self { .init(rawValue: "car_washes") }
+    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
+    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
+    public static var caterers: Self { .init(rawValue: "caterers") }
+    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
+    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
+    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
+    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
+    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
+    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
+    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
+    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
+    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
+    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
+    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
+    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
+    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
+    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
+    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
+    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
+    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
+    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
+    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
+    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
+    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
+    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
+    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
+    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
+    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
+    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
+    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
+    public static var courierServices: Self { .init(rawValue: "courier_services") }
+    public static var courtCosts: Self { .init(rawValue: "court_costs") }
+    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
+    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
+    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
+    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
+    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
+    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
+    public static var departmentStores: Self { .init(rawValue: "department_stores") }
+    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
+    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
+    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
+    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
+    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
+    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
+    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
+    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
+    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
+    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
+    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
+    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
+    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
+    public static var discountStores: Self { .init(rawValue: "discount_stores") }
+    public static var doctors: Self { .init(rawValue: "doctors") }
+    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
+    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
+    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
+    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
+    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
+    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
+    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
+    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
+    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
+    public static var educationalServices: Self { .init(rawValue: "educational_services") }
+    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
+    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
+    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
+    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
+    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
+    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
+    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
+    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
+    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
+    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
+    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
+    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
+    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
+    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
+    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
+    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
+    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
+    public static var florists: Self { .init(rawValue: "florists") }
+    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
+    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
+    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
+    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
+    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
+    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
+    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
+    public static var generalServices: Self { .init(rawValue: "general_services") }
+    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
+    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
+    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
+    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
+    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
+    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
+    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
+    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
+    public static var governmentServices: Self { .init(rawValue: "government_services") }
+    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
+    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
+    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
+    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
+    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
+    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
+    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
+    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
+    public static var hospitals: Self { .init(rawValue: "hospitals") }
+    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
+    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
+    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
+    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
+    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
+    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
+    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
+    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
+    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
+    public static var laundries: Self { .init(rawValue: "laundries") }
+    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
+    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
+    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
+    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
+    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
+    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
+    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
+    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
+    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
+    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
+    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
+    public static var medicalServices: Self { .init(rawValue: "medical_services") }
+    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
+    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
+    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
+    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
+    public static var miscellaneous: Self { .init(rawValue: "miscellaneous") }
+    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
+    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
+    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
+    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
+    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
+    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
+    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
+    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
+    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
+    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
+    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
+    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
+    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
+    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
+    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
+    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
+    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
+    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
+    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
+    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
+    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
+    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
+    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
+    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
+    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
+    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
+    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
+    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
+    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
+    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
+    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
+    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
+    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
+    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
+    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
+    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
+    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
+    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
+    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
+    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
+    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
+    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
+    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
+    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
+    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
+    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
+    public static var professionalServices: Self { .init(rawValue: "professional_services") }
+    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
+    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
+    public static var railroads: Self { .init(rawValue: "railroads") }
+    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
+    public static var recordStores: Self { .init(rawValue: "record_stores") }
+    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
+    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
+    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
+    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
+    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
+    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
+    public static var serviceStations: Self { .init(rawValue: "service_stations") }
+    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
+    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
+    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
+    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
+    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
+    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
+    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
+    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
+    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
+    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
+    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
+    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
+    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
+    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
+    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
+    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
+    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
+    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
+    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
+    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
+    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
+    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
+    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
+    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
+    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
+    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
+    public static var timeshares: Self { .init(rawValue: "timeshares") }
+    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
+    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
+    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
+    public static var towingServices: Self { .init(rawValue: "towing_services") }
+    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
+    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
+    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
+    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
+    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
+    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
+    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
+    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
+    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
+    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
+    public static var utilities: Self { .init(rawValue: "utilities") }
+    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
+    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
+    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
+    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
+    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
+    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
+    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
+    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
+    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
+    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
+    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
+    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
+    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
+    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
-public enum IssuingCardholderUpdateSpendingControlsBlockedCardPresences: String, Codable, Sendable {
-    case notPresent = "not_present"
-    case present
+public struct IssuingCardholderUpdateSpendingControlsBlockedCardPresences: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var notPresent: Self { .init(rawValue: "not_present") }
+    public static var present: Self { .init(rawValue: "present") }
 }
 
-public enum IssuingCardholderUpdateSpendingControlsBlockedCategories: String, Codable, Sendable {
-    case acRefrigerationRepair = "ac_refrigeration_repair"
-    case accountingBookkeepingServices = "accounting_bookkeeping_services"
-    case advertisingServices = "advertising_services"
-    case agriculturalCooperative = "agricultural_cooperative"
-    case airlinesAirCarriers = "airlines_air_carriers"
-    case airportsFlyingFields = "airports_flying_fields"
-    case ambulanceServices = "ambulance_services"
-    case amusementParksCarnivals = "amusement_parks_carnivals"
-    case antiqueReproductions = "antique_reproductions"
-    case antiqueShops = "antique_shops"
-    case aquariums
-    case architecturalSurveyingServices = "architectural_surveying_services"
-    case artDealersAndGalleries = "art_dealers_and_galleries"
-    case artistsSupplyAndCraftShops = "artists_supply_and_craft_shops"
-    case autoAndHomeSupplyStores = "auto_and_home_supply_stores"
-    case autoBodyRepairShops = "auto_body_repair_shops"
-    case autoPaintShops = "auto_paint_shops"
-    case autoServiceShops = "auto_service_shops"
-    case automatedCashDisburse = "automated_cash_disburse"
-    case automatedFuelDispensers = "automated_fuel_dispensers"
-    case automobileAssociations = "automobile_associations"
-    case automotivePartsAndAccessoriesStores = "automotive_parts_and_accessories_stores"
-    case automotiveTireStores = "automotive_tire_stores"
-    case bailAndBondPayments = "bail_and_bond_payments"
-    case bakeries
-    case bandsOrchestras = "bands_orchestras"
-    case barberAndBeautyShops = "barber_and_beauty_shops"
-    case bettingCasinoGambling = "betting_casino_gambling"
-    case bicycleShops = "bicycle_shops"
-    case billiardPoolEstablishments = "billiard_pool_establishments"
-    case boatDealers = "boat_dealers"
-    case boatRentalsAndLeases = "boat_rentals_and_leases"
-    case bookStores = "book_stores"
-    case booksPeriodicalsAndNewspapers = "books_periodicals_and_newspapers"
-    case bowlingAlleys = "bowling_alleys"
-    case busLines = "bus_lines"
-    case businessSecretarialSchools = "business_secretarial_schools"
-    case buyingShoppingServices = "buying_shopping_services"
-    case cableSatelliteAndOtherPayTelevisionAndRadio = "cable_satellite_and_other_pay_television_and_radio"
-    case cameraAndPhotographicSupplyStores = "camera_and_photographic_supply_stores"
-    case candyNutAndConfectioneryStores = "candy_nut_and_confectionery_stores"
-    case carAndTruckDealersNewUsed = "car_and_truck_dealers_new_used"
-    case carAndTruckDealersUsedOnly = "car_and_truck_dealers_used_only"
-    case carRentalAgencies = "car_rental_agencies"
-    case carWashes = "car_washes"
-    case carpentryServices = "carpentry_services"
-    case carpetUpholsteryCleaning = "carpet_upholstery_cleaning"
-    case caterers
-    case charitableAndSocialServiceOrganizationsFundraising = "charitable_and_social_service_organizations_fundraising"
-    case chemicalsAndAlliedProducts = "chemicals_and_allied_products"
-    case childCareServices = "child_care_services"
-    case childrensAndInfantsWearStores = "childrens_and_infants_wear_stores"
-    case chiropodistsPodiatrists = "chiropodists_podiatrists"
-    case chiropractors
-    case cigarStoresAndStands = "cigar_stores_and_stands"
-    case civicSocialFraternalAssociations = "civic_social_fraternal_associations"
-    case cleaningAndMaintenance = "cleaning_and_maintenance"
-    case clothingRental = "clothing_rental"
-    case collegesUniversities = "colleges_universities"
-    case commercialEquipment = "commercial_equipment"
-    case commercialFootwear = "commercial_footwear"
-    case commercialPhotographyArtAndGraphics = "commercial_photography_art_and_graphics"
-    case commuterTransportAndFerries = "commuter_transport_and_ferries"
-    case computerNetworkServices = "computer_network_services"
-    case computerProgramming = "computer_programming"
-    case computerRepair = "computer_repair"
-    case computerSoftwareStores = "computer_software_stores"
-    case computersPeripheralsAndSoftware = "computers_peripherals_and_software"
-    case concreteWorkServices = "concrete_work_services"
-    case constructionMaterials = "construction_materials"
-    case consultingPublicRelations = "consulting_public_relations"
-    case correspondenceSchools = "correspondence_schools"
-    case cosmeticStores = "cosmetic_stores"
-    case counselingServices = "counseling_services"
-    case countryClubs = "country_clubs"
-    case courierServices = "courier_services"
-    case courtCosts = "court_costs"
-    case creditReportingAgencies = "credit_reporting_agencies"
-    case cruiseLines = "cruise_lines"
-    case dairyProductsStores = "dairy_products_stores"
-    case danceHallStudiosSchools = "dance_hall_studios_schools"
-    case datingEscortServices = "dating_escort_services"
-    case dentistsOrthodontists = "dentists_orthodontists"
-    case departmentStores = "department_stores"
-    case detectiveAgencies = "detective_agencies"
-    case digitalGoodsApplications = "digital_goods_applications"
-    case digitalGoodsGames = "digital_goods_games"
-    case digitalGoodsLargeVolume = "digital_goods_large_volume"
-    case digitalGoodsMedia = "digital_goods_media"
-    case directMarketingCatalogMerchant = "direct_marketing_catalog_merchant"
-    case directMarketingCombinationCatalogAndRetailMerchant = "direct_marketing_combination_catalog_and_retail_merchant"
-    case directMarketingInboundTelemarketing = "direct_marketing_inbound_telemarketing"
-    case directMarketingInsuranceServices = "direct_marketing_insurance_services"
-    case directMarketingOther = "direct_marketing_other"
-    case directMarketingOutboundTelemarketing = "direct_marketing_outbound_telemarketing"
-    case directMarketingSubscription = "direct_marketing_subscription"
-    case directMarketingTravel = "direct_marketing_travel"
-    case discountStores = "discount_stores"
-    case doctors
-    case doorToDoorSales = "door_to_door_sales"
-    case draperyWindowCoveringAndUpholsteryStores = "drapery_window_covering_and_upholstery_stores"
-    case drinkingPlaces = "drinking_places"
-    case drugStoresAndPharmacies = "drug_stores_and_pharmacies"
-    case drugsDrugProprietariesAndDruggistSundries = "drugs_drug_proprietaries_and_druggist_sundries"
-    case dryCleaners = "dry_cleaners"
-    case durableGoods = "durable_goods"
-    case dutyFreeStores = "duty_free_stores"
-    case eatingPlacesRestaurants = "eating_places_restaurants"
-    case educationalServices = "educational_services"
-    case electricRazorStores = "electric_razor_stores"
-    case electricVehicleCharging = "electric_vehicle_charging"
-    case electricalPartsAndEquipment = "electrical_parts_and_equipment"
-    case electricalServices = "electrical_services"
-    case electronicsRepairShops = "electronics_repair_shops"
-    case electronicsStores = "electronics_stores"
-    case elementarySecondarySchools = "elementary_secondary_schools"
-    case emergencyServicesGcasVisaUseOnly = "emergency_services_gcas_visa_use_only"
-    case employmentTempAgencies = "employment_temp_agencies"
-    case equipmentRental = "equipment_rental"
-    case exterminatingServices = "exterminating_services"
-    case familyClothingStores = "family_clothing_stores"
-    case fastFoodRestaurants = "fast_food_restaurants"
-    case financialInstitutions = "financial_institutions"
-    case finesGovernmentAdministrativeEntities = "fines_government_administrative_entities"
-    case fireplaceFireplaceScreensAndAccessoriesStores = "fireplace_fireplace_screens_and_accessories_stores"
-    case floorCoveringStores = "floor_covering_stores"
-    case florists
-    case floristsSuppliesNurseryStockAndFlowers = "florists_supplies_nursery_stock_and_flowers"
-    case freezerAndLockerMeatProvisioners = "freezer_and_locker_meat_provisioners"
-    case fuelDealersNonAutomotive = "fuel_dealers_non_automotive"
-    case funeralServicesCrematories = "funeral_services_crematories"
-    case furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances = "furniture_home_furnishings_and_equipment_stores_except_appliances"
-    case furnitureRepairRefinishing = "furniture_repair_refinishing"
-    case furriersAndFurShops = "furriers_and_fur_shops"
-    case generalServices = "general_services"
-    case giftCardNoveltyAndSouvenirShops = "gift_card_novelty_and_souvenir_shops"
-    case glassPaintAndWallpaperStores = "glass_paint_and_wallpaper_stores"
-    case glasswareCrystalStores = "glassware_crystal_stores"
-    case golfCoursesPublic = "golf_courses_public"
-    case governmentLicensedHorseDogRacingUsRegionOnly = "government_licensed_horse_dog_racing_us_region_only"
-    case governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly = "government_licensed_online_casions_online_gambling_us_region_only"
-    case governmentOwnedLotteriesNonUsRegion = "government_owned_lotteries_non_us_region"
-    case governmentOwnedLotteriesUsRegionOnly = "government_owned_lotteries_us_region_only"
-    case governmentServices = "government_services"
-    case groceryStoresSupermarkets = "grocery_stores_supermarkets"
-    case hardwareEquipmentAndSupplies = "hardware_equipment_and_supplies"
-    case hardwareStores = "hardware_stores"
-    case healthAndBeautySpas = "health_and_beauty_spas"
-    case hearingAidsSalesAndSupplies = "hearing_aids_sales_and_supplies"
-    case heatingPlumbingAC = "heating_plumbing_a_c"
-    case hobbyToyAndGameShops = "hobby_toy_and_game_shops"
-    case homeSupplyWarehouseStores = "home_supply_warehouse_stores"
-    case hospitals
-    case hotelsMotelsAndResorts = "hotels_motels_and_resorts"
-    case householdApplianceStores = "household_appliance_stores"
-    case industrialSupplies = "industrial_supplies"
-    case informationRetrievalServices = "information_retrieval_services"
-    case insuranceDefault = "insurance_default"
-    case insuranceUnderwritingPremiums = "insurance_underwriting_premiums"
-    case intraCompanyPurchases = "intra_company_purchases"
-    case jewelryStoresWatchesClocksAndSilverwareStores = "jewelry_stores_watches_clocks_and_silverware_stores"
-    case landscapingServices = "landscaping_services"
-    case laundries
-    case laundryCleaningServices = "laundry_cleaning_services"
-    case legalServicesAttorneys = "legal_services_attorneys"
-    case luggageAndLeatherGoodsStores = "luggage_and_leather_goods_stores"
-    case lumberBuildingMaterialsStores = "lumber_building_materials_stores"
-    case manualCashDisburse = "manual_cash_disburse"
-    case marinasServiceAndSupplies = "marinas_service_and_supplies"
-    case marketplaces
-    case masonryStoneworkAndPlaster = "masonry_stonework_and_plaster"
-    case massageParlors = "massage_parlors"
-    case medicalAndDentalLabs = "medical_and_dental_labs"
-    case medicalDentalOphthalmicAndHospitalEquipmentAndSupplies = "medical_dental_ophthalmic_and_hospital_equipment_and_supplies"
-    case medicalServices = "medical_services"
-    case membershipOrganizations = "membership_organizations"
-    case mensAndBoysClothingAndAccessoriesStores = "mens_and_boys_clothing_and_accessories_stores"
-    case mensWomensClothingStores = "mens_womens_clothing_stores"
-    case metalServiceCenters = "metal_service_centers"
-    case miscellaneous
-    case miscellaneousApparelAndAccessoryShops = "miscellaneous_apparel_and_accessory_shops"
-    case miscellaneousAutoDealers = "miscellaneous_auto_dealers"
-    case miscellaneousBusinessServices = "miscellaneous_business_services"
-    case miscellaneousFoodStores = "miscellaneous_food_stores"
-    case miscellaneousGeneralMerchandise = "miscellaneous_general_merchandise"
-    case miscellaneousGeneralServices = "miscellaneous_general_services"
-    case miscellaneousHomeFurnishingSpecialtyStores = "miscellaneous_home_furnishing_specialty_stores"
-    case miscellaneousPublishingAndPrinting = "miscellaneous_publishing_and_printing"
-    case miscellaneousRecreationServices = "miscellaneous_recreation_services"
-    case miscellaneousRepairShops = "miscellaneous_repair_shops"
-    case miscellaneousSpecialtyRetail = "miscellaneous_specialty_retail"
-    case mobileHomeDealers = "mobile_home_dealers"
-    case motionPictureTheaters = "motion_picture_theaters"
-    case motorFreightCarriersAndTrucking = "motor_freight_carriers_and_trucking"
-    case motorHomesDealers = "motor_homes_dealers"
-    case motorVehicleSuppliesAndNewParts = "motor_vehicle_supplies_and_new_parts"
-    case motorcycleShopsAndDealers = "motorcycle_shops_and_dealers"
-    case motorcycleShopsDealers = "motorcycle_shops_dealers"
-    case musicStoresMusicalInstrumentsPianosAndSheetMusic = "music_stores_musical_instruments_pianos_and_sheet_music"
-    case newsDealersAndNewsstands = "news_dealers_and_newsstands"
-    case nonFiMoneyOrders = "non_fi_money_orders"
-    case nonFiStoredValueCardPurchaseLoad = "non_fi_stored_value_card_purchase_load"
-    case nondurableGoods = "nondurable_goods"
-    case nurseriesLawnAndGardenSupplyStores = "nurseries_lawn_and_garden_supply_stores"
-    case nursingPersonalCare = "nursing_personal_care"
-    case officeAndCommercialFurniture = "office_and_commercial_furniture"
-    case opticiansEyeglasses = "opticians_eyeglasses"
-    case optometristsOphthalmologist = "optometrists_ophthalmologist"
-    case orthopedicGoodsProstheticDevices = "orthopedic_goods_prosthetic_devices"
-    case osteopaths
-    case packageStoresBeerWineAndLiquor = "package_stores_beer_wine_and_liquor"
-    case paintsVarnishesAndSupplies = "paints_varnishes_and_supplies"
-    case parkingLotsGarages = "parking_lots_garages"
-    case passengerRailways = "passenger_railways"
-    case pawnShops = "pawn_shops"
-    case petShopsPetFoodAndSupplies = "pet_shops_pet_food_and_supplies"
-    case petroleumAndPetroleumProducts = "petroleum_and_petroleum_products"
-    case photoDeveloping = "photo_developing"
-    case photographicPhotocopyMicrofilmEquipmentAndSupplies = "photographic_photocopy_microfilm_equipment_and_supplies"
-    case photographicStudios = "photographic_studios"
-    case pictureVideoProduction = "picture_video_production"
-    case pieceGoodsNotionsAndOtherDryGoods = "piece_goods_notions_and_other_dry_goods"
-    case plumbingHeatingEquipmentAndSupplies = "plumbing_heating_equipment_and_supplies"
-    case politicalOrganizations = "political_organizations"
-    case postalServicesGovernmentOnly = "postal_services_government_only"
-    case preciousStonesAndMetalsWatchesAndJewelry = "precious_stones_and_metals_watches_and_jewelry"
-    case professionalServices = "professional_services"
-    case publicWarehousingAndStorage = "public_warehousing_and_storage"
-    case quickCopyReproAndBlueprint = "quick_copy_repro_and_blueprint"
-    case railroads
-    case realEstateAgentsAndManagersRentals = "real_estate_agents_and_managers_rentals"
-    case recordStores = "record_stores"
-    case recreationalVehicleRentals = "recreational_vehicle_rentals"
-    case religiousGoodsStores = "religious_goods_stores"
-    case religiousOrganizations = "religious_organizations"
-    case roofingSidingSheetMetal = "roofing_siding_sheet_metal"
-    case secretarialSupportServices = "secretarial_support_services"
-    case securityBrokersDealers = "security_brokers_dealers"
-    case serviceStations = "service_stations"
-    case sewingNeedleworkFabricAndPieceGoodsStores = "sewing_needlework_fabric_and_piece_goods_stores"
-    case shoeRepairHatCleaning = "shoe_repair_hat_cleaning"
-    case shoeStores = "shoe_stores"
-    case smallApplianceRepair = "small_appliance_repair"
-    case snowmobileDealers = "snowmobile_dealers"
-    case specialTradeServices = "special_trade_services"
-    case specialtyCleaning = "specialty_cleaning"
-    case sportingGoodsStores = "sporting_goods_stores"
-    case sportingRecreationCamps = "sporting_recreation_camps"
-    case sportsAndRidingApparelStores = "sports_and_riding_apparel_stores"
-    case sportsClubsFields = "sports_clubs_fields"
-    case stampAndCoinStores = "stamp_and_coin_stores"
-    case stationaryOfficeSuppliesPrintingAndWritingPaper = "stationary_office_supplies_printing_and_writing_paper"
-    case stationeryStoresOfficeAndSchoolSupplyStores = "stationery_stores_office_and_school_supply_stores"
-    case swimmingPoolsSales = "swimming_pools_sales"
-    case tUiTravelGermany = "t_ui_travel_germany"
-    case tailorsAlterations = "tailors_alterations"
-    case taxPaymentsGovernmentAgencies = "tax_payments_government_agencies"
-    case taxPreparationServices = "tax_preparation_services"
-    case taxicabsLimousines = "taxicabs_limousines"
-    case telecommunicationEquipmentAndTelephoneSales = "telecommunication_equipment_and_telephone_sales"
-    case telecommunicationServices = "telecommunication_services"
-    case telegraphServices = "telegraph_services"
-    case tentAndAwningShops = "tent_and_awning_shops"
-    case testingLaboratories = "testing_laboratories"
-    case theatricalTicketAgencies = "theatrical_ticket_agencies"
-    case timeshares
-    case tireRetreadingAndRepair = "tire_retreading_and_repair"
-    case tollsBridgeFees = "tolls_bridge_fees"
-    case touristAttractionsAndExhibits = "tourist_attractions_and_exhibits"
-    case towingServices = "towing_services"
-    case trailerParksCampgrounds = "trailer_parks_campgrounds"
-    case transportationServices = "transportation_services"
-    case travelAgenciesTourOperators = "travel_agencies_tour_operators"
-    case truckStopIteration = "truck_stop_iteration"
-    case truckUtilityTrailerRentals = "truck_utility_trailer_rentals"
-    case typesettingPlateMakingAndRelatedServices = "typesetting_plate_making_and_related_services"
-    case typewriterStores = "typewriter_stores"
-    case uSFederalGovernmentAgenciesOrDepartments = "u_s_federal_government_agencies_or_departments"
-    case uniformsCommercialClothing = "uniforms_commercial_clothing"
-    case usedMerchandiseAndSecondhandStores = "used_merchandise_and_secondhand_stores"
-    case utilities
-    case varietyStores = "variety_stores"
-    case veterinaryServices = "veterinary_services"
-    case videoAmusementGameSupplies = "video_amusement_game_supplies"
-    case videoGameArcades = "video_game_arcades"
-    case videoTapeRentalStores = "video_tape_rental_stores"
-    case vocationalTradeSchools = "vocational_trade_schools"
-    case watchJewelryRepair = "watch_jewelry_repair"
-    case weldingRepair = "welding_repair"
-    case wholesaleClubs = "wholesale_clubs"
-    case wigAndToupeeStores = "wig_and_toupee_stores"
-    case wiresMoneyOrders = "wires_money_orders"
-    case womensAccessoryAndSpecialtyShops = "womens_accessory_and_specialty_shops"
-    case womensReadyToWearStores = "womens_ready_to_wear_stores"
-    case wreckingAndSalvageYards = "wrecking_and_salvage_yards"
+public struct IssuingCardholderUpdateSpendingControlsBlockedCategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
+    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
+    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
+    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
+    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
+    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
+    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
+    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
+    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
+    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
+    public static var aquariums: Self { .init(rawValue: "aquariums") }
+    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
+    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
+    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
+    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
+    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
+    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
+    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
+    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
+    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
+    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
+    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
+    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
+    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
+    public static var bakeries: Self { .init(rawValue: "bakeries") }
+    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
+    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
+    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
+    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
+    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
+    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
+    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
+    public static var bookStores: Self { .init(rawValue: "book_stores") }
+    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
+    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
+    public static var busLines: Self { .init(rawValue: "bus_lines") }
+    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
+    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
+    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
+    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
+    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
+    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
+    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
+    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
+    public static var carWashes: Self { .init(rawValue: "car_washes") }
+    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
+    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
+    public static var caterers: Self { .init(rawValue: "caterers") }
+    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
+    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
+    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
+    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
+    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
+    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
+    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
+    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
+    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
+    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
+    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
+    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
+    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
+    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
+    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
+    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
+    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
+    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
+    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
+    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
+    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
+    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
+    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
+    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
+    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
+    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
+    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
+    public static var courierServices: Self { .init(rawValue: "courier_services") }
+    public static var courtCosts: Self { .init(rawValue: "court_costs") }
+    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
+    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
+    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
+    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
+    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
+    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
+    public static var departmentStores: Self { .init(rawValue: "department_stores") }
+    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
+    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
+    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
+    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
+    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
+    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
+    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
+    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
+    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
+    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
+    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
+    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
+    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
+    public static var discountStores: Self { .init(rawValue: "discount_stores") }
+    public static var doctors: Self { .init(rawValue: "doctors") }
+    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
+    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
+    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
+    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
+    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
+    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
+    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
+    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
+    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
+    public static var educationalServices: Self { .init(rawValue: "educational_services") }
+    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
+    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
+    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
+    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
+    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
+    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
+    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
+    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
+    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
+    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
+    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
+    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
+    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
+    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
+    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
+    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
+    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
+    public static var florists: Self { .init(rawValue: "florists") }
+    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
+    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
+    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
+    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
+    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
+    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
+    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
+    public static var generalServices: Self { .init(rawValue: "general_services") }
+    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
+    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
+    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
+    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
+    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
+    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
+    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
+    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
+    public static var governmentServices: Self { .init(rawValue: "government_services") }
+    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
+    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
+    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
+    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
+    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
+    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
+    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
+    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
+    public static var hospitals: Self { .init(rawValue: "hospitals") }
+    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
+    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
+    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
+    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
+    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
+    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
+    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
+    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
+    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
+    public static var laundries: Self { .init(rawValue: "laundries") }
+    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
+    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
+    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
+    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
+    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
+    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
+    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
+    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
+    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
+    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
+    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
+    public static var medicalServices: Self { .init(rawValue: "medical_services") }
+    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
+    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
+    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
+    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
+    public static var miscellaneous: Self { .init(rawValue: "miscellaneous") }
+    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
+    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
+    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
+    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
+    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
+    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
+    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
+    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
+    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
+    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
+    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
+    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
+    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
+    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
+    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
+    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
+    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
+    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
+    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
+    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
+    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
+    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
+    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
+    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
+    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
+    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
+    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
+    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
+    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
+    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
+    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
+    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
+    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
+    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
+    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
+    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
+    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
+    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
+    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
+    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
+    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
+    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
+    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
+    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
+    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
+    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
+    public static var professionalServices: Self { .init(rawValue: "professional_services") }
+    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
+    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
+    public static var railroads: Self { .init(rawValue: "railroads") }
+    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
+    public static var recordStores: Self { .init(rawValue: "record_stores") }
+    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
+    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
+    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
+    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
+    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
+    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
+    public static var serviceStations: Self { .init(rawValue: "service_stations") }
+    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
+    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
+    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
+    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
+    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
+    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
+    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
+    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
+    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
+    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
+    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
+    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
+    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
+    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
+    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
+    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
+    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
+    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
+    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
+    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
+    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
+    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
+    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
+    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
+    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
+    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
+    public static var timeshares: Self { .init(rawValue: "timeshares") }
+    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
+    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
+    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
+    public static var towingServices: Self { .init(rawValue: "towing_services") }
+    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
+    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
+    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
+    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
+    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
+    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
+    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
+    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
+    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
+    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
+    public static var utilities: Self { .init(rawValue: "utilities") }
+    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
+    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
+    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
+    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
+    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
+    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
+    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
+    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
+    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
+    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
+    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
+    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
+    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
+    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
 public struct IssuingCardholderUpdateSpendingControlsSpendingLimits: StripeParams {
@@ -2237,314 +2333,332 @@ public struct IssuingCardholderUpdateSpendingControlsSpendingLimits: StripeParam
     }
 }
 
-public enum IssuingCardholderUpdateSpendingControlsSpendingLimitsInterval: String, Codable, Sendable {
-    case allTime = "all_time"
-    case daily
-    case monthly
-    case perAuthorization = "per_authorization"
-    case weekly
-    case yearly
+public struct IssuingCardholderUpdateSpendingControlsSpendingLimitsInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var allTime: Self { .init(rawValue: "all_time") }
+    public static var daily: Self { .init(rawValue: "daily") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var perAuthorization: Self { .init(rawValue: "per_authorization") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
+    public static var yearly: Self { .init(rawValue: "yearly") }
 }
 
-public enum IssuingCardholderUpdateSpendingControlsSpendingLimitsCategories: String, Codable, Sendable {
-    case acRefrigerationRepair = "ac_refrigeration_repair"
-    case accountingBookkeepingServices = "accounting_bookkeeping_services"
-    case advertisingServices = "advertising_services"
-    case agriculturalCooperative = "agricultural_cooperative"
-    case airlinesAirCarriers = "airlines_air_carriers"
-    case airportsFlyingFields = "airports_flying_fields"
-    case ambulanceServices = "ambulance_services"
-    case amusementParksCarnivals = "amusement_parks_carnivals"
-    case antiqueReproductions = "antique_reproductions"
-    case antiqueShops = "antique_shops"
-    case aquariums
-    case architecturalSurveyingServices = "architectural_surveying_services"
-    case artDealersAndGalleries = "art_dealers_and_galleries"
-    case artistsSupplyAndCraftShops = "artists_supply_and_craft_shops"
-    case autoAndHomeSupplyStores = "auto_and_home_supply_stores"
-    case autoBodyRepairShops = "auto_body_repair_shops"
-    case autoPaintShops = "auto_paint_shops"
-    case autoServiceShops = "auto_service_shops"
-    case automatedCashDisburse = "automated_cash_disburse"
-    case automatedFuelDispensers = "automated_fuel_dispensers"
-    case automobileAssociations = "automobile_associations"
-    case automotivePartsAndAccessoriesStores = "automotive_parts_and_accessories_stores"
-    case automotiveTireStores = "automotive_tire_stores"
-    case bailAndBondPayments = "bail_and_bond_payments"
-    case bakeries
-    case bandsOrchestras = "bands_orchestras"
-    case barberAndBeautyShops = "barber_and_beauty_shops"
-    case bettingCasinoGambling = "betting_casino_gambling"
-    case bicycleShops = "bicycle_shops"
-    case billiardPoolEstablishments = "billiard_pool_establishments"
-    case boatDealers = "boat_dealers"
-    case boatRentalsAndLeases = "boat_rentals_and_leases"
-    case bookStores = "book_stores"
-    case booksPeriodicalsAndNewspapers = "books_periodicals_and_newspapers"
-    case bowlingAlleys = "bowling_alleys"
-    case busLines = "bus_lines"
-    case businessSecretarialSchools = "business_secretarial_schools"
-    case buyingShoppingServices = "buying_shopping_services"
-    case cableSatelliteAndOtherPayTelevisionAndRadio = "cable_satellite_and_other_pay_television_and_radio"
-    case cameraAndPhotographicSupplyStores = "camera_and_photographic_supply_stores"
-    case candyNutAndConfectioneryStores = "candy_nut_and_confectionery_stores"
-    case carAndTruckDealersNewUsed = "car_and_truck_dealers_new_used"
-    case carAndTruckDealersUsedOnly = "car_and_truck_dealers_used_only"
-    case carRentalAgencies = "car_rental_agencies"
-    case carWashes = "car_washes"
-    case carpentryServices = "carpentry_services"
-    case carpetUpholsteryCleaning = "carpet_upholstery_cleaning"
-    case caterers
-    case charitableAndSocialServiceOrganizationsFundraising = "charitable_and_social_service_organizations_fundraising"
-    case chemicalsAndAlliedProducts = "chemicals_and_allied_products"
-    case childCareServices = "child_care_services"
-    case childrensAndInfantsWearStores = "childrens_and_infants_wear_stores"
-    case chiropodistsPodiatrists = "chiropodists_podiatrists"
-    case chiropractors
-    case cigarStoresAndStands = "cigar_stores_and_stands"
-    case civicSocialFraternalAssociations = "civic_social_fraternal_associations"
-    case cleaningAndMaintenance = "cleaning_and_maintenance"
-    case clothingRental = "clothing_rental"
-    case collegesUniversities = "colleges_universities"
-    case commercialEquipment = "commercial_equipment"
-    case commercialFootwear = "commercial_footwear"
-    case commercialPhotographyArtAndGraphics = "commercial_photography_art_and_graphics"
-    case commuterTransportAndFerries = "commuter_transport_and_ferries"
-    case computerNetworkServices = "computer_network_services"
-    case computerProgramming = "computer_programming"
-    case computerRepair = "computer_repair"
-    case computerSoftwareStores = "computer_software_stores"
-    case computersPeripheralsAndSoftware = "computers_peripherals_and_software"
-    case concreteWorkServices = "concrete_work_services"
-    case constructionMaterials = "construction_materials"
-    case consultingPublicRelations = "consulting_public_relations"
-    case correspondenceSchools = "correspondence_schools"
-    case cosmeticStores = "cosmetic_stores"
-    case counselingServices = "counseling_services"
-    case countryClubs = "country_clubs"
-    case courierServices = "courier_services"
-    case courtCosts = "court_costs"
-    case creditReportingAgencies = "credit_reporting_agencies"
-    case cruiseLines = "cruise_lines"
-    case dairyProductsStores = "dairy_products_stores"
-    case danceHallStudiosSchools = "dance_hall_studios_schools"
-    case datingEscortServices = "dating_escort_services"
-    case dentistsOrthodontists = "dentists_orthodontists"
-    case departmentStores = "department_stores"
-    case detectiveAgencies = "detective_agencies"
-    case digitalGoodsApplications = "digital_goods_applications"
-    case digitalGoodsGames = "digital_goods_games"
-    case digitalGoodsLargeVolume = "digital_goods_large_volume"
-    case digitalGoodsMedia = "digital_goods_media"
-    case directMarketingCatalogMerchant = "direct_marketing_catalog_merchant"
-    case directMarketingCombinationCatalogAndRetailMerchant = "direct_marketing_combination_catalog_and_retail_merchant"
-    case directMarketingInboundTelemarketing = "direct_marketing_inbound_telemarketing"
-    case directMarketingInsuranceServices = "direct_marketing_insurance_services"
-    case directMarketingOther = "direct_marketing_other"
-    case directMarketingOutboundTelemarketing = "direct_marketing_outbound_telemarketing"
-    case directMarketingSubscription = "direct_marketing_subscription"
-    case directMarketingTravel = "direct_marketing_travel"
-    case discountStores = "discount_stores"
-    case doctors
-    case doorToDoorSales = "door_to_door_sales"
-    case draperyWindowCoveringAndUpholsteryStores = "drapery_window_covering_and_upholstery_stores"
-    case drinkingPlaces = "drinking_places"
-    case drugStoresAndPharmacies = "drug_stores_and_pharmacies"
-    case drugsDrugProprietariesAndDruggistSundries = "drugs_drug_proprietaries_and_druggist_sundries"
-    case dryCleaners = "dry_cleaners"
-    case durableGoods = "durable_goods"
-    case dutyFreeStores = "duty_free_stores"
-    case eatingPlacesRestaurants = "eating_places_restaurants"
-    case educationalServices = "educational_services"
-    case electricRazorStores = "electric_razor_stores"
-    case electricVehicleCharging = "electric_vehicle_charging"
-    case electricalPartsAndEquipment = "electrical_parts_and_equipment"
-    case electricalServices = "electrical_services"
-    case electronicsRepairShops = "electronics_repair_shops"
-    case electronicsStores = "electronics_stores"
-    case elementarySecondarySchools = "elementary_secondary_schools"
-    case emergencyServicesGcasVisaUseOnly = "emergency_services_gcas_visa_use_only"
-    case employmentTempAgencies = "employment_temp_agencies"
-    case equipmentRental = "equipment_rental"
-    case exterminatingServices = "exterminating_services"
-    case familyClothingStores = "family_clothing_stores"
-    case fastFoodRestaurants = "fast_food_restaurants"
-    case financialInstitutions = "financial_institutions"
-    case finesGovernmentAdministrativeEntities = "fines_government_administrative_entities"
-    case fireplaceFireplaceScreensAndAccessoriesStores = "fireplace_fireplace_screens_and_accessories_stores"
-    case floorCoveringStores = "floor_covering_stores"
-    case florists
-    case floristsSuppliesNurseryStockAndFlowers = "florists_supplies_nursery_stock_and_flowers"
-    case freezerAndLockerMeatProvisioners = "freezer_and_locker_meat_provisioners"
-    case fuelDealersNonAutomotive = "fuel_dealers_non_automotive"
-    case funeralServicesCrematories = "funeral_services_crematories"
-    case furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances = "furniture_home_furnishings_and_equipment_stores_except_appliances"
-    case furnitureRepairRefinishing = "furniture_repair_refinishing"
-    case furriersAndFurShops = "furriers_and_fur_shops"
-    case generalServices = "general_services"
-    case giftCardNoveltyAndSouvenirShops = "gift_card_novelty_and_souvenir_shops"
-    case glassPaintAndWallpaperStores = "glass_paint_and_wallpaper_stores"
-    case glasswareCrystalStores = "glassware_crystal_stores"
-    case golfCoursesPublic = "golf_courses_public"
-    case governmentLicensedHorseDogRacingUsRegionOnly = "government_licensed_horse_dog_racing_us_region_only"
-    case governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly = "government_licensed_online_casions_online_gambling_us_region_only"
-    case governmentOwnedLotteriesNonUsRegion = "government_owned_lotteries_non_us_region"
-    case governmentOwnedLotteriesUsRegionOnly = "government_owned_lotteries_us_region_only"
-    case governmentServices = "government_services"
-    case groceryStoresSupermarkets = "grocery_stores_supermarkets"
-    case hardwareEquipmentAndSupplies = "hardware_equipment_and_supplies"
-    case hardwareStores = "hardware_stores"
-    case healthAndBeautySpas = "health_and_beauty_spas"
-    case hearingAidsSalesAndSupplies = "hearing_aids_sales_and_supplies"
-    case heatingPlumbingAC = "heating_plumbing_a_c"
-    case hobbyToyAndGameShops = "hobby_toy_and_game_shops"
-    case homeSupplyWarehouseStores = "home_supply_warehouse_stores"
-    case hospitals
-    case hotelsMotelsAndResorts = "hotels_motels_and_resorts"
-    case householdApplianceStores = "household_appliance_stores"
-    case industrialSupplies = "industrial_supplies"
-    case informationRetrievalServices = "information_retrieval_services"
-    case insuranceDefault = "insurance_default"
-    case insuranceUnderwritingPremiums = "insurance_underwriting_premiums"
-    case intraCompanyPurchases = "intra_company_purchases"
-    case jewelryStoresWatchesClocksAndSilverwareStores = "jewelry_stores_watches_clocks_and_silverware_stores"
-    case landscapingServices = "landscaping_services"
-    case laundries
-    case laundryCleaningServices = "laundry_cleaning_services"
-    case legalServicesAttorneys = "legal_services_attorneys"
-    case luggageAndLeatherGoodsStores = "luggage_and_leather_goods_stores"
-    case lumberBuildingMaterialsStores = "lumber_building_materials_stores"
-    case manualCashDisburse = "manual_cash_disburse"
-    case marinasServiceAndSupplies = "marinas_service_and_supplies"
-    case marketplaces
-    case masonryStoneworkAndPlaster = "masonry_stonework_and_plaster"
-    case massageParlors = "massage_parlors"
-    case medicalAndDentalLabs = "medical_and_dental_labs"
-    case medicalDentalOphthalmicAndHospitalEquipmentAndSupplies = "medical_dental_ophthalmic_and_hospital_equipment_and_supplies"
-    case medicalServices = "medical_services"
-    case membershipOrganizations = "membership_organizations"
-    case mensAndBoysClothingAndAccessoriesStores = "mens_and_boys_clothing_and_accessories_stores"
-    case mensWomensClothingStores = "mens_womens_clothing_stores"
-    case metalServiceCenters = "metal_service_centers"
-    case miscellaneous
-    case miscellaneousApparelAndAccessoryShops = "miscellaneous_apparel_and_accessory_shops"
-    case miscellaneousAutoDealers = "miscellaneous_auto_dealers"
-    case miscellaneousBusinessServices = "miscellaneous_business_services"
-    case miscellaneousFoodStores = "miscellaneous_food_stores"
-    case miscellaneousGeneralMerchandise = "miscellaneous_general_merchandise"
-    case miscellaneousGeneralServices = "miscellaneous_general_services"
-    case miscellaneousHomeFurnishingSpecialtyStores = "miscellaneous_home_furnishing_specialty_stores"
-    case miscellaneousPublishingAndPrinting = "miscellaneous_publishing_and_printing"
-    case miscellaneousRecreationServices = "miscellaneous_recreation_services"
-    case miscellaneousRepairShops = "miscellaneous_repair_shops"
-    case miscellaneousSpecialtyRetail = "miscellaneous_specialty_retail"
-    case mobileHomeDealers = "mobile_home_dealers"
-    case motionPictureTheaters = "motion_picture_theaters"
-    case motorFreightCarriersAndTrucking = "motor_freight_carriers_and_trucking"
-    case motorHomesDealers = "motor_homes_dealers"
-    case motorVehicleSuppliesAndNewParts = "motor_vehicle_supplies_and_new_parts"
-    case motorcycleShopsAndDealers = "motorcycle_shops_and_dealers"
-    case motorcycleShopsDealers = "motorcycle_shops_dealers"
-    case musicStoresMusicalInstrumentsPianosAndSheetMusic = "music_stores_musical_instruments_pianos_and_sheet_music"
-    case newsDealersAndNewsstands = "news_dealers_and_newsstands"
-    case nonFiMoneyOrders = "non_fi_money_orders"
-    case nonFiStoredValueCardPurchaseLoad = "non_fi_stored_value_card_purchase_load"
-    case nondurableGoods = "nondurable_goods"
-    case nurseriesLawnAndGardenSupplyStores = "nurseries_lawn_and_garden_supply_stores"
-    case nursingPersonalCare = "nursing_personal_care"
-    case officeAndCommercialFurniture = "office_and_commercial_furniture"
-    case opticiansEyeglasses = "opticians_eyeglasses"
-    case optometristsOphthalmologist = "optometrists_ophthalmologist"
-    case orthopedicGoodsProstheticDevices = "orthopedic_goods_prosthetic_devices"
-    case osteopaths
-    case packageStoresBeerWineAndLiquor = "package_stores_beer_wine_and_liquor"
-    case paintsVarnishesAndSupplies = "paints_varnishes_and_supplies"
-    case parkingLotsGarages = "parking_lots_garages"
-    case passengerRailways = "passenger_railways"
-    case pawnShops = "pawn_shops"
-    case petShopsPetFoodAndSupplies = "pet_shops_pet_food_and_supplies"
-    case petroleumAndPetroleumProducts = "petroleum_and_petroleum_products"
-    case photoDeveloping = "photo_developing"
-    case photographicPhotocopyMicrofilmEquipmentAndSupplies = "photographic_photocopy_microfilm_equipment_and_supplies"
-    case photographicStudios = "photographic_studios"
-    case pictureVideoProduction = "picture_video_production"
-    case pieceGoodsNotionsAndOtherDryGoods = "piece_goods_notions_and_other_dry_goods"
-    case plumbingHeatingEquipmentAndSupplies = "plumbing_heating_equipment_and_supplies"
-    case politicalOrganizations = "political_organizations"
-    case postalServicesGovernmentOnly = "postal_services_government_only"
-    case preciousStonesAndMetalsWatchesAndJewelry = "precious_stones_and_metals_watches_and_jewelry"
-    case professionalServices = "professional_services"
-    case publicWarehousingAndStorage = "public_warehousing_and_storage"
-    case quickCopyReproAndBlueprint = "quick_copy_repro_and_blueprint"
-    case railroads
-    case realEstateAgentsAndManagersRentals = "real_estate_agents_and_managers_rentals"
-    case recordStores = "record_stores"
-    case recreationalVehicleRentals = "recreational_vehicle_rentals"
-    case religiousGoodsStores = "religious_goods_stores"
-    case religiousOrganizations = "religious_organizations"
-    case roofingSidingSheetMetal = "roofing_siding_sheet_metal"
-    case secretarialSupportServices = "secretarial_support_services"
-    case securityBrokersDealers = "security_brokers_dealers"
-    case serviceStations = "service_stations"
-    case sewingNeedleworkFabricAndPieceGoodsStores = "sewing_needlework_fabric_and_piece_goods_stores"
-    case shoeRepairHatCleaning = "shoe_repair_hat_cleaning"
-    case shoeStores = "shoe_stores"
-    case smallApplianceRepair = "small_appliance_repair"
-    case snowmobileDealers = "snowmobile_dealers"
-    case specialTradeServices = "special_trade_services"
-    case specialtyCleaning = "specialty_cleaning"
-    case sportingGoodsStores = "sporting_goods_stores"
-    case sportingRecreationCamps = "sporting_recreation_camps"
-    case sportsAndRidingApparelStores = "sports_and_riding_apparel_stores"
-    case sportsClubsFields = "sports_clubs_fields"
-    case stampAndCoinStores = "stamp_and_coin_stores"
-    case stationaryOfficeSuppliesPrintingAndWritingPaper = "stationary_office_supplies_printing_and_writing_paper"
-    case stationeryStoresOfficeAndSchoolSupplyStores = "stationery_stores_office_and_school_supply_stores"
-    case swimmingPoolsSales = "swimming_pools_sales"
-    case tUiTravelGermany = "t_ui_travel_germany"
-    case tailorsAlterations = "tailors_alterations"
-    case taxPaymentsGovernmentAgencies = "tax_payments_government_agencies"
-    case taxPreparationServices = "tax_preparation_services"
-    case taxicabsLimousines = "taxicabs_limousines"
-    case telecommunicationEquipmentAndTelephoneSales = "telecommunication_equipment_and_telephone_sales"
-    case telecommunicationServices = "telecommunication_services"
-    case telegraphServices = "telegraph_services"
-    case tentAndAwningShops = "tent_and_awning_shops"
-    case testingLaboratories = "testing_laboratories"
-    case theatricalTicketAgencies = "theatrical_ticket_agencies"
-    case timeshares
-    case tireRetreadingAndRepair = "tire_retreading_and_repair"
-    case tollsBridgeFees = "tolls_bridge_fees"
-    case touristAttractionsAndExhibits = "tourist_attractions_and_exhibits"
-    case towingServices = "towing_services"
-    case trailerParksCampgrounds = "trailer_parks_campgrounds"
-    case transportationServices = "transportation_services"
-    case travelAgenciesTourOperators = "travel_agencies_tour_operators"
-    case truckStopIteration = "truck_stop_iteration"
-    case truckUtilityTrailerRentals = "truck_utility_trailer_rentals"
-    case typesettingPlateMakingAndRelatedServices = "typesetting_plate_making_and_related_services"
-    case typewriterStores = "typewriter_stores"
-    case uSFederalGovernmentAgenciesOrDepartments = "u_s_federal_government_agencies_or_departments"
-    case uniformsCommercialClothing = "uniforms_commercial_clothing"
-    case usedMerchandiseAndSecondhandStores = "used_merchandise_and_secondhand_stores"
-    case utilities
-    case varietyStores = "variety_stores"
-    case veterinaryServices = "veterinary_services"
-    case videoAmusementGameSupplies = "video_amusement_game_supplies"
-    case videoGameArcades = "video_game_arcades"
-    case videoTapeRentalStores = "video_tape_rental_stores"
-    case vocationalTradeSchools = "vocational_trade_schools"
-    case watchJewelryRepair = "watch_jewelry_repair"
-    case weldingRepair = "welding_repair"
-    case wholesaleClubs = "wholesale_clubs"
-    case wigAndToupeeStores = "wig_and_toupee_stores"
-    case wiresMoneyOrders = "wires_money_orders"
-    case womensAccessoryAndSpecialtyShops = "womens_accessory_and_specialty_shops"
-    case womensReadyToWearStores = "womens_ready_to_wear_stores"
-    case wreckingAndSalvageYards = "wrecking_and_salvage_yards"
+public struct IssuingCardholderUpdateSpendingControlsSpendingLimitsCategories: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var acRefrigerationRepair: Self { .init(rawValue: "ac_refrigeration_repair") }
+    public static var accountingBookkeepingServices: Self { .init(rawValue: "accounting_bookkeeping_services") }
+    public static var advertisingServices: Self { .init(rawValue: "advertising_services") }
+    public static var agriculturalCooperative: Self { .init(rawValue: "agricultural_cooperative") }
+    public static var airlinesAirCarriers: Self { .init(rawValue: "airlines_air_carriers") }
+    public static var airportsFlyingFields: Self { .init(rawValue: "airports_flying_fields") }
+    public static var ambulanceServices: Self { .init(rawValue: "ambulance_services") }
+    public static var amusementParksCarnivals: Self { .init(rawValue: "amusement_parks_carnivals") }
+    public static var antiqueReproductions: Self { .init(rawValue: "antique_reproductions") }
+    public static var antiqueShops: Self { .init(rawValue: "antique_shops") }
+    public static var aquariums: Self { .init(rawValue: "aquariums") }
+    public static var architecturalSurveyingServices: Self { .init(rawValue: "architectural_surveying_services") }
+    public static var artDealersAndGalleries: Self { .init(rawValue: "art_dealers_and_galleries") }
+    public static var artistsSupplyAndCraftShops: Self { .init(rawValue: "artists_supply_and_craft_shops") }
+    public static var autoAndHomeSupplyStores: Self { .init(rawValue: "auto_and_home_supply_stores") }
+    public static var autoBodyRepairShops: Self { .init(rawValue: "auto_body_repair_shops") }
+    public static var autoPaintShops: Self { .init(rawValue: "auto_paint_shops") }
+    public static var autoServiceShops: Self { .init(rawValue: "auto_service_shops") }
+    public static var automatedCashDisburse: Self { .init(rawValue: "automated_cash_disburse") }
+    public static var automatedFuelDispensers: Self { .init(rawValue: "automated_fuel_dispensers") }
+    public static var automobileAssociations: Self { .init(rawValue: "automobile_associations") }
+    public static var automotivePartsAndAccessoriesStores: Self { .init(rawValue: "automotive_parts_and_accessories_stores") }
+    public static var automotiveTireStores: Self { .init(rawValue: "automotive_tire_stores") }
+    public static var bailAndBondPayments: Self { .init(rawValue: "bail_and_bond_payments") }
+    public static var bakeries: Self { .init(rawValue: "bakeries") }
+    public static var bandsOrchestras: Self { .init(rawValue: "bands_orchestras") }
+    public static var barberAndBeautyShops: Self { .init(rawValue: "barber_and_beauty_shops") }
+    public static var bettingCasinoGambling: Self { .init(rawValue: "betting_casino_gambling") }
+    public static var bicycleShops: Self { .init(rawValue: "bicycle_shops") }
+    public static var billiardPoolEstablishments: Self { .init(rawValue: "billiard_pool_establishments") }
+    public static var boatDealers: Self { .init(rawValue: "boat_dealers") }
+    public static var boatRentalsAndLeases: Self { .init(rawValue: "boat_rentals_and_leases") }
+    public static var bookStores: Self { .init(rawValue: "book_stores") }
+    public static var booksPeriodicalsAndNewspapers: Self { .init(rawValue: "books_periodicals_and_newspapers") }
+    public static var bowlingAlleys: Self { .init(rawValue: "bowling_alleys") }
+    public static var busLines: Self { .init(rawValue: "bus_lines") }
+    public static var businessSecretarialSchools: Self { .init(rawValue: "business_secretarial_schools") }
+    public static var buyingShoppingServices: Self { .init(rawValue: "buying_shopping_services") }
+    public static var cableSatelliteAndOtherPayTelevisionAndRadio: Self { .init(rawValue: "cable_satellite_and_other_pay_television_and_radio") }
+    public static var cameraAndPhotographicSupplyStores: Self { .init(rawValue: "camera_and_photographic_supply_stores") }
+    public static var candyNutAndConfectioneryStores: Self { .init(rawValue: "candy_nut_and_confectionery_stores") }
+    public static var carAndTruckDealersNewUsed: Self { .init(rawValue: "car_and_truck_dealers_new_used") }
+    public static var carAndTruckDealersUsedOnly: Self { .init(rawValue: "car_and_truck_dealers_used_only") }
+    public static var carRentalAgencies: Self { .init(rawValue: "car_rental_agencies") }
+    public static var carWashes: Self { .init(rawValue: "car_washes") }
+    public static var carpentryServices: Self { .init(rawValue: "carpentry_services") }
+    public static var carpetUpholsteryCleaning: Self { .init(rawValue: "carpet_upholstery_cleaning") }
+    public static var caterers: Self { .init(rawValue: "caterers") }
+    public static var charitableAndSocialServiceOrganizationsFundraising: Self { .init(rawValue: "charitable_and_social_service_organizations_fundraising") }
+    public static var chemicalsAndAlliedProducts: Self { .init(rawValue: "chemicals_and_allied_products") }
+    public static var childCareServices: Self { .init(rawValue: "child_care_services") }
+    public static var childrensAndInfantsWearStores: Self { .init(rawValue: "childrens_and_infants_wear_stores") }
+    public static var chiropodistsPodiatrists: Self { .init(rawValue: "chiropodists_podiatrists") }
+    public static var chiropractors: Self { .init(rawValue: "chiropractors") }
+    public static var cigarStoresAndStands: Self { .init(rawValue: "cigar_stores_and_stands") }
+    public static var civicSocialFraternalAssociations: Self { .init(rawValue: "civic_social_fraternal_associations") }
+    public static var cleaningAndMaintenance: Self { .init(rawValue: "cleaning_and_maintenance") }
+    public static var clothingRental: Self { .init(rawValue: "clothing_rental") }
+    public static var collegesUniversities: Self { .init(rawValue: "colleges_universities") }
+    public static var commercialEquipment: Self { .init(rawValue: "commercial_equipment") }
+    public static var commercialFootwear: Self { .init(rawValue: "commercial_footwear") }
+    public static var commercialPhotographyArtAndGraphics: Self { .init(rawValue: "commercial_photography_art_and_graphics") }
+    public static var commuterTransportAndFerries: Self { .init(rawValue: "commuter_transport_and_ferries") }
+    public static var computerNetworkServices: Self { .init(rawValue: "computer_network_services") }
+    public static var computerProgramming: Self { .init(rawValue: "computer_programming") }
+    public static var computerRepair: Self { .init(rawValue: "computer_repair") }
+    public static var computerSoftwareStores: Self { .init(rawValue: "computer_software_stores") }
+    public static var computersPeripheralsAndSoftware: Self { .init(rawValue: "computers_peripherals_and_software") }
+    public static var concreteWorkServices: Self { .init(rawValue: "concrete_work_services") }
+    public static var constructionMaterials: Self { .init(rawValue: "construction_materials") }
+    public static var consultingPublicRelations: Self { .init(rawValue: "consulting_public_relations") }
+    public static var correspondenceSchools: Self { .init(rawValue: "correspondence_schools") }
+    public static var cosmeticStores: Self { .init(rawValue: "cosmetic_stores") }
+    public static var counselingServices: Self { .init(rawValue: "counseling_services") }
+    public static var countryClubs: Self { .init(rawValue: "country_clubs") }
+    public static var courierServices: Self { .init(rawValue: "courier_services") }
+    public static var courtCosts: Self { .init(rawValue: "court_costs") }
+    public static var creditReportingAgencies: Self { .init(rawValue: "credit_reporting_agencies") }
+    public static var cruiseLines: Self { .init(rawValue: "cruise_lines") }
+    public static var dairyProductsStores: Self { .init(rawValue: "dairy_products_stores") }
+    public static var danceHallStudiosSchools: Self { .init(rawValue: "dance_hall_studios_schools") }
+    public static var datingEscortServices: Self { .init(rawValue: "dating_escort_services") }
+    public static var dentistsOrthodontists: Self { .init(rawValue: "dentists_orthodontists") }
+    public static var departmentStores: Self { .init(rawValue: "department_stores") }
+    public static var detectiveAgencies: Self { .init(rawValue: "detective_agencies") }
+    public static var digitalGoodsApplications: Self { .init(rawValue: "digital_goods_applications") }
+    public static var digitalGoodsGames: Self { .init(rawValue: "digital_goods_games") }
+    public static var digitalGoodsLargeVolume: Self { .init(rawValue: "digital_goods_large_volume") }
+    public static var digitalGoodsMedia: Self { .init(rawValue: "digital_goods_media") }
+    public static var directMarketingCatalogMerchant: Self { .init(rawValue: "direct_marketing_catalog_merchant") }
+    public static var directMarketingCombinationCatalogAndRetailMerchant: Self { .init(rawValue: "direct_marketing_combination_catalog_and_retail_merchant") }
+    public static var directMarketingInboundTelemarketing: Self { .init(rawValue: "direct_marketing_inbound_telemarketing") }
+    public static var directMarketingInsuranceServices: Self { .init(rawValue: "direct_marketing_insurance_services") }
+    public static var directMarketingOther: Self { .init(rawValue: "direct_marketing_other") }
+    public static var directMarketingOutboundTelemarketing: Self { .init(rawValue: "direct_marketing_outbound_telemarketing") }
+    public static var directMarketingSubscription: Self { .init(rawValue: "direct_marketing_subscription") }
+    public static var directMarketingTravel: Self { .init(rawValue: "direct_marketing_travel") }
+    public static var discountStores: Self { .init(rawValue: "discount_stores") }
+    public static var doctors: Self { .init(rawValue: "doctors") }
+    public static var doorToDoorSales: Self { .init(rawValue: "door_to_door_sales") }
+    public static var draperyWindowCoveringAndUpholsteryStores: Self { .init(rawValue: "drapery_window_covering_and_upholstery_stores") }
+    public static var drinkingPlaces: Self { .init(rawValue: "drinking_places") }
+    public static var drugStoresAndPharmacies: Self { .init(rawValue: "drug_stores_and_pharmacies") }
+    public static var drugsDrugProprietariesAndDruggistSundries: Self { .init(rawValue: "drugs_drug_proprietaries_and_druggist_sundries") }
+    public static var dryCleaners: Self { .init(rawValue: "dry_cleaners") }
+    public static var durableGoods: Self { .init(rawValue: "durable_goods") }
+    public static var dutyFreeStores: Self { .init(rawValue: "duty_free_stores") }
+    public static var eatingPlacesRestaurants: Self { .init(rawValue: "eating_places_restaurants") }
+    public static var educationalServices: Self { .init(rawValue: "educational_services") }
+    public static var electricRazorStores: Self { .init(rawValue: "electric_razor_stores") }
+    public static var electricVehicleCharging: Self { .init(rawValue: "electric_vehicle_charging") }
+    public static var electricalPartsAndEquipment: Self { .init(rawValue: "electrical_parts_and_equipment") }
+    public static var electricalServices: Self { .init(rawValue: "electrical_services") }
+    public static var electronicsRepairShops: Self { .init(rawValue: "electronics_repair_shops") }
+    public static var electronicsStores: Self { .init(rawValue: "electronics_stores") }
+    public static var elementarySecondarySchools: Self { .init(rawValue: "elementary_secondary_schools") }
+    public static var emergencyServicesGcasVisaUseOnly: Self { .init(rawValue: "emergency_services_gcas_visa_use_only") }
+    public static var employmentTempAgencies: Self { .init(rawValue: "employment_temp_agencies") }
+    public static var equipmentRental: Self { .init(rawValue: "equipment_rental") }
+    public static var exterminatingServices: Self { .init(rawValue: "exterminating_services") }
+    public static var familyClothingStores: Self { .init(rawValue: "family_clothing_stores") }
+    public static var fastFoodRestaurants: Self { .init(rawValue: "fast_food_restaurants") }
+    public static var financialInstitutions: Self { .init(rawValue: "financial_institutions") }
+    public static var finesGovernmentAdministrativeEntities: Self { .init(rawValue: "fines_government_administrative_entities") }
+    public static var fireplaceFireplaceScreensAndAccessoriesStores: Self { .init(rawValue: "fireplace_fireplace_screens_and_accessories_stores") }
+    public static var floorCoveringStores: Self { .init(rawValue: "floor_covering_stores") }
+    public static var florists: Self { .init(rawValue: "florists") }
+    public static var floristsSuppliesNurseryStockAndFlowers: Self { .init(rawValue: "florists_supplies_nursery_stock_and_flowers") }
+    public static var freezerAndLockerMeatProvisioners: Self { .init(rawValue: "freezer_and_locker_meat_provisioners") }
+    public static var fuelDealersNonAutomotive: Self { .init(rawValue: "fuel_dealers_non_automotive") }
+    public static var funeralServicesCrematories: Self { .init(rawValue: "funeral_services_crematories") }
+    public static var furnitureHomeFurnishingsAndEquipmentStoresExceptAppliances: Self { .init(rawValue: "furniture_home_furnishings_and_equipment_stores_except_appliances") }
+    public static var furnitureRepairRefinishing: Self { .init(rawValue: "furniture_repair_refinishing") }
+    public static var furriersAndFurShops: Self { .init(rawValue: "furriers_and_fur_shops") }
+    public static var generalServices: Self { .init(rawValue: "general_services") }
+    public static var giftCardNoveltyAndSouvenirShops: Self { .init(rawValue: "gift_card_novelty_and_souvenir_shops") }
+    public static var glassPaintAndWallpaperStores: Self { .init(rawValue: "glass_paint_and_wallpaper_stores") }
+    public static var glasswareCrystalStores: Self { .init(rawValue: "glassware_crystal_stores") }
+    public static var golfCoursesPublic: Self { .init(rawValue: "golf_courses_public") }
+    public static var governmentLicensedHorseDogRacingUsRegionOnly: Self { .init(rawValue: "government_licensed_horse_dog_racing_us_region_only") }
+    public static var governmentLicensedOnlineCasionsOnlineGamblingUsRegionOnly: Self { .init(rawValue: "government_licensed_online_casions_online_gambling_us_region_only") }
+    public static var governmentOwnedLotteriesNonUsRegion: Self { .init(rawValue: "government_owned_lotteries_non_us_region") }
+    public static var governmentOwnedLotteriesUsRegionOnly: Self { .init(rawValue: "government_owned_lotteries_us_region_only") }
+    public static var governmentServices: Self { .init(rawValue: "government_services") }
+    public static var groceryStoresSupermarkets: Self { .init(rawValue: "grocery_stores_supermarkets") }
+    public static var hardwareEquipmentAndSupplies: Self { .init(rawValue: "hardware_equipment_and_supplies") }
+    public static var hardwareStores: Self { .init(rawValue: "hardware_stores") }
+    public static var healthAndBeautySpas: Self { .init(rawValue: "health_and_beauty_spas") }
+    public static var hearingAidsSalesAndSupplies: Self { .init(rawValue: "hearing_aids_sales_and_supplies") }
+    public static var heatingPlumbingAC: Self { .init(rawValue: "heating_plumbing_a_c") }
+    public static var hobbyToyAndGameShops: Self { .init(rawValue: "hobby_toy_and_game_shops") }
+    public static var homeSupplyWarehouseStores: Self { .init(rawValue: "home_supply_warehouse_stores") }
+    public static var hospitals: Self { .init(rawValue: "hospitals") }
+    public static var hotelsMotelsAndResorts: Self { .init(rawValue: "hotels_motels_and_resorts") }
+    public static var householdApplianceStores: Self { .init(rawValue: "household_appliance_stores") }
+    public static var industrialSupplies: Self { .init(rawValue: "industrial_supplies") }
+    public static var informationRetrievalServices: Self { .init(rawValue: "information_retrieval_services") }
+    public static var insuranceDefault: Self { .init(rawValue: "insurance_default") }
+    public static var insuranceUnderwritingPremiums: Self { .init(rawValue: "insurance_underwriting_premiums") }
+    public static var intraCompanyPurchases: Self { .init(rawValue: "intra_company_purchases") }
+    public static var jewelryStoresWatchesClocksAndSilverwareStores: Self { .init(rawValue: "jewelry_stores_watches_clocks_and_silverware_stores") }
+    public static var landscapingServices: Self { .init(rawValue: "landscaping_services") }
+    public static var laundries: Self { .init(rawValue: "laundries") }
+    public static var laundryCleaningServices: Self { .init(rawValue: "laundry_cleaning_services") }
+    public static var legalServicesAttorneys: Self { .init(rawValue: "legal_services_attorneys") }
+    public static var luggageAndLeatherGoodsStores: Self { .init(rawValue: "luggage_and_leather_goods_stores") }
+    public static var lumberBuildingMaterialsStores: Self { .init(rawValue: "lumber_building_materials_stores") }
+    public static var manualCashDisburse: Self { .init(rawValue: "manual_cash_disburse") }
+    public static var marinasServiceAndSupplies: Self { .init(rawValue: "marinas_service_and_supplies") }
+    public static var marketplaces: Self { .init(rawValue: "marketplaces") }
+    public static var masonryStoneworkAndPlaster: Self { .init(rawValue: "masonry_stonework_and_plaster") }
+    public static var massageParlors: Self { .init(rawValue: "massage_parlors") }
+    public static var medicalAndDentalLabs: Self { .init(rawValue: "medical_and_dental_labs") }
+    public static var medicalDentalOphthalmicAndHospitalEquipmentAndSupplies: Self { .init(rawValue: "medical_dental_ophthalmic_and_hospital_equipment_and_supplies") }
+    public static var medicalServices: Self { .init(rawValue: "medical_services") }
+    public static var membershipOrganizations: Self { .init(rawValue: "membership_organizations") }
+    public static var mensAndBoysClothingAndAccessoriesStores: Self { .init(rawValue: "mens_and_boys_clothing_and_accessories_stores") }
+    public static var mensWomensClothingStores: Self { .init(rawValue: "mens_womens_clothing_stores") }
+    public static var metalServiceCenters: Self { .init(rawValue: "metal_service_centers") }
+    public static var miscellaneous: Self { .init(rawValue: "miscellaneous") }
+    public static var miscellaneousApparelAndAccessoryShops: Self { .init(rawValue: "miscellaneous_apparel_and_accessory_shops") }
+    public static var miscellaneousAutoDealers: Self { .init(rawValue: "miscellaneous_auto_dealers") }
+    public static var miscellaneousBusinessServices: Self { .init(rawValue: "miscellaneous_business_services") }
+    public static var miscellaneousFoodStores: Self { .init(rawValue: "miscellaneous_food_stores") }
+    public static var miscellaneousGeneralMerchandise: Self { .init(rawValue: "miscellaneous_general_merchandise") }
+    public static var miscellaneousGeneralServices: Self { .init(rawValue: "miscellaneous_general_services") }
+    public static var miscellaneousHomeFurnishingSpecialtyStores: Self { .init(rawValue: "miscellaneous_home_furnishing_specialty_stores") }
+    public static var miscellaneousPublishingAndPrinting: Self { .init(rawValue: "miscellaneous_publishing_and_printing") }
+    public static var miscellaneousRecreationServices: Self { .init(rawValue: "miscellaneous_recreation_services") }
+    public static var miscellaneousRepairShops: Self { .init(rawValue: "miscellaneous_repair_shops") }
+    public static var miscellaneousSpecialtyRetail: Self { .init(rawValue: "miscellaneous_specialty_retail") }
+    public static var mobileHomeDealers: Self { .init(rawValue: "mobile_home_dealers") }
+    public static var motionPictureTheaters: Self { .init(rawValue: "motion_picture_theaters") }
+    public static var motorFreightCarriersAndTrucking: Self { .init(rawValue: "motor_freight_carriers_and_trucking") }
+    public static var motorHomesDealers: Self { .init(rawValue: "motor_homes_dealers") }
+    public static var motorVehicleSuppliesAndNewParts: Self { .init(rawValue: "motor_vehicle_supplies_and_new_parts") }
+    public static var motorcycleShopsAndDealers: Self { .init(rawValue: "motorcycle_shops_and_dealers") }
+    public static var motorcycleShopsDealers: Self { .init(rawValue: "motorcycle_shops_dealers") }
+    public static var musicStoresMusicalInstrumentsPianosAndSheetMusic: Self { .init(rawValue: "music_stores_musical_instruments_pianos_and_sheet_music") }
+    public static var newsDealersAndNewsstands: Self { .init(rawValue: "news_dealers_and_newsstands") }
+    public static var nonFiMoneyOrders: Self { .init(rawValue: "non_fi_money_orders") }
+    public static var nonFiStoredValueCardPurchaseLoad: Self { .init(rawValue: "non_fi_stored_value_card_purchase_load") }
+    public static var nondurableGoods: Self { .init(rawValue: "nondurable_goods") }
+    public static var nurseriesLawnAndGardenSupplyStores: Self { .init(rawValue: "nurseries_lawn_and_garden_supply_stores") }
+    public static var nursingPersonalCare: Self { .init(rawValue: "nursing_personal_care") }
+    public static var officeAndCommercialFurniture: Self { .init(rawValue: "office_and_commercial_furniture") }
+    public static var opticiansEyeglasses: Self { .init(rawValue: "opticians_eyeglasses") }
+    public static var optometristsOphthalmologist: Self { .init(rawValue: "optometrists_ophthalmologist") }
+    public static var orthopedicGoodsProstheticDevices: Self { .init(rawValue: "orthopedic_goods_prosthetic_devices") }
+    public static var osteopaths: Self { .init(rawValue: "osteopaths") }
+    public static var packageStoresBeerWineAndLiquor: Self { .init(rawValue: "package_stores_beer_wine_and_liquor") }
+    public static var paintsVarnishesAndSupplies: Self { .init(rawValue: "paints_varnishes_and_supplies") }
+    public static var parkingLotsGarages: Self { .init(rawValue: "parking_lots_garages") }
+    public static var passengerRailways: Self { .init(rawValue: "passenger_railways") }
+    public static var pawnShops: Self { .init(rawValue: "pawn_shops") }
+    public static var petShopsPetFoodAndSupplies: Self { .init(rawValue: "pet_shops_pet_food_and_supplies") }
+    public static var petroleumAndPetroleumProducts: Self { .init(rawValue: "petroleum_and_petroleum_products") }
+    public static var photoDeveloping: Self { .init(rawValue: "photo_developing") }
+    public static var photographicPhotocopyMicrofilmEquipmentAndSupplies: Self { .init(rawValue: "photographic_photocopy_microfilm_equipment_and_supplies") }
+    public static var photographicStudios: Self { .init(rawValue: "photographic_studios") }
+    public static var pictureVideoProduction: Self { .init(rawValue: "picture_video_production") }
+    public static var pieceGoodsNotionsAndOtherDryGoods: Self { .init(rawValue: "piece_goods_notions_and_other_dry_goods") }
+    public static var plumbingHeatingEquipmentAndSupplies: Self { .init(rawValue: "plumbing_heating_equipment_and_supplies") }
+    public static var politicalOrganizations: Self { .init(rawValue: "political_organizations") }
+    public static var postalServicesGovernmentOnly: Self { .init(rawValue: "postal_services_government_only") }
+    public static var preciousStonesAndMetalsWatchesAndJewelry: Self { .init(rawValue: "precious_stones_and_metals_watches_and_jewelry") }
+    public static var professionalServices: Self { .init(rawValue: "professional_services") }
+    public static var publicWarehousingAndStorage: Self { .init(rawValue: "public_warehousing_and_storage") }
+    public static var quickCopyReproAndBlueprint: Self { .init(rawValue: "quick_copy_repro_and_blueprint") }
+    public static var railroads: Self { .init(rawValue: "railroads") }
+    public static var realEstateAgentsAndManagersRentals: Self { .init(rawValue: "real_estate_agents_and_managers_rentals") }
+    public static var recordStores: Self { .init(rawValue: "record_stores") }
+    public static var recreationalVehicleRentals: Self { .init(rawValue: "recreational_vehicle_rentals") }
+    public static var religiousGoodsStores: Self { .init(rawValue: "religious_goods_stores") }
+    public static var religiousOrganizations: Self { .init(rawValue: "religious_organizations") }
+    public static var roofingSidingSheetMetal: Self { .init(rawValue: "roofing_siding_sheet_metal") }
+    public static var secretarialSupportServices: Self { .init(rawValue: "secretarial_support_services") }
+    public static var securityBrokersDealers: Self { .init(rawValue: "security_brokers_dealers") }
+    public static var serviceStations: Self { .init(rawValue: "service_stations") }
+    public static var sewingNeedleworkFabricAndPieceGoodsStores: Self { .init(rawValue: "sewing_needlework_fabric_and_piece_goods_stores") }
+    public static var shoeRepairHatCleaning: Self { .init(rawValue: "shoe_repair_hat_cleaning") }
+    public static var shoeStores: Self { .init(rawValue: "shoe_stores") }
+    public static var smallApplianceRepair: Self { .init(rawValue: "small_appliance_repair") }
+    public static var snowmobileDealers: Self { .init(rawValue: "snowmobile_dealers") }
+    public static var specialTradeServices: Self { .init(rawValue: "special_trade_services") }
+    public static var specialtyCleaning: Self { .init(rawValue: "specialty_cleaning") }
+    public static var sportingGoodsStores: Self { .init(rawValue: "sporting_goods_stores") }
+    public static var sportingRecreationCamps: Self { .init(rawValue: "sporting_recreation_camps") }
+    public static var sportsAndRidingApparelStores: Self { .init(rawValue: "sports_and_riding_apparel_stores") }
+    public static var sportsClubsFields: Self { .init(rawValue: "sports_clubs_fields") }
+    public static var stampAndCoinStores: Self { .init(rawValue: "stamp_and_coin_stores") }
+    public static var stationaryOfficeSuppliesPrintingAndWritingPaper: Self { .init(rawValue: "stationary_office_supplies_printing_and_writing_paper") }
+    public static var stationeryStoresOfficeAndSchoolSupplyStores: Self { .init(rawValue: "stationery_stores_office_and_school_supply_stores") }
+    public static var swimmingPoolsSales: Self { .init(rawValue: "swimming_pools_sales") }
+    public static var tUiTravelGermany: Self { .init(rawValue: "t_ui_travel_germany") }
+    public static var tailorsAlterations: Self { .init(rawValue: "tailors_alterations") }
+    public static var taxPaymentsGovernmentAgencies: Self { .init(rawValue: "tax_payments_government_agencies") }
+    public static var taxPreparationServices: Self { .init(rawValue: "tax_preparation_services") }
+    public static var taxicabsLimousines: Self { .init(rawValue: "taxicabs_limousines") }
+    public static var telecommunicationEquipmentAndTelephoneSales: Self { .init(rawValue: "telecommunication_equipment_and_telephone_sales") }
+    public static var telecommunicationServices: Self { .init(rawValue: "telecommunication_services") }
+    public static var telegraphServices: Self { .init(rawValue: "telegraph_services") }
+    public static var tentAndAwningShops: Self { .init(rawValue: "tent_and_awning_shops") }
+    public static var testingLaboratories: Self { .init(rawValue: "testing_laboratories") }
+    public static var theatricalTicketAgencies: Self { .init(rawValue: "theatrical_ticket_agencies") }
+    public static var timeshares: Self { .init(rawValue: "timeshares") }
+    public static var tireRetreadingAndRepair: Self { .init(rawValue: "tire_retreading_and_repair") }
+    public static var tollsBridgeFees: Self { .init(rawValue: "tolls_bridge_fees") }
+    public static var touristAttractionsAndExhibits: Self { .init(rawValue: "tourist_attractions_and_exhibits") }
+    public static var towingServices: Self { .init(rawValue: "towing_services") }
+    public static var trailerParksCampgrounds: Self { .init(rawValue: "trailer_parks_campgrounds") }
+    public static var transportationServices: Self { .init(rawValue: "transportation_services") }
+    public static var travelAgenciesTourOperators: Self { .init(rawValue: "travel_agencies_tour_operators") }
+    public static var truckStopIteration: Self { .init(rawValue: "truck_stop_iteration") }
+    public static var truckUtilityTrailerRentals: Self { .init(rawValue: "truck_utility_trailer_rentals") }
+    public static var typesettingPlateMakingAndRelatedServices: Self { .init(rawValue: "typesetting_plate_making_and_related_services") }
+    public static var typewriterStores: Self { .init(rawValue: "typewriter_stores") }
+    public static var uSFederalGovernmentAgenciesOrDepartments: Self { .init(rawValue: "u_s_federal_government_agencies_or_departments") }
+    public static var uniformsCommercialClothing: Self { .init(rawValue: "uniforms_commercial_clothing") }
+    public static var usedMerchandiseAndSecondhandStores: Self { .init(rawValue: "used_merchandise_and_secondhand_stores") }
+    public static var utilities: Self { .init(rawValue: "utilities") }
+    public static var varietyStores: Self { .init(rawValue: "variety_stores") }
+    public static var veterinaryServices: Self { .init(rawValue: "veterinary_services") }
+    public static var videoAmusementGameSupplies: Self { .init(rawValue: "video_amusement_game_supplies") }
+    public static var videoGameArcades: Self { .init(rawValue: "video_game_arcades") }
+    public static var videoTapeRentalStores: Self { .init(rawValue: "video_tape_rental_stores") }
+    public static var vocationalTradeSchools: Self { .init(rawValue: "vocational_trade_schools") }
+    public static var watchJewelryRepair: Self { .init(rawValue: "watch_jewelry_repair") }
+    public static var weldingRepair: Self { .init(rawValue: "welding_repair") }
+    public static var wholesaleClubs: Self { .init(rawValue: "wholesale_clubs") }
+    public static var wigAndToupeeStores: Self { .init(rawValue: "wig_and_toupee_stores") }
+    public static var wiresMoneyOrders: Self { .init(rawValue: "wires_money_orders") }
+    public static var womensAccessoryAndSpecialtyShops: Self { .init(rawValue: "womens_accessory_and_specialty_shops") }
+    public static var womensReadyToWearStores: Self { .init(rawValue: "womens_ready_to_wear_stores") }
+    public static var wreckingAndSalvageYards: Self { .init(rawValue: "wrecking_and_salvage_yards") }
 }
 
-public enum IssuingCardholderUpdateStatus: String, Codable, Sendable {
-    case active
-    case inactive
+public struct IssuingCardholderUpdateStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }

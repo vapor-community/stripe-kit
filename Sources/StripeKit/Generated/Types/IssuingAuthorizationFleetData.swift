@@ -30,17 +30,29 @@ public struct IssuingAuthorizationFleetData: Codable, Sendable {
 }
 
 /// The type of purchase.
-public enum IssuingAuthorizationFleetDataPurchaseType: String, Codable, Sendable {
-    case fuelAndNonFuelPurchase = "fuel_and_non_fuel_purchase"
-    case fuelPurchase = "fuel_purchase"
-    case nonFuelPurchase = "non_fuel_purchase"
+public struct IssuingAuthorizationFleetDataPurchaseType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fuelAndNonFuelPurchase: Self { .init(rawValue: "fuel_and_non_fuel_purchase") }
+    public static var fuelPurchase: Self { .init(rawValue: "fuel_purchase") }
+    public static var nonFuelPurchase: Self { .init(rawValue: "non_fuel_purchase") }
 }
 
 /// The type of fuel service.
-public enum IssuingAuthorizationFleetDataServiceType: String, Codable, Sendable {
-    case fullService = "full_service"
-    case nonFuelTransaction = "non_fuel_transaction"
-    case selfService = "self_service"
+public struct IssuingAuthorizationFleetDataServiceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fullService: Self { .init(rawValue: "full_service") }
+    public static var nonFuelTransaction: Self { .init(rawValue: "non_fuel_transaction") }
+    public static var selfService: Self { .init(rawValue: "self_service") }
 }
 
 public struct IssuingAuthorizationFleetDataList: Codable, Sendable {

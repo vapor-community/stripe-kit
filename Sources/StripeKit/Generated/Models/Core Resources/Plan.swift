@@ -106,38 +106,68 @@ public struct Plan: Codable, Sendable {
 /// `usage_type=licensed`), or per unit of total usage (for plans with `usage_type=metered`). `tiered`
 /// indicates that the unit pricing will be computed using a tiering strategy as defined using the
 /// `tiers` and `tiers_mode` attributes.
-public enum PlanBillingScheme: String, Codable, Sendable {
-    case perUnit = "per_unit"
-    case tiered
+public struct PlanBillingScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var perUnit: Self { .init(rawValue: "per_unit") }
+    public static var tiered: Self { .init(rawValue: "tiered") }
 }
 
 /// The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
-public enum PlanInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct PlanInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PlanObject: String, Codable, Sendable {
-    case plan
+public struct PlanObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var plan: Self { .init(rawValue: "plan") }
 }
 
 /// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the
 /// maximum quantity within a period determines the per unit price. In `graduated` tiering, pricing can
 /// change as the quantity grows.
-public enum PlanTiersMode: String, Codable, Sendable {
-    case graduated
-    case volume
+public struct PlanTiersMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var graduated: Self { .init(rawValue: "graduated") }
+    public static var volume: Self { .init(rawValue: "volume") }
 }
 
 /// Configures how the quantity per period should be determined. Can be either `metered` or `licensed`.
 /// `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered`
 /// aggregates the total usage based on usage records. Defaults to `licensed`.
-public enum PlanUsageType: String, Codable, Sendable {
-    case licensed
-    case metered
+public struct PlanUsageType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var licensed: Self { .init(rawValue: "licensed") }
+    public static var metered: Self { .init(rawValue: "metered") }
 }
 
 public struct PlanList: Codable, Sendable {

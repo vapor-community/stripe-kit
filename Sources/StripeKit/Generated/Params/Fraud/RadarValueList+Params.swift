@@ -106,17 +106,23 @@ public struct RadarValueListUpdateParams: StripeParams {
     }
 }
 
-public enum RadarValueListCreateItemType: String, Codable, Sendable {
-    case account
-    case cardBin = "card_bin"
-    case cardFingerprint = "card_fingerprint"
-    case caseSensitiveString = "case_sensitive_string"
-    case country
-    case cryptoFingerprint = "crypto_fingerprint"
-    case customerId = "customer_id"
-    case email
-    case ipAddress = "ip_address"
-    case sepaDebitFingerprint = "sepa_debit_fingerprint"
-    case string
-    case usBankAccountFingerprint = "us_bank_account_fingerprint"
+public struct RadarValueListCreateItemType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var cardBin: Self { .init(rawValue: "card_bin") }
+    public static var cardFingerprint: Self { .init(rawValue: "card_fingerprint") }
+    public static var caseSensitiveString: Self { .init(rawValue: "case_sensitive_string") }
+    public static var country: Self { .init(rawValue: "country") }
+    public static var cryptoFingerprint: Self { .init(rawValue: "crypto_fingerprint") }
+    public static var customerId: Self { .init(rawValue: "customer_id") }
+    public static var email: Self { .init(rawValue: "email") }
+    public static var ipAddress: Self { .init(rawValue: "ip_address") }
+    public static var sepaDebitFingerprint: Self { .init(rawValue: "sepa_debit_fingerprint") }
+    public static var string: Self { .init(rawValue: "string") }
+    public static var usBankAccountFingerprint: Self { .init(rawValue: "us_bank_account_fingerprint") }
 }

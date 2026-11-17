@@ -14,11 +14,17 @@ public struct TaxProductRegistrationsResourceCountryOptionsEurope: Codable, Send
 }
 
 /// Type of registration in an EU country.
-public enum TaxProductRegistrationsResourceCountryOptionsEuropeType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxProductRegistrationsResourceCountryOptionsEuropeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsEuropeList: Codable, Sendable {

@@ -25,10 +25,16 @@ public struct SetupAttemptPaymentMethodDetailsCardWallet: Codable, Sendable {
 /// The type of the card wallet, one of `apple_pay`, `google_pay`, or `link`. An additional hash is
 /// included on the Wallet subhash with a name matching this value. It contains additional information
 /// specific to the card wallet type.
-public enum SetupAttemptPaymentMethodDetailsCardWalletType: String, Codable, Sendable {
-    case applePay = "apple_pay"
-    case googlePay = "google_pay"
-    case link
+public struct SetupAttemptPaymentMethodDetailsCardWalletType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var applePay: Self { .init(rawValue: "apple_pay") }
+    public static var googlePay: Self { .init(rawValue: "google_pay") }
+    public static var link: Self { .init(rawValue: "link") }
 }
 
 public struct SetupAttemptPaymentMethodDetailsCardWalletList: Codable, Sendable {

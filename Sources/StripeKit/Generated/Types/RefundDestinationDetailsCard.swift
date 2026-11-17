@@ -26,10 +26,16 @@ public struct RefundDestinationDetailsCard: Codable, Sendable {
 }
 
 /// The type of refund. This can be `refund`, `reversal`, or `pending`.
-public enum RefundDestinationDetailsCardType: String, Codable, Sendable {
-    case pending
-    case refund
-    case reversal
+public struct RefundDestinationDetailsCardType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var refund: Self { .init(rawValue: "refund") }
+    public static var reversal: Self { .init(rawValue: "reversal") }
 }
 
 public struct RefundDestinationDetailsCardList: Codable, Sendable {

@@ -16,10 +16,16 @@ public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEnd: C
 }
 
 /// Select how to calculate the end of the invoice item period.
-public enum SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEndType: String, Codable, Sendable {
-    case minItemPeriodEnd = "min_item_period_end"
-    case phaseEnd = "phase_end"
-    case timestamp
+public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEndType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var minItemPeriodEnd: Self { .init(rawValue: "min_item_period_end") }
+    public static var phaseEnd: Self { .init(rawValue: "phase_end") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodEndList: Codable, Sendable {

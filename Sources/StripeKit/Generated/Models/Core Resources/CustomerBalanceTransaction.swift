@@ -79,8 +79,14 @@ public struct CustomerBalanceTransaction: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CustomerBalanceTransactionObject: String, Codable, Sendable {
-    case customerBalanceTransaction = "customer_balance_transaction"
+public struct CustomerBalanceTransactionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerBalanceTransaction: Self { .init(rawValue: "customer_balance_transaction") }
 }
 
 /// Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_overpaid`,
@@ -88,19 +94,25 @@ public enum CustomerBalanceTransactionObject: String, Codable, Sendable {
 /// `checkout_session_subscription_payment`, or `checkout_session_subscription_payment_canceled`. See
 /// the [Customer Balance page](https://docs.stripe.com/billing/customer/balance#types) to learn more
 /// about transaction types.
-public enum CustomerBalanceTransactionType: String, Codable, Sendable {
-    case adjustment
-    case appliedToInvoice = "applied_to_invoice"
-    case checkoutSessionSubscriptionPayment = "checkout_session_subscription_payment"
-    case checkoutSessionSubscriptionPaymentCanceled = "checkout_session_subscription_payment_canceled"
-    case creditNote = "credit_note"
-    case initial
-    case invoiceOverpaid = "invoice_overpaid"
-    case invoiceTooLarge = "invoice_too_large"
-    case invoiceTooSmall = "invoice_too_small"
-    case migration
-    case unappliedFromInvoice = "unapplied_from_invoice"
-    case unspentReceiverCredit = "unspent_receiver_credit"
+public struct CustomerBalanceTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var adjustment: Self { .init(rawValue: "adjustment") }
+    public static var appliedToInvoice: Self { .init(rawValue: "applied_to_invoice") }
+    public static var checkoutSessionSubscriptionPayment: Self { .init(rawValue: "checkout_session_subscription_payment") }
+    public static var checkoutSessionSubscriptionPaymentCanceled: Self { .init(rawValue: "checkout_session_subscription_payment_canceled") }
+    public static var creditNote: Self { .init(rawValue: "credit_note") }
+    public static var initial: Self { .init(rawValue: "initial") }
+    public static var invoiceOverpaid: Self { .init(rawValue: "invoice_overpaid") }
+    public static var invoiceTooLarge: Self { .init(rawValue: "invoice_too_large") }
+    public static var invoiceTooSmall: Self { .init(rawValue: "invoice_too_small") }
+    public static var migration: Self { .init(rawValue: "migration") }
+    public static var unappliedFromInvoice: Self { .init(rawValue: "unapplied_from_invoice") }
+    public static var unspentReceiverCredit: Self { .init(rawValue: "unspent_receiver_credit") }
 }
 
 public struct CustomerBalanceTransactionList: Codable, Sendable {

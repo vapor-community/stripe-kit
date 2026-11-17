@@ -51,22 +51,34 @@ public struct TerminalReaderReaderResourceReaderAction: Codable, Sendable {
 }
 
 /// Status of the action performed by the reader.
-public enum TerminalReaderReaderResourceReaderActionStatus: String, Codable, Sendable {
-    case failed
-    case inProgress = "in_progress"
-    case succeeded
+public struct TerminalReaderReaderResourceReaderActionStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var inProgress: Self { .init(rawValue: "in_progress") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 /// Type of action performed by the reader.
-public enum TerminalReaderReaderResourceReaderActionType: String, Codable, Sendable {
-    case collectInputs = "collect_inputs"
-    case collectPaymentMethod = "collect_payment_method"
-    case confirmPaymentIntent = "confirm_payment_intent"
-    case printContent = "print_content"
-    case processPaymentIntent = "process_payment_intent"
-    case processSetupIntent = "process_setup_intent"
-    case refundPayment = "refund_payment"
-    case setReaderDisplay = "set_reader_display"
+public struct TerminalReaderReaderResourceReaderActionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var collectInputs: Self { .init(rawValue: "collect_inputs") }
+    public static var collectPaymentMethod: Self { .init(rawValue: "collect_payment_method") }
+    public static var confirmPaymentIntent: Self { .init(rawValue: "confirm_payment_intent") }
+    public static var printContent: Self { .init(rawValue: "print_content") }
+    public static var processPaymentIntent: Self { .init(rawValue: "process_payment_intent") }
+    public static var processSetupIntent: Self { .init(rawValue: "process_setup_intent") }
+    public static var refundPayment: Self { .init(rawValue: "refund_payment") }
+    public static var setReaderDisplay: Self { .init(rawValue: "set_reader_display") }
 }
 
 public struct TerminalReaderReaderResourceReaderActionList: Codable, Sendable {

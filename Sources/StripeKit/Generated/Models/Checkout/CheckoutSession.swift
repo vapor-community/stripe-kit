@@ -274,130 +274,207 @@ public struct CheckoutSession: Codable, Sendable {
 }
 
 /// Describes whether Checkout should collect the customer's billing address. Defaults to `auto`.
-public enum CheckoutSessionBillingAddressCollection: String, Codable, Sendable {
-    case auto
-    case required
+public struct CheckoutSessionBillingAddressCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 /// Configure whether a Checkout Session creates a Customer when the Checkout Session completes.
-public enum CheckoutSessionCustomerCreation: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct CheckoutSessionCustomerCreation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 /// The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's
 /// locale is used.
-public enum CheckoutSessionLocale: String, Codable, Sendable {
-    case auto
-    case bg
-    case cs
-    case da
-    case de
-    case el
-    case en
-    case enGb = "en-GB"
-    case es
-    case es419 = "es-419"
-    case et
-    case fi
-    case fil
-    case fr
-    case frCa = "fr-CA"
-    case hiIn = "hi-IN"
-    case hr
-    case hu
-    case id
-    case it
-    case ja
-    case ko
-    case lt
-    case lv
-    case ms
-    case mt
-    case nb
-    case nl
-    case pl
-    case pt
-    case ptBr = "pt-BR"
-    case ro
-    case ru
-    case sk
-    case sl
-    case sv
-    case th
-    case tr
-    case vi
-    case zh
-    case zhHk = "zh-HK"
-    case zhTw = "zh-TW"
+public struct CheckoutSessionLocale: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var bg: Self { .init(rawValue: "bg") }
+    public static var cs: Self { .init(rawValue: "cs") }
+    public static var da: Self { .init(rawValue: "da") }
+    public static var de: Self { .init(rawValue: "de") }
+    public static var el: Self { .init(rawValue: "el") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var enGb: Self { .init(rawValue: "en-GB") }
+    public static var es: Self { .init(rawValue: "es") }
+    public static var es419: Self { .init(rawValue: "es-419") }
+    public static var et: Self { .init(rawValue: "et") }
+    public static var fi: Self { .init(rawValue: "fi") }
+    public static var fil: Self { .init(rawValue: "fil") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var frCa: Self { .init(rawValue: "fr-CA") }
+    public static var hiIn: Self { .init(rawValue: "hi-IN") }
+    public static var hr: Self { .init(rawValue: "hr") }
+    public static var hu: Self { .init(rawValue: "hu") }
+    public static var id: Self { .init(rawValue: "id") }
+    public static var it: Self { .init(rawValue: "it") }
+    public static var ja: Self { .init(rawValue: "ja") }
+    public static var ko: Self { .init(rawValue: "ko") }
+    public static var lt: Self { .init(rawValue: "lt") }
+    public static var lv: Self { .init(rawValue: "lv") }
+    public static var ms: Self { .init(rawValue: "ms") }
+    public static var mt: Self { .init(rawValue: "mt") }
+    public static var nb: Self { .init(rawValue: "nb") }
+    public static var nl: Self { .init(rawValue: "nl") }
+    public static var pl: Self { .init(rawValue: "pl") }
+    public static var pt: Self { .init(rawValue: "pt") }
+    public static var ptBr: Self { .init(rawValue: "pt-BR") }
+    public static var ro: Self { .init(rawValue: "ro") }
+    public static var ru: Self { .init(rawValue: "ru") }
+    public static var sk: Self { .init(rawValue: "sk") }
+    public static var sl: Self { .init(rawValue: "sl") }
+    public static var sv: Self { .init(rawValue: "sv") }
+    public static var th: Self { .init(rawValue: "th") }
+    public static var tr: Self { .init(rawValue: "tr") }
+    public static var vi: Self { .init(rawValue: "vi") }
+    public static var zh: Self { .init(rawValue: "zh") }
+    public static var zhHk: Self { .init(rawValue: "zh-HK") }
+    public static var zhTw: Self { .init(rawValue: "zh-TW") }
 }
 
 /// The mode of the Checkout Session.
-public enum CheckoutSessionMode: String, Codable, Sendable {
-    case payment
-    case setup
-    case subscription
+public struct CheckoutSessionMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var payment: Self { .init(rawValue: "payment") }
+    public static var setup: Self { .init(rawValue: "setup") }
+    public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CheckoutSessionObject: String, Codable, Sendable {
-    case checkoutSession = "checkout.session"
+public struct CheckoutSessionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checkoutSession: Self { .init(rawValue: "checkout.session") }
 }
 
 /// Where the user is coming from. This informs the optimizations that are applied to the session.
-public enum CheckoutSessionOriginContext: String, Codable, Sendable {
-    case mobileApp = "mobile_app"
-    case web
+public struct CheckoutSessionOriginContext: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var mobileApp: Self { .init(rawValue: "mobile_app") }
+    public static var web: Self { .init(rawValue: "web") }
 }
 
 /// Configure whether a Checkout Session should collect a payment method. Can only be set in
 /// `subscription` mode. Defaults to `always`.
-public enum CheckoutSessionPaymentMethodCollection: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
+public struct CheckoutSessionPaymentMethodCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The Checkout Session will always collect a PaymentMethod.
+    public static var always: Self { .init(rawValue: "always") }
+    /// The Checkout Session will only collect a PaymentMethod if there is an amount due.
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
 }
 
 /// The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`. You
 /// can use this value to decide when to fulfill your customer's order.
-public enum CheckoutSessionPaymentStatus: String, Codable, Sendable {
-    case noPaymentRequired = "no_payment_required"
-    case paid
-    case unpaid
+public struct CheckoutSessionPaymentStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var noPaymentRequired: Self { .init(rawValue: "no_payment_required") }
+    public static var paid: Self { .init(rawValue: "paid") }
+    public static var unpaid: Self { .init(rawValue: "unpaid") }
 }
 
 /// This parameter applies to `ui_mode: embedded_page`. Learn more about the [redirect
 /// behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of
 /// embedded sessions. Defaults to `always`.
-public enum CheckoutSessionRedirectOnCompletion: String, Codable, Sendable {
-    case always
-    case ifRequired = "if_required"
-    case never
+public struct CheckoutSessionRedirectOnCompletion: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifRequired: Self { .init(rawValue: "if_required") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// The status of the Checkout Session, one of `open`, `complete`, or `expired`.
-public enum CheckoutSessionStatus: String, Codable, Sendable {
-    case complete
-    case expired
-    case `open` = "open"
+public struct CheckoutSessionStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The checkout session is complete. Payment processing may still be in progress
+    public static var complete: Self { .init(rawValue: "complete") }
+    /// The checkout session has expired. No further processing will occur
+    public static var expired: Self { .init(rawValue: "expired") }
+    /// The checkout session is still in progress. Payment processing has not started
+    public static var `open`: Self { .init(rawValue: "open") }
 }
 
 /// Describes the type of transaction being performed by Checkout in order to customize relevant text on
 /// the page, such as the submit button. `submit_type` can only be specified on Checkout Sessions in
 /// `payment` mode. If blank or `auto`, `pay` is used.
-public enum CheckoutSessionSubmitType: String, Codable, Sendable {
-    case auto
-    case book
-    case donate
-    case pay
-    case subscribe
+public struct CheckoutSessionSubmitType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var book: Self { .init(rawValue: "book") }
+    public static var donate: Self { .init(rawValue: "donate") }
+    public static var pay: Self { .init(rawValue: "pay") }
+    public static var subscribe: Self { .init(rawValue: "subscribe") }
 }
 
 /// The UI mode of the Session. Defaults to `hosted_page`.
-public enum CheckoutSessionUiMode: String, Codable, Sendable {
-    case elements
-    case embeddedPage = "embedded_page"
-    case form
-    case hostedPage = "hosted_page"
+public struct CheckoutSessionUiMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var elements: Self { .init(rawValue: "elements") }
+    public static var embeddedPage: Self { .init(rawValue: "embedded_page") }
+    public static var form: Self { .init(rawValue: "form") }
+    public static var hostedPage: Self { .init(rawValue: "hosted_page") }
 }
 
 public struct CheckoutSessionList: Codable, Sendable {

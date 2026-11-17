@@ -16,10 +16,16 @@ public struct TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxElecti
 }
 
 /// The type of the election for the state sales tax registration.
-public enum TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxElectionType: String, Codable, Sendable {
-    case localUseTax = "local_use_tax"
-    case simplifiedSellersUseTax = "simplified_sellers_use_tax"
-    case singleLocalUseTax = "single_local_use_tax"
+public struct TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxElectionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var localUseTax: Self { .init(rawValue: "local_use_tax") }
+    public static var simplifiedSellersUseTax: Self { .init(rawValue: "simplified_sellers_use_tax") }
+    public static var singleLocalUseTax: Self { .init(rawValue: "single_local_use_tax") }
 }
 
 public struct TaxProductRegistrationsResourceCountryOptionsUsStateSalesTaxElectionList: Codable, Sendable {

@@ -47,8 +47,14 @@ public struct FileLink: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum FileLinkObject: String, Codable, Sendable {
-    case fileLink = "file_link"
+public struct FileLinkObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fileLink: Self { .init(rawValue: "file_link") }
 }
 
 public struct FileLinkList: Codable, Sendable {

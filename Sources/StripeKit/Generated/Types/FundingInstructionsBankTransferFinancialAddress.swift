@@ -33,13 +33,19 @@ public struct FundingInstructionsBankTransferFinancialAddress: Codable, Sendable
 }
 
 /// The type of financial address
-public enum FundingInstructionsBankTransferFinancialAddressType: String, Codable, Sendable {
-    case aba
-    case iban
-    case sortCode = "sort_code"
-    case spei
-    case swift
-    case zengin
+public struct FundingInstructionsBankTransferFinancialAddressType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var aba: Self { .init(rawValue: "aba") }
+    public static var iban: Self { .init(rawValue: "iban") }
+    public static var sortCode: Self { .init(rawValue: "sort_code") }
+    public static var spei: Self { .init(rawValue: "spei") }
+    public static var swift: Self { .init(rawValue: "swift") }
+    public static var zengin: Self { .init(rawValue: "zengin") }
 }
 
 public struct FundingInstructionsBankTransferFinancialAddressList: Codable, Sendable {

@@ -401,13 +401,19 @@ public struct TerminalReaderCollectInputsInputsCustomText: StripeParams {
     }
 }
 
-public enum TerminalReaderCollectInputsInputsType: String, Codable, Sendable {
-    case email
-    case numeric
-    case phone
-    case selection
-    case signature
-    case text
+public struct TerminalReaderCollectInputsInputsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var email: Self { .init(rawValue: "email") }
+    public static var numeric: Self { .init(rawValue: "numeric") }
+    public static var phone: Self { .init(rawValue: "phone") }
+    public static var selection: Self { .init(rawValue: "selection") }
+    public static var signature: Self { .init(rawValue: "signature") }
+    public static var text: Self { .init(rawValue: "text") }
 }
 
 /// Options for the `selection` input
@@ -435,9 +441,15 @@ public struct TerminalReaderCollectInputsInputsSelectionChoices: StripeParams {
     }
 }
 
-public enum TerminalReaderCollectInputsInputsSelectionChoicesStyle: String, Codable, Sendable {
-    case primary
-    case secondary
+public struct TerminalReaderCollectInputsInputsSelectionChoicesStyle: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var primary: Self { .init(rawValue: "primary") }
+    public static var secondary: Self { .init(rawValue: "secondary") }
 }
 
 public struct TerminalReaderCollectInputsInputsToggles: StripeParams {
@@ -463,9 +475,15 @@ public struct TerminalReaderCollectInputsInputsToggles: StripeParams {
     }
 }
 
-public enum TerminalReaderCollectInputsInputsTogglesDefaultValue: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct TerminalReaderCollectInputsInputsTogglesDefaultValue: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// Configuration overrides for this collection, such as tipping, surcharging, and customer cancellation
@@ -497,10 +515,16 @@ public struct TerminalReaderCollectPaymentMethodCollectConfig: StripeParams {
     }
 }
 
-public enum TerminalReaderCollectPaymentMethodCollectConfigAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct TerminalReaderCollectPaymentMethodCollectConfigAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Tipping configuration for this transaction.
@@ -535,33 +559,45 @@ public struct TerminalReaderConfirmPaymentIntentConfirmConfig: StripeParams {
     }
 }
 
-public enum TerminalReaderListDeviceType: String, Codable, Sendable {
-    case bbposChipper2X = "bbpos_chipper2x"
-    case bbposWisepad3 = "bbpos_wisepad3"
-    case bbposWiseposE = "bbpos_wisepos_e"
-    case mobilePhoneReader = "mobile_phone_reader"
-    case simulatedStripeS700 = "simulated_stripe_s700"
-    case simulatedStripeS710 = "simulated_stripe_s710"
-    case simulatedStripeT600 = "simulated_stripe_t600"
-    case simulatedVerifoneM425 = "simulated_verifone_m425"
-    case simulatedVerifoneP630 = "simulated_verifone_p630"
-    case simulatedVerifoneUx700 = "simulated_verifone_ux700"
-    case simulatedVerifoneV660P = "simulated_verifone_v660p"
-    case simulatedWiseposE = "simulated_wisepos_e"
-    case stripeM2 = "stripe_m2"
-    case stripeS700 = "stripe_s700"
-    case stripeS710 = "stripe_s710"
-    case stripeT600 = "stripe_t600"
-    case verifoneP400 = "verifone_P400"
-    case verifoneM425 = "verifone_m425"
-    case verifoneP630 = "verifone_p630"
-    case verifoneUx700 = "verifone_ux700"
-    case verifoneV660P = "verifone_v660p"
+public struct TerminalReaderListDeviceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bbposChipper2X: Self { .init(rawValue: "bbpos_chipper2x") }
+    public static var bbposWisepad3: Self { .init(rawValue: "bbpos_wisepad3") }
+    public static var bbposWiseposE: Self { .init(rawValue: "bbpos_wisepos_e") }
+    public static var mobilePhoneReader: Self { .init(rawValue: "mobile_phone_reader") }
+    public static var simulatedStripeS700: Self { .init(rawValue: "simulated_stripe_s700") }
+    public static var simulatedStripeS710: Self { .init(rawValue: "simulated_stripe_s710") }
+    public static var simulatedStripeT600: Self { .init(rawValue: "simulated_stripe_t600") }
+    public static var simulatedVerifoneM425: Self { .init(rawValue: "simulated_verifone_m425") }
+    public static var simulatedVerifoneP630: Self { .init(rawValue: "simulated_verifone_p630") }
+    public static var simulatedVerifoneUx700: Self { .init(rawValue: "simulated_verifone_ux700") }
+    public static var simulatedVerifoneV660P: Self { .init(rawValue: "simulated_verifone_v660p") }
+    public static var simulatedWiseposE: Self { .init(rawValue: "simulated_wisepos_e") }
+    public static var stripeM2: Self { .init(rawValue: "stripe_m2") }
+    public static var stripeS700: Self { .init(rawValue: "stripe_s700") }
+    public static var stripeS710: Self { .init(rawValue: "stripe_s710") }
+    public static var stripeT600: Self { .init(rawValue: "stripe_t600") }
+    public static var verifoneP400: Self { .init(rawValue: "verifone_P400") }
+    public static var verifoneM425: Self { .init(rawValue: "verifone_m425") }
+    public static var verifoneP630: Self { .init(rawValue: "verifone_p630") }
+    public static var verifoneUx700: Self { .init(rawValue: "verifone_ux700") }
+    public static var verifoneV660P: Self { .init(rawValue: "verifone_v660p") }
 }
 
-public enum TerminalReaderListStatus: String, Codable, Sendable {
-    case offline
-    case online
+public struct TerminalReaderListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offline: Self { .init(rawValue: "offline") }
+    public static var online: Self { .init(rawValue: "online") }
 }
 
 /// Simulated data for the card payment method.
@@ -610,10 +646,16 @@ public struct TerminalReaderPresentPaymentMethodInteracPresent: StripeParams {
     }
 }
 
-public enum TerminalReaderPresentPaymentMethodType: String, Codable, Sendable {
-    case card
-    case cardPresent = "card_present"
-    case interacPresent = "interac_present"
+public struct TerminalReaderPresentPaymentMethodType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
+    public static var cardPresent: Self { .init(rawValue: "card_present") }
+    public static var interacPresent: Self { .init(rawValue: "interac_present") }
 }
 
 /// Configuration overrides for this transaction, such as tipping and customer cancellation settings.
@@ -650,10 +692,16 @@ public struct TerminalReaderProcessPaymentIntentProcessConfig: StripeParams {
     }
 }
 
-public enum TerminalReaderProcessPaymentIntentProcessConfigAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct TerminalReaderProcessPaymentIntentProcessConfigAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Tipping configuration for this transaction.
@@ -672,10 +720,16 @@ public struct TerminalReaderProcessPaymentIntentProcessConfigTipping: StripePara
     }
 }
 
-public enum TerminalReaderProcessSetupIntentAllowRedisplay: String, Codable, Sendable {
-    case always
-    case limited
-    case unspecified
+public struct TerminalReaderProcessSetupIntentAllowRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var limited: Self { .init(rawValue: "limited") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// Configuration overrides for this setup, such as MOTO and customer cancellation settings.
@@ -706,8 +760,14 @@ public struct TerminalReaderRefundPaymentRefundPaymentConfig: StripeParams {
     }
 }
 
-public enum TerminalReaderSetReaderDisplayType: String, Codable, Sendable {
-    case cart
+public struct TerminalReaderSetReaderDisplayType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cart: Self { .init(rawValue: "cart") }
 }
 
 /// Cart details to display on the reader screen, including line items, amounts, and currency.
@@ -754,7 +814,13 @@ public struct TerminalReaderSetReaderDisplayCartLineItems: StripeParams {
     }
 }
 
-public enum TerminalReaderSucceedInputCollectionSkipNonRequiredInputs: String, Codable, Sendable {
-    case all
-    case none
+public struct TerminalReaderSucceedInputCollectionSkipNonRequiredInputs: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var all: Self { .init(rawValue: "all") }
+    public static var none: Self { .init(rawValue: "none") }
 }

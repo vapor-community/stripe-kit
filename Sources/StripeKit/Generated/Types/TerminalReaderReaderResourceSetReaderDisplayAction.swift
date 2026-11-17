@@ -16,8 +16,14 @@ public struct TerminalReaderReaderResourceSetReaderDisplayAction: Codable, Senda
 }
 
 /// Type of information to be displayed by the reader. Only `cart` is currently supported.
-public enum TerminalReaderReaderResourceSetReaderDisplayActionType: String, Codable, Sendable {
-    case cart
+public struct TerminalReaderReaderResourceSetReaderDisplayActionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cart: Self { .init(rawValue: "cart") }
 }
 
 public struct TerminalReaderReaderResourceSetReaderDisplayActionList: Codable, Sendable {

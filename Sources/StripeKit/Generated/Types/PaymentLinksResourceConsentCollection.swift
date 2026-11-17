@@ -24,16 +24,28 @@ public struct PaymentLinksResourceConsentCollection: Codable, Sendable {
 }
 
 /// If set to `auto`, enables the collection of customer consent for promotional communications.
-public enum PaymentLinksResourceConsentCollectionPromotions: String, Codable, Sendable {
-    case auto
-    case none
+public struct PaymentLinksResourceConsentCollectionPromotions: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var auto: Self { .init(rawValue: "auto") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// If set to `required`, it requires cutomers to accept the terms of service before being able to pay.
 /// If set to `none`, customers won't be shown a checkbox to accept the terms of service.
-public enum PaymentLinksResourceConsentCollectionTermsOfService: String, Codable, Sendable {
-    case none
-    case required
+public struct PaymentLinksResourceConsentCollectionTermsOfService: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var required: Self { .init(rawValue: "required") }
 }
 
 public struct PaymentLinksResourceConsentCollectionList: Codable, Sendable {

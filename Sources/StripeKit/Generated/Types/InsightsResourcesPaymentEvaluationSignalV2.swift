@@ -26,13 +26,25 @@ public struct InsightsResourcesPaymentEvaluationSignalV2: Codable, Sendable {
 }
 
 /// Risk level of this signal, based on the score.
-public enum InsightsResourcesPaymentEvaluationSignalV2RiskLevel: String, Codable, Sendable {
-    case elevated
-    case highest
-    case low
-    case normal
-    case notAssessed = "not_assessed"
-    case unknown
+public struct InsightsResourcesPaymentEvaluationSignalV2RiskLevel: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// This signal's score is in the elevated range.
+    public static var elevated: Self { .init(rawValue: "elevated") }
+    /// This signal's score is in the highest range.
+    public static var highest: Self { .init(rawValue: "highest") }
+    /// This signal's score is in the low range.
+    public static var low: Self { .init(rawValue: "low") }
+    /// This signal's score is in the normal range.
+    public static var normal: Self { .init(rawValue: "normal") }
+    /// This signal was not assessed.
+    public static var notAssessed: Self { .init(rawValue: "not_assessed") }
+    /// This signal's risk level is unknown.
+    public static var unknown: Self { .init(rawValue: "unknown") }
 }
 
 public struct InsightsResourcesPaymentEvaluationSignalV2List: Codable, Sendable {

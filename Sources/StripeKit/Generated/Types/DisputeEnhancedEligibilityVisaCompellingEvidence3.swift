@@ -20,10 +20,16 @@ public struct DisputeEnhancedEligibilityVisaCompellingEvidence3: Codable, Sendab
 }
 
 /// Visa Compelling Evidence 3.0 eligibility status.
-public enum DisputeEnhancedEligibilityVisaCompellingEvidence3Status: String, Codable, Sendable {
-    case notQualified = "not_qualified"
-    case qualified
-    case requiresAction = "requires_action"
+public struct DisputeEnhancedEligibilityVisaCompellingEvidence3Status: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var notQualified: Self { .init(rawValue: "not_qualified") }
+    public static var qualified: Self { .init(rawValue: "qualified") }
+    public static var requiresAction: Self { .init(rawValue: "requires_action") }
 }
 
 public struct DisputeEnhancedEligibilityVisaCompellingEvidence3List: Codable, Sendable {

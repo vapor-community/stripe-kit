@@ -60,15 +60,27 @@ public struct TreasuryTransactionListParams: StripeParams {
     }
 }
 
-public enum TreasuryTransactionListOrderBy: String, Codable, Sendable {
-    case created
-    case postedAt = "posted_at"
+public struct TreasuryTransactionListOrderBy: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var created: Self { .init(rawValue: "created") }
+    public static var postedAt: Self { .init(rawValue: "posted_at") }
 }
 
-public enum TreasuryTransactionListStatus: String, Codable, Sendable {
-    case `open` = "open"
-    case posted
-    case void
+public struct TreasuryTransactionListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var `open`: Self { .init(rawValue: "open") }
+    public static var posted: Self { .init(rawValue: "posted") }
+    public static var void: Self { .init(rawValue: "void") }
 }
 
 /// A filter for the `status_transitions.posted_at` timestamp. When using this filter, `status=posted`

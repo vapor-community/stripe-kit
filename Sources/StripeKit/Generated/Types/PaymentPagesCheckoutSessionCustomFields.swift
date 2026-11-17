@@ -23,10 +23,16 @@ public struct PaymentPagesCheckoutSessionCustomFields: Codable, Sendable {
 }
 
 /// The type of the field.
-public enum PaymentPagesCheckoutSessionCustomFieldsType: String, Codable, Sendable {
-    case dropdown
-    case numeric
-    case text
+public struct PaymentPagesCheckoutSessionCustomFieldsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dropdown: Self { .init(rawValue: "dropdown") }
+    public static var numeric: Self { .init(rawValue: "numeric") }
+    public static var text: Self { .init(rawValue: "text") }
 }
 
 public struct PaymentPagesCheckoutSessionCustomFieldsList: Codable, Sendable {

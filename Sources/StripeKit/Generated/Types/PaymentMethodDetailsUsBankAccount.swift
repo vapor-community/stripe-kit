@@ -43,15 +43,27 @@ public struct PaymentMethodDetailsUsBankAccount: Codable, Sendable {
 }
 
 /// Account holder type: individual or company.
-public enum PaymentMethodDetailsUsBankAccountAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct PaymentMethodDetailsUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 /// Account type: checkings or savings. Defaults to checking if omitted.
-public enum PaymentMethodDetailsUsBankAccountAccountType: String, Codable, Sendable {
-    case checking
-    case savings
+public struct PaymentMethodDetailsUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
 public struct PaymentMethodDetailsUsBankAccountList: Codable, Sendable {

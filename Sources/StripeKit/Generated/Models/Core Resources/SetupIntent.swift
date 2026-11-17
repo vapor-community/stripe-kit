@@ -157,27 +157,45 @@ public struct SetupIntent: Codable, Sendable {
 
 /// Reason for cancellation of this SetupIntent, one of `abandoned`, `requested_by_customer`, or
 /// `duplicate`.
-public enum SetupIntentCancellationReason: String, Codable, Sendable {
-    case abandoned
-    case duplicate
-    case requestedByCustomer = "requested_by_customer"
+public struct SetupIntentCancellationReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var abandoned: Self { .init(rawValue: "abandoned") }
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var requestedByCustomer: Self { .init(rawValue: "requested_by_customer") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum SetupIntentObject: String, Codable, Sendable {
-    case setupIntent = "setup_intent"
+public struct SetupIntentObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var setupIntent: Self { .init(rawValue: "setup_intent") }
 }
 
 /// [Status](https://docs.stripe.com/payments/intents#intent-statuses) of this SetupIntent, one of
 /// `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `canceled`, or
 /// `succeeded`.
-public enum SetupIntentStatus: String, Codable, Sendable {
-    case canceled
-    case processing
-    case requiresAction = "requires_action"
-    case requiresConfirmation = "requires_confirmation"
-    case requiresPaymentMethod = "requires_payment_method"
-    case succeeded
+public struct SetupIntentStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var processing: Self { .init(rawValue: "processing") }
+    public static var requiresAction: Self { .init(rawValue: "requires_action") }
+    public static var requiresConfirmation: Self { .init(rawValue: "requires_confirmation") }
+    public static var requiresPaymentMethod: Self { .init(rawValue: "requires_payment_method") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct SetupIntentList: Codable, Sendable {

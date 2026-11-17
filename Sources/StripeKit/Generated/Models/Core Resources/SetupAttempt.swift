@@ -86,8 +86,14 @@ public struct SetupAttempt: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum SetupAttemptObject: String, Codable, Sendable {
-    case setupAttempt = "setup_attempt"
+public struct SetupAttemptObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var setupAttempt: Self { .init(rawValue: "setup_attempt") }
 }
 
 public struct SetupAttemptList: Codable, Sendable {

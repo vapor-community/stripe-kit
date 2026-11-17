@@ -36,8 +36,14 @@ public struct ExchangeRate: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ExchangeRateObject: String, Codable, Sendable {
-    case exchangeRate = "exchange_rate"
+public struct ExchangeRateObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exchangeRate: Self { .init(rawValue: "exchange_rate") }
 }
 
 public struct ExchangeRateList: Codable, Sendable {

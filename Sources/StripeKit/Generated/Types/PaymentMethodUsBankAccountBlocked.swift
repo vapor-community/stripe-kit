@@ -20,30 +20,42 @@ public struct PaymentMethodUsBankAccountBlocked: Codable, Sendable {
 }
 
 /// The ACH network code that resulted in this block.
-public enum PaymentMethodUsBankAccountBlockedNetworkCode: String, Codable, Sendable {
-    case r02 = "R02"
-    case r03 = "R03"
-    case r04 = "R04"
-    case r05 = "R05"
-    case r07 = "R07"
-    case r08 = "R08"
-    case r10 = "R10"
-    case r11 = "R11"
-    case r16 = "R16"
-    case r20 = "R20"
-    case r29 = "R29"
-    case r31 = "R31"
+public struct PaymentMethodUsBankAccountBlockedNetworkCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var r02: Self { .init(rawValue: "R02") }
+    public static var r03: Self { .init(rawValue: "R03") }
+    public static var r04: Self { .init(rawValue: "R04") }
+    public static var r05: Self { .init(rawValue: "R05") }
+    public static var r07: Self { .init(rawValue: "R07") }
+    public static var r08: Self { .init(rawValue: "R08") }
+    public static var r10: Self { .init(rawValue: "R10") }
+    public static var r11: Self { .init(rawValue: "R11") }
+    public static var r16: Self { .init(rawValue: "R16") }
+    public static var r20: Self { .init(rawValue: "R20") }
+    public static var r29: Self { .init(rawValue: "R29") }
+    public static var r31: Self { .init(rawValue: "R31") }
 }
 
 /// The reason why this PaymentMethod's fingerprint has been blocked
-public enum PaymentMethodUsBankAccountBlockedReason: String, Codable, Sendable {
-    case bankAccountClosed = "bank_account_closed"
-    case bankAccountFrozen = "bank_account_frozen"
-    case bankAccountInvalidDetails = "bank_account_invalid_details"
-    case bankAccountRestricted = "bank_account_restricted"
-    case bankAccountUnusable = "bank_account_unusable"
-    case debitNotAuthorized = "debit_not_authorized"
-    case tokenizedAccountNumberDeactivated = "tokenized_account_number_deactivated"
+public struct PaymentMethodUsBankAccountBlockedReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankAccountClosed: Self { .init(rawValue: "bank_account_closed") }
+    public static var bankAccountFrozen: Self { .init(rawValue: "bank_account_frozen") }
+    public static var bankAccountInvalidDetails: Self { .init(rawValue: "bank_account_invalid_details") }
+    public static var bankAccountRestricted: Self { .init(rawValue: "bank_account_restricted") }
+    public static var bankAccountUnusable: Self { .init(rawValue: "bank_account_unusable") }
+    public static var debitNotAuthorized: Self { .init(rawValue: "debit_not_authorized") }
+    public static var tokenizedAccountNumberDeactivated: Self { .init(rawValue: "tokenized_account_number_deactivated") }
 }
 
 public struct PaymentMethodUsBankAccountBlockedList: Codable, Sendable {

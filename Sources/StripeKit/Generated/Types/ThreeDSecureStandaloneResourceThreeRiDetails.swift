@@ -21,11 +21,17 @@ public struct ThreeDSecureStandaloneResourceThreeRiDetails: Codable, Sendable {
 }
 
 /// Type of the 3RI Authentication.
-public enum ThreeDSecureStandaloneResourceThreeRiDetailsType: String, Codable, Sendable {
-    case delayedShipment = "delayed_shipment"
-    case otherPayment = "other_payment"
-    case recurring
-    case splitShipment = "split_shipment"
+public struct ThreeDSecureStandaloneResourceThreeRiDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var delayedShipment: Self { .init(rawValue: "delayed_shipment") }
+    public static var otherPayment: Self { .init(rawValue: "other_payment") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
+    public static var splitShipment: Self { .init(rawValue: "split_shipment") }
 }
 
 public struct ThreeDSecureStandaloneResourceThreeRiDetailsList: Codable, Sendable {

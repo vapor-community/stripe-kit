@@ -34,20 +34,32 @@ public struct MandateBacsDebit: Codable, Sendable {
 
 /// The status of the mandate on the Bacs network. Can be one of `pending`, `revoked`, `refused`, or
 /// `accepted`.
-public enum MandateBacsDebitNetworkStatus: String, Codable, Sendable {
-    case accepted
-    case pending
-    case refused
-    case revoked
+public struct MandateBacsDebitNetworkStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accepted: Self { .init(rawValue: "accepted") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var refused: Self { .init(rawValue: "refused") }
+    public static var revoked: Self { .init(rawValue: "revoked") }
 }
 
 /// When the mandate is revoked on the Bacs network this field displays the reason for the revocation.
-public enum MandateBacsDebitRevocationReason: String, Codable, Sendable {
-    case accountClosed = "account_closed"
-    case bankAccountRestricted = "bank_account_restricted"
-    case bankOwnershipChanged = "bank_ownership_changed"
-    case couldNotProcess = "could_not_process"
-    case debitNotAuthorized = "debit_not_authorized"
+public struct MandateBacsDebitRevocationReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountClosed: Self { .init(rawValue: "account_closed") }
+    public static var bankAccountRestricted: Self { .init(rawValue: "bank_account_restricted") }
+    public static var bankOwnershipChanged: Self { .init(rawValue: "bank_ownership_changed") }
+    public static var couldNotProcess: Self { .init(rawValue: "could_not_process") }
+    public static var debitNotAuthorized: Self { .init(rawValue: "debit_not_authorized") }
 }
 
 public struct MandateBacsDebitList: Codable, Sendable {

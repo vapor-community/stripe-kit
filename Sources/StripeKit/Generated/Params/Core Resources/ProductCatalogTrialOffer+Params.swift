@@ -109,8 +109,15 @@ public struct ProductCatalogTrialOfferCreateDuration: StripeParams {
     }
 }
 
-public enum ProductCatalogTrialOfferCreateDurationType: String, Codable, Sendable {
-    case relative
+public struct ProductCatalogTrialOfferCreateDurationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The duration of trials created from this offer are determined relative to the trial start date.
+    public static var relative: Self { .init(rawValue: "relative") }
 }
 
 /// The relative duration of the trial period computed as the number of recurring price intervals.

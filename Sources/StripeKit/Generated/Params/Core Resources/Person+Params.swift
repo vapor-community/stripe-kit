@@ -544,9 +544,15 @@ public struct PersonCreateDocumentsVisa: StripeParams {
     }
 }
 
-public enum PersonCreatePoliticalExposure: String, Codable, Sendable {
-    case existing
-    case none
+public struct PersonCreatePoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var existing: Self { .init(rawValue: "existing") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// The person's registered address.
@@ -670,14 +676,20 @@ public struct PersonCreateUsCfpbDataEthnicityDetails: StripeParams {
     }
 }
 
-public enum PersonCreateUsCfpbDataEthnicityDetailsEthnicity: String, Codable, Sendable {
-    case cuban
-    case hispanicOrLatino = "hispanic_or_latino"
-    case mexican
-    case notHispanicOrLatino = "not_hispanic_or_latino"
-    case otherHispanicOrLatino = "other_hispanic_or_latino"
-    case preferNotToAnswer = "prefer_not_to_answer"
-    case puertoRican = "puerto_rican"
+public struct PersonCreateUsCfpbDataEthnicityDetailsEthnicity: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cuban: Self { .init(rawValue: "cuban") }
+    public static var hispanicOrLatino: Self { .init(rawValue: "hispanic_or_latino") }
+    public static var mexican: Self { .init(rawValue: "mexican") }
+    public static var notHispanicOrLatino: Self { .init(rawValue: "not_hispanic_or_latino") }
+    public static var otherHispanicOrLatino: Self { .init(rawValue: "other_hispanic_or_latino") }
+    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
+    public static var puertoRican: Self { .init(rawValue: "puerto_rican") }
 }
 
 /// The persons race details
@@ -698,31 +710,37 @@ public struct PersonCreateUsCfpbDataRaceDetails: StripeParams {
     }
 }
 
-public enum PersonCreateUsCfpbDataRaceDetailsRace: String, Codable, Sendable {
-    case africanAmerican = "african_american"
-    case americanIndianOrAlaskaNative = "american_indian_or_alaska_native"
-    case asian
-    case asianIndian = "asian_indian"
-    case blackOrAfricanAmerican = "black_or_african_american"
-    case chinese
-    case ethiopian
-    case filipino
-    case guamanianOrChamorro = "guamanian_or_chamorro"
-    case haitian
-    case jamaican
-    case japanese
-    case korean
-    case nativeHawaiian = "native_hawaiian"
-    case nativeHawaiianOrOtherPacificIslander = "native_hawaiian_or_other_pacific_islander"
-    case nigerian
-    case otherAsian = "other_asian"
-    case otherBlackOrAfricanAmerican = "other_black_or_african_american"
-    case otherPacificIslander = "other_pacific_islander"
-    case preferNotToAnswer = "prefer_not_to_answer"
-    case samoan
-    case somali
-    case vietnamese
-    case white
+public struct PersonCreateUsCfpbDataRaceDetailsRace: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var africanAmerican: Self { .init(rawValue: "african_american") }
+    public static var americanIndianOrAlaskaNative: Self { .init(rawValue: "american_indian_or_alaska_native") }
+    public static var asian: Self { .init(rawValue: "asian") }
+    public static var asianIndian: Self { .init(rawValue: "asian_indian") }
+    public static var blackOrAfricanAmerican: Self { .init(rawValue: "black_or_african_american") }
+    public static var chinese: Self { .init(rawValue: "chinese") }
+    public static var ethiopian: Self { .init(rawValue: "ethiopian") }
+    public static var filipino: Self { .init(rawValue: "filipino") }
+    public static var guamanianOrChamorro: Self { .init(rawValue: "guamanian_or_chamorro") }
+    public static var haitian: Self { .init(rawValue: "haitian") }
+    public static var jamaican: Self { .init(rawValue: "jamaican") }
+    public static var japanese: Self { .init(rawValue: "japanese") }
+    public static var korean: Self { .init(rawValue: "korean") }
+    public static var nativeHawaiian: Self { .init(rawValue: "native_hawaiian") }
+    public static var nativeHawaiianOrOtherPacificIslander: Self { .init(rawValue: "native_hawaiian_or_other_pacific_islander") }
+    public static var nigerian: Self { .init(rawValue: "nigerian") }
+    public static var otherAsian: Self { .init(rawValue: "other_asian") }
+    public static var otherBlackOrAfricanAmerican: Self { .init(rawValue: "other_black_or_african_american") }
+    public static var otherPacificIslander: Self { .init(rawValue: "other_pacific_islander") }
+    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
+    public static var samoan: Self { .init(rawValue: "samoan") }
+    public static var somali: Self { .init(rawValue: "somali") }
+    public static var vietnamese: Self { .init(rawValue: "vietnamese") }
+    public static var white: Self { .init(rawValue: "white") }
 }
 
 /// The person's verification status.
@@ -1035,9 +1053,15 @@ public struct PersonUpdateDocumentsVisa: StripeParams {
     }
 }
 
-public enum PersonUpdatePoliticalExposure: String, Codable, Sendable {
-    case existing
-    case none
+public struct PersonUpdatePoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var existing: Self { .init(rawValue: "existing") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// The person's registered address.
@@ -1161,14 +1185,20 @@ public struct PersonUpdateUsCfpbDataEthnicityDetails: StripeParams {
     }
 }
 
-public enum PersonUpdateUsCfpbDataEthnicityDetailsEthnicity: String, Codable, Sendable {
-    case cuban
-    case hispanicOrLatino = "hispanic_or_latino"
-    case mexican
-    case notHispanicOrLatino = "not_hispanic_or_latino"
-    case otherHispanicOrLatino = "other_hispanic_or_latino"
-    case preferNotToAnswer = "prefer_not_to_answer"
-    case puertoRican = "puerto_rican"
+public struct PersonUpdateUsCfpbDataEthnicityDetailsEthnicity: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cuban: Self { .init(rawValue: "cuban") }
+    public static var hispanicOrLatino: Self { .init(rawValue: "hispanic_or_latino") }
+    public static var mexican: Self { .init(rawValue: "mexican") }
+    public static var notHispanicOrLatino: Self { .init(rawValue: "not_hispanic_or_latino") }
+    public static var otherHispanicOrLatino: Self { .init(rawValue: "other_hispanic_or_latino") }
+    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
+    public static var puertoRican: Self { .init(rawValue: "puerto_rican") }
 }
 
 /// The persons race details
@@ -1189,31 +1219,37 @@ public struct PersonUpdateUsCfpbDataRaceDetails: StripeParams {
     }
 }
 
-public enum PersonUpdateUsCfpbDataRaceDetailsRace: String, Codable, Sendable {
-    case africanAmerican = "african_american"
-    case americanIndianOrAlaskaNative = "american_indian_or_alaska_native"
-    case asian
-    case asianIndian = "asian_indian"
-    case blackOrAfricanAmerican = "black_or_african_american"
-    case chinese
-    case ethiopian
-    case filipino
-    case guamanianOrChamorro = "guamanian_or_chamorro"
-    case haitian
-    case jamaican
-    case japanese
-    case korean
-    case nativeHawaiian = "native_hawaiian"
-    case nativeHawaiianOrOtherPacificIslander = "native_hawaiian_or_other_pacific_islander"
-    case nigerian
-    case otherAsian = "other_asian"
-    case otherBlackOrAfricanAmerican = "other_black_or_african_american"
-    case otherPacificIslander = "other_pacific_islander"
-    case preferNotToAnswer = "prefer_not_to_answer"
-    case samoan
-    case somali
-    case vietnamese
-    case white
+public struct PersonUpdateUsCfpbDataRaceDetailsRace: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var africanAmerican: Self { .init(rawValue: "african_american") }
+    public static var americanIndianOrAlaskaNative: Self { .init(rawValue: "american_indian_or_alaska_native") }
+    public static var asian: Self { .init(rawValue: "asian") }
+    public static var asianIndian: Self { .init(rawValue: "asian_indian") }
+    public static var blackOrAfricanAmerican: Self { .init(rawValue: "black_or_african_american") }
+    public static var chinese: Self { .init(rawValue: "chinese") }
+    public static var ethiopian: Self { .init(rawValue: "ethiopian") }
+    public static var filipino: Self { .init(rawValue: "filipino") }
+    public static var guamanianOrChamorro: Self { .init(rawValue: "guamanian_or_chamorro") }
+    public static var haitian: Self { .init(rawValue: "haitian") }
+    public static var jamaican: Self { .init(rawValue: "jamaican") }
+    public static var japanese: Self { .init(rawValue: "japanese") }
+    public static var korean: Self { .init(rawValue: "korean") }
+    public static var nativeHawaiian: Self { .init(rawValue: "native_hawaiian") }
+    public static var nativeHawaiianOrOtherPacificIslander: Self { .init(rawValue: "native_hawaiian_or_other_pacific_islander") }
+    public static var nigerian: Self { .init(rawValue: "nigerian") }
+    public static var otherAsian: Self { .init(rawValue: "other_asian") }
+    public static var otherBlackOrAfricanAmerican: Self { .init(rawValue: "other_black_or_african_american") }
+    public static var otherPacificIslander: Self { .init(rawValue: "other_pacific_islander") }
+    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
+    public static var samoan: Self { .init(rawValue: "samoan") }
+    public static var somali: Self { .init(rawValue: "somali") }
+    public static var vietnamese: Self { .init(rawValue: "vietnamese") }
+    public static var white: Self { .init(rawValue: "white") }
 }
 
 /// The person's verification status.

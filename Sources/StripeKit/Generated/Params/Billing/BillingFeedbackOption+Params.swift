@@ -75,7 +75,15 @@ public struct BillingFeedbackOptionUpdateParams: StripeParams {
     }
 }
 
-public enum BillingFeedbackOptionListStatus: String, Codable, Sendable {
-    case active
-    case inactive
+public struct BillingFeedbackOptionListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The feedback option is active and available for use.
+    public static var active: Self { .init(rawValue: "active") }
+    /// The feedback option has been deactivated and is no longer available for use.
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }

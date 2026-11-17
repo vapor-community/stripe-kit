@@ -41,10 +41,16 @@ public struct CurrencyOption: Codable, Sendable {
 /// was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of
 /// taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as
 /// either `inclusive` or `exclusive`, it cannot be changed.
-public enum CurrencyOptionTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct CurrencyOptionTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 public struct CurrencyOptionList: Codable, Sendable {

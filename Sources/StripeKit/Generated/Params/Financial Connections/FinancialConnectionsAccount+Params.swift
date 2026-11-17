@@ -150,16 +150,34 @@ public struct FinancialConnectionsAccountListAccountHolder: StripeParams {
     }
 }
 
-public enum FinancialConnectionsAccountRefreshFeatures: String, Codable, Sendable {
-    case balance
-    case ownership
-    case transactions
+public struct FinancialConnectionsAccountRefreshFeatures: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balance: Self { .init(rawValue: "balance") }
+    public static var ownership: Self { .init(rawValue: "ownership") }
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum FinancialConnectionsAccountSubscribeFeatures: String, Codable, Sendable {
-    case transactions
+public struct FinancialConnectionsAccountSubscribeFeatures: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }
 
-public enum FinancialConnectionsAccountUnsubscribeFeatures: String, Codable, Sendable {
-    case transactions
+public struct FinancialConnectionsAccountUnsubscribeFeatures: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var transactions: Self { .init(rawValue: "transactions") }
 }

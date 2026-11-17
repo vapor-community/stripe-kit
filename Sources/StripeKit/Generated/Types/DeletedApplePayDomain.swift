@@ -17,8 +17,14 @@ public struct DeletedApplePayDomain: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DeletedApplePayDomainObject: String, Codable, Sendable {
-    case applePayDomain = "apple_pay_domain"
+public struct DeletedApplePayDomainObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var applePayDomain: Self { .init(rawValue: "apple_pay_domain") }
 }
 
 public struct DeletedApplePayDomainList: Codable, Sendable {

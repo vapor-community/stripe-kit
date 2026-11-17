@@ -18,9 +18,15 @@ public struct PaymentPagesCheckoutSessionBrandingSettingsLogo: Codable, Sendable
 }
 
 /// The type of image for the logo. Must be one of `file` or `url`.
-public enum PaymentPagesCheckoutSessionBrandingSettingsLogoType: String, Codable, Sendable {
-    case file
-    case url
+public struct PaymentPagesCheckoutSessionBrandingSettingsLogoType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var file: Self { .init(rawValue: "file") }
+    public static var url: Self { .init(rawValue: "url") }
 }
 
 public struct PaymentPagesCheckoutSessionBrandingSettingsLogoList: Codable, Sendable {

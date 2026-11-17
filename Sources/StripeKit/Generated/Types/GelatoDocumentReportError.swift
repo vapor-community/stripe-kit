@@ -16,10 +16,16 @@ public struct GelatoDocumentReportError: Codable, Sendable {
 }
 
 /// A short machine-readable string giving the reason for the verification failure.
-public enum GelatoDocumentReportErrorCode: String, Codable, Sendable {
-    case documentExpired = "document_expired"
-    case documentTypeNotSupported = "document_type_not_supported"
-    case documentUnverifiedOther = "document_unverified_other"
+public struct GelatoDocumentReportErrorCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var documentExpired: Self { .init(rawValue: "document_expired") }
+    public static var documentTypeNotSupported: Self { .init(rawValue: "document_type_not_supported") }
+    public static var documentUnverifiedOther: Self { .init(rawValue: "document_unverified_other") }
 }
 
 public struct GelatoDocumentReportErrorList: Codable, Sendable {

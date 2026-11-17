@@ -21,15 +21,27 @@ public struct TreasuryFinancialAccountsResourcePlatformRestrictions: Codable, Se
 }
 
 /// Restricts all inbound money movement.
-public enum TreasuryFinancialAccountsResourcePlatformRestrictionsInboundFlows: String, Codable, Sendable {
-    case restricted
-    case unrestricted
+public struct TreasuryFinancialAccountsResourcePlatformRestrictionsInboundFlows: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var restricted: Self { .init(rawValue: "restricted") }
+    public static var unrestricted: Self { .init(rawValue: "unrestricted") }
 }
 
 /// Restricts all outbound money movement.
-public enum TreasuryFinancialAccountsResourcePlatformRestrictionsOutboundFlows: String, Codable, Sendable {
-    case restricted
-    case unrestricted
+public struct TreasuryFinancialAccountsResourcePlatformRestrictionsOutboundFlows: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var restricted: Self { .init(rawValue: "restricted") }
+    public static var unrestricted: Self { .init(rawValue: "unrestricted") }
 }
 
 public struct TreasuryFinancialAccountsResourcePlatformRestrictionsList: Codable, Sendable {

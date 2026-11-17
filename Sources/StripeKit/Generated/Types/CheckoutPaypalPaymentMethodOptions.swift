@@ -38,8 +38,14 @@ public struct CheckoutPaypalPaymentMethodOptions: Codable, Sendable {
 }
 
 /// Controls when the funds will be captured from the customer's account.
-public enum CheckoutPaypalPaymentMethodOptionsCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutPaypalPaymentMethodOptionsCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -53,9 +59,15 @@ public enum CheckoutPaypalPaymentMethodOptionsCaptureMethod: String, Codable, Se
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum CheckoutPaypalPaymentMethodOptionsSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct CheckoutPaypalPaymentMethodOptionsSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 public struct CheckoutPaypalPaymentMethodOptionsList: Codable, Sendable {

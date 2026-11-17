@@ -60,21 +60,39 @@ public struct TaxTransactionLineItem: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TaxTransactionLineItemObject: String, Codable, Sendable {
-    case taxTransactionLineItem = "tax.transaction_line_item"
+public struct TaxTransactionLineItemObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxTransactionLineItem: Self { .init(rawValue: "tax.transaction_line_item") }
 }
 
 /// Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes
 /// taxes.
-public enum TaxTransactionLineItemTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
+public struct TaxTransactionLineItemTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
 }
 
 /// If `reversal`, this line item reverses an earlier transaction.
-public enum TaxTransactionLineItemType: String, Codable, Sendable {
-    case reversal
-    case transaction
+public struct TaxTransactionLineItemType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var reversal: Self { .init(rawValue: "reversal") }
+    public static var transaction: Self { .init(rawValue: "transaction") }
 }
 
 public struct TaxTransactionLineItemList: Codable, Sendable {

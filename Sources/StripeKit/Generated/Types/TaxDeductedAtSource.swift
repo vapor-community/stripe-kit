@@ -31,8 +31,14 @@ public struct TaxDeductedAtSource: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TaxDeductedAtSourceObject: String, Codable, Sendable {
-    case taxDeductedAtSource = "tax_deducted_at_source"
+public struct TaxDeductedAtSourceObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxDeductedAtSource: Self { .init(rawValue: "tax_deducted_at_source") }
 }
 
 public struct TaxDeductedAtSourceList: Codable, Sendable {

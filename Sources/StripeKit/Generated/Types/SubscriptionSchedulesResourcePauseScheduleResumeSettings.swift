@@ -24,23 +24,53 @@ public struct SubscriptionSchedulesResourcePauseScheduleResumeSettings: Codable,
 }
 
 /// The billing cycle anchor that applies when the subscription is resumed.
-public enum SubscriptionSchedulesResourcePauseScheduleResumeSettingsBillingCycleAnchor: String, Codable, Sendable {
-    case resumeAt = "resume_at"
-    case unchanged
+public struct SubscriptionSchedulesResourcePauseScheduleResumeSettingsBillingCycleAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Set the billing cycle anchor to the date the subscription resumes.
+    public static var resumeAt: Self { .init(rawValue: "resume_at") }
+    /// Keep the existing billing cycle anchor.
+    public static var unchanged: Self { .init(rawValue: "unchanged") }
 }
 
 /// Controls whether Stripe attempts payment on the resumption invoice and how that affects the
 /// subscription's status.
-public enum SubscriptionSchedulesResourcePauseScheduleResumeSettingsPaymentBehavior: String, Codable, Sendable {
-    case resumeOnPaymentAttempt = "resume_on_payment_attempt"
-    case resumeOnPaymentSuccess = "resume_on_payment_success"
+public struct SubscriptionSchedulesResourcePauseScheduleResumeSettingsPaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// If you create a resumption invoice, Stripe finalizes the invoice immediately but doesn't attempt
+    /// payment. You can then manually attempt payment on the invoice using the [Pay invoice
+    /// endpoint](/api/invoices/pay). If the payment attempt succeeds, the subscription becomes `active`. If
+    /// the payment attempt fails, the subscription becomes `past_due`. If the invoice has no payment
+    /// attempts after 23 hours, Stripe voids the invoice and the subscription remains `paused`.
+    public static var resumeOnPaymentAttempt: Self { .init(rawValue: "resume_on_payment_attempt") }
+    /// If you create a resumption invoice, Stripe finalizes and attempts payment on the invoice
+    /// immediately. If that payment attempt succeeds, the subscription becomes `active`. If that payment
+    /// attempt fails, the subscription remains `paused`. You can then manually attempt payment on the
+    /// invoice using the [Pay invoice endpoint](/api/invoices/pay). If the invoice isn't paid successfully
+    /// within 1 year of its creation, Stripe voids the invoice and the subscription remains `paused`.
+    public static var resumeOnPaymentSuccess: Self { .init(rawValue: "resume_on_payment_success") }
 }
 
 /// Determines how to handle prorations resulting from the billing_cycle_anchor change on resume.
-public enum SubscriptionSchedulesResourcePauseScheduleResumeSettingsProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct SubscriptionSchedulesResourcePauseScheduleResumeSettingsProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct SubscriptionSchedulesResourcePauseScheduleResumeSettingsList: Codable, Sendable {

@@ -21,11 +21,17 @@ public struct SubscriptionsResourceBillingSchedulesBillUntilDuration: Codable, S
 }
 
 /// Specifies billing duration. Either `day`, `week`, `month` or `year`.
-public enum SubscriptionsResourceBillingSchedulesBillUntilDurationInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct SubscriptionsResourceBillingSchedulesBillUntilDurationInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 public struct SubscriptionsResourceBillingSchedulesBillUntilDurationList: Codable, Sendable {

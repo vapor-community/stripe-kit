@@ -28,45 +28,69 @@ public struct InsightsResourcesPaymentEvaluationRejectedCard: Codable, Sendable 
 }
 
 /// Result of the address line 1 check.
-public enum InsightsResourcesPaymentEvaluationRejectedCardAddressLine1Check: String, Codable, Sendable {
-    case fail
-    case pass
-    case unavailable
-    case unchecked
+public struct InsightsResourcesPaymentEvaluationRejectedCardAddressLine1Check: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fail: Self { .init(rawValue: "fail") }
+    public static var pass: Self { .init(rawValue: "pass") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
 
 /// Indicates whether the cardholder provided a postal code and if it matched the cardholder’s billing
 /// address.
-public enum InsightsResourcesPaymentEvaluationRejectedCardAddressPostalCodeCheck: String, Codable, Sendable {
-    case fail
-    case pass
-    case unavailable
-    case unchecked
+public struct InsightsResourcesPaymentEvaluationRejectedCardAddressPostalCodeCheck: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fail: Self { .init(rawValue: "fail") }
+    public static var pass: Self { .init(rawValue: "pass") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
 
 /// Result of the CVC check.
-public enum InsightsResourcesPaymentEvaluationRejectedCardCvcCheck: String, Codable, Sendable {
-    case fail
-    case pass
-    case unavailable
-    case unchecked
+public struct InsightsResourcesPaymentEvaluationRejectedCardCvcCheck: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fail: Self { .init(rawValue: "fail") }
+    public static var pass: Self { .init(rawValue: "pass") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
 
 /// Card issuer's reason for the network decline.
-public enum InsightsResourcesPaymentEvaluationRejectedCardReason: String, Codable, Sendable {
-    case authenticationFailed = "authentication_failed"
-    case doNotHonor = "do_not_honor"
-    case expired
-    case incorrectCvc = "incorrect_cvc"
-    case incorrectNumber = "incorrect_number"
-    case incorrectPostalCode = "incorrect_postal_code"
-    case insufficientFunds = "insufficient_funds"
-    case invalidAccount = "invalid_account"
-    case lostCard = "lost_card"
-    case other
-    case processingError = "processing_error"
-    case reportedStolen = "reported_stolen"
-    case tryAgainLater = "try_again_later"
+public struct InsightsResourcesPaymentEvaluationRejectedCardReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var authenticationFailed: Self { .init(rawValue: "authentication_failed") }
+    public static var doNotHonor: Self { .init(rawValue: "do_not_honor") }
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var incorrectCvc: Self { .init(rawValue: "incorrect_cvc") }
+    public static var incorrectNumber: Self { .init(rawValue: "incorrect_number") }
+    public static var incorrectPostalCode: Self { .init(rawValue: "incorrect_postal_code") }
+    public static var insufficientFunds: Self { .init(rawValue: "insufficient_funds") }
+    public static var invalidAccount: Self { .init(rawValue: "invalid_account") }
+    public static var lostCard: Self { .init(rawValue: "lost_card") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var processingError: Self { .init(rawValue: "processing_error") }
+    public static var reportedStolen: Self { .init(rawValue: "reported_stolen") }
+    public static var tryAgainLater: Self { .init(rawValue: "try_again_later") }
 }
 
 public struct InsightsResourcesPaymentEvaluationRejectedCardList: Codable, Sendable {

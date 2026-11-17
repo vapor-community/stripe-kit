@@ -62,15 +62,27 @@ public struct IssuingTokenUpdateParams: StripeParams {
     }
 }
 
-public enum IssuingTokenListStatus: String, Codable, Sendable {
-    case active
-    case deleted
-    case requested
-    case suspended
+public struct IssuingTokenListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var deleted: Self { .init(rawValue: "deleted") }
+    public static var requested: Self { .init(rawValue: "requested") }
+    public static var suspended: Self { .init(rawValue: "suspended") }
 }
 
-public enum IssuingTokenUpdateStatus: String, Codable, Sendable {
-    case active
-    case deleted
-    case suspended
+public struct IssuingTokenUpdateStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var deleted: Self { .init(rawValue: "deleted") }
+    public static var suspended: Self { .init(rawValue: "suspended") }
 }

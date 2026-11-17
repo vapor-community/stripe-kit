@@ -32,11 +32,17 @@ public struct TaxIDsOwner: Codable, Sendable {
 }
 
 /// Type of owner referenced.
-public enum TaxIDsOwnerType: String, Codable, Sendable {
-    case account
-    case application
-    case customer
-    case `self` = "self"
+public struct TaxIDsOwnerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var application: Self { .init(rawValue: "application") }
+    public static var customer: Self { .init(rawValue: "customer") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct TaxIDsOwnerList: Codable, Sendable {

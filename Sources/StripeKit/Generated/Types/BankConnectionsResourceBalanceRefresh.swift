@@ -24,10 +24,16 @@ public struct BankConnectionsResourceBalanceRefresh: Codable, Sendable {
 }
 
 /// The status of the last refresh attempt.
-public enum BankConnectionsResourceBalanceRefreshStatus: String, Codable, Sendable {
-    case failed
-    case pending
-    case succeeded
+public struct BankConnectionsResourceBalanceRefreshStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct BankConnectionsResourceBalanceRefreshList: Codable, Sendable {

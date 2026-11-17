@@ -156,8 +156,14 @@ public struct PromotionCodeCreatePromotion: StripeParams {
     }
 }
 
-public enum PromotionCodeCreatePromotionType: String, Codable, Sendable {
-    case coupon
+public struct PromotionCodeCreatePromotionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var coupon: Self { .init(rawValue: "coupon") }
 }
 
 /// Settings that restrict the redemption of the promotion code.

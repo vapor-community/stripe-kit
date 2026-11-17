@@ -17,8 +17,14 @@ public struct DeletedCustomer: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DeletedCustomerObject: String, Codable, Sendable {
-    case customer
+public struct DeletedCustomerObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customer: Self { .init(rawValue: "customer") }
 }
 
 public struct DeletedCustomerList: Codable, Sendable {

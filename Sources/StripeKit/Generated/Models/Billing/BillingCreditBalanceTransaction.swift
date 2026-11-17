@@ -49,14 +49,26 @@ public struct BillingCreditBalanceTransaction: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingCreditBalanceTransactionObject: String, Codable, Sendable {
-    case billingCreditBalanceTransaction = "billing.credit_balance_transaction"
+public struct BillingCreditBalanceTransactionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingCreditBalanceTransaction: Self { .init(rawValue: "billing.credit_balance_transaction") }
 }
 
 /// The type of credit balance transaction (credit or debit).
-public enum BillingCreditBalanceTransactionType: String, Codable, Sendable {
-    case credit
-    case debit
+public struct BillingCreditBalanceTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var credit: Self { .init(rawValue: "credit") }
+    public static var debit: Self { .init(rawValue: "debit") }
 }
 
 public struct BillingCreditBalanceTransactionList: Codable, Sendable {

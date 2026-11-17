@@ -36,10 +36,16 @@ public struct PaymentPagesCheckoutSessionBrandingSettings: Codable, Sendable {
 }
 
 /// The border style for the Checkout Session. Must be one of `rounded`, `rectangular`, or `pill`.
-public enum PaymentPagesCheckoutSessionBrandingSettingsBorderStyle: String, Codable, Sendable {
-    case pill
-    case rectangular
-    case rounded
+public struct PaymentPagesCheckoutSessionBrandingSettingsBorderStyle: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var pill: Self { .init(rawValue: "pill") }
+    public static var rectangular: Self { .init(rawValue: "rectangular") }
+    public static var rounded: Self { .init(rawValue: "rounded") }
 }
 
 public struct PaymentPagesCheckoutSessionBrandingSettingsList: Codable, Sendable {

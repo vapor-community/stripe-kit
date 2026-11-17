@@ -75,20 +75,38 @@ public struct PaymentAttemptRecord: Codable, Sendable {
 }
 
 /// Indicates whether the customer was present in your checkout flow during this payment.
-public enum PaymentAttemptRecordCustomerPresence: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct PaymentAttemptRecordCustomerPresence: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PaymentAttemptRecordObject: String, Codable, Sendable {
-    case paymentAttemptRecord = "payment_attempt_record"
+public struct PaymentAttemptRecordObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentAttemptRecord: Self { .init(rawValue: "payment_attempt_record") }
 }
 
 /// Indicates who reported the payment.
-public enum PaymentAttemptRecordReportedBy: String, Codable, Sendable {
-    case `self` = "self"
-    case stripe
+public struct PaymentAttemptRecordReportedBy: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var `self`: Self { .init(rawValue: "self") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 public struct PaymentAttemptRecordList: Codable, Sendable {

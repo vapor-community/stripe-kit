@@ -18,29 +18,47 @@ public struct TreasuryFinancialAccountsResourceTogglesSettingStatusDetails: Coda
 }
 
 /// Represents the reason why the status is `pending` or `restricted`.
-public enum TreasuryFinancialAccountsResourceTogglesSettingStatusDetailsCode: String, Codable, Sendable {
-    case activating
-    case capabilityNotRequested = "capability_not_requested"
-    case financialAccountClosed = "financial_account_closed"
-    case rejectedOther = "rejected_other"
-    case rejectedUnsupportedBusiness = "rejected_unsupported_business"
-    case requirementsPastDue = "requirements_past_due"
-    case requirementsPendingVerification = "requirements_pending_verification"
-    case restrictedByPlatform = "restricted_by_platform"
-    case restrictedOther = "restricted_other"
+public struct TreasuryFinancialAccountsResourceTogglesSettingStatusDetailsCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var activating: Self { .init(rawValue: "activating") }
+    public static var capabilityNotRequested: Self { .init(rawValue: "capability_not_requested") }
+    public static var financialAccountClosed: Self { .init(rawValue: "financial_account_closed") }
+    public static var rejectedOther: Self { .init(rawValue: "rejected_other") }
+    public static var rejectedUnsupportedBusiness: Self { .init(rawValue: "rejected_unsupported_business") }
+    public static var requirementsPastDue: Self { .init(rawValue: "requirements_past_due") }
+    public static var requirementsPendingVerification: Self { .init(rawValue: "requirements_pending_verification") }
+    public static var restrictedByPlatform: Self { .init(rawValue: "restricted_by_platform") }
+    public static var restrictedOther: Self { .init(rawValue: "restricted_other") }
 }
 
 /// Represents what the user should do, if anything, to activate the Feature.
-public enum TreasuryFinancialAccountsResourceTogglesSettingStatusDetailsResolution: String, Codable, Sendable {
-    case contactStripe = "contact_stripe"
-    case provideInformation = "provide_information"
-    case removeRestriction = "remove_restriction"
+public struct TreasuryFinancialAccountsResourceTogglesSettingStatusDetailsResolution: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var contactStripe: Self { .init(rawValue: "contact_stripe") }
+    public static var provideInformation: Self { .init(rawValue: "provide_information") }
+    public static var removeRestriction: Self { .init(rawValue: "remove_restriction") }
 }
 
 /// The `platform_restrictions` that are restricting this Feature.
-public enum TreasuryFinancialAccountsResourceTogglesSettingStatusDetailsRestriction: String, Codable, Sendable {
-    case inboundFlows = "inbound_flows"
-    case outboundFlows = "outbound_flows"
+public struct TreasuryFinancialAccountsResourceTogglesSettingStatusDetailsRestriction: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundFlows: Self { .init(rawValue: "inbound_flows") }
+    public static var outboundFlows: Self { .init(rawValue: "outbound_flows") }
 }
 
 public struct TreasuryFinancialAccountsResourceTogglesSettingStatusDetailsList: Codable, Sendable {

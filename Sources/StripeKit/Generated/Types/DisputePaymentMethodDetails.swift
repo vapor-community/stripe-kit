@@ -25,11 +25,17 @@ public struct DisputePaymentMethodDetails: Codable, Sendable {
 }
 
 /// Payment method type.
-public enum DisputePaymentMethodDetailsType: String, Codable, Sendable {
-    case amazonPay = "amazon_pay"
-    case card
-    case klarna
-    case paypal
+public struct DisputePaymentMethodDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var amazonPay: Self { .init(rawValue: "amazon_pay") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var klarna: Self { .init(rawValue: "klarna") }
+    public static var paypal: Self { .init(rawValue: "paypal") }
 }
 
 public struct DisputePaymentMethodDetailsList: Codable, Sendable {

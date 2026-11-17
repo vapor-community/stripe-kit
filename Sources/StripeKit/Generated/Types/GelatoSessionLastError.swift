@@ -16,26 +16,32 @@ public struct GelatoSessionLastError: Codable, Sendable {
 }
 
 /// A short machine-readable string giving the reason for the verification or user-session failure.
-public enum GelatoSessionLastErrorCode: String, Codable, Sendable {
-    case abandoned
-    case consentDeclined = "consent_declined"
-    case countryNotSupported = "country_not_supported"
-    case deviceNotSupported = "device_not_supported"
-    case documentExpired = "document_expired"
-    case documentTypeNotSupported = "document_type_not_supported"
-    case documentUnverifiedOther = "document_unverified_other"
-    case emailUnverifiedOther = "email_unverified_other"
-    case emailVerificationDeclined = "email_verification_declined"
-    case idNumberInsufficientDocumentData = "id_number_insufficient_document_data"
-    case idNumberMismatch = "id_number_mismatch"
-    case idNumberUnverifiedOther = "id_number_unverified_other"
-    case phoneUnverifiedOther = "phone_unverified_other"
-    case phoneVerificationDeclined = "phone_verification_declined"
-    case selfieDocumentMissingPhoto = "selfie_document_missing_photo"
-    case selfieFaceMismatch = "selfie_face_mismatch"
-    case selfieManipulated = "selfie_manipulated"
-    case selfieUnverifiedOther = "selfie_unverified_other"
-    case underSupportedAge = "under_supported_age"
+public struct GelatoSessionLastErrorCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var abandoned: Self { .init(rawValue: "abandoned") }
+    public static var consentDeclined: Self { .init(rawValue: "consent_declined") }
+    public static var countryNotSupported: Self { .init(rawValue: "country_not_supported") }
+    public static var deviceNotSupported: Self { .init(rawValue: "device_not_supported") }
+    public static var documentExpired: Self { .init(rawValue: "document_expired") }
+    public static var documentTypeNotSupported: Self { .init(rawValue: "document_type_not_supported") }
+    public static var documentUnverifiedOther: Self { .init(rawValue: "document_unverified_other") }
+    public static var emailUnverifiedOther: Self { .init(rawValue: "email_unverified_other") }
+    public static var emailVerificationDeclined: Self { .init(rawValue: "email_verification_declined") }
+    public static var idNumberInsufficientDocumentData: Self { .init(rawValue: "id_number_insufficient_document_data") }
+    public static var idNumberMismatch: Self { .init(rawValue: "id_number_mismatch") }
+    public static var idNumberUnverifiedOther: Self { .init(rawValue: "id_number_unverified_other") }
+    public static var phoneUnverifiedOther: Self { .init(rawValue: "phone_unverified_other") }
+    public static var phoneVerificationDeclined: Self { .init(rawValue: "phone_verification_declined") }
+    public static var selfieDocumentMissingPhoto: Self { .init(rawValue: "selfie_document_missing_photo") }
+    public static var selfieFaceMismatch: Self { .init(rawValue: "selfie_face_mismatch") }
+    public static var selfieManipulated: Self { .init(rawValue: "selfie_manipulated") }
+    public static var selfieUnverifiedOther: Self { .init(rawValue: "selfie_unverified_other") }
+    public static var underSupportedAge: Self { .init(rawValue: "under_supported_age") }
 }
 
 public struct GelatoSessionLastErrorList: Codable, Sendable {

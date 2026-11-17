@@ -23,41 +23,53 @@ public struct PaymentMethodFpx: Codable, Sendable {
 }
 
 /// Account holder type, if provided. Can be one of `individual` or `company`.
-public enum PaymentMethodFpxAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct PaymentMethodFpxAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 /// The customer's bank, if provided. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`,
 /// `bank_islam`, `bank_muamalat`, `bnp_paribas`, `bank_rakyat`, `bsn`, `cimb`, `citibank`,
 /// `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`,
 /// `uob`, `deutsche_bank`, `maybank2e`, `mbsb_bank`, `pb_enterprise`, or `bank_of_china`.
-public enum PaymentMethodFpxBank: String, Codable, Sendable {
-    case affinBank = "affin_bank"
-    case agrobank
-    case allianceBank = "alliance_bank"
-    case ambank
-    case bankIslam = "bank_islam"
-    case bankMuamalat = "bank_muamalat"
-    case bankOfChina = "bank_of_china"
-    case bankRakyat = "bank_rakyat"
-    case bnpParibas = "bnp_paribas"
-    case bsn
-    case cimb
-    case citibank
-    case deutscheBank = "deutsche_bank"
-    case hongLeongBank = "hong_leong_bank"
-    case hsbc
-    case kfh
-    case maybank2e
-    case maybank2u
-    case mbsbBank = "mbsb_bank"
-    case ocbc
-    case pbEnterprise = "pb_enterprise"
-    case publicBank = "public_bank"
-    case rhb
-    case standardChartered = "standard_chartered"
-    case uob
+public struct PaymentMethodFpxBank: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var affinBank: Self { .init(rawValue: "affin_bank") }
+    public static var agrobank: Self { .init(rawValue: "agrobank") }
+    public static var allianceBank: Self { .init(rawValue: "alliance_bank") }
+    public static var ambank: Self { .init(rawValue: "ambank") }
+    public static var bankIslam: Self { .init(rawValue: "bank_islam") }
+    public static var bankMuamalat: Self { .init(rawValue: "bank_muamalat") }
+    public static var bankOfChina: Self { .init(rawValue: "bank_of_china") }
+    public static var bankRakyat: Self { .init(rawValue: "bank_rakyat") }
+    public static var bnpParibas: Self { .init(rawValue: "bnp_paribas") }
+    public static var bsn: Self { .init(rawValue: "bsn") }
+    public static var cimb: Self { .init(rawValue: "cimb") }
+    public static var citibank: Self { .init(rawValue: "citibank") }
+    public static var deutscheBank: Self { .init(rawValue: "deutsche_bank") }
+    public static var hongLeongBank: Self { .init(rawValue: "hong_leong_bank") }
+    public static var hsbc: Self { .init(rawValue: "hsbc") }
+    public static var kfh: Self { .init(rawValue: "kfh") }
+    public static var maybank2e: Self { .init(rawValue: "maybank2e") }
+    public static var maybank2u: Self { .init(rawValue: "maybank2u") }
+    public static var mbsbBank: Self { .init(rawValue: "mbsb_bank") }
+    public static var ocbc: Self { .init(rawValue: "ocbc") }
+    public static var pbEnterprise: Self { .init(rawValue: "pb_enterprise") }
+    public static var publicBank: Self { .init(rawValue: "public_bank") }
+    public static var rhb: Self { .init(rawValue: "rhb") }
+    public static var standardChartered: Self { .init(rawValue: "standard_chartered") }
+    public static var uob: Self { .init(rawValue: "uob") }
 }
 
 public struct PaymentMethodFpxList: Codable, Sendable {

@@ -47,8 +47,14 @@ public struct RadarEarlyFraudWarning: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum RadarEarlyFraudWarningObject: String, Codable, Sendable {
-    case radarEarlyFraudWarning = "radar.early_fraud_warning"
+public struct RadarEarlyFraudWarningObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var radarEarlyFraudWarning: Self { .init(rawValue: "radar.early_fraud_warning") }
 }
 
 public struct RadarEarlyFraudWarningList: Codable, Sendable {

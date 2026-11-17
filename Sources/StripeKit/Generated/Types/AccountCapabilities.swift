@@ -291,558 +291,978 @@ public struct AccountCapabilities: Codable, Sendable {
 
 /// The status of the Canadian pre-authorized debits payments capability of the account, or whether the
 /// account can directly process Canadian pre-authorized debits charges.
-public enum AccountCapabilitiesAcssDebitPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesAcssDebitPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Affirm capability of the account, or whether the account can directly process
 /// Affirm charges.
-public enum AccountCapabilitiesAffirmPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesAffirmPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Afterpay Clearpay capability of the account, or whether the account can directly
 /// process Afterpay Clearpay charges.
-public enum AccountCapabilitiesAfterpayClearpayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesAfterpayClearpayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Alma capability of the account, or whether the account can directly process Alma
 /// payments.
-public enum AccountCapabilitiesAlmaPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesAlmaPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the AmazonPay capability of the account, or whether the account can directly process
 /// AmazonPay payments.
-public enum AccountCapabilitiesAmazonPayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesAmazonPayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the `app_distribution` capability of the account, or whether the platform can
 /// distribute apps to other accounts.
-public enum AccountCapabilitiesAppDistribution: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesAppDistribution: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the BECS Direct Debit (AU) payments capability of the account, or whether the account
 /// can directly process BECS Direct Debit (AU) charges.
-public enum AccountCapabilitiesAuBecsDebitPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesAuBecsDebitPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Bacs Direct Debits payments capability of the account, or whether the account can
 /// directly process Bacs Direct Debits charges.
-public enum AccountCapabilitiesBacsDebitPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesBacsDebitPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Bancontact payments capability of the account, or whether the account can directly
 /// process Bancontact charges.
-public enum AccountCapabilitiesBancontactPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesBancontactPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the customer_balance payments capability of the account, or whether the account can
 /// directly process customer_balance charges.
-public enum AccountCapabilitiesBankTransferPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesBankTransferPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Billie capability of the account, or whether the account can directly process
 /// Billie payments.
-public enum AccountCapabilitiesBilliePayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesBilliePayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Bizum capability of the account, or whether the account can directly process Bizum
 /// payments.
-public enum AccountCapabilitiesBizumPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesBizumPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the blik payments capability of the account, or whether the account can directly
 /// process blik charges.
-public enum AccountCapabilitiesBlikPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesBlikPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the BLIK recurring payments capability of the account, or whether the account can
 /// accept recurring and subscription BLIK payments.
-public enum AccountCapabilitiesBlikRecurringPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesBlikRecurringPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the boleto payments capability of the account, or whether the account can directly
 /// process boleto charges.
-public enum AccountCapabilitiesBoletoPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesBoletoPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the card issuing capability of the account, or whether you can use Issuing to
 /// distribute funds on cards
-public enum AccountCapabilitiesCardIssuing: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesCardIssuing: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the card payments capability of the account, or whether the account can directly
 /// process credit and debit card charges.
-public enum AccountCapabilitiesCardPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesCardPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Cartes Bancaires payments capability of the account, or whether the account can
 /// directly process Cartes Bancaires card charges in EUR currency.
-public enum AccountCapabilitiesCartesBancairesPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesCartesBancairesPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Cash App Pay capability of the account, or whether the account can directly
 /// process Cash App Pay payments.
-public enum AccountCapabilitiesCashappPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesCashappPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Crypto capability of the account, or whether the account can directly process
 /// Crypto payments.
-public enum AccountCapabilitiesCryptoPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesCryptoPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the EPS payments capability of the account, or whether the account can directly
 /// process EPS charges.
-public enum AccountCapabilitiesEpsPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesEpsPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the FPX payments capability of the account, or whether the account can directly
 /// process FPX charges.
-public enum AccountCapabilitiesFpxPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesFpxPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the GB customer_balance payments (GBP currency) capability of the account, or whether
 /// the account can directly process GB customer_balance charges.
-public enum AccountCapabilitiesGbBankTransferPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesGbBankTransferPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the giropay payments capability of the account, or whether the account can directly
 /// process giropay charges.
-public enum AccountCapabilitiesGiropayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesGiropayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the GrabPay payments capability of the account, or whether the account can directly
 /// process GrabPay charges.
-public enum AccountCapabilitiesGrabpayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesGrabpayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the iDEAL payments capability of the account, or whether the account can directly
 /// process iDEAL charges.
-public enum AccountCapabilitiesIdealPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesIdealPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the india_international_payments capability of the account, or whether the account can
 /// process international charges (non INR) in India.
-public enum AccountCapabilitiesIndiaInternationalPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesIndiaInternationalPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the JCB payments capability of the account, or whether the account (Japan only) can
 /// directly process JCB credit card charges in JPY currency.
-public enum AccountCapabilitiesJcbPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesJcbPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Japanese customer_balance payments (JPY currency) capability of the account, or
 /// whether the account can directly process Japanese customer_balance charges.
-public enum AccountCapabilitiesJpBankTransferPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesJpBankTransferPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the KakaoPay capability of the account, or whether the account can directly process
 /// KakaoPay payments.
-public enum AccountCapabilitiesKakaoPayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesKakaoPayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Klarna payments capability of the account, or whether the account can directly
 /// process Klarna charges.
-public enum AccountCapabilitiesKlarnaPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesKlarnaPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the konbini payments capability of the account, or whether the account can directly
 /// process konbini charges.
-public enum AccountCapabilitiesKonbiniPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesKonbiniPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the KrCard capability of the account, or whether the account can directly process
 /// KrCard payments.
-public enum AccountCapabilitiesKrCardPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesKrCardPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the legacy payments capability of the account.
-public enum AccountCapabilitiesLegacyPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesLegacyPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the link_payments capability of the account, or whether the account can directly
 /// process Link charges.
-public enum AccountCapabilitiesLinkPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesLinkPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the MB WAY payments capability of the account, or whether the account can directly
 /// process MB WAY charges.
-public enum AccountCapabilitiesMbWayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesMbWayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the MobilePay capability of the account, or whether the account can directly process
 /// MobilePay charges.
-public enum AccountCapabilitiesMobilepayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesMobilepayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Multibanco payments capability of the account, or whether the account can directly
 /// process Multibanco charges.
-public enum AccountCapabilitiesMultibancoPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesMultibancoPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Mexican customer_balance payments (MXN currency) capability of the account, or
 /// whether the account can directly process Mexican customer_balance charges.
-public enum AccountCapabilitiesMxBankTransferPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesMxBankTransferPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the NaverPay capability of the account, or whether the account can directly process
 /// NaverPay payments.
-public enum AccountCapabilitiesNaverPayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesNaverPayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the New Zealand BECS Direct Debit payments capability of the account, or whether the
 /// account can directly process New Zealand BECS Direct Debit charges.
-public enum AccountCapabilitiesNzBankAccountBecsDebitPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesNzBankAccountBecsDebitPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the OXXO payments capability of the account, or whether the account can directly
 /// process OXXO charges.
-public enum AccountCapabilitiesOxxoPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesOxxoPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the P24 payments capability of the account, or whether the account can directly
 /// process P24 charges.
-public enum AccountCapabilitiesP24Payments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesP24Payments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the pay_by_bank payments capability of the account, or whether the account can
 /// directly process pay_by_bank charges.
-public enum AccountCapabilitiesPayByBankPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesPayByBankPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Payco capability of the account, or whether the account can directly process Payco
 /// payments.
-public enum AccountCapabilitiesPaycoPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesPaycoPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the paynow payments capability of the account, or whether the account can directly
 /// process paynow charges.
-public enum AccountCapabilitiesPaynowPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesPaynowPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Paypay capability of the account, or whether the account can directly process
 /// Paypay payments.
-public enum AccountCapabilitiesPaypayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesPaypayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the PayTo capability of the account, or whether the account can directly process PayTo
 /// charges.
-public enum AccountCapabilitiesPaytoPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesPaytoPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the pix payments capability of the account, or whether the account can directly
 /// process pix charges.
-public enum AccountCapabilitiesPixPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesPixPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the promptpay payments capability of the account, or whether the account can directly
 /// process promptpay charges.
-public enum AccountCapabilitiesPromptpayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesPromptpayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the RevolutPay capability of the account, or whether the account can directly process
 /// RevolutPay payments.
-public enum AccountCapabilitiesRevolutPayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesRevolutPayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the SamsungPay capability of the account, or whether the account can directly process
 /// SamsungPay payments.
-public enum AccountCapabilitiesSamsungPayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesSamsungPayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Satispay capability of the account, or whether the account can directly process
 /// Satispay payments.
-public enum AccountCapabilitiesSatispayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesSatispayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Scalapay capability of the account, or whether the account can directly process
 /// Scalapay payments.
-public enum AccountCapabilitiesScalapayPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesScalapayPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the SEPA customer_balance payments (EUR currency) capability of the account, or
 /// whether the account can directly process SEPA customer_balance charges.
-public enum AccountCapabilitiesSepaBankTransferPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesSepaBankTransferPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the SEPA Direct Debits payments capability of the account, or whether the account can
 /// directly process SEPA Direct Debits charges.
-public enum AccountCapabilitiesSepaDebitPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesSepaDebitPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the SeQura capability of the account, or whether the account can directly process
 /// SeQura payments.
-public enum AccountCapabilitiesSequraPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesSequraPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Sofort payments capability of the account, or whether the account can directly
 /// process Sofort charges.
-public enum AccountCapabilitiesSofortPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesSofortPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Sunbit capability of the account, or whether the account can directly process
 /// Sunbit payments.
-public enum AccountCapabilitiesSunbitPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesSunbitPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Swish capability of the account, or whether the account can directly process Swish
 /// payments.
-public enum AccountCapabilitiesSwishPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesSwishPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the tax reporting 1099-K (US) capability of the account.
-public enum AccountCapabilitiesTaxReportingUs1099K: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesTaxReportingUs1099K: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the tax reporting 1099-MISC (US) capability of the account.
-public enum AccountCapabilitiesTaxReportingUs1099Misc: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesTaxReportingUs1099Misc: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the transfers capability of the account, or whether your platform can transfer funds
 /// to the account.
-public enum AccountCapabilitiesTransfers: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesTransfers: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the banking capability, or whether the account can have bank accounts.
-public enum AccountCapabilitiesTreasury: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesTreasury: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the TWINT capability of the account, or whether the account can directly process TWINT
 /// charges.
-public enum AccountCapabilitiesTwintPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesTwintPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the upi payments capability of the account, or whether the account can directly
 /// process upi charges.
-public enum AccountCapabilitiesUpiPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesUpiPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the US bank account ACH payments capability of the account, or whether the account can
 /// directly process US bank account charges.
-public enum AccountCapabilitiesUsBankAccountAchPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesUsBankAccountAchPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the US customer_balance payments (USD currency) capability of the account, or whether
 /// the account can directly process US customer_balance charges.
-public enum AccountCapabilitiesUsBankTransferPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesUsBankTransferPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Wero capability of the account, or whether the account can directly process Wero
 /// payments.
-public enum AccountCapabilitiesWeroPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesWeroPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// The status of the Zip capability of the account, or whether the account can directly process Zip
 /// charges.
-public enum AccountCapabilitiesZipPayments: String, Codable, Sendable {
-    case active
-    case inactive
-    case pending
+public struct AccountCapabilitiesZipPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 public struct AccountCapabilitiesList: Codable, Sendable {

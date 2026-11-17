@@ -24,36 +24,71 @@ public struct TaxProductResourceLineItemTaxRateDetails: Codable, Sendable {
 }
 
 /// The tax type, such as `vat` or `sales_tax`.
-public enum TaxProductResourceLineItemTaxRateDetailsTaxType: String, Codable, Sendable {
-    case admissionsTax = "admissions_tax"
-    case amusementTax = "amusement_tax"
-    case attendanceTax = "attendance_tax"
-    case communicationsTax = "communications_tax"
-    case digitalExciseTax = "digital_excise_tax"
-    case entertainmentTax = "entertainment_tax"
-    case getFund = "get_fund"
-    case grossReceiptsTax = "gross_receipts_tax"
-    case gst
-    case hospitalityTax = "hospitality_tax"
-    case hst
-    case igst
-    case jct
-    case leaseTax = "lease_tax"
-    case luxuryTax = "luxury_tax"
-    case massTransitParkingTax = "mass_transit_parking_tax"
-    case nhil
-    case parkingTax = "parking_tax"
-    case pst
-    case qst
-    case recyclingFee = "recycling_fee"
-    case resortTax = "resort_tax"
-    case retailDeliveryFee = "retail_delivery_fee"
-    case rst
-    case salesTax = "sales_tax"
-    case serviceTax = "service_tax"
-    case tourismTax = "tourism_tax"
-    case utilityUsersTax = "utility_users_tax"
-    case vat
+public struct TaxProductResourceLineItemTaxRateDetailsTaxType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Admissions Tax
+    public static var admissionsTax: Self { .init(rawValue: "admissions_tax") }
+    /// Amusement Tax
+    public static var amusementTax: Self { .init(rawValue: "amusement_tax") }
+    /// Attendance Tax
+    public static var attendanceTax: Self { .init(rawValue: "attendance_tax") }
+    /// Communications Tax
+    public static var communicationsTax: Self { .init(rawValue: "communications_tax") }
+    /// Digital Excise Tax
+    public static var digitalExciseTax: Self { .init(rawValue: "digital_excise_tax") }
+    /// Entertainment Tax
+    public static var entertainmentTax: Self { .init(rawValue: "entertainment_tax") }
+    /// Ghana Education Trust Fund Levy
+    public static var getFund: Self { .init(rawValue: "get_fund") }
+    /// Gross Receipts Tax
+    public static var grossReceiptsTax: Self { .init(rawValue: "gross_receipts_tax") }
+    /// Goods and Services Tax
+    public static var gst: Self { .init(rawValue: "gst") }
+    /// Hospitality Tax
+    public static var hospitalityTax: Self { .init(rawValue: "hospitality_tax") }
+    /// Harmonized Sales Tax
+    public static var hst: Self { .init(rawValue: "hst") }
+    /// Integrated Goods and Services Tax
+    public static var igst: Self { .init(rawValue: "igst") }
+    /// Japanese Consumption Tax
+    public static var jct: Self { .init(rawValue: "jct") }
+    /// Chicago Lease Tax
+    public static var leaseTax: Self { .init(rawValue: "lease_tax") }
+    /// Luxury Tax
+    public static var luxuryTax: Self { .init(rawValue: "luxury_tax") }
+    /// Mass Transit Parking Tax
+    public static var massTransitParkingTax: Self { .init(rawValue: "mass_transit_parking_tax") }
+    /// National Health Insurance Levy
+    public static var nhil: Self { .init(rawValue: "nhil") }
+    /// Parking Tax
+    public static var parkingTax: Self { .init(rawValue: "parking_tax") }
+    /// Provincial Sales Tax
+    public static var pst: Self { .init(rawValue: "pst") }
+    /// Quebec Sales Tax
+    public static var qst: Self { .init(rawValue: "qst") }
+    /// Recycling Fee
+    public static var recyclingFee: Self { .init(rawValue: "recycling_fee") }
+    /// Resort Tax
+    public static var resortTax: Self { .init(rawValue: "resort_tax") }
+    /// Retail Delivery Fee
+    public static var retailDeliveryFee: Self { .init(rawValue: "retail_delivery_fee") }
+    /// Retail Sales Tax
+    public static var rst: Self { .init(rawValue: "rst") }
+    /// Sales Tax
+    public static var salesTax: Self { .init(rawValue: "sales_tax") }
+    /// Service Tax
+    public static var serviceTax: Self { .init(rawValue: "service_tax") }
+    /// Tourism Tax
+    public static var tourismTax: Self { .init(rawValue: "tourism_tax") }
+    /// Utility Users Tax
+    public static var utilityUsersTax: Self { .init(rawValue: "utility_users_tax") }
+    /// Value-Added Tax
+    public static var vat: Self { .init(rawValue: "vat") }
 }
 
 public struct TaxProductResourceLineItemTaxRateDetailsList: Codable, Sendable {

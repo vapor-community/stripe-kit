@@ -16,9 +16,15 @@ public struct ConnectAccountReference: Codable, Sendable {
 }
 
 /// Type of the account referenced.
-public enum ConnectAccountReferenceType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct ConnectAccountReferenceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct ConnectAccountReferenceList: Codable, Sendable {

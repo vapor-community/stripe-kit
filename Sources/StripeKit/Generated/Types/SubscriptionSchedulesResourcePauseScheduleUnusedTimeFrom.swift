@@ -13,10 +13,19 @@ public struct SubscriptionSchedulesResourcePauseScheduleUnusedTimeFrom: Codable,
 }
 
 /// The type of unused time credit behavior.
-public enum SubscriptionSchedulesResourcePauseScheduleUnusedTimeFromType: String, Codable, Sendable {
-    case itemCurrentPeriodStart = "item_current_period_start"
-    case none
-    case pauseAt = "pause_at"
+public struct SubscriptionSchedulesResourcePauseScheduleUnusedTimeFromType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Credit unused time from the start of each item's current billing period.
+    public static var itemCurrentPeriodStart: Self { .init(rawValue: "item_current_period_start") }
+    /// Do not credit unused time.
+    public static var none: Self { .init(rawValue: "none") }
+    /// Credit unused time from the pause date.
+    public static var pauseAt: Self { .init(rawValue: "pause_at") }
 }
 
 public struct SubscriptionSchedulesResourcePauseScheduleUnusedTimeFromList: Codable, Sendable {

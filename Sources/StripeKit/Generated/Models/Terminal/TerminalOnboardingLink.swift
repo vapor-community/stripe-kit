@@ -28,12 +28,24 @@ public struct TerminalOnboardingLink: Codable, Sendable {
 }
 
 /// The type of link being generated.
-public enum TerminalOnboardingLinkLinkType: String, Codable, Sendable {
-    case appleTermsAndConditions = "apple_terms_and_conditions"
+public struct TerminalOnboardingLinkLinkType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var appleTermsAndConditions: Self { .init(rawValue: "apple_terms_and_conditions") }
 }
 
-public enum TerminalOnboardingLinkObject: String, Codable, Sendable {
-    case terminalOnboardingLink = "terminal.onboarding_link"
+public struct TerminalOnboardingLinkObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var terminalOnboardingLink: Self { .init(rawValue: "terminal.onboarding_link") }
 }
 
 public struct TerminalOnboardingLinkList: Codable, Sendable {

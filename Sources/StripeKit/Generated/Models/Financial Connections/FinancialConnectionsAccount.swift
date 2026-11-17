@@ -87,35 +87,59 @@ public struct FinancialConnectionsAccount: Codable, Sendable {
 }
 
 /// The type of the account. Account category is further divided in `subcategory`.
-public enum FinancialConnectionsAccountCategory: String, Codable, Sendable {
-    case cash
-    case credit
-    case investment
-    case other
+public struct FinancialConnectionsAccountCategory: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cash: Self { .init(rawValue: "cash") }
+    public static var credit: Self { .init(rawValue: "credit") }
+    public static var investment: Self { .init(rawValue: "investment") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum FinancialConnectionsAccountObject: String, Codable, Sendable {
-    case financialConnectionsAccount = "financial_connections.account"
+public struct FinancialConnectionsAccountObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var financialConnectionsAccount: Self { .init(rawValue: "financial_connections.account") }
 }
 
 /// The status of the link to the account.
-public enum FinancialConnectionsAccountStatus: String, Codable, Sendable {
-    case active
-    case disconnected
-    case inactive
+public struct FinancialConnectionsAccountStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var disconnected: Self { .init(rawValue: "disconnected") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
 /// If `category` is `cash`, one of: - `checking` - `savings` - `other` If `category` is `credit`, one
 /// of: - `mortgage` - `line_of_credit` - `credit_card` - `other` If `category` is `investment` or
 /// `other`, this will be `other`.
-public enum FinancialConnectionsAccountSubcategory: String, Codable, Sendable {
-    case checking
-    case creditCard = "credit_card"
-    case lineOfCredit = "line_of_credit"
-    case mortgage
-    case other
-    case savings
+public struct FinancialConnectionsAccountSubcategory: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var creditCard: Self { .init(rawValue: "credit_card") }
+    public static var lineOfCredit: Self { .init(rawValue: "line_of_credit") }
+    public static var mortgage: Self { .init(rawValue: "mortgage") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
 public struct FinancialConnectionsAccountList: Codable, Sendable {

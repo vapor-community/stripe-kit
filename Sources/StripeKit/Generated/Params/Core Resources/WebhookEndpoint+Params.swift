@@ -118,692 +118,710 @@ public struct WebhookEndpointUpdateParams: StripeParams {
     }
 }
 
-public enum WebhookEndpointCreateEnabledEvents: String, Codable, Sendable {
-    case all = "*"
-    case accountApplicationAuthorized = "account.application.authorized"
-    case accountApplicationDeauthorized = "account.application.deauthorized"
-    case accountExternalAccountCreated = "account.external_account.created"
-    case accountExternalAccountDeleted = "account.external_account.deleted"
-    case accountExternalAccountUpdated = "account.external_account.updated"
-    case accountUpdated = "account.updated"
-    case applicationFeeCreated = "application_fee.created"
-    case applicationFeeRefundUpdated = "application_fee.refund.updated"
-    case applicationFeeRefunded = "application_fee.refunded"
-    case appsInstallCreated = "apps.install.created"
-    case appsInstallDeleted = "apps.install.deleted"
-    case appsInstallUpdated = "apps.install.updated"
-    case balanceAvailable = "balance.available"
-    case balanceSettingsUpdated = "balance_settings.updated"
-    case billingAlertTriggered = "billing.alert.triggered"
-    case billingCreditBalanceTransactionCreated = "billing.credit_balance_transaction.created"
-    case billingCreditGrantCreated = "billing.credit_grant.created"
-    case billingCreditGrantUpdated = "billing.credit_grant.updated"
-    case billingMeterCreated = "billing.meter.created"
-    case billingMeterDeactivated = "billing.meter.deactivated"
-    case billingMeterReactivated = "billing.meter.reactivated"
-    case billingMeterUpdated = "billing.meter.updated"
-    case billingPortalConfigurationCreated = "billing_portal.configuration.created"
-    case billingPortalConfigurationUpdated = "billing_portal.configuration.updated"
-    case billingPortalSessionCreated = "billing_portal.session.created"
-    case capabilityUpdated = "capability.updated"
-    case cashBalanceFundsAvailable = "cash_balance.funds_available"
-    case chargeCaptured = "charge.captured"
-    case chargeDisputeClosed = "charge.dispute.closed"
-    case chargeDisputeCreated = "charge.dispute.created"
-    case chargeDisputeFundsReinstated = "charge.dispute.funds_reinstated"
-    case chargeDisputeFundsWithdrawn = "charge.dispute.funds_withdrawn"
-    case chargeDisputeUpdated = "charge.dispute.updated"
-    case chargeExpired = "charge.expired"
-    case chargeFailed = "charge.failed"
-    case chargePending = "charge.pending"
-    case chargeRefundUpdated = "charge.refund.updated"
-    case chargeRefunded = "charge.refunded"
-    case chargeSucceeded = "charge.succeeded"
-    case chargeUpdated = "charge.updated"
-    case checkoutSessionAsyncPaymentFailed = "checkout.session.async_payment_failed"
-    case checkoutSessionAsyncPaymentSucceeded = "checkout.session.async_payment_succeeded"
-    case checkoutSessionCompleted = "checkout.session.completed"
-    case checkoutSessionExpired = "checkout.session.expired"
-    case climateOrderCanceled = "climate.order.canceled"
-    case climateOrderCreated = "climate.order.created"
-    case climateOrderDelayed = "climate.order.delayed"
-    case climateOrderDelivered = "climate.order.delivered"
-    case climateOrderProductSubstituted = "climate.order.product_substituted"
-    case climateProductCreated = "climate.product.created"
-    case climateProductPricingUpdated = "climate.product.pricing_updated"
-    case couponCreated = "coupon.created"
-    case couponDeleted = "coupon.deleted"
-    case couponUpdated = "coupon.updated"
-    case creditNoteCreated = "credit_note.created"
-    case creditNoteUpdated = "credit_note.updated"
-    case creditNoteVoided = "credit_note.voided"
-    case customerCreated = "customer.created"
-    case customerDeleted = "customer.deleted"
-    case customerDiscountCreated = "customer.discount.created"
-    case customerDiscountDeleted = "customer.discount.deleted"
-    case customerDiscountUpdated = "customer.discount.updated"
-    case customerSourceCreated = "customer.source.created"
-    case customerSourceDeleted = "customer.source.deleted"
-    case customerSourceExpiring = "customer.source.expiring"
-    case customerSourceUpdated = "customer.source.updated"
-    case customerSubscriptionCreated = "customer.subscription.created"
-    case customerSubscriptionDeleted = "customer.subscription.deleted"
-    case customerSubscriptionPaused = "customer.subscription.paused"
-    case customerSubscriptionPendingUpdateApplied = "customer.subscription.pending_update_applied"
-    case customerSubscriptionPendingUpdateExpired = "customer.subscription.pending_update_expired"
-    case customerSubscriptionResumed = "customer.subscription.resumed"
-    case customerSubscriptionTrialWillEnd = "customer.subscription.trial_will_end"
-    case customerSubscriptionUpdated = "customer.subscription.updated"
-    case customerTaxIdCreated = "customer.tax_id.created"
-    case customerTaxIdDeleted = "customer.tax_id.deleted"
-    case customerTaxIdUpdated = "customer.tax_id.updated"
-    case customerUpdated = "customer.updated"
-    case customerCashBalanceTransactionCreated = "customer_cash_balance_transaction.created"
-    case entitlementsActiveEntitlementSummaryUpdated = "entitlements.active_entitlement_summary.updated"
-    case fileCreated = "file.created"
-    case financialConnectionsAccountAccountNumbersUpdated = "financial_connections.account.account_numbers_updated"
-    case financialConnectionsAccountCreated = "financial_connections.account.created"
-    case financialConnectionsAccountDeactivated = "financial_connections.account.deactivated"
-    case financialConnectionsAccountDisconnected = "financial_connections.account.disconnected"
-    case financialConnectionsAccountExpectedDeactivationDateUpdated = "financial_connections.account.expected_deactivation_date_updated"
-    case financialConnectionsAccountReactivated = "financial_connections.account.reactivated"
-    case financialConnectionsAccountRefreshedBalance = "financial_connections.account.refreshed_balance"
-    case financialConnectionsAccountRefreshedOwnership = "financial_connections.account.refreshed_ownership"
-    case financialConnectionsAccountRefreshedTransactions = "financial_connections.account.refreshed_transactions"
-    case financialConnectionsAccountSupportedPaymentMethodTypesUpdated = "financial_connections.account.supported_payment_method_types_updated"
-    case financialConnectionsAccountUpcomingAccountNumberExpiry = "financial_connections.account.upcoming_account_number_expiry"
-    case financialConnectionsAccountUpcomingDeactivation = "financial_connections.account.upcoming_deactivation"
-    case financialConnectionsAuthorizationExpectedDeactivationDateUpdated = "financial_connections.authorization.expected_deactivation_date_updated"
-    case financialConnectionsAuthorizationUpcomingDeactivation = "financial_connections.authorization.upcoming_deactivation"
-    case identityVerificationSessionCanceled = "identity.verification_session.canceled"
-    case identityVerificationSessionCreated = "identity.verification_session.created"
-    case identityVerificationSessionProcessing = "identity.verification_session.processing"
-    case identityVerificationSessionRedacted = "identity.verification_session.redacted"
-    case identityVerificationSessionRequiresInput = "identity.verification_session.requires_input"
-    case identityVerificationSessionVerified = "identity.verification_session.verified"
-    case invoiceCreated = "invoice.created"
-    case invoiceDeleted = "invoice.deleted"
-    case invoiceFinalizationFailed = "invoice.finalization_failed"
-    case invoiceFinalized = "invoice.finalized"
-    case invoiceMarkedUncollectible = "invoice.marked_uncollectible"
-    case invoiceOverdue = "invoice.overdue"
-    case invoiceOverpaid = "invoice.overpaid"
-    case invoicePaid = "invoice.paid"
-    case invoicePaymentActionRequired = "invoice.payment_action_required"
-    case invoicePaymentAttemptRequired = "invoice.payment_attempt_required"
-    case invoicePaymentFailed = "invoice.payment_failed"
-    case invoicePaymentSucceeded = "invoice.payment_succeeded"
-    case invoiceSent = "invoice.sent"
-    case invoiceUpcoming = "invoice.upcoming"
-    case invoiceUpdated = "invoice.updated"
-    case invoiceVoided = "invoice.voided"
-    case invoiceWillBeDue = "invoice.will_be_due"
-    case invoicePaymentPaid = "invoice_payment.paid"
-    case invoiceitemCreated = "invoiceitem.created"
-    case invoiceitemDeleted = "invoiceitem.deleted"
-    case issuingAuthorizationCreated = "issuing_authorization.created"
-    case issuingAuthorizationRequest = "issuing_authorization.request"
-    case issuingAuthorizationUpdated = "issuing_authorization.updated"
-    case issuingCardCreated = "issuing_card.created"
-    case issuingCardUpdated = "issuing_card.updated"
-    case issuingCardholderCreated = "issuing_cardholder.created"
-    case issuingCardholderUpdated = "issuing_cardholder.updated"
-    case issuingDisputeClosed = "issuing_dispute.closed"
-    case issuingDisputeCreated = "issuing_dispute.created"
-    case issuingDisputeFundsReinstated = "issuing_dispute.funds_reinstated"
-    case issuingDisputeFundsRescinded = "issuing_dispute.funds_rescinded"
-    case issuingDisputeSubmitted = "issuing_dispute.submitted"
-    case issuingDisputeUpdated = "issuing_dispute.updated"
-    case issuingPersonalizationDesignActivated = "issuing_personalization_design.activated"
-    case issuingPersonalizationDesignDeactivated = "issuing_personalization_design.deactivated"
-    case issuingPersonalizationDesignRejected = "issuing_personalization_design.rejected"
-    case issuingPersonalizationDesignUpdated = "issuing_personalization_design.updated"
-    case issuingTokenCreated = "issuing_token.created"
-    case issuingTokenUpdated = "issuing_token.updated"
-    case issuingTransactionCreated = "issuing_transaction.created"
-    case issuingTransactionPurchaseDetailsReceiptUpdated = "issuing_transaction.purchase_details_receipt_updated"
-    case issuingTransactionUpdated = "issuing_transaction.updated"
-    case mandateUpdated = "mandate.updated"
-    case paymentIntentAmountCapturableUpdated = "payment_intent.amount_capturable_updated"
-    case paymentIntentCanceled = "payment_intent.canceled"
-    case paymentIntentCreated = "payment_intent.created"
-    case paymentIntentPartiallyFunded = "payment_intent.partially_funded"
-    case paymentIntentPaymentFailed = "payment_intent.payment_failed"
-    case paymentIntentProcessing = "payment_intent.processing"
-    case paymentIntentRequiresAction = "payment_intent.requires_action"
-    case paymentIntentSucceeded = "payment_intent.succeeded"
-    case paymentLinkCreated = "payment_link.created"
-    case paymentLinkUpdated = "payment_link.updated"
-    case paymentMethodAttached = "payment_method.attached"
-    case paymentMethodAutomaticallyUpdated = "payment_method.automatically_updated"
-    case paymentMethodDetached = "payment_method.detached"
-    case paymentMethodUpdated = "payment_method.updated"
-    case payoutCanceled = "payout.canceled"
-    case payoutCreated = "payout.created"
-    case payoutFailed = "payout.failed"
-    case payoutPaid = "payout.paid"
-    case payoutReconciliationCompleted = "payout.reconciliation_completed"
-    case payoutUpdated = "payout.updated"
-    case personCreated = "person.created"
-    case personDeleted = "person.deleted"
-    case personUpdated = "person.updated"
-    case planCreated = "plan.created"
-    case planDeleted = "plan.deleted"
-    case planUpdated = "plan.updated"
-    case priceCreated = "price.created"
-    case priceDeleted = "price.deleted"
-    case priceUpdated = "price.updated"
-    case productCreated = "product.created"
-    case productDeleted = "product.deleted"
-    case productUpdated = "product.updated"
-    case promotionCodeCreated = "promotion_code.created"
-    case promotionCodeUpdated = "promotion_code.updated"
-    case quoteAccepted = "quote.accepted"
-    case quoteCanceled = "quote.canceled"
-    case quoteCreated = "quote.created"
-    case quoteFinalized = "quote.finalized"
-    case radarEarlyFraudWarningCreated = "radar.early_fraud_warning.created"
-    case radarEarlyFraudWarningUpdated = "radar.early_fraud_warning.updated"
-    case refundCreated = "refund.created"
-    case refundFailed = "refund.failed"
-    case refundUpdated = "refund.updated"
-    case reportingReportRunFailed = "reporting.report_run.failed"
-    case reportingReportRunSucceeded = "reporting.report_run.succeeded"
-    case reportingReportTypeUpdated = "reporting.report_type.updated"
-    case reserveHoldCreated = "reserve.hold.created"
-    case reserveHoldUpdated = "reserve.hold.updated"
-    case reservePlanCreated = "reserve.plan.created"
-    case reservePlanDisabled = "reserve.plan.disabled"
-    case reservePlanExpired = "reserve.plan.expired"
-    case reservePlanUpdated = "reserve.plan.updated"
-    case reserveReleaseCreated = "reserve.release.created"
-    case reviewClosed = "review.closed"
-    case reviewOpened = "review.opened"
-    case setupIntentCanceled = "setup_intent.canceled"
-    case setupIntentCreated = "setup_intent.created"
-    case setupIntentRequiresAction = "setup_intent.requires_action"
-    case setupIntentSetupFailed = "setup_intent.setup_failed"
-    case setupIntentSucceeded = "setup_intent.succeeded"
-    case sigmaScheduledQueryRunCreated = "sigma.scheduled_query_run.created"
-    case sourceCanceled = "source.canceled"
-    case sourceChargeable = "source.chargeable"
-    case sourceFailed = "source.failed"
-    case sourceMandateNotification = "source.mandate_notification"
-    case sourceRefundAttributesRequired = "source.refund_attributes_required"
-    case sourceTransactionCreated = "source.transaction.created"
-    case sourceTransactionUpdated = "source.transaction.updated"
-    case subscriptionScheduleAborted = "subscription_schedule.aborted"
-    case subscriptionScheduleCanceled = "subscription_schedule.canceled"
-    case subscriptionScheduleCompleted = "subscription_schedule.completed"
-    case subscriptionScheduleCreated = "subscription_schedule.created"
-    case subscriptionScheduleExpiring = "subscription_schedule.expiring"
-    case subscriptionScheduleReleased = "subscription_schedule.released"
-    case subscriptionScheduleUpdated = "subscription_schedule.updated"
-    case taxSettingsUpdated = "tax.settings.updated"
-    case taxRateCreated = "tax_rate.created"
-    case taxRateUpdated = "tax_rate.updated"
-    case terminalReaderActionFailed = "terminal.reader.action_failed"
-    case terminalReaderActionSucceeded = "terminal.reader.action_succeeded"
-    case terminalReaderActionUpdated = "terminal.reader.action_updated"
-    case testHelpersTestClockAdvancing = "test_helpers.test_clock.advancing"
-    case testHelpersTestClockCreated = "test_helpers.test_clock.created"
-    case testHelpersTestClockDeleted = "test_helpers.test_clock.deleted"
-    case testHelpersTestClockInternalFailure = "test_helpers.test_clock.internal_failure"
-    case testHelpersTestClockReady = "test_helpers.test_clock.ready"
-    case threeDSecureAuthenticationCanceled = "three_d_secure.authentication.canceled"
-    case threeDSecureAuthenticationChallengeStarted = "three_d_secure.authentication.challenge_started"
-    case threeDSecureAuthenticationErrored = "three_d_secure.authentication.errored"
-    case threeDSecureAuthenticationFailed = "three_d_secure.authentication.failed"
-    case threeDSecureAuthenticationRequiresChallenge = "three_d_secure.authentication.requires_challenge"
-    case threeDSecureAuthenticationRequiresSubmission = "three_d_secure.authentication.requires_submission"
-    case threeDSecureAuthenticationSucceeded = "three_d_secure.authentication.succeeded"
-    case topupCanceled = "topup.canceled"
-    case topupCreated = "topup.created"
-    case topupFailed = "topup.failed"
-    case topupReversed = "topup.reversed"
-    case topupSucceeded = "topup.succeeded"
-    case transferCreated = "transfer.created"
-    case transferReversed = "transfer.reversed"
-    case transferUpdated = "transfer.updated"
-    case treasuryCreditReversalCreated = "treasury.credit_reversal.created"
-    case treasuryCreditReversalPosted = "treasury.credit_reversal.posted"
-    case treasuryDebitReversalCompleted = "treasury.debit_reversal.completed"
-    case treasuryDebitReversalCreated = "treasury.debit_reversal.created"
-    case treasuryDebitReversalInitialCreditGranted = "treasury.debit_reversal.initial_credit_granted"
-    case treasuryFinancialAccountClosed = "treasury.financial_account.closed"
-    case treasuryFinancialAccountCreated = "treasury.financial_account.created"
-    case treasuryFinancialAccountFeaturesStatusUpdated = "treasury.financial_account.features_status_updated"
-    case treasuryInboundTransferCanceled = "treasury.inbound_transfer.canceled"
-    case treasuryInboundTransferCreated = "treasury.inbound_transfer.created"
-    case treasuryInboundTransferFailed = "treasury.inbound_transfer.failed"
-    case treasuryInboundTransferSucceeded = "treasury.inbound_transfer.succeeded"
-    case treasuryOutboundPaymentCanceled = "treasury.outbound_payment.canceled"
-    case treasuryOutboundPaymentCreated = "treasury.outbound_payment.created"
-    case treasuryOutboundPaymentExpectedArrivalDateUpdated = "treasury.outbound_payment.expected_arrival_date_updated"
-    case treasuryOutboundPaymentFailed = "treasury.outbound_payment.failed"
-    case treasuryOutboundPaymentPosted = "treasury.outbound_payment.posted"
-    case treasuryOutboundPaymentReturned = "treasury.outbound_payment.returned"
-    case treasuryOutboundPaymentTrackingDetailsUpdated = "treasury.outbound_payment.tracking_details_updated"
-    case treasuryOutboundTransferCanceled = "treasury.outbound_transfer.canceled"
-    case treasuryOutboundTransferCreated = "treasury.outbound_transfer.created"
-    case treasuryOutboundTransferExpectedArrivalDateUpdated = "treasury.outbound_transfer.expected_arrival_date_updated"
-    case treasuryOutboundTransferFailed = "treasury.outbound_transfer.failed"
-    case treasuryOutboundTransferPosted = "treasury.outbound_transfer.posted"
-    case treasuryOutboundTransferReturned = "treasury.outbound_transfer.returned"
-    case treasuryOutboundTransferTrackingDetailsUpdated = "treasury.outbound_transfer.tracking_details_updated"
-    case treasuryReceivedCreditCreated = "treasury.received_credit.created"
-    case treasuryReceivedCreditFailed = "treasury.received_credit.failed"
-    case treasuryReceivedCreditSucceeded = "treasury.received_credit.succeeded"
-    case treasuryReceivedDebitCreated = "treasury.received_debit.created"
+public struct WebhookEndpointCreateEnabledEvents: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var all: Self { .init(rawValue: "*") }
+    public static var accountApplicationAuthorized: Self { .init(rawValue: "account.application.authorized") }
+    public static var accountApplicationDeauthorized: Self { .init(rawValue: "account.application.deauthorized") }
+    public static var accountExternalAccountCreated: Self { .init(rawValue: "account.external_account.created") }
+    public static var accountExternalAccountDeleted: Self { .init(rawValue: "account.external_account.deleted") }
+    public static var accountExternalAccountUpdated: Self { .init(rawValue: "account.external_account.updated") }
+    public static var accountUpdated: Self { .init(rawValue: "account.updated") }
+    public static var applicationFeeCreated: Self { .init(rawValue: "application_fee.created") }
+    public static var applicationFeeRefundUpdated: Self { .init(rawValue: "application_fee.refund.updated") }
+    public static var applicationFeeRefunded: Self { .init(rawValue: "application_fee.refunded") }
+    public static var appsInstallCreated: Self { .init(rawValue: "apps.install.created") }
+    public static var appsInstallDeleted: Self { .init(rawValue: "apps.install.deleted") }
+    public static var appsInstallUpdated: Self { .init(rawValue: "apps.install.updated") }
+    public static var balanceAvailable: Self { .init(rawValue: "balance.available") }
+    public static var balanceSettingsUpdated: Self { .init(rawValue: "balance_settings.updated") }
+    public static var billingAlertTriggered: Self { .init(rawValue: "billing.alert.triggered") }
+    public static var billingCreditBalanceTransactionCreated: Self { .init(rawValue: "billing.credit_balance_transaction.created") }
+    public static var billingCreditGrantCreated: Self { .init(rawValue: "billing.credit_grant.created") }
+    public static var billingCreditGrantUpdated: Self { .init(rawValue: "billing.credit_grant.updated") }
+    public static var billingMeterCreated: Self { .init(rawValue: "billing.meter.created") }
+    public static var billingMeterDeactivated: Self { .init(rawValue: "billing.meter.deactivated") }
+    public static var billingMeterReactivated: Self { .init(rawValue: "billing.meter.reactivated") }
+    public static var billingMeterUpdated: Self { .init(rawValue: "billing.meter.updated") }
+    public static var billingPortalConfigurationCreated: Self { .init(rawValue: "billing_portal.configuration.created") }
+    public static var billingPortalConfigurationUpdated: Self { .init(rawValue: "billing_portal.configuration.updated") }
+    public static var billingPortalSessionCreated: Self { .init(rawValue: "billing_portal.session.created") }
+    public static var capabilityUpdated: Self { .init(rawValue: "capability.updated") }
+    public static var cashBalanceFundsAvailable: Self { .init(rawValue: "cash_balance.funds_available") }
+    public static var chargeCaptured: Self { .init(rawValue: "charge.captured") }
+    public static var chargeDisputeClosed: Self { .init(rawValue: "charge.dispute.closed") }
+    public static var chargeDisputeCreated: Self { .init(rawValue: "charge.dispute.created") }
+    public static var chargeDisputeFundsReinstated: Self { .init(rawValue: "charge.dispute.funds_reinstated") }
+    public static var chargeDisputeFundsWithdrawn: Self { .init(rawValue: "charge.dispute.funds_withdrawn") }
+    public static var chargeDisputeUpdated: Self { .init(rawValue: "charge.dispute.updated") }
+    public static var chargeExpired: Self { .init(rawValue: "charge.expired") }
+    public static var chargeFailed: Self { .init(rawValue: "charge.failed") }
+    public static var chargePending: Self { .init(rawValue: "charge.pending") }
+    public static var chargeRefundUpdated: Self { .init(rawValue: "charge.refund.updated") }
+    public static var chargeRefunded: Self { .init(rawValue: "charge.refunded") }
+    public static var chargeSucceeded: Self { .init(rawValue: "charge.succeeded") }
+    public static var chargeUpdated: Self { .init(rawValue: "charge.updated") }
+    public static var checkoutSessionAsyncPaymentFailed: Self { .init(rawValue: "checkout.session.async_payment_failed") }
+    public static var checkoutSessionAsyncPaymentSucceeded: Self { .init(rawValue: "checkout.session.async_payment_succeeded") }
+    public static var checkoutSessionCompleted: Self { .init(rawValue: "checkout.session.completed") }
+    public static var checkoutSessionExpired: Self { .init(rawValue: "checkout.session.expired") }
+    public static var climateOrderCanceled: Self { .init(rawValue: "climate.order.canceled") }
+    public static var climateOrderCreated: Self { .init(rawValue: "climate.order.created") }
+    public static var climateOrderDelayed: Self { .init(rawValue: "climate.order.delayed") }
+    public static var climateOrderDelivered: Self { .init(rawValue: "climate.order.delivered") }
+    public static var climateOrderProductSubstituted: Self { .init(rawValue: "climate.order.product_substituted") }
+    public static var climateProductCreated: Self { .init(rawValue: "climate.product.created") }
+    public static var climateProductPricingUpdated: Self { .init(rawValue: "climate.product.pricing_updated") }
+    public static var couponCreated: Self { .init(rawValue: "coupon.created") }
+    public static var couponDeleted: Self { .init(rawValue: "coupon.deleted") }
+    public static var couponUpdated: Self { .init(rawValue: "coupon.updated") }
+    public static var creditNoteCreated: Self { .init(rawValue: "credit_note.created") }
+    public static var creditNoteUpdated: Self { .init(rawValue: "credit_note.updated") }
+    public static var creditNoteVoided: Self { .init(rawValue: "credit_note.voided") }
+    public static var customerCreated: Self { .init(rawValue: "customer.created") }
+    public static var customerDeleted: Self { .init(rawValue: "customer.deleted") }
+    public static var customerDiscountCreated: Self { .init(rawValue: "customer.discount.created") }
+    public static var customerDiscountDeleted: Self { .init(rawValue: "customer.discount.deleted") }
+    public static var customerDiscountUpdated: Self { .init(rawValue: "customer.discount.updated") }
+    public static var customerSourceCreated: Self { .init(rawValue: "customer.source.created") }
+    public static var customerSourceDeleted: Self { .init(rawValue: "customer.source.deleted") }
+    public static var customerSourceExpiring: Self { .init(rawValue: "customer.source.expiring") }
+    public static var customerSourceUpdated: Self { .init(rawValue: "customer.source.updated") }
+    public static var customerSubscriptionCreated: Self { .init(rawValue: "customer.subscription.created") }
+    public static var customerSubscriptionDeleted: Self { .init(rawValue: "customer.subscription.deleted") }
+    public static var customerSubscriptionPaused: Self { .init(rawValue: "customer.subscription.paused") }
+    public static var customerSubscriptionPendingUpdateApplied: Self { .init(rawValue: "customer.subscription.pending_update_applied") }
+    public static var customerSubscriptionPendingUpdateExpired: Self { .init(rawValue: "customer.subscription.pending_update_expired") }
+    public static var customerSubscriptionResumed: Self { .init(rawValue: "customer.subscription.resumed") }
+    public static var customerSubscriptionTrialWillEnd: Self { .init(rawValue: "customer.subscription.trial_will_end") }
+    public static var customerSubscriptionUpdated: Self { .init(rawValue: "customer.subscription.updated") }
+    public static var customerTaxIdCreated: Self { .init(rawValue: "customer.tax_id.created") }
+    public static var customerTaxIdDeleted: Self { .init(rawValue: "customer.tax_id.deleted") }
+    public static var customerTaxIdUpdated: Self { .init(rawValue: "customer.tax_id.updated") }
+    public static var customerUpdated: Self { .init(rawValue: "customer.updated") }
+    public static var customerCashBalanceTransactionCreated: Self { .init(rawValue: "customer_cash_balance_transaction.created") }
+    public static var entitlementsActiveEntitlementSummaryUpdated: Self { .init(rawValue: "entitlements.active_entitlement_summary.updated") }
+    public static var fileCreated: Self { .init(rawValue: "file.created") }
+    public static var financialConnectionsAccountAccountNumbersUpdated: Self { .init(rawValue: "financial_connections.account.account_numbers_updated") }
+    public static var financialConnectionsAccountCreated: Self { .init(rawValue: "financial_connections.account.created") }
+    public static var financialConnectionsAccountDeactivated: Self { .init(rawValue: "financial_connections.account.deactivated") }
+    public static var financialConnectionsAccountDisconnected: Self { .init(rawValue: "financial_connections.account.disconnected") }
+    public static var financialConnectionsAccountExpectedDeactivationDateUpdated: Self { .init(rawValue: "financial_connections.account.expected_deactivation_date_updated") }
+    public static var financialConnectionsAccountReactivated: Self { .init(rawValue: "financial_connections.account.reactivated") }
+    public static var financialConnectionsAccountRefreshedBalance: Self { .init(rawValue: "financial_connections.account.refreshed_balance") }
+    public static var financialConnectionsAccountRefreshedOwnership: Self { .init(rawValue: "financial_connections.account.refreshed_ownership") }
+    public static var financialConnectionsAccountRefreshedTransactions: Self { .init(rawValue: "financial_connections.account.refreshed_transactions") }
+    public static var financialConnectionsAccountSupportedPaymentMethodTypesUpdated: Self { .init(rawValue: "financial_connections.account.supported_payment_method_types_updated") }
+    public static var financialConnectionsAccountUpcomingAccountNumberExpiry: Self { .init(rawValue: "financial_connections.account.upcoming_account_number_expiry") }
+    public static var financialConnectionsAccountUpcomingDeactivation: Self { .init(rawValue: "financial_connections.account.upcoming_deactivation") }
+    public static var financialConnectionsAuthorizationExpectedDeactivationDateUpdated: Self { .init(rawValue: "financial_connections.authorization.expected_deactivation_date_updated") }
+    public static var financialConnectionsAuthorizationUpcomingDeactivation: Self { .init(rawValue: "financial_connections.authorization.upcoming_deactivation") }
+    public static var identityVerificationSessionCanceled: Self { .init(rawValue: "identity.verification_session.canceled") }
+    public static var identityVerificationSessionCreated: Self { .init(rawValue: "identity.verification_session.created") }
+    public static var identityVerificationSessionProcessing: Self { .init(rawValue: "identity.verification_session.processing") }
+    public static var identityVerificationSessionRedacted: Self { .init(rawValue: "identity.verification_session.redacted") }
+    public static var identityVerificationSessionRequiresInput: Self { .init(rawValue: "identity.verification_session.requires_input") }
+    public static var identityVerificationSessionVerified: Self { .init(rawValue: "identity.verification_session.verified") }
+    public static var invoiceCreated: Self { .init(rawValue: "invoice.created") }
+    public static var invoiceDeleted: Self { .init(rawValue: "invoice.deleted") }
+    public static var invoiceFinalizationFailed: Self { .init(rawValue: "invoice.finalization_failed") }
+    public static var invoiceFinalized: Self { .init(rawValue: "invoice.finalized") }
+    public static var invoiceMarkedUncollectible: Self { .init(rawValue: "invoice.marked_uncollectible") }
+    public static var invoiceOverdue: Self { .init(rawValue: "invoice.overdue") }
+    public static var invoiceOverpaid: Self { .init(rawValue: "invoice.overpaid") }
+    public static var invoicePaid: Self { .init(rawValue: "invoice.paid") }
+    public static var invoicePaymentActionRequired: Self { .init(rawValue: "invoice.payment_action_required") }
+    public static var invoicePaymentAttemptRequired: Self { .init(rawValue: "invoice.payment_attempt_required") }
+    public static var invoicePaymentFailed: Self { .init(rawValue: "invoice.payment_failed") }
+    public static var invoicePaymentSucceeded: Self { .init(rawValue: "invoice.payment_succeeded") }
+    public static var invoiceSent: Self { .init(rawValue: "invoice.sent") }
+    public static var invoiceUpcoming: Self { .init(rawValue: "invoice.upcoming") }
+    public static var invoiceUpdated: Self { .init(rawValue: "invoice.updated") }
+    public static var invoiceVoided: Self { .init(rawValue: "invoice.voided") }
+    public static var invoiceWillBeDue: Self { .init(rawValue: "invoice.will_be_due") }
+    public static var invoicePaymentPaid: Self { .init(rawValue: "invoice_payment.paid") }
+    public static var invoiceitemCreated: Self { .init(rawValue: "invoiceitem.created") }
+    public static var invoiceitemDeleted: Self { .init(rawValue: "invoiceitem.deleted") }
+    public static var issuingAuthorizationCreated: Self { .init(rawValue: "issuing_authorization.created") }
+    public static var issuingAuthorizationRequest: Self { .init(rawValue: "issuing_authorization.request") }
+    public static var issuingAuthorizationUpdated: Self { .init(rawValue: "issuing_authorization.updated") }
+    public static var issuingCardCreated: Self { .init(rawValue: "issuing_card.created") }
+    public static var issuingCardUpdated: Self { .init(rawValue: "issuing_card.updated") }
+    public static var issuingCardholderCreated: Self { .init(rawValue: "issuing_cardholder.created") }
+    public static var issuingCardholderUpdated: Self { .init(rawValue: "issuing_cardholder.updated") }
+    public static var issuingDisputeClosed: Self { .init(rawValue: "issuing_dispute.closed") }
+    public static var issuingDisputeCreated: Self { .init(rawValue: "issuing_dispute.created") }
+    public static var issuingDisputeFundsReinstated: Self { .init(rawValue: "issuing_dispute.funds_reinstated") }
+    public static var issuingDisputeFundsRescinded: Self { .init(rawValue: "issuing_dispute.funds_rescinded") }
+    public static var issuingDisputeSubmitted: Self { .init(rawValue: "issuing_dispute.submitted") }
+    public static var issuingDisputeUpdated: Self { .init(rawValue: "issuing_dispute.updated") }
+    public static var issuingPersonalizationDesignActivated: Self { .init(rawValue: "issuing_personalization_design.activated") }
+    public static var issuingPersonalizationDesignDeactivated: Self { .init(rawValue: "issuing_personalization_design.deactivated") }
+    public static var issuingPersonalizationDesignRejected: Self { .init(rawValue: "issuing_personalization_design.rejected") }
+    public static var issuingPersonalizationDesignUpdated: Self { .init(rawValue: "issuing_personalization_design.updated") }
+    public static var issuingTokenCreated: Self { .init(rawValue: "issuing_token.created") }
+    public static var issuingTokenUpdated: Self { .init(rawValue: "issuing_token.updated") }
+    public static var issuingTransactionCreated: Self { .init(rawValue: "issuing_transaction.created") }
+    public static var issuingTransactionPurchaseDetailsReceiptUpdated: Self { .init(rawValue: "issuing_transaction.purchase_details_receipt_updated") }
+    public static var issuingTransactionUpdated: Self { .init(rawValue: "issuing_transaction.updated") }
+    public static var mandateUpdated: Self { .init(rawValue: "mandate.updated") }
+    public static var paymentIntentAmountCapturableUpdated: Self { .init(rawValue: "payment_intent.amount_capturable_updated") }
+    public static var paymentIntentCanceled: Self { .init(rawValue: "payment_intent.canceled") }
+    public static var paymentIntentCreated: Self { .init(rawValue: "payment_intent.created") }
+    public static var paymentIntentPartiallyFunded: Self { .init(rawValue: "payment_intent.partially_funded") }
+    public static var paymentIntentPaymentFailed: Self { .init(rawValue: "payment_intent.payment_failed") }
+    public static var paymentIntentProcessing: Self { .init(rawValue: "payment_intent.processing") }
+    public static var paymentIntentRequiresAction: Self { .init(rawValue: "payment_intent.requires_action") }
+    public static var paymentIntentSucceeded: Self { .init(rawValue: "payment_intent.succeeded") }
+    public static var paymentLinkCreated: Self { .init(rawValue: "payment_link.created") }
+    public static var paymentLinkUpdated: Self { .init(rawValue: "payment_link.updated") }
+    public static var paymentMethodAttached: Self { .init(rawValue: "payment_method.attached") }
+    public static var paymentMethodAutomaticallyUpdated: Self { .init(rawValue: "payment_method.automatically_updated") }
+    public static var paymentMethodDetached: Self { .init(rawValue: "payment_method.detached") }
+    public static var paymentMethodUpdated: Self { .init(rawValue: "payment_method.updated") }
+    public static var payoutCanceled: Self { .init(rawValue: "payout.canceled") }
+    public static var payoutCreated: Self { .init(rawValue: "payout.created") }
+    public static var payoutFailed: Self { .init(rawValue: "payout.failed") }
+    public static var payoutPaid: Self { .init(rawValue: "payout.paid") }
+    public static var payoutReconciliationCompleted: Self { .init(rawValue: "payout.reconciliation_completed") }
+    public static var payoutUpdated: Self { .init(rawValue: "payout.updated") }
+    public static var personCreated: Self { .init(rawValue: "person.created") }
+    public static var personDeleted: Self { .init(rawValue: "person.deleted") }
+    public static var personUpdated: Self { .init(rawValue: "person.updated") }
+    public static var planCreated: Self { .init(rawValue: "plan.created") }
+    public static var planDeleted: Self { .init(rawValue: "plan.deleted") }
+    public static var planUpdated: Self { .init(rawValue: "plan.updated") }
+    public static var priceCreated: Self { .init(rawValue: "price.created") }
+    public static var priceDeleted: Self { .init(rawValue: "price.deleted") }
+    public static var priceUpdated: Self { .init(rawValue: "price.updated") }
+    public static var productCreated: Self { .init(rawValue: "product.created") }
+    public static var productDeleted: Self { .init(rawValue: "product.deleted") }
+    public static var productUpdated: Self { .init(rawValue: "product.updated") }
+    public static var promotionCodeCreated: Self { .init(rawValue: "promotion_code.created") }
+    public static var promotionCodeUpdated: Self { .init(rawValue: "promotion_code.updated") }
+    public static var quoteAccepted: Self { .init(rawValue: "quote.accepted") }
+    public static var quoteCanceled: Self { .init(rawValue: "quote.canceled") }
+    public static var quoteCreated: Self { .init(rawValue: "quote.created") }
+    public static var quoteFinalized: Self { .init(rawValue: "quote.finalized") }
+    public static var radarEarlyFraudWarningCreated: Self { .init(rawValue: "radar.early_fraud_warning.created") }
+    public static var radarEarlyFraudWarningUpdated: Self { .init(rawValue: "radar.early_fraud_warning.updated") }
+    public static var refundCreated: Self { .init(rawValue: "refund.created") }
+    public static var refundFailed: Self { .init(rawValue: "refund.failed") }
+    public static var refundUpdated: Self { .init(rawValue: "refund.updated") }
+    public static var reportingReportRunFailed: Self { .init(rawValue: "reporting.report_run.failed") }
+    public static var reportingReportRunSucceeded: Self { .init(rawValue: "reporting.report_run.succeeded") }
+    public static var reportingReportTypeUpdated: Self { .init(rawValue: "reporting.report_type.updated") }
+    public static var reserveHoldCreated: Self { .init(rawValue: "reserve.hold.created") }
+    public static var reserveHoldUpdated: Self { .init(rawValue: "reserve.hold.updated") }
+    public static var reservePlanCreated: Self { .init(rawValue: "reserve.plan.created") }
+    public static var reservePlanDisabled: Self { .init(rawValue: "reserve.plan.disabled") }
+    public static var reservePlanExpired: Self { .init(rawValue: "reserve.plan.expired") }
+    public static var reservePlanUpdated: Self { .init(rawValue: "reserve.plan.updated") }
+    public static var reserveReleaseCreated: Self { .init(rawValue: "reserve.release.created") }
+    public static var reviewClosed: Self { .init(rawValue: "review.closed") }
+    public static var reviewOpened: Self { .init(rawValue: "review.opened") }
+    public static var setupIntentCanceled: Self { .init(rawValue: "setup_intent.canceled") }
+    public static var setupIntentCreated: Self { .init(rawValue: "setup_intent.created") }
+    public static var setupIntentRequiresAction: Self { .init(rawValue: "setup_intent.requires_action") }
+    public static var setupIntentSetupFailed: Self { .init(rawValue: "setup_intent.setup_failed") }
+    public static var setupIntentSucceeded: Self { .init(rawValue: "setup_intent.succeeded") }
+    public static var sigmaScheduledQueryRunCreated: Self { .init(rawValue: "sigma.scheduled_query_run.created") }
+    public static var sourceCanceled: Self { .init(rawValue: "source.canceled") }
+    public static var sourceChargeable: Self { .init(rawValue: "source.chargeable") }
+    public static var sourceFailed: Self { .init(rawValue: "source.failed") }
+    public static var sourceMandateNotification: Self { .init(rawValue: "source.mandate_notification") }
+    public static var sourceRefundAttributesRequired: Self { .init(rawValue: "source.refund_attributes_required") }
+    public static var sourceTransactionCreated: Self { .init(rawValue: "source.transaction.created") }
+    public static var sourceTransactionUpdated: Self { .init(rawValue: "source.transaction.updated") }
+    public static var subscriptionScheduleAborted: Self { .init(rawValue: "subscription_schedule.aborted") }
+    public static var subscriptionScheduleCanceled: Self { .init(rawValue: "subscription_schedule.canceled") }
+    public static var subscriptionScheduleCompleted: Self { .init(rawValue: "subscription_schedule.completed") }
+    public static var subscriptionScheduleCreated: Self { .init(rawValue: "subscription_schedule.created") }
+    public static var subscriptionScheduleExpiring: Self { .init(rawValue: "subscription_schedule.expiring") }
+    public static var subscriptionScheduleReleased: Self { .init(rawValue: "subscription_schedule.released") }
+    public static var subscriptionScheduleUpdated: Self { .init(rawValue: "subscription_schedule.updated") }
+    public static var taxSettingsUpdated: Self { .init(rawValue: "tax.settings.updated") }
+    public static var taxRateCreated: Self { .init(rawValue: "tax_rate.created") }
+    public static var taxRateUpdated: Self { .init(rawValue: "tax_rate.updated") }
+    public static var terminalReaderActionFailed: Self { .init(rawValue: "terminal.reader.action_failed") }
+    public static var terminalReaderActionSucceeded: Self { .init(rawValue: "terminal.reader.action_succeeded") }
+    public static var terminalReaderActionUpdated: Self { .init(rawValue: "terminal.reader.action_updated") }
+    public static var testHelpersTestClockAdvancing: Self { .init(rawValue: "test_helpers.test_clock.advancing") }
+    public static var testHelpersTestClockCreated: Self { .init(rawValue: "test_helpers.test_clock.created") }
+    public static var testHelpersTestClockDeleted: Self { .init(rawValue: "test_helpers.test_clock.deleted") }
+    public static var testHelpersTestClockInternalFailure: Self { .init(rawValue: "test_helpers.test_clock.internal_failure") }
+    public static var testHelpersTestClockReady: Self { .init(rawValue: "test_helpers.test_clock.ready") }
+    public static var threeDSecureAuthenticationCanceled: Self { .init(rawValue: "three_d_secure.authentication.canceled") }
+    public static var threeDSecureAuthenticationChallengeStarted: Self { .init(rawValue: "three_d_secure.authentication.challenge_started") }
+    public static var threeDSecureAuthenticationErrored: Self { .init(rawValue: "three_d_secure.authentication.errored") }
+    public static var threeDSecureAuthenticationFailed: Self { .init(rawValue: "three_d_secure.authentication.failed") }
+    public static var threeDSecureAuthenticationRequiresChallenge: Self { .init(rawValue: "three_d_secure.authentication.requires_challenge") }
+    public static var threeDSecureAuthenticationRequiresSubmission: Self { .init(rawValue: "three_d_secure.authentication.requires_submission") }
+    public static var threeDSecureAuthenticationSucceeded: Self { .init(rawValue: "three_d_secure.authentication.succeeded") }
+    public static var topupCanceled: Self { .init(rawValue: "topup.canceled") }
+    public static var topupCreated: Self { .init(rawValue: "topup.created") }
+    public static var topupFailed: Self { .init(rawValue: "topup.failed") }
+    public static var topupReversed: Self { .init(rawValue: "topup.reversed") }
+    public static var topupSucceeded: Self { .init(rawValue: "topup.succeeded") }
+    public static var transferCreated: Self { .init(rawValue: "transfer.created") }
+    public static var transferReversed: Self { .init(rawValue: "transfer.reversed") }
+    public static var transferUpdated: Self { .init(rawValue: "transfer.updated") }
+    public static var treasuryCreditReversalCreated: Self { .init(rawValue: "treasury.credit_reversal.created") }
+    public static var treasuryCreditReversalPosted: Self { .init(rawValue: "treasury.credit_reversal.posted") }
+    public static var treasuryDebitReversalCompleted: Self { .init(rawValue: "treasury.debit_reversal.completed") }
+    public static var treasuryDebitReversalCreated: Self { .init(rawValue: "treasury.debit_reversal.created") }
+    public static var treasuryDebitReversalInitialCreditGranted: Self { .init(rawValue: "treasury.debit_reversal.initial_credit_granted") }
+    public static var treasuryFinancialAccountClosed: Self { .init(rawValue: "treasury.financial_account.closed") }
+    public static var treasuryFinancialAccountCreated: Self { .init(rawValue: "treasury.financial_account.created") }
+    public static var treasuryFinancialAccountFeaturesStatusUpdated: Self { .init(rawValue: "treasury.financial_account.features_status_updated") }
+    public static var treasuryInboundTransferCanceled: Self { .init(rawValue: "treasury.inbound_transfer.canceled") }
+    public static var treasuryInboundTransferCreated: Self { .init(rawValue: "treasury.inbound_transfer.created") }
+    public static var treasuryInboundTransferFailed: Self { .init(rawValue: "treasury.inbound_transfer.failed") }
+    public static var treasuryInboundTransferSucceeded: Self { .init(rawValue: "treasury.inbound_transfer.succeeded") }
+    public static var treasuryOutboundPaymentCanceled: Self { .init(rawValue: "treasury.outbound_payment.canceled") }
+    public static var treasuryOutboundPaymentCreated: Self { .init(rawValue: "treasury.outbound_payment.created") }
+    public static var treasuryOutboundPaymentExpectedArrivalDateUpdated: Self { .init(rawValue: "treasury.outbound_payment.expected_arrival_date_updated") }
+    public static var treasuryOutboundPaymentFailed: Self { .init(rawValue: "treasury.outbound_payment.failed") }
+    public static var treasuryOutboundPaymentPosted: Self { .init(rawValue: "treasury.outbound_payment.posted") }
+    public static var treasuryOutboundPaymentReturned: Self { .init(rawValue: "treasury.outbound_payment.returned") }
+    public static var treasuryOutboundPaymentTrackingDetailsUpdated: Self { .init(rawValue: "treasury.outbound_payment.tracking_details_updated") }
+    public static var treasuryOutboundTransferCanceled: Self { .init(rawValue: "treasury.outbound_transfer.canceled") }
+    public static var treasuryOutboundTransferCreated: Self { .init(rawValue: "treasury.outbound_transfer.created") }
+    public static var treasuryOutboundTransferExpectedArrivalDateUpdated: Self { .init(rawValue: "treasury.outbound_transfer.expected_arrival_date_updated") }
+    public static var treasuryOutboundTransferFailed: Self { .init(rawValue: "treasury.outbound_transfer.failed") }
+    public static var treasuryOutboundTransferPosted: Self { .init(rawValue: "treasury.outbound_transfer.posted") }
+    public static var treasuryOutboundTransferReturned: Self { .init(rawValue: "treasury.outbound_transfer.returned") }
+    public static var treasuryOutboundTransferTrackingDetailsUpdated: Self { .init(rawValue: "treasury.outbound_transfer.tracking_details_updated") }
+    public static var treasuryReceivedCreditCreated: Self { .init(rawValue: "treasury.received_credit.created") }
+    public static var treasuryReceivedCreditFailed: Self { .init(rawValue: "treasury.received_credit.failed") }
+    public static var treasuryReceivedCreditSucceeded: Self { .init(rawValue: "treasury.received_credit.succeeded") }
+    public static var treasuryReceivedDebitCreated: Self { .init(rawValue: "treasury.received_debit.created") }
 }
 
-public enum WebhookEndpointCreateApiVersion: String, Codable, Sendable {
-    case v20110101 = "2011-01-01"
-    case v20110621 = "2011-06-21"
-    case v20110628 = "2011-06-28"
-    case v20110801 = "2011-08-01"
-    case v20110915 = "2011-09-15"
-    case v20111117 = "2011-11-17"
-    case v20120223 = "2012-02-23"
-    case v20120325 = "2012-03-25"
-    case v20120618 = "2012-06-18"
-    case v20120628 = "2012-06-28"
-    case v20120709 = "2012-07-09"
-    case v20120924 = "2012-09-24"
-    case v20121026 = "2012-10-26"
-    case v20121107 = "2012-11-07"
-    case v20130211 = "2013-02-11"
-    case v20130213 = "2013-02-13"
-    case v20130705 = "2013-07-05"
-    case v20130812 = "2013-08-12"
-    case v20130813 = "2013-08-13"
-    case v20131029 = "2013-10-29"
-    case v20131203 = "2013-12-03"
-    case v20140131 = "2014-01-31"
-    case v20140313 = "2014-03-13"
-    case v20140328 = "2014-03-28"
-    case v20140519 = "2014-05-19"
-    case v20140613 = "2014-06-13"
-    case v20140617 = "2014-06-17"
-    case v20140722 = "2014-07-22"
-    case v20140726 = "2014-07-26"
-    case v20140804 = "2014-08-04"
-    case v20140820 = "2014-08-20"
-    case v20140908 = "2014-09-08"
-    case v20141007 = "2014-10-07"
-    case v20141105 = "2014-11-05"
-    case v20141120 = "2014-11-20"
-    case v20141208 = "2014-12-08"
-    case v20141217 = "2014-12-17"
-    case v20141222 = "2014-12-22"
-    case v20150111 = "2015-01-11"
-    case v20150126 = "2015-01-26"
-    case v20150210 = "2015-02-10"
-    case v20150216 = "2015-02-16"
-    case v20150218 = "2015-02-18"
-    case v20150324 = "2015-03-24"
-    case v20150407 = "2015-04-07"
-    case v20150615 = "2015-06-15"
-    case v20150707 = "2015-07-07"
-    case v20150713 = "2015-07-13"
-    case v20150728 = "2015-07-28"
-    case v20150807 = "2015-08-07"
-    case v20150819 = "2015-08-19"
-    case v20150903 = "2015-09-03"
-    case v20150908 = "2015-09-08"
-    case v20150923 = "2015-09-23"
-    case v20151001 = "2015-10-01"
-    case v20151012 = "2015-10-12"
-    case v20151016 = "2015-10-16"
-    case v20160203 = "2016-02-03"
-    case v20160219 = "2016-02-19"
-    case v20160222 = "2016-02-22"
-    case v20160223 = "2016-02-23"
-    case v20160229 = "2016-02-29"
-    case v20160307 = "2016-03-07"
-    case v20160615 = "2016-06-15"
-    case v20160706 = "2016-07-06"
-    case v20161019 = "2016-10-19"
-    case v20170127 = "2017-01-27"
-    case v20170214 = "2017-02-14"
-    case v20170406 = "2017-04-06"
-    case v20170525 = "2017-05-25"
-    case v20170605 = "2017-06-05"
-    case v20170815 = "2017-08-15"
-    case v20171214 = "2017-12-14"
-    case v20180123 = "2018-01-23"
-    case v20180205 = "2018-02-05"
-    case v20180206 = "2018-02-06"
-    case v20180228 = "2018-02-28"
-    case v20180521 = "2018-05-21"
-    case v20180727 = "2018-07-27"
-    case v20180823 = "2018-08-23"
-    case v20180906 = "2018-09-06"
-    case v20180924 = "2018-09-24"
-    case v20181031 = "2018-10-31"
-    case v20181108 = "2018-11-08"
-    case v20190211 = "2019-02-11"
-    case v20190219 = "2019-02-19"
-    case v20190314 = "2019-03-14"
-    case v20190516 = "2019-05-16"
-    case v20190814 = "2019-08-14"
-    case v20190909 = "2019-09-09"
-    case v20191008 = "2019-10-08"
-    case v20191017 = "2019-10-17"
-    case v20191105 = "2019-11-05"
-    case v20191203 = "2019-12-03"
-    case v20200302 = "2020-03-02"
-    case v20200827 = "2020-08-27"
-    case v20220801 = "2022-08-01"
-    case v20221115 = "2022-11-15"
-    case v20230816 = "2023-08-16"
-    case v20231016 = "2023-10-16"
-    case v20240410 = "2024-04-10"
-    case v20240620 = "2024-06-20"
-    case v20240930Acacia = "2024-09-30.acacia"
-    case v20241028Acacia = "2024-10-28.acacia"
-    case v20241120Acacia = "2024-11-20.acacia"
-    case v20241218Acacia = "2024-12-18.acacia"
-    case v20250127Acacia = "2025-01-27.acacia"
-    case v20250224Acacia = "2025-02-24.acacia"
-    case v20250301Dashboard = "2025-03-01.dashboard"
-    case v20250331Basil = "2025-03-31.basil"
-    case v20250430Basil = "2025-04-30.basil"
-    case v20250528Basil = "2025-05-28.basil"
-    case v20250630Basil = "2025-06-30.basil"
-    case v20250730Basil = "2025-07-30.basil"
-    case v20250827Basil = "2025-08-27.basil"
-    case v20250930Clover = "2025-09-30.clover"
-    case v20251029Clover = "2025-10-29.clover"
-    case v20251117Clover = "2025-11-17.clover"
-    case v20251215Clover = "2025-12-15.clover"
-    case v20260128Clover = "2026-01-28.clover"
-    case v20260225Clover = "2026-02-25.clover"
-    case v20260325Dahlia = "2026-03-25.dahlia"
-    case v20260422Dahlia = "2026-04-22.dahlia"
-    case v20260527Dahlia = "2026-05-27.dahlia"
-    case v20260624Dahlia = "2026-06-24.dahlia"
-    case v20260729Dahlia = "2026-07-29.dahlia"
-    case v20260826Dahlia = "2026-08-26.dahlia"
-    case v20260930Endive = "2026-09-30.endive"
-    case v20261028Endive = "2026-10-28.endive"
+public struct WebhookEndpointCreateApiVersion: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var v20110101: Self { .init(rawValue: "2011-01-01") }
+    public static var v20110621: Self { .init(rawValue: "2011-06-21") }
+    public static var v20110628: Self { .init(rawValue: "2011-06-28") }
+    public static var v20110801: Self { .init(rawValue: "2011-08-01") }
+    public static var v20110915: Self { .init(rawValue: "2011-09-15") }
+    public static var v20111117: Self { .init(rawValue: "2011-11-17") }
+    public static var v20120223: Self { .init(rawValue: "2012-02-23") }
+    public static var v20120325: Self { .init(rawValue: "2012-03-25") }
+    public static var v20120618: Self { .init(rawValue: "2012-06-18") }
+    public static var v20120628: Self { .init(rawValue: "2012-06-28") }
+    public static var v20120709: Self { .init(rawValue: "2012-07-09") }
+    public static var v20120924: Self { .init(rawValue: "2012-09-24") }
+    public static var v20121026: Self { .init(rawValue: "2012-10-26") }
+    public static var v20121107: Self { .init(rawValue: "2012-11-07") }
+    public static var v20130211: Self { .init(rawValue: "2013-02-11") }
+    public static var v20130213: Self { .init(rawValue: "2013-02-13") }
+    public static var v20130705: Self { .init(rawValue: "2013-07-05") }
+    public static var v20130812: Self { .init(rawValue: "2013-08-12") }
+    public static var v20130813: Self { .init(rawValue: "2013-08-13") }
+    public static var v20131029: Self { .init(rawValue: "2013-10-29") }
+    public static var v20131203: Self { .init(rawValue: "2013-12-03") }
+    public static var v20140131: Self { .init(rawValue: "2014-01-31") }
+    public static var v20140313: Self { .init(rawValue: "2014-03-13") }
+    public static var v20140328: Self { .init(rawValue: "2014-03-28") }
+    public static var v20140519: Self { .init(rawValue: "2014-05-19") }
+    public static var v20140613: Self { .init(rawValue: "2014-06-13") }
+    public static var v20140617: Self { .init(rawValue: "2014-06-17") }
+    public static var v20140722: Self { .init(rawValue: "2014-07-22") }
+    public static var v20140726: Self { .init(rawValue: "2014-07-26") }
+    public static var v20140804: Self { .init(rawValue: "2014-08-04") }
+    public static var v20140820: Self { .init(rawValue: "2014-08-20") }
+    public static var v20140908: Self { .init(rawValue: "2014-09-08") }
+    public static var v20141007: Self { .init(rawValue: "2014-10-07") }
+    public static var v20141105: Self { .init(rawValue: "2014-11-05") }
+    public static var v20141120: Self { .init(rawValue: "2014-11-20") }
+    public static var v20141208: Self { .init(rawValue: "2014-12-08") }
+    public static var v20141217: Self { .init(rawValue: "2014-12-17") }
+    public static var v20141222: Self { .init(rawValue: "2014-12-22") }
+    public static var v20150111: Self { .init(rawValue: "2015-01-11") }
+    public static var v20150126: Self { .init(rawValue: "2015-01-26") }
+    public static var v20150210: Self { .init(rawValue: "2015-02-10") }
+    public static var v20150216: Self { .init(rawValue: "2015-02-16") }
+    public static var v20150218: Self { .init(rawValue: "2015-02-18") }
+    public static var v20150324: Self { .init(rawValue: "2015-03-24") }
+    public static var v20150407: Self { .init(rawValue: "2015-04-07") }
+    public static var v20150615: Self { .init(rawValue: "2015-06-15") }
+    public static var v20150707: Self { .init(rawValue: "2015-07-07") }
+    public static var v20150713: Self { .init(rawValue: "2015-07-13") }
+    public static var v20150728: Self { .init(rawValue: "2015-07-28") }
+    public static var v20150807: Self { .init(rawValue: "2015-08-07") }
+    public static var v20150819: Self { .init(rawValue: "2015-08-19") }
+    public static var v20150903: Self { .init(rawValue: "2015-09-03") }
+    public static var v20150908: Self { .init(rawValue: "2015-09-08") }
+    public static var v20150923: Self { .init(rawValue: "2015-09-23") }
+    public static var v20151001: Self { .init(rawValue: "2015-10-01") }
+    public static var v20151012: Self { .init(rawValue: "2015-10-12") }
+    public static var v20151016: Self { .init(rawValue: "2015-10-16") }
+    public static var v20160203: Self { .init(rawValue: "2016-02-03") }
+    public static var v20160219: Self { .init(rawValue: "2016-02-19") }
+    public static var v20160222: Self { .init(rawValue: "2016-02-22") }
+    public static var v20160223: Self { .init(rawValue: "2016-02-23") }
+    public static var v20160229: Self { .init(rawValue: "2016-02-29") }
+    public static var v20160307: Self { .init(rawValue: "2016-03-07") }
+    public static var v20160615: Self { .init(rawValue: "2016-06-15") }
+    public static var v20160706: Self { .init(rawValue: "2016-07-06") }
+    public static var v20161019: Self { .init(rawValue: "2016-10-19") }
+    public static var v20170127: Self { .init(rawValue: "2017-01-27") }
+    public static var v20170214: Self { .init(rawValue: "2017-02-14") }
+    public static var v20170406: Self { .init(rawValue: "2017-04-06") }
+    public static var v20170525: Self { .init(rawValue: "2017-05-25") }
+    public static var v20170605: Self { .init(rawValue: "2017-06-05") }
+    public static var v20170815: Self { .init(rawValue: "2017-08-15") }
+    public static var v20171214: Self { .init(rawValue: "2017-12-14") }
+    public static var v20180123: Self { .init(rawValue: "2018-01-23") }
+    public static var v20180205: Self { .init(rawValue: "2018-02-05") }
+    public static var v20180206: Self { .init(rawValue: "2018-02-06") }
+    public static var v20180228: Self { .init(rawValue: "2018-02-28") }
+    public static var v20180521: Self { .init(rawValue: "2018-05-21") }
+    public static var v20180727: Self { .init(rawValue: "2018-07-27") }
+    public static var v20180823: Self { .init(rawValue: "2018-08-23") }
+    public static var v20180906: Self { .init(rawValue: "2018-09-06") }
+    public static var v20180924: Self { .init(rawValue: "2018-09-24") }
+    public static var v20181031: Self { .init(rawValue: "2018-10-31") }
+    public static var v20181108: Self { .init(rawValue: "2018-11-08") }
+    public static var v20190211: Self { .init(rawValue: "2019-02-11") }
+    public static var v20190219: Self { .init(rawValue: "2019-02-19") }
+    public static var v20190314: Self { .init(rawValue: "2019-03-14") }
+    public static var v20190516: Self { .init(rawValue: "2019-05-16") }
+    public static var v20190814: Self { .init(rawValue: "2019-08-14") }
+    public static var v20190909: Self { .init(rawValue: "2019-09-09") }
+    public static var v20191008: Self { .init(rawValue: "2019-10-08") }
+    public static var v20191017: Self { .init(rawValue: "2019-10-17") }
+    public static var v20191105: Self { .init(rawValue: "2019-11-05") }
+    public static var v20191203: Self { .init(rawValue: "2019-12-03") }
+    public static var v20200302: Self { .init(rawValue: "2020-03-02") }
+    public static var v20200827: Self { .init(rawValue: "2020-08-27") }
+    public static var v20220801: Self { .init(rawValue: "2022-08-01") }
+    public static var v20221115: Self { .init(rawValue: "2022-11-15") }
+    public static var v20230816: Self { .init(rawValue: "2023-08-16") }
+    public static var v20231016: Self { .init(rawValue: "2023-10-16") }
+    public static var v20240410: Self { .init(rawValue: "2024-04-10") }
+    public static var v20240620: Self { .init(rawValue: "2024-06-20") }
+    public static var v20240930Acacia: Self { .init(rawValue: "2024-09-30.acacia") }
+    public static var v20241028Acacia: Self { .init(rawValue: "2024-10-28.acacia") }
+    public static var v20241120Acacia: Self { .init(rawValue: "2024-11-20.acacia") }
+    public static var v20241218Acacia: Self { .init(rawValue: "2024-12-18.acacia") }
+    public static var v20250127Acacia: Self { .init(rawValue: "2025-01-27.acacia") }
+    public static var v20250224Acacia: Self { .init(rawValue: "2025-02-24.acacia") }
+    public static var v20250301Dashboard: Self { .init(rawValue: "2025-03-01.dashboard") }
+    public static var v20250331Basil: Self { .init(rawValue: "2025-03-31.basil") }
+    public static var v20250430Basil: Self { .init(rawValue: "2025-04-30.basil") }
+    public static var v20250528Basil: Self { .init(rawValue: "2025-05-28.basil") }
+    public static var v20250630Basil: Self { .init(rawValue: "2025-06-30.basil") }
+    public static var v20250730Basil: Self { .init(rawValue: "2025-07-30.basil") }
+    public static var v20250827Basil: Self { .init(rawValue: "2025-08-27.basil") }
+    public static var v20250930Clover: Self { .init(rawValue: "2025-09-30.clover") }
+    public static var v20251029Clover: Self { .init(rawValue: "2025-10-29.clover") }
+    public static var v20251117Clover: Self { .init(rawValue: "2025-11-17.clover") }
+    public static var v20251215Clover: Self { .init(rawValue: "2025-12-15.clover") }
+    public static var v20260128Clover: Self { .init(rawValue: "2026-01-28.clover") }
+    public static var v20260225Clover: Self { .init(rawValue: "2026-02-25.clover") }
+    public static var v20260325Dahlia: Self { .init(rawValue: "2026-03-25.dahlia") }
+    public static var v20260422Dahlia: Self { .init(rawValue: "2026-04-22.dahlia") }
+    public static var v20260527Dahlia: Self { .init(rawValue: "2026-05-27.dahlia") }
+    public static var v20260624Dahlia: Self { .init(rawValue: "2026-06-24.dahlia") }
+    public static var v20260729Dahlia: Self { .init(rawValue: "2026-07-29.dahlia") }
+    public static var v20260826Dahlia: Self { .init(rawValue: "2026-08-26.dahlia") }
+    public static var v20260930Endive: Self { .init(rawValue: "2026-09-30.endive") }
+    public static var v20261028Endive: Self { .init(rawValue: "2026-10-28.endive") }
 }
 
-public enum WebhookEndpointUpdateEnabledEvents: String, Codable, Sendable {
-    case all = "*"
-    case accountApplicationAuthorized = "account.application.authorized"
-    case accountApplicationDeauthorized = "account.application.deauthorized"
-    case accountExternalAccountCreated = "account.external_account.created"
-    case accountExternalAccountDeleted = "account.external_account.deleted"
-    case accountExternalAccountUpdated = "account.external_account.updated"
-    case accountUpdated = "account.updated"
-    case applicationFeeCreated = "application_fee.created"
-    case applicationFeeRefundUpdated = "application_fee.refund.updated"
-    case applicationFeeRefunded = "application_fee.refunded"
-    case appsInstallCreated = "apps.install.created"
-    case appsInstallDeleted = "apps.install.deleted"
-    case appsInstallUpdated = "apps.install.updated"
-    case balanceAvailable = "balance.available"
-    case balanceSettingsUpdated = "balance_settings.updated"
-    case billingAlertTriggered = "billing.alert.triggered"
-    case billingCreditBalanceTransactionCreated = "billing.credit_balance_transaction.created"
-    case billingCreditGrantCreated = "billing.credit_grant.created"
-    case billingCreditGrantUpdated = "billing.credit_grant.updated"
-    case billingMeterCreated = "billing.meter.created"
-    case billingMeterDeactivated = "billing.meter.deactivated"
-    case billingMeterReactivated = "billing.meter.reactivated"
-    case billingMeterUpdated = "billing.meter.updated"
-    case billingPortalConfigurationCreated = "billing_portal.configuration.created"
-    case billingPortalConfigurationUpdated = "billing_portal.configuration.updated"
-    case billingPortalSessionCreated = "billing_portal.session.created"
-    case capabilityUpdated = "capability.updated"
-    case cashBalanceFundsAvailable = "cash_balance.funds_available"
-    case chargeCaptured = "charge.captured"
-    case chargeDisputeClosed = "charge.dispute.closed"
-    case chargeDisputeCreated = "charge.dispute.created"
-    case chargeDisputeFundsReinstated = "charge.dispute.funds_reinstated"
-    case chargeDisputeFundsWithdrawn = "charge.dispute.funds_withdrawn"
-    case chargeDisputeUpdated = "charge.dispute.updated"
-    case chargeExpired = "charge.expired"
-    case chargeFailed = "charge.failed"
-    case chargePending = "charge.pending"
-    case chargeRefundUpdated = "charge.refund.updated"
-    case chargeRefunded = "charge.refunded"
-    case chargeSucceeded = "charge.succeeded"
-    case chargeUpdated = "charge.updated"
-    case checkoutSessionAsyncPaymentFailed = "checkout.session.async_payment_failed"
-    case checkoutSessionAsyncPaymentSucceeded = "checkout.session.async_payment_succeeded"
-    case checkoutSessionCompleted = "checkout.session.completed"
-    case checkoutSessionExpired = "checkout.session.expired"
-    case climateOrderCanceled = "climate.order.canceled"
-    case climateOrderCreated = "climate.order.created"
-    case climateOrderDelayed = "climate.order.delayed"
-    case climateOrderDelivered = "climate.order.delivered"
-    case climateOrderProductSubstituted = "climate.order.product_substituted"
-    case climateProductCreated = "climate.product.created"
-    case climateProductPricingUpdated = "climate.product.pricing_updated"
-    case couponCreated = "coupon.created"
-    case couponDeleted = "coupon.deleted"
-    case couponUpdated = "coupon.updated"
-    case creditNoteCreated = "credit_note.created"
-    case creditNoteUpdated = "credit_note.updated"
-    case creditNoteVoided = "credit_note.voided"
-    case customerCreated = "customer.created"
-    case customerDeleted = "customer.deleted"
-    case customerDiscountCreated = "customer.discount.created"
-    case customerDiscountDeleted = "customer.discount.deleted"
-    case customerDiscountUpdated = "customer.discount.updated"
-    case customerSourceCreated = "customer.source.created"
-    case customerSourceDeleted = "customer.source.deleted"
-    case customerSourceExpiring = "customer.source.expiring"
-    case customerSourceUpdated = "customer.source.updated"
-    case customerSubscriptionCreated = "customer.subscription.created"
-    case customerSubscriptionDeleted = "customer.subscription.deleted"
-    case customerSubscriptionPaused = "customer.subscription.paused"
-    case customerSubscriptionPendingUpdateApplied = "customer.subscription.pending_update_applied"
-    case customerSubscriptionPendingUpdateExpired = "customer.subscription.pending_update_expired"
-    case customerSubscriptionResumed = "customer.subscription.resumed"
-    case customerSubscriptionTrialWillEnd = "customer.subscription.trial_will_end"
-    case customerSubscriptionUpdated = "customer.subscription.updated"
-    case customerTaxIdCreated = "customer.tax_id.created"
-    case customerTaxIdDeleted = "customer.tax_id.deleted"
-    case customerTaxIdUpdated = "customer.tax_id.updated"
-    case customerUpdated = "customer.updated"
-    case customerCashBalanceTransactionCreated = "customer_cash_balance_transaction.created"
-    case entitlementsActiveEntitlementSummaryUpdated = "entitlements.active_entitlement_summary.updated"
-    case fileCreated = "file.created"
-    case financialConnectionsAccountAccountNumbersUpdated = "financial_connections.account.account_numbers_updated"
-    case financialConnectionsAccountCreated = "financial_connections.account.created"
-    case financialConnectionsAccountDeactivated = "financial_connections.account.deactivated"
-    case financialConnectionsAccountDisconnected = "financial_connections.account.disconnected"
-    case financialConnectionsAccountExpectedDeactivationDateUpdated = "financial_connections.account.expected_deactivation_date_updated"
-    case financialConnectionsAccountReactivated = "financial_connections.account.reactivated"
-    case financialConnectionsAccountRefreshedBalance = "financial_connections.account.refreshed_balance"
-    case financialConnectionsAccountRefreshedOwnership = "financial_connections.account.refreshed_ownership"
-    case financialConnectionsAccountRefreshedTransactions = "financial_connections.account.refreshed_transactions"
-    case financialConnectionsAccountSupportedPaymentMethodTypesUpdated = "financial_connections.account.supported_payment_method_types_updated"
-    case financialConnectionsAccountUpcomingAccountNumberExpiry = "financial_connections.account.upcoming_account_number_expiry"
-    case financialConnectionsAccountUpcomingDeactivation = "financial_connections.account.upcoming_deactivation"
-    case financialConnectionsAuthorizationExpectedDeactivationDateUpdated = "financial_connections.authorization.expected_deactivation_date_updated"
-    case financialConnectionsAuthorizationUpcomingDeactivation = "financial_connections.authorization.upcoming_deactivation"
-    case identityVerificationSessionCanceled = "identity.verification_session.canceled"
-    case identityVerificationSessionCreated = "identity.verification_session.created"
-    case identityVerificationSessionProcessing = "identity.verification_session.processing"
-    case identityVerificationSessionRedacted = "identity.verification_session.redacted"
-    case identityVerificationSessionRequiresInput = "identity.verification_session.requires_input"
-    case identityVerificationSessionVerified = "identity.verification_session.verified"
-    case invoiceCreated = "invoice.created"
-    case invoiceDeleted = "invoice.deleted"
-    case invoiceFinalizationFailed = "invoice.finalization_failed"
-    case invoiceFinalized = "invoice.finalized"
-    case invoiceMarkedUncollectible = "invoice.marked_uncollectible"
-    case invoiceOverdue = "invoice.overdue"
-    case invoiceOverpaid = "invoice.overpaid"
-    case invoicePaid = "invoice.paid"
-    case invoicePaymentActionRequired = "invoice.payment_action_required"
-    case invoicePaymentAttemptRequired = "invoice.payment_attempt_required"
-    case invoicePaymentFailed = "invoice.payment_failed"
-    case invoicePaymentSucceeded = "invoice.payment_succeeded"
-    case invoiceSent = "invoice.sent"
-    case invoiceUpcoming = "invoice.upcoming"
-    case invoiceUpdated = "invoice.updated"
-    case invoiceVoided = "invoice.voided"
-    case invoiceWillBeDue = "invoice.will_be_due"
-    case invoicePaymentPaid = "invoice_payment.paid"
-    case invoiceitemCreated = "invoiceitem.created"
-    case invoiceitemDeleted = "invoiceitem.deleted"
-    case issuingAuthorizationCreated = "issuing_authorization.created"
-    case issuingAuthorizationRequest = "issuing_authorization.request"
-    case issuingAuthorizationUpdated = "issuing_authorization.updated"
-    case issuingCardCreated = "issuing_card.created"
-    case issuingCardUpdated = "issuing_card.updated"
-    case issuingCardholderCreated = "issuing_cardholder.created"
-    case issuingCardholderUpdated = "issuing_cardholder.updated"
-    case issuingDisputeClosed = "issuing_dispute.closed"
-    case issuingDisputeCreated = "issuing_dispute.created"
-    case issuingDisputeFundsReinstated = "issuing_dispute.funds_reinstated"
-    case issuingDisputeFundsRescinded = "issuing_dispute.funds_rescinded"
-    case issuingDisputeSubmitted = "issuing_dispute.submitted"
-    case issuingDisputeUpdated = "issuing_dispute.updated"
-    case issuingPersonalizationDesignActivated = "issuing_personalization_design.activated"
-    case issuingPersonalizationDesignDeactivated = "issuing_personalization_design.deactivated"
-    case issuingPersonalizationDesignRejected = "issuing_personalization_design.rejected"
-    case issuingPersonalizationDesignUpdated = "issuing_personalization_design.updated"
-    case issuingTokenCreated = "issuing_token.created"
-    case issuingTokenUpdated = "issuing_token.updated"
-    case issuingTransactionCreated = "issuing_transaction.created"
-    case issuingTransactionPurchaseDetailsReceiptUpdated = "issuing_transaction.purchase_details_receipt_updated"
-    case issuingTransactionUpdated = "issuing_transaction.updated"
-    case mandateUpdated = "mandate.updated"
-    case paymentIntentAmountCapturableUpdated = "payment_intent.amount_capturable_updated"
-    case paymentIntentCanceled = "payment_intent.canceled"
-    case paymentIntentCreated = "payment_intent.created"
-    case paymentIntentPartiallyFunded = "payment_intent.partially_funded"
-    case paymentIntentPaymentFailed = "payment_intent.payment_failed"
-    case paymentIntentProcessing = "payment_intent.processing"
-    case paymentIntentRequiresAction = "payment_intent.requires_action"
-    case paymentIntentSucceeded = "payment_intent.succeeded"
-    case paymentLinkCreated = "payment_link.created"
-    case paymentLinkUpdated = "payment_link.updated"
-    case paymentMethodAttached = "payment_method.attached"
-    case paymentMethodAutomaticallyUpdated = "payment_method.automatically_updated"
-    case paymentMethodDetached = "payment_method.detached"
-    case paymentMethodUpdated = "payment_method.updated"
-    case payoutCanceled = "payout.canceled"
-    case payoutCreated = "payout.created"
-    case payoutFailed = "payout.failed"
-    case payoutPaid = "payout.paid"
-    case payoutReconciliationCompleted = "payout.reconciliation_completed"
-    case payoutUpdated = "payout.updated"
-    case personCreated = "person.created"
-    case personDeleted = "person.deleted"
-    case personUpdated = "person.updated"
-    case planCreated = "plan.created"
-    case planDeleted = "plan.deleted"
-    case planUpdated = "plan.updated"
-    case priceCreated = "price.created"
-    case priceDeleted = "price.deleted"
-    case priceUpdated = "price.updated"
-    case productCreated = "product.created"
-    case productDeleted = "product.deleted"
-    case productUpdated = "product.updated"
-    case promotionCodeCreated = "promotion_code.created"
-    case promotionCodeUpdated = "promotion_code.updated"
-    case quoteAccepted = "quote.accepted"
-    case quoteCanceled = "quote.canceled"
-    case quoteCreated = "quote.created"
-    case quoteFinalized = "quote.finalized"
-    case radarEarlyFraudWarningCreated = "radar.early_fraud_warning.created"
-    case radarEarlyFraudWarningUpdated = "radar.early_fraud_warning.updated"
-    case refundCreated = "refund.created"
-    case refundFailed = "refund.failed"
-    case refundUpdated = "refund.updated"
-    case reportingReportRunFailed = "reporting.report_run.failed"
-    case reportingReportRunSucceeded = "reporting.report_run.succeeded"
-    case reportingReportTypeUpdated = "reporting.report_type.updated"
-    case reserveHoldCreated = "reserve.hold.created"
-    case reserveHoldUpdated = "reserve.hold.updated"
-    case reservePlanCreated = "reserve.plan.created"
-    case reservePlanDisabled = "reserve.plan.disabled"
-    case reservePlanExpired = "reserve.plan.expired"
-    case reservePlanUpdated = "reserve.plan.updated"
-    case reserveReleaseCreated = "reserve.release.created"
-    case reviewClosed = "review.closed"
-    case reviewOpened = "review.opened"
-    case setupIntentCanceled = "setup_intent.canceled"
-    case setupIntentCreated = "setup_intent.created"
-    case setupIntentRequiresAction = "setup_intent.requires_action"
-    case setupIntentSetupFailed = "setup_intent.setup_failed"
-    case setupIntentSucceeded = "setup_intent.succeeded"
-    case sigmaScheduledQueryRunCreated = "sigma.scheduled_query_run.created"
-    case sourceCanceled = "source.canceled"
-    case sourceChargeable = "source.chargeable"
-    case sourceFailed = "source.failed"
-    case sourceMandateNotification = "source.mandate_notification"
-    case sourceRefundAttributesRequired = "source.refund_attributes_required"
-    case sourceTransactionCreated = "source.transaction.created"
-    case sourceTransactionUpdated = "source.transaction.updated"
-    case subscriptionScheduleAborted = "subscription_schedule.aborted"
-    case subscriptionScheduleCanceled = "subscription_schedule.canceled"
-    case subscriptionScheduleCompleted = "subscription_schedule.completed"
-    case subscriptionScheduleCreated = "subscription_schedule.created"
-    case subscriptionScheduleExpiring = "subscription_schedule.expiring"
-    case subscriptionScheduleReleased = "subscription_schedule.released"
-    case subscriptionScheduleUpdated = "subscription_schedule.updated"
-    case taxSettingsUpdated = "tax.settings.updated"
-    case taxRateCreated = "tax_rate.created"
-    case taxRateUpdated = "tax_rate.updated"
-    case terminalReaderActionFailed = "terminal.reader.action_failed"
-    case terminalReaderActionSucceeded = "terminal.reader.action_succeeded"
-    case terminalReaderActionUpdated = "terminal.reader.action_updated"
-    case testHelpersTestClockAdvancing = "test_helpers.test_clock.advancing"
-    case testHelpersTestClockCreated = "test_helpers.test_clock.created"
-    case testHelpersTestClockDeleted = "test_helpers.test_clock.deleted"
-    case testHelpersTestClockInternalFailure = "test_helpers.test_clock.internal_failure"
-    case testHelpersTestClockReady = "test_helpers.test_clock.ready"
-    case threeDSecureAuthenticationCanceled = "three_d_secure.authentication.canceled"
-    case threeDSecureAuthenticationChallengeStarted = "three_d_secure.authentication.challenge_started"
-    case threeDSecureAuthenticationErrored = "three_d_secure.authentication.errored"
-    case threeDSecureAuthenticationFailed = "three_d_secure.authentication.failed"
-    case threeDSecureAuthenticationRequiresChallenge = "three_d_secure.authentication.requires_challenge"
-    case threeDSecureAuthenticationRequiresSubmission = "three_d_secure.authentication.requires_submission"
-    case threeDSecureAuthenticationSucceeded = "three_d_secure.authentication.succeeded"
-    case topupCanceled = "topup.canceled"
-    case topupCreated = "topup.created"
-    case topupFailed = "topup.failed"
-    case topupReversed = "topup.reversed"
-    case topupSucceeded = "topup.succeeded"
-    case transferCreated = "transfer.created"
-    case transferReversed = "transfer.reversed"
-    case transferUpdated = "transfer.updated"
-    case treasuryCreditReversalCreated = "treasury.credit_reversal.created"
-    case treasuryCreditReversalPosted = "treasury.credit_reversal.posted"
-    case treasuryDebitReversalCompleted = "treasury.debit_reversal.completed"
-    case treasuryDebitReversalCreated = "treasury.debit_reversal.created"
-    case treasuryDebitReversalInitialCreditGranted = "treasury.debit_reversal.initial_credit_granted"
-    case treasuryFinancialAccountClosed = "treasury.financial_account.closed"
-    case treasuryFinancialAccountCreated = "treasury.financial_account.created"
-    case treasuryFinancialAccountFeaturesStatusUpdated = "treasury.financial_account.features_status_updated"
-    case treasuryInboundTransferCanceled = "treasury.inbound_transfer.canceled"
-    case treasuryInboundTransferCreated = "treasury.inbound_transfer.created"
-    case treasuryInboundTransferFailed = "treasury.inbound_transfer.failed"
-    case treasuryInboundTransferSucceeded = "treasury.inbound_transfer.succeeded"
-    case treasuryOutboundPaymentCanceled = "treasury.outbound_payment.canceled"
-    case treasuryOutboundPaymentCreated = "treasury.outbound_payment.created"
-    case treasuryOutboundPaymentExpectedArrivalDateUpdated = "treasury.outbound_payment.expected_arrival_date_updated"
-    case treasuryOutboundPaymentFailed = "treasury.outbound_payment.failed"
-    case treasuryOutboundPaymentPosted = "treasury.outbound_payment.posted"
-    case treasuryOutboundPaymentReturned = "treasury.outbound_payment.returned"
-    case treasuryOutboundPaymentTrackingDetailsUpdated = "treasury.outbound_payment.tracking_details_updated"
-    case treasuryOutboundTransferCanceled = "treasury.outbound_transfer.canceled"
-    case treasuryOutboundTransferCreated = "treasury.outbound_transfer.created"
-    case treasuryOutboundTransferExpectedArrivalDateUpdated = "treasury.outbound_transfer.expected_arrival_date_updated"
-    case treasuryOutboundTransferFailed = "treasury.outbound_transfer.failed"
-    case treasuryOutboundTransferPosted = "treasury.outbound_transfer.posted"
-    case treasuryOutboundTransferReturned = "treasury.outbound_transfer.returned"
-    case treasuryOutboundTransferTrackingDetailsUpdated = "treasury.outbound_transfer.tracking_details_updated"
-    case treasuryReceivedCreditCreated = "treasury.received_credit.created"
-    case treasuryReceivedCreditFailed = "treasury.received_credit.failed"
-    case treasuryReceivedCreditSucceeded = "treasury.received_credit.succeeded"
-    case treasuryReceivedDebitCreated = "treasury.received_debit.created"
+public struct WebhookEndpointUpdateEnabledEvents: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var all: Self { .init(rawValue: "*") }
+    public static var accountApplicationAuthorized: Self { .init(rawValue: "account.application.authorized") }
+    public static var accountApplicationDeauthorized: Self { .init(rawValue: "account.application.deauthorized") }
+    public static var accountExternalAccountCreated: Self { .init(rawValue: "account.external_account.created") }
+    public static var accountExternalAccountDeleted: Self { .init(rawValue: "account.external_account.deleted") }
+    public static var accountExternalAccountUpdated: Self { .init(rawValue: "account.external_account.updated") }
+    public static var accountUpdated: Self { .init(rawValue: "account.updated") }
+    public static var applicationFeeCreated: Self { .init(rawValue: "application_fee.created") }
+    public static var applicationFeeRefundUpdated: Self { .init(rawValue: "application_fee.refund.updated") }
+    public static var applicationFeeRefunded: Self { .init(rawValue: "application_fee.refunded") }
+    public static var appsInstallCreated: Self { .init(rawValue: "apps.install.created") }
+    public static var appsInstallDeleted: Self { .init(rawValue: "apps.install.deleted") }
+    public static var appsInstallUpdated: Self { .init(rawValue: "apps.install.updated") }
+    public static var balanceAvailable: Self { .init(rawValue: "balance.available") }
+    public static var balanceSettingsUpdated: Self { .init(rawValue: "balance_settings.updated") }
+    public static var billingAlertTriggered: Self { .init(rawValue: "billing.alert.triggered") }
+    public static var billingCreditBalanceTransactionCreated: Self { .init(rawValue: "billing.credit_balance_transaction.created") }
+    public static var billingCreditGrantCreated: Self { .init(rawValue: "billing.credit_grant.created") }
+    public static var billingCreditGrantUpdated: Self { .init(rawValue: "billing.credit_grant.updated") }
+    public static var billingMeterCreated: Self { .init(rawValue: "billing.meter.created") }
+    public static var billingMeterDeactivated: Self { .init(rawValue: "billing.meter.deactivated") }
+    public static var billingMeterReactivated: Self { .init(rawValue: "billing.meter.reactivated") }
+    public static var billingMeterUpdated: Self { .init(rawValue: "billing.meter.updated") }
+    public static var billingPortalConfigurationCreated: Self { .init(rawValue: "billing_portal.configuration.created") }
+    public static var billingPortalConfigurationUpdated: Self { .init(rawValue: "billing_portal.configuration.updated") }
+    public static var billingPortalSessionCreated: Self { .init(rawValue: "billing_portal.session.created") }
+    public static var capabilityUpdated: Self { .init(rawValue: "capability.updated") }
+    public static var cashBalanceFundsAvailable: Self { .init(rawValue: "cash_balance.funds_available") }
+    public static var chargeCaptured: Self { .init(rawValue: "charge.captured") }
+    public static var chargeDisputeClosed: Self { .init(rawValue: "charge.dispute.closed") }
+    public static var chargeDisputeCreated: Self { .init(rawValue: "charge.dispute.created") }
+    public static var chargeDisputeFundsReinstated: Self { .init(rawValue: "charge.dispute.funds_reinstated") }
+    public static var chargeDisputeFundsWithdrawn: Self { .init(rawValue: "charge.dispute.funds_withdrawn") }
+    public static var chargeDisputeUpdated: Self { .init(rawValue: "charge.dispute.updated") }
+    public static var chargeExpired: Self { .init(rawValue: "charge.expired") }
+    public static var chargeFailed: Self { .init(rawValue: "charge.failed") }
+    public static var chargePending: Self { .init(rawValue: "charge.pending") }
+    public static var chargeRefundUpdated: Self { .init(rawValue: "charge.refund.updated") }
+    public static var chargeRefunded: Self { .init(rawValue: "charge.refunded") }
+    public static var chargeSucceeded: Self { .init(rawValue: "charge.succeeded") }
+    public static var chargeUpdated: Self { .init(rawValue: "charge.updated") }
+    public static var checkoutSessionAsyncPaymentFailed: Self { .init(rawValue: "checkout.session.async_payment_failed") }
+    public static var checkoutSessionAsyncPaymentSucceeded: Self { .init(rawValue: "checkout.session.async_payment_succeeded") }
+    public static var checkoutSessionCompleted: Self { .init(rawValue: "checkout.session.completed") }
+    public static var checkoutSessionExpired: Self { .init(rawValue: "checkout.session.expired") }
+    public static var climateOrderCanceled: Self { .init(rawValue: "climate.order.canceled") }
+    public static var climateOrderCreated: Self { .init(rawValue: "climate.order.created") }
+    public static var climateOrderDelayed: Self { .init(rawValue: "climate.order.delayed") }
+    public static var climateOrderDelivered: Self { .init(rawValue: "climate.order.delivered") }
+    public static var climateOrderProductSubstituted: Self { .init(rawValue: "climate.order.product_substituted") }
+    public static var climateProductCreated: Self { .init(rawValue: "climate.product.created") }
+    public static var climateProductPricingUpdated: Self { .init(rawValue: "climate.product.pricing_updated") }
+    public static var couponCreated: Self { .init(rawValue: "coupon.created") }
+    public static var couponDeleted: Self { .init(rawValue: "coupon.deleted") }
+    public static var couponUpdated: Self { .init(rawValue: "coupon.updated") }
+    public static var creditNoteCreated: Self { .init(rawValue: "credit_note.created") }
+    public static var creditNoteUpdated: Self { .init(rawValue: "credit_note.updated") }
+    public static var creditNoteVoided: Self { .init(rawValue: "credit_note.voided") }
+    public static var customerCreated: Self { .init(rawValue: "customer.created") }
+    public static var customerDeleted: Self { .init(rawValue: "customer.deleted") }
+    public static var customerDiscountCreated: Self { .init(rawValue: "customer.discount.created") }
+    public static var customerDiscountDeleted: Self { .init(rawValue: "customer.discount.deleted") }
+    public static var customerDiscountUpdated: Self { .init(rawValue: "customer.discount.updated") }
+    public static var customerSourceCreated: Self { .init(rawValue: "customer.source.created") }
+    public static var customerSourceDeleted: Self { .init(rawValue: "customer.source.deleted") }
+    public static var customerSourceExpiring: Self { .init(rawValue: "customer.source.expiring") }
+    public static var customerSourceUpdated: Self { .init(rawValue: "customer.source.updated") }
+    public static var customerSubscriptionCreated: Self { .init(rawValue: "customer.subscription.created") }
+    public static var customerSubscriptionDeleted: Self { .init(rawValue: "customer.subscription.deleted") }
+    public static var customerSubscriptionPaused: Self { .init(rawValue: "customer.subscription.paused") }
+    public static var customerSubscriptionPendingUpdateApplied: Self { .init(rawValue: "customer.subscription.pending_update_applied") }
+    public static var customerSubscriptionPendingUpdateExpired: Self { .init(rawValue: "customer.subscription.pending_update_expired") }
+    public static var customerSubscriptionResumed: Self { .init(rawValue: "customer.subscription.resumed") }
+    public static var customerSubscriptionTrialWillEnd: Self { .init(rawValue: "customer.subscription.trial_will_end") }
+    public static var customerSubscriptionUpdated: Self { .init(rawValue: "customer.subscription.updated") }
+    public static var customerTaxIdCreated: Self { .init(rawValue: "customer.tax_id.created") }
+    public static var customerTaxIdDeleted: Self { .init(rawValue: "customer.tax_id.deleted") }
+    public static var customerTaxIdUpdated: Self { .init(rawValue: "customer.tax_id.updated") }
+    public static var customerUpdated: Self { .init(rawValue: "customer.updated") }
+    public static var customerCashBalanceTransactionCreated: Self { .init(rawValue: "customer_cash_balance_transaction.created") }
+    public static var entitlementsActiveEntitlementSummaryUpdated: Self { .init(rawValue: "entitlements.active_entitlement_summary.updated") }
+    public static var fileCreated: Self { .init(rawValue: "file.created") }
+    public static var financialConnectionsAccountAccountNumbersUpdated: Self { .init(rawValue: "financial_connections.account.account_numbers_updated") }
+    public static var financialConnectionsAccountCreated: Self { .init(rawValue: "financial_connections.account.created") }
+    public static var financialConnectionsAccountDeactivated: Self { .init(rawValue: "financial_connections.account.deactivated") }
+    public static var financialConnectionsAccountDisconnected: Self { .init(rawValue: "financial_connections.account.disconnected") }
+    public static var financialConnectionsAccountExpectedDeactivationDateUpdated: Self { .init(rawValue: "financial_connections.account.expected_deactivation_date_updated") }
+    public static var financialConnectionsAccountReactivated: Self { .init(rawValue: "financial_connections.account.reactivated") }
+    public static var financialConnectionsAccountRefreshedBalance: Self { .init(rawValue: "financial_connections.account.refreshed_balance") }
+    public static var financialConnectionsAccountRefreshedOwnership: Self { .init(rawValue: "financial_connections.account.refreshed_ownership") }
+    public static var financialConnectionsAccountRefreshedTransactions: Self { .init(rawValue: "financial_connections.account.refreshed_transactions") }
+    public static var financialConnectionsAccountSupportedPaymentMethodTypesUpdated: Self { .init(rawValue: "financial_connections.account.supported_payment_method_types_updated") }
+    public static var financialConnectionsAccountUpcomingAccountNumberExpiry: Self { .init(rawValue: "financial_connections.account.upcoming_account_number_expiry") }
+    public static var financialConnectionsAccountUpcomingDeactivation: Self { .init(rawValue: "financial_connections.account.upcoming_deactivation") }
+    public static var financialConnectionsAuthorizationExpectedDeactivationDateUpdated: Self { .init(rawValue: "financial_connections.authorization.expected_deactivation_date_updated") }
+    public static var financialConnectionsAuthorizationUpcomingDeactivation: Self { .init(rawValue: "financial_connections.authorization.upcoming_deactivation") }
+    public static var identityVerificationSessionCanceled: Self { .init(rawValue: "identity.verification_session.canceled") }
+    public static var identityVerificationSessionCreated: Self { .init(rawValue: "identity.verification_session.created") }
+    public static var identityVerificationSessionProcessing: Self { .init(rawValue: "identity.verification_session.processing") }
+    public static var identityVerificationSessionRedacted: Self { .init(rawValue: "identity.verification_session.redacted") }
+    public static var identityVerificationSessionRequiresInput: Self { .init(rawValue: "identity.verification_session.requires_input") }
+    public static var identityVerificationSessionVerified: Self { .init(rawValue: "identity.verification_session.verified") }
+    public static var invoiceCreated: Self { .init(rawValue: "invoice.created") }
+    public static var invoiceDeleted: Self { .init(rawValue: "invoice.deleted") }
+    public static var invoiceFinalizationFailed: Self { .init(rawValue: "invoice.finalization_failed") }
+    public static var invoiceFinalized: Self { .init(rawValue: "invoice.finalized") }
+    public static var invoiceMarkedUncollectible: Self { .init(rawValue: "invoice.marked_uncollectible") }
+    public static var invoiceOverdue: Self { .init(rawValue: "invoice.overdue") }
+    public static var invoiceOverpaid: Self { .init(rawValue: "invoice.overpaid") }
+    public static var invoicePaid: Self { .init(rawValue: "invoice.paid") }
+    public static var invoicePaymentActionRequired: Self { .init(rawValue: "invoice.payment_action_required") }
+    public static var invoicePaymentAttemptRequired: Self { .init(rawValue: "invoice.payment_attempt_required") }
+    public static var invoicePaymentFailed: Self { .init(rawValue: "invoice.payment_failed") }
+    public static var invoicePaymentSucceeded: Self { .init(rawValue: "invoice.payment_succeeded") }
+    public static var invoiceSent: Self { .init(rawValue: "invoice.sent") }
+    public static var invoiceUpcoming: Self { .init(rawValue: "invoice.upcoming") }
+    public static var invoiceUpdated: Self { .init(rawValue: "invoice.updated") }
+    public static var invoiceVoided: Self { .init(rawValue: "invoice.voided") }
+    public static var invoiceWillBeDue: Self { .init(rawValue: "invoice.will_be_due") }
+    public static var invoicePaymentPaid: Self { .init(rawValue: "invoice_payment.paid") }
+    public static var invoiceitemCreated: Self { .init(rawValue: "invoiceitem.created") }
+    public static var invoiceitemDeleted: Self { .init(rawValue: "invoiceitem.deleted") }
+    public static var issuingAuthorizationCreated: Self { .init(rawValue: "issuing_authorization.created") }
+    public static var issuingAuthorizationRequest: Self { .init(rawValue: "issuing_authorization.request") }
+    public static var issuingAuthorizationUpdated: Self { .init(rawValue: "issuing_authorization.updated") }
+    public static var issuingCardCreated: Self { .init(rawValue: "issuing_card.created") }
+    public static var issuingCardUpdated: Self { .init(rawValue: "issuing_card.updated") }
+    public static var issuingCardholderCreated: Self { .init(rawValue: "issuing_cardholder.created") }
+    public static var issuingCardholderUpdated: Self { .init(rawValue: "issuing_cardholder.updated") }
+    public static var issuingDisputeClosed: Self { .init(rawValue: "issuing_dispute.closed") }
+    public static var issuingDisputeCreated: Self { .init(rawValue: "issuing_dispute.created") }
+    public static var issuingDisputeFundsReinstated: Self { .init(rawValue: "issuing_dispute.funds_reinstated") }
+    public static var issuingDisputeFundsRescinded: Self { .init(rawValue: "issuing_dispute.funds_rescinded") }
+    public static var issuingDisputeSubmitted: Self { .init(rawValue: "issuing_dispute.submitted") }
+    public static var issuingDisputeUpdated: Self { .init(rawValue: "issuing_dispute.updated") }
+    public static var issuingPersonalizationDesignActivated: Self { .init(rawValue: "issuing_personalization_design.activated") }
+    public static var issuingPersonalizationDesignDeactivated: Self { .init(rawValue: "issuing_personalization_design.deactivated") }
+    public static var issuingPersonalizationDesignRejected: Self { .init(rawValue: "issuing_personalization_design.rejected") }
+    public static var issuingPersonalizationDesignUpdated: Self { .init(rawValue: "issuing_personalization_design.updated") }
+    public static var issuingTokenCreated: Self { .init(rawValue: "issuing_token.created") }
+    public static var issuingTokenUpdated: Self { .init(rawValue: "issuing_token.updated") }
+    public static var issuingTransactionCreated: Self { .init(rawValue: "issuing_transaction.created") }
+    public static var issuingTransactionPurchaseDetailsReceiptUpdated: Self { .init(rawValue: "issuing_transaction.purchase_details_receipt_updated") }
+    public static var issuingTransactionUpdated: Self { .init(rawValue: "issuing_transaction.updated") }
+    public static var mandateUpdated: Self { .init(rawValue: "mandate.updated") }
+    public static var paymentIntentAmountCapturableUpdated: Self { .init(rawValue: "payment_intent.amount_capturable_updated") }
+    public static var paymentIntentCanceled: Self { .init(rawValue: "payment_intent.canceled") }
+    public static var paymentIntentCreated: Self { .init(rawValue: "payment_intent.created") }
+    public static var paymentIntentPartiallyFunded: Self { .init(rawValue: "payment_intent.partially_funded") }
+    public static var paymentIntentPaymentFailed: Self { .init(rawValue: "payment_intent.payment_failed") }
+    public static var paymentIntentProcessing: Self { .init(rawValue: "payment_intent.processing") }
+    public static var paymentIntentRequiresAction: Self { .init(rawValue: "payment_intent.requires_action") }
+    public static var paymentIntentSucceeded: Self { .init(rawValue: "payment_intent.succeeded") }
+    public static var paymentLinkCreated: Self { .init(rawValue: "payment_link.created") }
+    public static var paymentLinkUpdated: Self { .init(rawValue: "payment_link.updated") }
+    public static var paymentMethodAttached: Self { .init(rawValue: "payment_method.attached") }
+    public static var paymentMethodAutomaticallyUpdated: Self { .init(rawValue: "payment_method.automatically_updated") }
+    public static var paymentMethodDetached: Self { .init(rawValue: "payment_method.detached") }
+    public static var paymentMethodUpdated: Self { .init(rawValue: "payment_method.updated") }
+    public static var payoutCanceled: Self { .init(rawValue: "payout.canceled") }
+    public static var payoutCreated: Self { .init(rawValue: "payout.created") }
+    public static var payoutFailed: Self { .init(rawValue: "payout.failed") }
+    public static var payoutPaid: Self { .init(rawValue: "payout.paid") }
+    public static var payoutReconciliationCompleted: Self { .init(rawValue: "payout.reconciliation_completed") }
+    public static var payoutUpdated: Self { .init(rawValue: "payout.updated") }
+    public static var personCreated: Self { .init(rawValue: "person.created") }
+    public static var personDeleted: Self { .init(rawValue: "person.deleted") }
+    public static var personUpdated: Self { .init(rawValue: "person.updated") }
+    public static var planCreated: Self { .init(rawValue: "plan.created") }
+    public static var planDeleted: Self { .init(rawValue: "plan.deleted") }
+    public static var planUpdated: Self { .init(rawValue: "plan.updated") }
+    public static var priceCreated: Self { .init(rawValue: "price.created") }
+    public static var priceDeleted: Self { .init(rawValue: "price.deleted") }
+    public static var priceUpdated: Self { .init(rawValue: "price.updated") }
+    public static var productCreated: Self { .init(rawValue: "product.created") }
+    public static var productDeleted: Self { .init(rawValue: "product.deleted") }
+    public static var productUpdated: Self { .init(rawValue: "product.updated") }
+    public static var promotionCodeCreated: Self { .init(rawValue: "promotion_code.created") }
+    public static var promotionCodeUpdated: Self { .init(rawValue: "promotion_code.updated") }
+    public static var quoteAccepted: Self { .init(rawValue: "quote.accepted") }
+    public static var quoteCanceled: Self { .init(rawValue: "quote.canceled") }
+    public static var quoteCreated: Self { .init(rawValue: "quote.created") }
+    public static var quoteFinalized: Self { .init(rawValue: "quote.finalized") }
+    public static var radarEarlyFraudWarningCreated: Self { .init(rawValue: "radar.early_fraud_warning.created") }
+    public static var radarEarlyFraudWarningUpdated: Self { .init(rawValue: "radar.early_fraud_warning.updated") }
+    public static var refundCreated: Self { .init(rawValue: "refund.created") }
+    public static var refundFailed: Self { .init(rawValue: "refund.failed") }
+    public static var refundUpdated: Self { .init(rawValue: "refund.updated") }
+    public static var reportingReportRunFailed: Self { .init(rawValue: "reporting.report_run.failed") }
+    public static var reportingReportRunSucceeded: Self { .init(rawValue: "reporting.report_run.succeeded") }
+    public static var reportingReportTypeUpdated: Self { .init(rawValue: "reporting.report_type.updated") }
+    public static var reserveHoldCreated: Self { .init(rawValue: "reserve.hold.created") }
+    public static var reserveHoldUpdated: Self { .init(rawValue: "reserve.hold.updated") }
+    public static var reservePlanCreated: Self { .init(rawValue: "reserve.plan.created") }
+    public static var reservePlanDisabled: Self { .init(rawValue: "reserve.plan.disabled") }
+    public static var reservePlanExpired: Self { .init(rawValue: "reserve.plan.expired") }
+    public static var reservePlanUpdated: Self { .init(rawValue: "reserve.plan.updated") }
+    public static var reserveReleaseCreated: Self { .init(rawValue: "reserve.release.created") }
+    public static var reviewClosed: Self { .init(rawValue: "review.closed") }
+    public static var reviewOpened: Self { .init(rawValue: "review.opened") }
+    public static var setupIntentCanceled: Self { .init(rawValue: "setup_intent.canceled") }
+    public static var setupIntentCreated: Self { .init(rawValue: "setup_intent.created") }
+    public static var setupIntentRequiresAction: Self { .init(rawValue: "setup_intent.requires_action") }
+    public static var setupIntentSetupFailed: Self { .init(rawValue: "setup_intent.setup_failed") }
+    public static var setupIntentSucceeded: Self { .init(rawValue: "setup_intent.succeeded") }
+    public static var sigmaScheduledQueryRunCreated: Self { .init(rawValue: "sigma.scheduled_query_run.created") }
+    public static var sourceCanceled: Self { .init(rawValue: "source.canceled") }
+    public static var sourceChargeable: Self { .init(rawValue: "source.chargeable") }
+    public static var sourceFailed: Self { .init(rawValue: "source.failed") }
+    public static var sourceMandateNotification: Self { .init(rawValue: "source.mandate_notification") }
+    public static var sourceRefundAttributesRequired: Self { .init(rawValue: "source.refund_attributes_required") }
+    public static var sourceTransactionCreated: Self { .init(rawValue: "source.transaction.created") }
+    public static var sourceTransactionUpdated: Self { .init(rawValue: "source.transaction.updated") }
+    public static var subscriptionScheduleAborted: Self { .init(rawValue: "subscription_schedule.aborted") }
+    public static var subscriptionScheduleCanceled: Self { .init(rawValue: "subscription_schedule.canceled") }
+    public static var subscriptionScheduleCompleted: Self { .init(rawValue: "subscription_schedule.completed") }
+    public static var subscriptionScheduleCreated: Self { .init(rawValue: "subscription_schedule.created") }
+    public static var subscriptionScheduleExpiring: Self { .init(rawValue: "subscription_schedule.expiring") }
+    public static var subscriptionScheduleReleased: Self { .init(rawValue: "subscription_schedule.released") }
+    public static var subscriptionScheduleUpdated: Self { .init(rawValue: "subscription_schedule.updated") }
+    public static var taxSettingsUpdated: Self { .init(rawValue: "tax.settings.updated") }
+    public static var taxRateCreated: Self { .init(rawValue: "tax_rate.created") }
+    public static var taxRateUpdated: Self { .init(rawValue: "tax_rate.updated") }
+    public static var terminalReaderActionFailed: Self { .init(rawValue: "terminal.reader.action_failed") }
+    public static var terminalReaderActionSucceeded: Self { .init(rawValue: "terminal.reader.action_succeeded") }
+    public static var terminalReaderActionUpdated: Self { .init(rawValue: "terminal.reader.action_updated") }
+    public static var testHelpersTestClockAdvancing: Self { .init(rawValue: "test_helpers.test_clock.advancing") }
+    public static var testHelpersTestClockCreated: Self { .init(rawValue: "test_helpers.test_clock.created") }
+    public static var testHelpersTestClockDeleted: Self { .init(rawValue: "test_helpers.test_clock.deleted") }
+    public static var testHelpersTestClockInternalFailure: Self { .init(rawValue: "test_helpers.test_clock.internal_failure") }
+    public static var testHelpersTestClockReady: Self { .init(rawValue: "test_helpers.test_clock.ready") }
+    public static var threeDSecureAuthenticationCanceled: Self { .init(rawValue: "three_d_secure.authentication.canceled") }
+    public static var threeDSecureAuthenticationChallengeStarted: Self { .init(rawValue: "three_d_secure.authentication.challenge_started") }
+    public static var threeDSecureAuthenticationErrored: Self { .init(rawValue: "three_d_secure.authentication.errored") }
+    public static var threeDSecureAuthenticationFailed: Self { .init(rawValue: "three_d_secure.authentication.failed") }
+    public static var threeDSecureAuthenticationRequiresChallenge: Self { .init(rawValue: "three_d_secure.authentication.requires_challenge") }
+    public static var threeDSecureAuthenticationRequiresSubmission: Self { .init(rawValue: "three_d_secure.authentication.requires_submission") }
+    public static var threeDSecureAuthenticationSucceeded: Self { .init(rawValue: "three_d_secure.authentication.succeeded") }
+    public static var topupCanceled: Self { .init(rawValue: "topup.canceled") }
+    public static var topupCreated: Self { .init(rawValue: "topup.created") }
+    public static var topupFailed: Self { .init(rawValue: "topup.failed") }
+    public static var topupReversed: Self { .init(rawValue: "topup.reversed") }
+    public static var topupSucceeded: Self { .init(rawValue: "topup.succeeded") }
+    public static var transferCreated: Self { .init(rawValue: "transfer.created") }
+    public static var transferReversed: Self { .init(rawValue: "transfer.reversed") }
+    public static var transferUpdated: Self { .init(rawValue: "transfer.updated") }
+    public static var treasuryCreditReversalCreated: Self { .init(rawValue: "treasury.credit_reversal.created") }
+    public static var treasuryCreditReversalPosted: Self { .init(rawValue: "treasury.credit_reversal.posted") }
+    public static var treasuryDebitReversalCompleted: Self { .init(rawValue: "treasury.debit_reversal.completed") }
+    public static var treasuryDebitReversalCreated: Self { .init(rawValue: "treasury.debit_reversal.created") }
+    public static var treasuryDebitReversalInitialCreditGranted: Self { .init(rawValue: "treasury.debit_reversal.initial_credit_granted") }
+    public static var treasuryFinancialAccountClosed: Self { .init(rawValue: "treasury.financial_account.closed") }
+    public static var treasuryFinancialAccountCreated: Self { .init(rawValue: "treasury.financial_account.created") }
+    public static var treasuryFinancialAccountFeaturesStatusUpdated: Self { .init(rawValue: "treasury.financial_account.features_status_updated") }
+    public static var treasuryInboundTransferCanceled: Self { .init(rawValue: "treasury.inbound_transfer.canceled") }
+    public static var treasuryInboundTransferCreated: Self { .init(rawValue: "treasury.inbound_transfer.created") }
+    public static var treasuryInboundTransferFailed: Self { .init(rawValue: "treasury.inbound_transfer.failed") }
+    public static var treasuryInboundTransferSucceeded: Self { .init(rawValue: "treasury.inbound_transfer.succeeded") }
+    public static var treasuryOutboundPaymentCanceled: Self { .init(rawValue: "treasury.outbound_payment.canceled") }
+    public static var treasuryOutboundPaymentCreated: Self { .init(rawValue: "treasury.outbound_payment.created") }
+    public static var treasuryOutboundPaymentExpectedArrivalDateUpdated: Self { .init(rawValue: "treasury.outbound_payment.expected_arrival_date_updated") }
+    public static var treasuryOutboundPaymentFailed: Self { .init(rawValue: "treasury.outbound_payment.failed") }
+    public static var treasuryOutboundPaymentPosted: Self { .init(rawValue: "treasury.outbound_payment.posted") }
+    public static var treasuryOutboundPaymentReturned: Self { .init(rawValue: "treasury.outbound_payment.returned") }
+    public static var treasuryOutboundPaymentTrackingDetailsUpdated: Self { .init(rawValue: "treasury.outbound_payment.tracking_details_updated") }
+    public static var treasuryOutboundTransferCanceled: Self { .init(rawValue: "treasury.outbound_transfer.canceled") }
+    public static var treasuryOutboundTransferCreated: Self { .init(rawValue: "treasury.outbound_transfer.created") }
+    public static var treasuryOutboundTransferExpectedArrivalDateUpdated: Self { .init(rawValue: "treasury.outbound_transfer.expected_arrival_date_updated") }
+    public static var treasuryOutboundTransferFailed: Self { .init(rawValue: "treasury.outbound_transfer.failed") }
+    public static var treasuryOutboundTransferPosted: Self { .init(rawValue: "treasury.outbound_transfer.posted") }
+    public static var treasuryOutboundTransferReturned: Self { .init(rawValue: "treasury.outbound_transfer.returned") }
+    public static var treasuryOutboundTransferTrackingDetailsUpdated: Self { .init(rawValue: "treasury.outbound_transfer.tracking_details_updated") }
+    public static var treasuryReceivedCreditCreated: Self { .init(rawValue: "treasury.received_credit.created") }
+    public static var treasuryReceivedCreditFailed: Self { .init(rawValue: "treasury.received_credit.failed") }
+    public static var treasuryReceivedCreditSucceeded: Self { .init(rawValue: "treasury.received_credit.succeeded") }
+    public static var treasuryReceivedDebitCreated: Self { .init(rawValue: "treasury.received_debit.created") }
 }

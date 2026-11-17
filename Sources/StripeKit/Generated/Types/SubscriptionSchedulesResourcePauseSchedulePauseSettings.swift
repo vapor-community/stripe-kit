@@ -22,14 +22,30 @@ public struct SubscriptionSchedulesResourcePauseSchedulePauseSettings: Codable, 
 }
 
 /// Determines how to handle debits and credits when pausing.
-public enum SubscriptionSchedulesResourcePauseSchedulePauseSettingsInvoicingBehavior: String, Codable, Sendable {
-    case invoice
-    case pendingInvoiceItem = "pending_invoice_item"
+public struct SubscriptionSchedulesResourcePauseSchedulePauseSettingsInvoicingBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Invoices immediately for debits and credits in the current period. If pausing doesn't create any
+    /// invoice items, Stripe doesn't generate an invoice.
+    public static var invoice: Self { .init(rawValue: "invoice") }
+    /// Creates pending invoice items for debits and credits in the current period.
+    public static var pendingInvoiceItem: Self { .init(rawValue: "pending_invoice_item") }
 }
 
 /// The type of pause settings.
-public enum SubscriptionSchedulesResourcePauseSchedulePauseSettingsType: String, Codable, Sendable {
-    case subscription
+public struct SubscriptionSchedulesResourcePauseSchedulePauseSettingsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Pauses collection, billing, and servicing.
+    public static var subscription: Self { .init(rawValue: "subscription") }
 }
 
 public struct SubscriptionSchedulesResourcePauseSchedulePauseSettingsList: Codable, Sendable {

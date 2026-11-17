@@ -31,10 +31,16 @@ public struct InvoicePaymentMethodOptionsCard: Codable, Sendable {
 /// [manually requesting 3D
 /// Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more
 /// information on how this configuration interacts with Radar and our SCA Engine.
-public enum InvoicePaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
-    case any
-    case automatic
-    case challenge
+public struct InvoicePaymentMethodOptionsCardRequestThreeDSecure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var any: Self { .init(rawValue: "any") }
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var challenge: Self { .init(rawValue: "challenge") }
 }
 
 public struct InvoicePaymentMethodOptionsCardList: Codable, Sendable {

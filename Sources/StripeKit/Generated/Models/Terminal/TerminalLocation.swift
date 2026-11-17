@@ -51,8 +51,14 @@ public struct TerminalLocation: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TerminalLocationObject: String, Codable, Sendable {
-    case terminalLocation = "terminal.location"
+public struct TerminalLocationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var terminalLocation: Self { .init(rawValue: "terminal.location") }
 }
 
 public struct TerminalLocationList: Codable, Sendable {

@@ -15,8 +15,14 @@ public struct BillingCreditGrantsResourceAmount: Codable, Sendable {
 }
 
 /// The type of this amount. We currently only support `monetary` billing credits.
-public enum BillingCreditGrantsResourceAmountType: String, Codable, Sendable {
-    case monetary
+public struct BillingCreditGrantsResourceAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var monetary: Self { .init(rawValue: "monetary") }
 }
 
 public struct BillingCreditGrantsResourceAmountList: Codable, Sendable {

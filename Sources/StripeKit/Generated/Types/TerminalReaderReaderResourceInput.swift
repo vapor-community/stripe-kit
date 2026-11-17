@@ -42,13 +42,19 @@ public struct TerminalReaderReaderResourceInput: Codable, Sendable {
 }
 
 /// Type of input being collected.
-public enum TerminalReaderReaderResourceInputType: String, Codable, Sendable {
-    case email
-    case numeric
-    case phone
-    case selection
-    case signature
-    case text
+public struct TerminalReaderReaderResourceInputType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var email: Self { .init(rawValue: "email") }
+    public static var numeric: Self { .init(rawValue: "numeric") }
+    public static var phone: Self { .init(rawValue: "phone") }
+    public static var selection: Self { .init(rawValue: "selection") }
+    public static var signature: Self { .init(rawValue: "signature") }
+    public static var text: Self { .init(rawValue: "text") }
 }
 
 public struct TerminalReaderReaderResourceInputList: Codable, Sendable {

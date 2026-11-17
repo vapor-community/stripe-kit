@@ -138,33 +138,57 @@ public struct CreditNote: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CreditNoteObject: String, Codable, Sendable {
-    case creditNote = "credit_note"
+public struct CreditNoteObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditNote: Self { .init(rawValue: "credit_note") }
 }
 
 /// Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or
 /// `product_unsatisfactory`
-public enum CreditNoteReason: String, Codable, Sendable {
-    case duplicate
-    case fraudulent
-    case orderChange = "order_change"
-    case productUnsatisfactory = "product_unsatisfactory"
+public struct CreditNoteReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var orderChange: Self { .init(rawValue: "order_change") }
+    public static var productUnsatisfactory: Self { .init(rawValue: "product_unsatisfactory") }
 }
 
 /// Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit
 /// notes](https://docs.stripe.com/billing/invoices/credit-notes#voiding).
-public enum CreditNoteStatus: String, Codable, Sendable {
-    case issued
-    case void
+public struct CreditNoteStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var issued: Self { .init(rawValue: "issued") }
+    public static var void: Self { .init(rawValue: "void") }
 }
 
 /// Type of this credit note, one of `pre_payment` or `post_payment`. A `pre_payment` credit note means
 /// it was issued when the invoice was open. A `post_payment` credit note means it was issued when the
 /// invoice was paid.
-public enum CreditNoteType: String, Codable, Sendable {
-    case mixed
-    case postPayment = "post_payment"
-    case prePayment = "pre_payment"
+public struct CreditNoteType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var mixed: Self { .init(rawValue: "mixed") }
+    public static var postPayment: Self { .init(rawValue: "post_payment") }
+    public static var prePayment: Self { .init(rawValue: "pre_payment") }
 }
 
 public struct CreditNoteList: Codable, Sendable {

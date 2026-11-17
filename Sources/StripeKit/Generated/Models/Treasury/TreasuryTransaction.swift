@@ -65,28 +65,46 @@ public struct TreasuryTransaction: Codable, Sendable {
 }
 
 /// Type of the flow that created the Transaction.
-public enum TreasuryTransactionFlowType: String, Codable, Sendable {
-    case creditReversal = "credit_reversal"
-    case debitReversal = "debit_reversal"
-    case inboundTransfer = "inbound_transfer"
-    case issuingAuthorization = "issuing_authorization"
-    case other
-    case outboundPayment = "outbound_payment"
-    case outboundTransfer = "outbound_transfer"
-    case receivedCredit = "received_credit"
-    case receivedDebit = "received_debit"
+public struct TreasuryTransactionFlowType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditReversal: Self { .init(rawValue: "credit_reversal") }
+    public static var debitReversal: Self { .init(rawValue: "debit_reversal") }
+    public static var inboundTransfer: Self { .init(rawValue: "inbound_transfer") }
+    public static var issuingAuthorization: Self { .init(rawValue: "issuing_authorization") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var outboundPayment: Self { .init(rawValue: "outbound_payment") }
+    public static var outboundTransfer: Self { .init(rawValue: "outbound_transfer") }
+    public static var receivedCredit: Self { .init(rawValue: "received_credit") }
+    public static var receivedDebit: Self { .init(rawValue: "received_debit") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TreasuryTransactionObject: String, Codable, Sendable {
-    case treasuryTransaction = "treasury.transaction"
+public struct TreasuryTransactionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var treasuryTransaction: Self { .init(rawValue: "treasury.transaction") }
 }
 
 /// Status of the Transaction.
-public enum TreasuryTransactionStatus: String, Codable, Sendable {
-    case `open` = "open"
-    case posted
-    case void
+public struct TreasuryTransactionStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var `open`: Self { .init(rawValue: "open") }
+    public static var posted: Self { .init(rawValue: "posted") }
+    public static var void: Self { .init(rawValue: "void") }
 }
 
 public struct TreasuryTransactionList: Codable, Sendable {

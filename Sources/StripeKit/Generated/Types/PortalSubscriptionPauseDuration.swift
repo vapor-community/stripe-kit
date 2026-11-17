@@ -20,9 +20,17 @@ public struct PortalSubscriptionPauseDuration: Codable, Sendable {
 }
 
 /// Whether subscriptions can be paused indefinitely or for a preset duration.
-public enum PortalSubscriptionPauseDurationType: String, Codable, Sendable {
-    case indefinite
-    case intervalOptions = "interval_options"
+public struct PortalSubscriptionPauseDurationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Allow subscriptions to be paused indefinitely.
+    public static var indefinite: Self { .init(rawValue: "indefinite") }
+    /// Require customers to choose from configured pause duration options.
+    public static var intervalOptions: Self { .init(rawValue: "interval_options") }
 }
 
 public struct PortalSubscriptionPauseDurationList: Codable, Sendable {

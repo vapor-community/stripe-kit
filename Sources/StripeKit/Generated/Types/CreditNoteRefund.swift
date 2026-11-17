@@ -27,9 +27,15 @@ public struct CreditNoteRefund: Codable, Sendable {
 }
 
 /// Type of the refund, one of `refund` or `payment_record_refund`.
-public enum CreditNoteRefundType: String, Codable, Sendable {
-    case paymentRecordRefund = "payment_record_refund"
-    case refund
+public struct CreditNoteRefundType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentRecordRefund: Self { .init(rawValue: "payment_record_refund") }
+    public static var refund: Self { .init(rawValue: "refund") }
 }
 
 public struct CreditNoteRefundList: Codable, Sendable {

@@ -55,9 +55,15 @@ public struct CustomerSessionResourceComponentsResourcePaymentElementResourceFea
 
 /// Controls whether or not the Payment Element shows saved payment methods. This parameter defaults to
 /// `disabled`.
-public enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRedisplay: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRedisplay: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// Controls whether the Payment Element displays the option to remove a saved payment method. This
@@ -66,9 +72,15 @@ public enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeatu
 /// [`customer`
 /// object](https://docs.stripe.com/api/payment_methods/object#payment_method_object-customer) from that
 /// [PaymentMethod](https://docs.stripe.com/api/payment_methods).
-public enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// Controls whether the Payment Element displays a checkbox offering to save a new payment method. This
@@ -77,9 +89,15 @@ public enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeatu
 /// value on the PaymentMethod is set to `'always'` at confirmation time. For PaymentIntents, the
 /// [`setup_future_usage`](https://docs.stripe.com/api/payment_intents/object#payment_intent_object-setup_future_usage)
 /// value is also set to the value defined in `payment_method_save_usage`.
-public enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSave: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 /// When using PaymentIntents and the customer checks the save checkbox, this field determines the
@@ -87,9 +105,15 @@ public enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeatu
 /// value used to confirm the PaymentIntent. When using SetupIntents, directly configure the
 /// [`usage`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-usage) value on
 /// SetupIntent creation.
-public enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSaveUsage: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSaveUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 public struct CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesList: Codable, Sendable {

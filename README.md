@@ -132,6 +132,23 @@ public struct CustomerRoutes: Sendable {
 }
 ```
 
+### Enums and Values Stripe Adds Later
+
+Stripe adds enum values, such as new payment method types and error codes, without a new API version. So the spec's enums are extensible: each is a struct holding its raw value, with a static member per value Stripe documents.
+
+```swift
+if paymentMethod.type == .card { … }
+
+switch paymentMethod.type {
+case .card: …
+case .sepaDebit: …
+default: print("Another payment method type: \(paymentMethod.type.rawValue)")
+}
+```
+
+- Any value decodes, including one this version of StripeKit doesn't list, instead of failing the response. Send one in params with `.init(rawValue: "new_value")`.
+- An object of an unknown type in a list of several types (`ExternalAccount`, `PaymentSource`) decodes as `.undocumented` with its raw `JSONValue`.
+
 ### Deleted Objects
 
 Delete endpoints return a `Deleted*` type (`id`, `object`, `deleted: true`), not the full object.
@@ -277,7 +294,7 @@ case .invoicePaid:
     print("Invoice \(invoice.id ?? "") paid: \(invoice.amountPaid)")
 
 default:
-    print("Unhandled event: \(event.type)")  // includes `.unknown` for event types newer than StripeKit
+    print("Unhandled event: \(event.type.rawValue)")  // includes event types newer than StripeKit
 }
 ```
 

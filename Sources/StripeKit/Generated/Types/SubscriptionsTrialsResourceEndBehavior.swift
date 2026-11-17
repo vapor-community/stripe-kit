@@ -20,10 +20,16 @@ public struct SubscriptionsTrialsResourceEndBehavior: Codable, Sendable {
 
 /// Indicates how the subscription should change when the trial ends if the user did not provide a
 /// payment method.
-public enum SubscriptionsTrialsResourceEndBehaviorMissingPaymentMethod: String, Codable, Sendable {
-    case cancel
-    case createInvoice = "create_invoice"
-    case pause
+public struct SubscriptionsTrialsResourceEndBehaviorMissingPaymentMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
+    public static var createInvoice: Self { .init(rawValue: "create_invoice") }
+    public static var pause: Self { .init(rawValue: "pause") }
 }
 
 public struct SubscriptionsTrialsResourceEndBehaviorList: Codable, Sendable {

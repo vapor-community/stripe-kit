@@ -98,25 +98,43 @@ public struct IdentityVerificationSession: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum IdentityVerificationSessionObject: String, Codable, Sendable {
-    case identityVerificationSession = "identity.verification_session"
+public struct IdentityVerificationSessionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var identityVerificationSession: Self { .init(rawValue: "identity.verification_session") }
 }
 
 /// Status of this VerificationSession. [Learn more about the lifecycle of
 /// sessions](https://docs.stripe.com/identity/how-sessions-work).
-public enum IdentityVerificationSessionStatus: String, Codable, Sendable {
-    case canceled
-    case processing
-    case requiresInput = "requires_input"
-    case verified
+public struct IdentityVerificationSessionStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var processing: Self { .init(rawValue: "processing") }
+    public static var requiresInput: Self { .init(rawValue: "requires_input") }
+    public static var verified: Self { .init(rawValue: "verified") }
 }
 
 /// The type of [verification check](https://docs.stripe.com/identity/verification-checks) to be
 /// performed.
-public enum IdentityVerificationSessionType: String, Codable, Sendable {
-    case document
-    case idNumber = "id_number"
-    case verificationFlow = "verification_flow"
+public struct IdentityVerificationSessionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var document: Self { .init(rawValue: "document") }
+    public static var idNumber: Self { .init(rawValue: "id_number") }
+    public static var verificationFlow: Self { .init(rawValue: "verification_flow") }
 }
 
 public struct IdentityVerificationSessionList: Codable, Sendable {

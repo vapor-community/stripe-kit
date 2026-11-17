@@ -21,17 +21,29 @@ public struct InsightsResourcesPaymentEvaluationMoneyMovementCard: Codable, Send
 }
 
 /// Describes the presence of the customer during the payment.
-public enum InsightsResourcesPaymentEvaluationMoneyMovementCardCustomerPresence: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct InsightsResourcesPaymentEvaluationMoneyMovementCardCustomerPresence: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// Describes the type of payment.
-public enum InsightsResourcesPaymentEvaluationMoneyMovementCardPaymentType: String, Codable, Sendable {
-    case oneOff = "one_off"
-    case recurring
-    case setupOneOff = "setup_one_off"
-    case setupRecurring = "setup_recurring"
+public struct InsightsResourcesPaymentEvaluationMoneyMovementCardPaymentType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var oneOff: Self { .init(rawValue: "one_off") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
+    public static var setupOneOff: Self { .init(rawValue: "setup_one_off") }
+    public static var setupRecurring: Self { .init(rawValue: "setup_recurring") }
 }
 
 public struct InsightsResourcesPaymentEvaluationMoneyMovementCardList: Codable, Sendable {

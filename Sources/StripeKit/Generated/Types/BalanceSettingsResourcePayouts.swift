@@ -36,9 +36,15 @@ public struct BalanceSettingsResourcePayouts: Codable, Sendable {
 }
 
 /// Whether the funds in this account can be paid out.
-public enum BalanceSettingsResourcePayoutsStatus: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct BalanceSettingsResourcePayoutsStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 public struct BalanceSettingsResourcePayoutsList: Codable, Sendable {

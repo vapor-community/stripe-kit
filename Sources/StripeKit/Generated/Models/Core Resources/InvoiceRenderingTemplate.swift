@@ -33,14 +33,26 @@ public struct InvoiceRenderingTemplate: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum InvoiceRenderingTemplateObject: String, Codable, Sendable {
-    case invoiceRenderingTemplate = "invoice_rendering_template"
+public struct InvoiceRenderingTemplateObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var invoiceRenderingTemplate: Self { .init(rawValue: "invoice_rendering_template") }
 }
 
 /// The status of the template, one of `active` or `archived`.
-public enum InvoiceRenderingTemplateStatus: String, Codable, Sendable {
-    case active
-    case archived
+public struct InvoiceRenderingTemplateStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var archived: Self { .init(rawValue: "archived") }
 }
 
 public struct InvoiceRenderingTemplateList: Codable, Sendable {

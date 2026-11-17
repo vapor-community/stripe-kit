@@ -60,8 +60,14 @@ public struct TransferReversal: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TransferReversalObject: String, Codable, Sendable {
-    case transferReversal = "transfer_reversal"
+public struct TransferReversalObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var transferReversal: Self { .init(rawValue: "transfer_reversal") }
 }
 
 public struct TransferReversalList: Codable, Sendable {

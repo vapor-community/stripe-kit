@@ -46,14 +46,20 @@ public struct PaymentMethodDetailsPaymentRecordSofort: Codable, Sendable {
 
 /// Preferred language of the SOFORT authorization page that the customer is redirected to. Can be one
 /// of `de`, `en`, `es`, `fr`, `it`, `nl`, or `pl`
-public enum PaymentMethodDetailsPaymentRecordSofortPreferredLanguage: String, Codable, Sendable {
-    case de
-    case en
-    case es
-    case fr
-    case it
-    case nl
-    case pl
+public struct PaymentMethodDetailsPaymentRecordSofortPreferredLanguage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var de: Self { .init(rawValue: "de") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var es: Self { .init(rawValue: "es") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var it: Self { .init(rawValue: "it") }
+    public static var nl: Self { .init(rawValue: "nl") }
+    public static var pl: Self { .init(rawValue: "pl") }
 }
 
 public struct PaymentMethodDetailsPaymentRecordSofortList: Codable, Sendable {

@@ -33,8 +33,14 @@ public struct TaxAssociation: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TaxAssociationObject: String, Codable, Sendable {
-    case taxAssociation = "tax.association"
+public struct TaxAssociationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxAssociation: Self { .init(rawValue: "tax.association") }
 }
 
 public struct TaxAssociationList: Codable, Sendable {

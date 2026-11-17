@@ -52,15 +52,27 @@ public struct FinancialConnectionsTransaction: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum FinancialConnectionsTransactionObject: String, Codable, Sendable {
-    case financialConnectionsTransaction = "financial_connections.transaction"
+public struct FinancialConnectionsTransactionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var financialConnectionsTransaction: Self { .init(rawValue: "financial_connections.transaction") }
 }
 
 /// The status of the transaction.
-public enum FinancialConnectionsTransactionStatus: String, Codable, Sendable {
-    case pending
-    case posted
-    case void
+public struct FinancialConnectionsTransactionStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var posted: Self { .init(rawValue: "posted") }
+    public static var void: Self { .init(rawValue: "void") }
 }
 
 public struct FinancialConnectionsTransactionList: Codable, Sendable {

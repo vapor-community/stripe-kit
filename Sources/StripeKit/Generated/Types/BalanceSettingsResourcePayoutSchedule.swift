@@ -27,11 +27,17 @@ public struct BalanceSettingsResourcePayoutSchedule: Codable, Sendable {
 
 /// How frequently funds will be paid out. One of `manual` (payouts only created via API call), `daily`,
 /// `weekly`, or `monthly`.
-public enum BalanceSettingsResourcePayoutScheduleInterval: String, Codable, Sendable {
-    case daily
-    case manual
-    case monthly
-    case weekly
+public struct BalanceSettingsResourcePayoutScheduleInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var daily: Self { .init(rawValue: "daily") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
 }
 
 public struct BalanceSettingsResourcePayoutScheduleList: Codable, Sendable {

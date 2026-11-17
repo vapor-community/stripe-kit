@@ -13,9 +13,15 @@ public struct PortalResourceScheduleUpdateAtPeriodEndCondition: Codable, Sendabl
 }
 
 /// The type of condition.
-public enum PortalResourceScheduleUpdateAtPeriodEndConditionType: String, Codable, Sendable {
-    case decreasingItemAmount = "decreasing_item_amount"
-    case shorteningInterval = "shortening_interval"
+public struct PortalResourceScheduleUpdateAtPeriodEndConditionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var decreasingItemAmount: Self { .init(rawValue: "decreasing_item_amount") }
+    public static var shorteningInterval: Self { .init(rawValue: "shortening_interval") }
 }
 
 public struct PortalResourceScheduleUpdateAtPeriodEndConditionList: Codable, Sendable {

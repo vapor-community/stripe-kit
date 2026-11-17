@@ -96,9 +96,15 @@ public struct BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurren
     }
 }
 
-public enum BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrencyType: String, Codable, Sendable {
-    case transferAll = "transfer_all"
-    case transferUpToAmount = "transfer_up_to_amount"
+public struct BalanceSettingsUpdatePaymentsPayoutsAutomaticTransferRulesByCurrencyType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var transferAll: Self { .init(rawValue: "transfer_all") }
+    public static var transferUpToAmount: Self { .init(rawValue: "transfer_up_to_amount") }
 }
 
 /// Details on when funds from charges are available, and when they are paid out to an external account.
@@ -129,19 +135,31 @@ public struct BalanceSettingsUpdatePaymentsPayoutsSchedule: StripeParams {
     }
 }
 
-public enum BalanceSettingsUpdatePaymentsPayoutsScheduleInterval: String, Codable, Sendable {
-    case daily
-    case manual
-    case monthly
-    case weekly
+public struct BalanceSettingsUpdatePaymentsPayoutsScheduleInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var daily: Self { .init(rawValue: "daily") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
 }
 
-public enum BalanceSettingsUpdatePaymentsPayoutsScheduleWeeklyPayoutDays: String, Codable, Sendable {
-    case friday
-    case monday
-    case thursday
-    case tuesday
-    case wednesday
+public struct BalanceSettingsUpdatePaymentsPayoutsScheduleWeeklyPayoutDays: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var friday: Self { .init(rawValue: "friday") }
+    public static var monday: Self { .init(rawValue: "monday") }
+    public static var thursday: Self { .init(rawValue: "thursday") }
+    public static var tuesday: Self { .init(rawValue: "tuesday") }
+    public static var wednesday: Self { .init(rawValue: "wednesday") }
 }
 
 /// Settings related to the account's balance settlement timing.

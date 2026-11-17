@@ -17,9 +17,15 @@ public struct PaymentMethodOptionsCardPresentRouting: Codable, Sendable {
 }
 
 /// Requested routing priority
-public enum PaymentMethodOptionsCardPresentRoutingRequestedPriority: String, Codable, Sendable {
-    case domestic
-    case international
+public struct PaymentMethodOptionsCardPresentRoutingRequestedPriority: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var domestic: Self { .init(rawValue: "domestic") }
+    public static var international: Self { .init(rawValue: "international") }
 }
 
 public struct PaymentMethodOptionsCardPresentRoutingList: Codable, Sendable {

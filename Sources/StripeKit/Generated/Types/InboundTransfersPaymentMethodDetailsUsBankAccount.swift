@@ -41,21 +41,39 @@ public struct InboundTransfersPaymentMethodDetailsUsBankAccount: Codable, Sendab
 }
 
 /// Account holder type: individual or company.
-public enum InboundTransfersPaymentMethodDetailsUsBankAccountAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct InboundTransfersPaymentMethodDetailsUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 /// Account type: checkings or savings. Defaults to checking if omitted.
-public enum InboundTransfersPaymentMethodDetailsUsBankAccountAccountType: String, Codable, Sendable {
-    case checking
-    case savings
+public struct InboundTransfersPaymentMethodDetailsUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
 /// The network rails used. See the [docs](https://docs.stripe.com/treasury/money-movement/timelines) to
 /// learn more about money movement timelines for each network type.
-public enum InboundTransfersPaymentMethodDetailsUsBankAccountNetwork: String, Codable, Sendable {
-    case ach
+public struct InboundTransfersPaymentMethodDetailsUsBankAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
 }
 
 public struct InboundTransfersPaymentMethodDetailsUsBankAccountList: Codable, Sendable {

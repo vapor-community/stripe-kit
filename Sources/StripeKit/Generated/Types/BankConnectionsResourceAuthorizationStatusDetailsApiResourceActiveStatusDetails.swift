@@ -20,9 +20,18 @@ public struct BankConnectionsResourceAuthorizationStatusDetailsApiResourceActive
 }
 
 /// The action (if any) to proactively relink the Authorization.
-public enum BankConnectionsResourceAuthorizationStatusDetailsApiResourceActiveStatusDetailsAction: String, Codable, Sendable {
-    case none
-    case relinkRequired = "relink_required"
+public struct BankConnectionsResourceAuthorizationStatusDetailsApiResourceActiveStatusDetailsAction: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// There is no action recommended at this time to resolve the upcoming Authorization deactivation.
+    public static var none: Self { .init(rawValue: "none") }
+    /// You may proactively relink the Authorization by having your end user complete the streamlined relink
+    /// flow.
+    public static var relinkRequired: Self { .init(rawValue: "relink_required") }
 }
 
 public struct BankConnectionsResourceAuthorizationStatusDetailsApiResourceActiveStatusDetailsList: Codable, Sendable {

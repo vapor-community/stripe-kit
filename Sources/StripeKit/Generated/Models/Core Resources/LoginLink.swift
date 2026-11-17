@@ -21,8 +21,14 @@ public struct LoginLink: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum LoginLinkObject: String, Codable, Sendable {
-    case loginLink = "login_link"
+public struct LoginLinkObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var loginLink: Self { .init(rawValue: "login_link") }
 }
 
 public struct LoginLinkList: Codable, Sendable {

@@ -99,52 +99,76 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetails: 
 
 /// Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`,
 /// `mastercard`, `unionpay`, `visa` or `unknown`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsBrand: String, Codable, Sendable {
-    case amex
-    case cartesBancaires = "cartes_bancaires"
-    case diners
-    case discover
-    case eftposAu = "eftpos_au"
-    case interac
-    case jcb
-    case link
-    case mastercard
-    case unionpay
-    case unknown
-    case visa
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsBrand: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var amex: Self { .init(rawValue: "amex") }
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var diners: Self { .init(rawValue: "diners") }
+    public static var discover: Self { .init(rawValue: "discover") }
+    public static var eftposAu: Self { .init(rawValue: "eftpos_au") }
+    public static var interac: Self { .init(rawValue: "interac") }
+    public static var jcb: Self { .init(rawValue: "jcb") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var unionpay: Self { .init(rawValue: "unionpay") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 /// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsFunding: String, Codable, Sendable {
-    case credit
-    case debit
-    case prepaid
-    case unknown
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsFunding: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var credit: Self { .init(rawValue: "credit") }
+    public static var debit: Self { .init(rawValue: "debit") }
+    public static var prepaid: Self { .init(rawValue: "prepaid") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
 }
 
 /// Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`,
 /// `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsNetwork: String, Codable, Sendable {
-    case amex
-    case cartesBancaires = "cartes_bancaires"
-    case diners
-    case discover
-    case eftposAu = "eftpos_au"
-    case interac
-    case jcb
-    case link
-    case mastercard
-    case unionpay
-    case unknown
-    case visa
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var amex: Self { .init(rawValue: "amex") }
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var diners: Self { .init(rawValue: "diners") }
+    public static var discover: Self { .init(rawValue: "discover") }
+    public static var eftposAu: Self { .init(rawValue: "eftpos_au") }
+    public static var interac: Self { .init(rawValue: "interac") }
+    public static var jcb: Self { .init(rawValue: "jcb") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var unionpay: Self { .init(rawValue: "unionpay") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 /// The transaction type that was passed for an off-session, Merchant-Initiated transaction, one of
 /// `recurring` or `unscheduled`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsStoredCredentialUsage: String, Codable, Sendable {
-    case installment
-    case recurring
-    case unscheduled
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsStoredCredentialUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var installment: Self { .init(rawValue: "installment") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
+    public static var unscheduled: Self { .init(rawValue: "unscheduled") }
 }
 
 public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsList: Codable, Sendable {

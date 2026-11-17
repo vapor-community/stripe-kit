@@ -33,15 +33,21 @@ public struct IssuingDisputeEvidence: Codable, Sendable {
 }
 
 /// The reason for filing the dispute. Its value will match the field containing the evidence.
-public enum IssuingDisputeEvidenceReason: String, Codable, Sendable {
-    case canceled
-    case duplicate
-    case fraudulent
-    case merchandiseNotAsDescribed = "merchandise_not_as_described"
-    case noValidAuthorization = "no_valid_authorization"
-    case notReceived = "not_received"
-    case other
-    case serviceNotAsDescribed = "service_not_as_described"
+public struct IssuingDisputeEvidenceReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var merchandiseNotAsDescribed: Self { .init(rawValue: "merchandise_not_as_described") }
+    public static var noValidAuthorization: Self { .init(rawValue: "no_valid_authorization") }
+    public static var notReceived: Self { .init(rawValue: "not_received") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var serviceNotAsDescribed: Self { .init(rawValue: "service_not_as_described") }
 }
 
 public struct IssuingDisputeEvidenceList: Codable, Sendable {

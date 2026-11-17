@@ -75,31 +75,55 @@ public struct TreasuryReceivedDebit: Codable, Sendable {
 
 /// Reason for the failure. A ReceivedDebit might fail because the FinancialAccount doesn't have
 /// sufficient funds, is closed, or is frozen.
-public enum TreasuryReceivedDebitFailureCode: String, Codable, Sendable {
-    case accountClosed = "account_closed"
-    case accountFrozen = "account_frozen"
-    case insufficientFunds = "insufficient_funds"
-    case internationalTransaction = "international_transaction"
-    case other
+public struct TreasuryReceivedDebitFailureCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountClosed: Self { .init(rawValue: "account_closed") }
+    public static var accountFrozen: Self { .init(rawValue: "account_frozen") }
+    public static var insufficientFunds: Self { .init(rawValue: "insufficient_funds") }
+    public static var internationalTransaction: Self { .init(rawValue: "international_transaction") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 /// The network used for the ReceivedDebit.
-public enum TreasuryReceivedDebitNetwork: String, Codable, Sendable {
-    case ach
-    case card
-    case stripe
+public struct TreasuryReceivedDebitNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TreasuryReceivedDebitObject: String, Codable, Sendable {
-    case treasuryReceivedDebit = "treasury.received_debit"
+public struct TreasuryReceivedDebitObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var treasuryReceivedDebit: Self { .init(rawValue: "treasury.received_debit") }
 }
 
 /// Status of the ReceivedDebit. ReceivedDebits are created with a status of either `succeeded`
 /// (approved) or `failed` (declined). The failure reason can be found under the `failure_code`.
-public enum TreasuryReceivedDebitStatus: String, Codable, Sendable {
-    case failed
-    case succeeded
+public struct TreasuryReceivedDebitStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct TreasuryReceivedDebitList: Codable, Sendable {

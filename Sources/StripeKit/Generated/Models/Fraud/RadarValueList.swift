@@ -52,24 +52,48 @@ public struct RadarValueList: Codable, Sendable {
 /// The type of items in the value list. One of `card_fingerprint`, `card_bin`, `crypto_fingerprint`,
 /// `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, `customer_id`, `account`,
 /// `sepa_debit_fingerprint`, or `us_bank_account_fingerprint`.
-public enum RadarValueListItemType: String, Codable, Sendable {
-    case account
-    case cardBin = "card_bin"
-    case cardFingerprint = "card_fingerprint"
-    case caseSensitiveString = "case_sensitive_string"
-    case country
-    case cryptoFingerprint = "crypto_fingerprint"
-    case customerId = "customer_id"
-    case email
-    case ipAddress = "ip_address"
-    case sepaDebitFingerprint = "sepa_debit_fingerprint"
-    case string
-    case usBankAccountFingerprint = "us_bank_account_fingerprint"
+public struct RadarValueListItemType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Account IDs.
+    public static var account: Self { .init(rawValue: "account") }
+    /// Card BINs.
+    public static var cardBin: Self { .init(rawValue: "card_bin") }
+    /// Card fingerprints.
+    public static var cardFingerprint: Self { .init(rawValue: "card_fingerprint") }
+    /// Case-sensitive strings.
+    public static var caseSensitiveString: Self { .init(rawValue: "case_sensitive_string") }
+    /// Two-letter ISO country codes.
+    public static var country: Self { .init(rawValue: "country") }
+    /// Cryptocurrency fingerprints.
+    public static var cryptoFingerprint: Self { .init(rawValue: "crypto_fingerprint") }
+    /// Customer IDs.
+    public static var customerId: Self { .init(rawValue: "customer_id") }
+    /// Email addresses.
+    public static var email: Self { .init(rawValue: "email") }
+    /// IP addresses.
+    public static var ipAddress: Self { .init(rawValue: "ip_address") }
+    /// SEPA debit fingerprints.
+    public static var sepaDebitFingerprint: Self { .init(rawValue: "sepa_debit_fingerprint") }
+    /// Arbitrary case-insensitive strings.
+    public static var string: Self { .init(rawValue: "string") }
+    /// US bank account fingerprints.
+    public static var usBankAccountFingerprint: Self { .init(rawValue: "us_bank_account_fingerprint") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum RadarValueListObject: String, Codable, Sendable {
-    case radarValueList = "radar.value_list"
+public struct RadarValueListObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var radarValueList: Self { .init(rawValue: "radar.value_list") }
 }
 
 public struct RadarValueListList: Codable, Sendable {

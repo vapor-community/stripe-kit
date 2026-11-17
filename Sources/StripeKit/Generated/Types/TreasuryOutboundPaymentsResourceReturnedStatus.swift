@@ -16,17 +16,23 @@ public struct TreasuryOutboundPaymentsResourceReturnedStatus: Codable, Sendable 
 }
 
 /// Reason for the return.
-public enum TreasuryOutboundPaymentsResourceReturnedStatusCode: String, Codable, Sendable {
-    case accountClosed = "account_closed"
-    case accountFrozen = "account_frozen"
-    case bankAccountRestricted = "bank_account_restricted"
-    case bankOwnershipChanged = "bank_ownership_changed"
-    case declined
-    case incorrectAccountHolderName = "incorrect_account_holder_name"
-    case invalidAccountNumber = "invalid_account_number"
-    case invalidCurrency = "invalid_currency"
-    case noAccount = "no_account"
-    case other
+public struct TreasuryOutboundPaymentsResourceReturnedStatusCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountClosed: Self { .init(rawValue: "account_closed") }
+    public static var accountFrozen: Self { .init(rawValue: "account_frozen") }
+    public static var bankAccountRestricted: Self { .init(rawValue: "bank_account_restricted") }
+    public static var bankOwnershipChanged: Self { .init(rawValue: "bank_ownership_changed") }
+    public static var declined: Self { .init(rawValue: "declined") }
+    public static var incorrectAccountHolderName: Self { .init(rawValue: "incorrect_account_holder_name") }
+    public static var invalidAccountNumber: Self { .init(rawValue: "invalid_account_number") }
+    public static var invalidCurrency: Self { .init(rawValue: "invalid_currency") }
+    public static var noAccount: Self { .init(rawValue: "no_account") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 public struct TreasuryOutboundPaymentsResourceReturnedStatusList: Codable, Sendable {

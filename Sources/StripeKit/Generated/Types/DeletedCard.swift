@@ -20,8 +20,14 @@ public struct DeletedCard: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DeletedCardObject: String, Codable, Sendable {
-    case card
+public struct DeletedCardObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
 }
 
 public struct DeletedCardList: Codable, Sendable {

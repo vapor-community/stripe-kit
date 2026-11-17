@@ -38,36 +38,54 @@ public struct SetupIntentPaymentMethodOptionsMandateOptionsPayto: Codable, Senda
 
 /// The type of amount that will be collected. The amount charged must be exact or up to the value of
 /// `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
-public enum SetupIntentPaymentMethodOptionsMandateOptionsPaytoAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct SetupIntentPaymentMethodOptionsMandateOptionsPaytoAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 /// The periodicity at which payments will be collected. Defaults to `adhoc`.
-public enum SetupIntentPaymentMethodOptionsMandateOptionsPaytoPaymentSchedule: String, Codable, Sendable {
-    case adhoc
-    case annual
-    case daily
-    case fortnightly
-    case monthly
-    case quarterly
-    case semiAnnual = "semi_annual"
-    case weekly
+public struct SetupIntentPaymentMethodOptionsMandateOptionsPaytoPaymentSchedule: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var adhoc: Self { .init(rawValue: "adhoc") }
+    public static var annual: Self { .init(rawValue: "annual") }
+    public static var daily: Self { .init(rawValue: "daily") }
+    public static var fortnightly: Self { .init(rawValue: "fortnightly") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var quarterly: Self { .init(rawValue: "quarterly") }
+    public static var semiAnnual: Self { .init(rawValue: "semi_annual") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
 }
 
 /// The purpose for which payments are made. Has a default value based on your merchant category code.
-public enum SetupIntentPaymentMethodOptionsMandateOptionsPaytoPurpose: String, Codable, Sendable {
-    case dependantSupport = "dependant_support"
-    case government
-    case loan
-    case mortgage
-    case other
-    case pension
-    case personal
-    case retail
-    case salary
-    case tax
-    case utility
+public struct SetupIntentPaymentMethodOptionsMandateOptionsPaytoPurpose: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dependantSupport: Self { .init(rawValue: "dependant_support") }
+    public static var government: Self { .init(rawValue: "government") }
+    public static var loan: Self { .init(rawValue: "loan") }
+    public static var mortgage: Self { .init(rawValue: "mortgage") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var pension: Self { .init(rawValue: "pension") }
+    public static var personal: Self { .init(rawValue: "personal") }
+    public static var retail: Self { .init(rawValue: "retail") }
+    public static var salary: Self { .init(rawValue: "salary") }
+    public static var tax: Self { .init(rawValue: "tax") }
+    public static var utility: Self { .init(rawValue: "utility") }
 }
 
 public struct SetupIntentPaymentMethodOptionsMandateOptionsPaytoList: Codable, Sendable {

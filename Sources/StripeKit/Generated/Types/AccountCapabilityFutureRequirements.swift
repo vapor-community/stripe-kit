@@ -57,17 +57,23 @@ public struct AccountCapabilityFutureRequirements: Codable, Sendable {
 /// This is typed as an enum for consistency with `requirements.disabled_reason`, but it safe to assume
 /// `future_requirements.disabled_reason` is null because fields in `future_requirements` will never
 /// disable the account.
-public enum AccountCapabilityFutureRequirementsDisabledReason: String, Codable, Sendable {
-    case other
-    case pausedInactivity = "paused.inactivity"
-    case pendingOnboarding = "pending.onboarding"
-    case pendingReview = "pending.review"
-    case platformDisabled = "platform_disabled"
-    case platformPaused = "platform_paused"
-    case rejectedInactivity = "rejected.inactivity"
-    case rejectedOther = "rejected.other"
-    case rejectedUnsupportedBusiness = "rejected.unsupported_business"
-    case requirementsFieldsNeeded = "requirements.fields_needed"
+public struct AccountCapabilityFutureRequirementsDisabledReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var other: Self { .init(rawValue: "other") }
+    public static var pausedInactivity: Self { .init(rawValue: "paused.inactivity") }
+    public static var pendingOnboarding: Self { .init(rawValue: "pending.onboarding") }
+    public static var pendingReview: Self { .init(rawValue: "pending.review") }
+    public static var platformDisabled: Self { .init(rawValue: "platform_disabled") }
+    public static var platformPaused: Self { .init(rawValue: "platform_paused") }
+    public static var rejectedInactivity: Self { .init(rawValue: "rejected.inactivity") }
+    public static var rejectedOther: Self { .init(rawValue: "rejected.other") }
+    public static var rejectedUnsupportedBusiness: Self { .init(rawValue: "rejected.unsupported_business") }
+    public static var requirementsFieldsNeeded: Self { .init(rawValue: "requirements.fields_needed") }
 }
 
 public struct AccountCapabilityFutureRequirementsList: Codable, Sendable {

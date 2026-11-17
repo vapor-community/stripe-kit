@@ -44,18 +44,30 @@ public struct IssuingNetworkTokenWalletProvider: Codable, Sendable {
 }
 
 /// The method used for tokenizing a card.
-public enum IssuingNetworkTokenWalletProviderCardNumberSource: String, Codable, Sendable {
-    case app
-    case manual
-    case onFile = "on_file"
-    case other
+public struct IssuingNetworkTokenWalletProviderCardNumberSource: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var app: Self { .init(rawValue: "app") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var onFile: Self { .init(rawValue: "on_file") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 /// The recommendation on responding to the tokenization request.
-public enum IssuingNetworkTokenWalletProviderSuggestedDecision: String, Codable, Sendable {
-    case approve
-    case decline
-    case requireAuth = "require_auth"
+public struct IssuingNetworkTokenWalletProviderSuggestedDecision: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var approve: Self { .init(rawValue: "approve") }
+    public static var decline: Self { .init(rawValue: "decline") }
+    public static var requireAuth: Self { .init(rawValue: "require_auth") }
 }
 
 public struct IssuingNetworkTokenWalletProviderList: Codable, Sendable {

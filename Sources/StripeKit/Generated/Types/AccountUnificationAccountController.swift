@@ -35,16 +35,28 @@ public struct AccountUnificationAccountController: Codable, Sendable {
 
 /// A value indicating responsibility for collecting requirements on this account. Only returned when
 /// the Connect application retrieving the resource controls the account.
-public enum AccountUnificationAccountControllerRequirementCollection: String, Codable, Sendable {
-    case application
-    case stripe
+public struct AccountUnificationAccountControllerRequirementCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var application: Self { .init(rawValue: "application") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 /// The controller type. Can be `application`, if a Connect application controls the account, or
 /// `account`, if the account controls itself.
-public enum AccountUnificationAccountControllerType: String, Codable, Sendable {
-    case account
-    case application
+public struct AccountUnificationAccountControllerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var application: Self { .init(rawValue: "application") }
 }
 
 public struct AccountUnificationAccountControllerList: Codable, Sendable {

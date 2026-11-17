@@ -17,9 +17,15 @@ public struct InvoicePaymentMethodOptionsAcssDebitMandateOptions: Codable, Senda
 }
 
 /// Transaction type of the mandate.
-public enum InvoicePaymentMethodOptionsAcssDebitMandateOptionsTransactionType: String, Codable, Sendable {
-    case business
-    case personal
+public struct InvoicePaymentMethodOptionsAcssDebitMandateOptionsTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var business: Self { .init(rawValue: "business") }
+    public static var personal: Self { .init(rawValue: "personal") }
 }
 
 public struct InvoicePaymentMethodOptionsAcssDebitMandateOptionsList: Codable, Sendable {

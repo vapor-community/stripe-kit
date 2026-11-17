@@ -24,9 +24,15 @@ public struct BalanceSettingsResourceAutomaticTransferRule: Codable, Sendable {
 }
 
 /// The type of automatic transfer rule.
-public enum BalanceSettingsResourceAutomaticTransferRuleType: String, Codable, Sendable {
-    case transferAll = "transfer_all"
-    case transferUpToAmount = "transfer_up_to_amount"
+public struct BalanceSettingsResourceAutomaticTransferRuleType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var transferAll: Self { .init(rawValue: "transfer_all") }
+    public static var transferUpToAmount: Self { .init(rawValue: "transfer_up_to_amount") }
 }
 
 public struct BalanceSettingsResourceAutomaticTransferRuleList: Codable, Sendable {

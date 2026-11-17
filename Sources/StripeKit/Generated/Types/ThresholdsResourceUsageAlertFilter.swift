@@ -14,8 +14,14 @@ public struct ThresholdsResourceUsageAlertFilter: Codable, Sendable {
     public var type: ThresholdsResourceUsageAlertFilterType
 }
 
-public enum ThresholdsResourceUsageAlertFilterType: String, Codable, Sendable {
-    case customer
+public struct ThresholdsResourceUsageAlertFilterType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customer: Self { .init(rawValue: "customer") }
 }
 
 public struct ThresholdsResourceUsageAlertFilterList: Codable, Sendable {

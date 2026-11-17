@@ -28,9 +28,15 @@ public struct InvoicesResourcePretaxCreditAmount: Codable, Sendable {
 }
 
 /// Type of the pretax credit amount referenced.
-public enum InvoicesResourcePretaxCreditAmountType: String, Codable, Sendable {
-    case creditBalanceTransaction = "credit_balance_transaction"
-    case discount
+public struct InvoicesResourcePretaxCreditAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditBalanceTransaction: Self { .init(rawValue: "credit_balance_transaction") }
+    public static var discount: Self { .init(rawValue: "discount") }
 }
 
 public struct InvoicesResourcePretaxCreditAmountList: Codable, Sendable {

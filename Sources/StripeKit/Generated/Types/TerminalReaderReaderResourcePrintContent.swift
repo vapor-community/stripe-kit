@@ -15,8 +15,14 @@ public struct TerminalReaderReaderResourcePrintContent: Codable, Sendable {
 }
 
 /// The type of content to print. Currently supports `image`.
-public enum TerminalReaderReaderResourcePrintContentType: String, Codable, Sendable {
-    case image
+public struct TerminalReaderReaderResourcePrintContentType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var image: Self { .init(rawValue: "image") }
 }
 
 public struct TerminalReaderReaderResourcePrintContentList: Codable, Sendable {

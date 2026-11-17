@@ -25,9 +25,15 @@ public struct InvoiceItemProrationCreditedItems: Codable, Sendable {
 
 /// Whether the credit references a pending invoice item or one or more invoice line items on an
 /// invoice.
-public enum InvoiceItemProrationCreditedItemsType: String, Codable, Sendable {
-    case invoiceItem = "invoice_item"
-    case invoiceLineItems = "invoice_line_items"
+public struct InvoiceItemProrationCreditedItemsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var invoiceItem: Self { .init(rawValue: "invoice_item") }
+    public static var invoiceLineItems: Self { .init(rawValue: "invoice_line_items") }
 }
 
 public struct InvoiceItemProrationCreditedItemsList: Codable, Sendable {

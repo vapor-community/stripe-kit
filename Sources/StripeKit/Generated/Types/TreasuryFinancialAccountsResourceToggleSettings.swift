@@ -24,10 +24,16 @@ public struct TreasuryFinancialAccountsResourceToggleSettings: Codable, Sendable
 }
 
 /// Whether the Feature is operational.
-public enum TreasuryFinancialAccountsResourceToggleSettingsStatus: String, Codable, Sendable {
-    case active
-    case pending
-    case restricted
+public struct TreasuryFinancialAccountsResourceToggleSettingsStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var restricted: Self { .init(rawValue: "restricted") }
 }
 
 public struct TreasuryFinancialAccountsResourceToggleSettingsList: Codable, Sendable {

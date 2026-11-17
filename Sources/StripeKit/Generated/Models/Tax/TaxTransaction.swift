@@ -71,14 +71,26 @@ public struct TaxTransaction: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TaxTransactionObject: String, Codable, Sendable {
-    case taxTransaction = "tax.transaction"
+public struct TaxTransactionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxTransaction: Self { .init(rawValue: "tax.transaction") }
 }
 
 /// If `reversal`, this transaction reverses an earlier transaction.
-public enum TaxTransactionType: String, Codable, Sendable {
-    case reversal
-    case transaction
+public struct TaxTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var reversal: Self { .init(rawValue: "reversal") }
+    public static var transaction: Self { .init(rawValue: "transaction") }
 }
 
 public struct TaxTransactionList: Codable, Sendable {

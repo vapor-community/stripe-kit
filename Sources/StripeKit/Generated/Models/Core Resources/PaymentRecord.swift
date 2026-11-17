@@ -76,20 +76,38 @@ public struct PaymentRecord: Codable, Sendable {
 }
 
 /// Indicates whether the customer was present in your checkout flow during this payment.
-public enum PaymentRecordCustomerPresence: String, Codable, Sendable {
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct PaymentRecordCustomerPresence: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PaymentRecordObject: String, Codable, Sendable {
-    case paymentRecord = "payment_record"
+public struct PaymentRecordObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentRecord: Self { .init(rawValue: "payment_record") }
 }
 
 /// Indicates who reported the payment.
-public enum PaymentRecordReportedBy: String, Codable, Sendable {
-    case `self` = "self"
-    case stripe
+public struct PaymentRecordReportedBy: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var `self`: Self { .init(rawValue: "self") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 public struct PaymentRecordList: Codable, Sendable {

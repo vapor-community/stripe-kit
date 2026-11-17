@@ -28,8 +28,14 @@ public struct EphemeralKey: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum EphemeralKeyObject: String, Codable, Sendable {
-    case ephemeralKey = "ephemeral_key"
+public struct EphemeralKeyObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ephemeralKey: Self { .init(rawValue: "ephemeral_key") }
 }
 
 public struct EphemeralKeyList: Codable, Sendable {

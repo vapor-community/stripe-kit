@@ -67,10 +67,16 @@ public struct ChargeOutcome: Codable, Sendable {
 
 /// An enumerated value providing a more detailed explanation on [how to proceed with an
 /// error](https://docs.stripe.com/declines#retrying-issuer-declines).
-public enum ChargeOutcomeAdviceCode: String, Codable, Sendable {
-    case confirmCardData = "confirm_card_data"
-    case doNotTryAgain = "do_not_try_again"
-    case tryAgainLater = "try_again_later"
+public struct ChargeOutcomeAdviceCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var confirmCardData: Self { .init(rawValue: "confirm_card_data") }
+    public static var doNotTryAgain: Self { .init(rawValue: "do_not_try_again") }
+    public static var tryAgainLater: Self { .init(rawValue: "try_again_later") }
 }
 
 public struct ChargeOutcomeList: Codable, Sendable {

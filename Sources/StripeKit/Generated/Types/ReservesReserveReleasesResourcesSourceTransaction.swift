@@ -19,9 +19,15 @@ public struct ReservesReserveReleasesResourcesSourceTransaction: Codable, Sendab
 }
 
 /// The type of source transaction.
-public enum ReservesReserveReleasesResourcesSourceTransactionType: String, Codable, Sendable {
-    case dispute
-    case refund
+public struct ReservesReserveReleasesResourcesSourceTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dispute: Self { .init(rawValue: "dispute") }
+    public static var refund: Self { .init(rawValue: "refund") }
 }
 
 public struct ReservesReserveReleasesResourcesSourceTransactionList: Codable, Sendable {

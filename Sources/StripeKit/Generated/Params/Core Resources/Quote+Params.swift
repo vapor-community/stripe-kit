@@ -406,14 +406,26 @@ public struct QuoteCreateAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum QuoteCreateAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct QuoteCreateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum QuoteCreateCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct QuoteCreateCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 public struct QuoteCreateDiscounts: StripeParams {
@@ -514,9 +526,15 @@ public struct QuoteCreateInvoiceSettingsIssuer: StripeParams {
     }
 }
 
-public enum QuoteCreateInvoiceSettingsIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct QuoteCreateInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct QuoteCreateLineItems: StripeParams {
@@ -634,17 +652,29 @@ public struct QuoteCreateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
-public enum QuoteCreateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct QuoteCreateLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum QuoteCreateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct QuoteCreateLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// When creating a subscription or subscription schedule, the specified configuration data will be
@@ -703,9 +733,15 @@ public struct QuoteCreateSubscriptionDataBillingMode: StripeParams {
     }
 }
 
-public enum QuoteCreateSubscriptionDataBillingModeType: String, Codable, Sendable {
-    case classic
-    case flexible
+public struct QuoteCreateSubscriptionDataBillingModeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var classic: Self { .init(rawValue: "classic") }
+    public static var flexible: Self { .init(rawValue: "flexible") }
 }
 
 /// Configure behavior for flexible billing mode.
@@ -722,9 +758,17 @@ public struct QuoteCreateSubscriptionDataBillingModeFlexible: StripeParams {
     }
 }
 
-public enum QuoteCreateSubscriptionDataBillingModeFlexibleProrationDiscounts: String, Codable, Sendable {
-    case included
-    case itemized
+public struct QuoteCreateSubscriptionDataBillingModeFlexibleProrationDiscounts: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Amounts are net of discounts, and discount amounts are zero.
+    public static var included: Self { .init(rawValue: "included") }
+    /// Amounts are gross of discounts, and discount amounts are accurate.
+    public static var itemized: Self { .init(rawValue: "itemized") }
 }
 
 /// One of the forms `effective_date` accepts.
@@ -785,11 +829,17 @@ public struct QuoteCreateTransferData: StripeParams {
     }
 }
 
-public enum QuoteListStatus: String, Codable, Sendable {
-    case accepted
-    case canceled
-    case draft
-    case `open` = "open"
+public struct QuoteListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accepted: Self { .init(rawValue: "accepted") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var draft: Self { .init(rawValue: "draft") }
+    public static var `open`: Self { .init(rawValue: "open") }
 }
 
 /// Settings for automatic tax lookup for this quote and resulting invoices and subscriptions.
@@ -823,14 +873,26 @@ public struct QuoteUpdateAutomaticTaxLiability: StripeParams {
     }
 }
 
-public enum QuoteUpdateAutomaticTaxLiabilityType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct QuoteUpdateAutomaticTaxLiabilityType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
-public enum QuoteUpdateCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct QuoteUpdateCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 public struct QuoteUpdateDiscounts: StripeParams {
@@ -912,9 +974,15 @@ public struct QuoteUpdateInvoiceSettingsIssuer: StripeParams {
     }
 }
 
-public enum QuoteUpdateInvoiceSettingsIssuerType: String, Codable, Sendable {
-    case account
-    case `self` = "self"
+public struct QuoteUpdateInvoiceSettingsIssuerType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var `self`: Self { .init(rawValue: "self") }
 }
 
 public struct QuoteUpdateLineItems: StripeParams {
@@ -1036,17 +1104,29 @@ public struct QuoteUpdateLineItemsPriceDataRecurring: StripeParams {
     }
 }
 
-public enum QuoteUpdateLineItemsPriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct QuoteUpdateLineItemsPriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum QuoteUpdateLineItemsPriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct QuoteUpdateLineItemsPriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 /// When creating a subscription or subscription schedule, the specified configuration data will be

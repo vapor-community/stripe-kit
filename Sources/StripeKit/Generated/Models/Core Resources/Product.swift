@@ -94,15 +94,27 @@ public struct Product: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ProductObject: String, Codable, Sendable {
-    case product
+public struct ProductObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var product: Self { .init(rawValue: "product") }
 }
 
 /// The type of the product. The product is either of type `good`, which is eligible for use with Orders
 /// and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
-public enum ProductType: String, Codable, Sendable {
-    case good
-    case service
+public struct ProductType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var good: Self { .init(rawValue: "good") }
+    public static var service: Self { .init(rawValue: "service") }
 }
 
 public struct ProductList: Codable, Sendable {

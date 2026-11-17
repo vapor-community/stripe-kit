@@ -190,16 +190,28 @@ public struct PlanUpdateParams: StripeParams {
     }
 }
 
-public enum PlanCreateInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct PlanCreateInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum PlanCreateBillingScheme: String, Codable, Sendable {
-    case perUnit = "per_unit"
-    case tiered
+public struct PlanCreateBillingScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var perUnit: Self { .init(rawValue: "per_unit") }
+    public static var tiered: Self { .init(rawValue: "tiered") }
 }
 
 /// The product whose pricing the created plan will represent. This can either be the ID of an existing
@@ -366,9 +378,15 @@ public enum PlanCreateTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral 
     }
 }
 
-public enum PlanCreateTiersMode: String, Codable, Sendable {
-    case graduated
-    case volume
+public struct PlanCreateTiersMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var graduated: Self { .init(rawValue: "graduated") }
+    public static var volume: Self { .init(rawValue: "volume") }
 }
 
 /// Apply a transformation to the reported usage or set quantity before computing the billed price.
@@ -390,12 +408,24 @@ public struct PlanCreateTransformUsage: StripeParams {
     }
 }
 
-public enum PlanCreateTransformUsageRound: String, Codable, Sendable {
-    case down
-    case up
+public struct PlanCreateTransformUsageRound: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var down: Self { .init(rawValue: "down") }
+    public static var up: Self { .init(rawValue: "up") }
 }
 
-public enum PlanCreateUsageType: String, Codable, Sendable {
-    case licensed
-    case metered
+public struct PlanCreateUsageType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var licensed: Self { .init(rawValue: "licensed") }
+    public static var metered: Self { .init(rawValue: "metered") }
 }

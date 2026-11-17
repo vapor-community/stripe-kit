@@ -20,8 +20,14 @@ public struct DeletedBankAccount: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum DeletedBankAccountObject: String, Codable, Sendable {
-    case bankAccount = "bank_account"
+public struct DeletedBankAccountObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankAccount: Self { .init(rawValue: "bank_account") }
 }
 
 public struct DeletedBankAccountList: Codable, Sendable {

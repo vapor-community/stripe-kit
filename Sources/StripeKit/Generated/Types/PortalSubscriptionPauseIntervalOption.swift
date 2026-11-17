@@ -20,11 +20,17 @@ public struct PortalSubscriptionPauseIntervalOption: Codable, Sendable {
 }
 
 /// Specifies the pause duration unit. Either `day`, `week`, `month`, or `year`.
-public enum PortalSubscriptionPauseIntervalOptionInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct PortalSubscriptionPauseIntervalOptionInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
 public struct PortalSubscriptionPauseIntervalOptionList: Codable, Sendable {

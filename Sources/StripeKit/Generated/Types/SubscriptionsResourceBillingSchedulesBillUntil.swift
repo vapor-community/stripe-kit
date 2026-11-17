@@ -27,9 +27,15 @@ public struct SubscriptionsResourceBillingSchedulesBillUntil: Codable, Sendable 
 }
 
 /// Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
-public enum SubscriptionsResourceBillingSchedulesBillUntilType: String, Codable, Sendable {
-    case duration
-    case timestamp
+public struct SubscriptionsResourceBillingSchedulesBillUntilType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var duration: Self { .init(rawValue: "duration") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 public struct SubscriptionsResourceBillingSchedulesBillUntilList: Codable, Sendable {

@@ -67,28 +67,34 @@ public struct IssuingAuthorizationRequest: Codable, Sendable {
 
 /// When an authorization is approved or declined by you or by Stripe, this field provides additional
 /// detail on the reason for the outcome.
-public enum IssuingAuthorizationRequestReason: String, Codable, Sendable {
-    case accountDisabled = "account_disabled"
-    case cardActive = "card_active"
-    case cardCanceled = "card_canceled"
-    case cardExpired = "card_expired"
-    case cardInactive = "card_inactive"
-    case cardholderBlocked = "cardholder_blocked"
-    case cardholderInactive = "cardholder_inactive"
-    case cardholderVerificationRequired = "cardholder_verification_required"
-    case insecureAuthorizationMethod = "insecure_authorization_method"
-    case insufficientFunds = "insufficient_funds"
-    case networkFallback = "network_fallback"
-    case notAllowed = "not_allowed"
-    case pinBlocked = "pin_blocked"
-    case spendingControls = "spending_controls"
-    case stripeInternalError = "stripe_internal_error"
-    case suspectedFraud = "suspected_fraud"
-    case verificationFailed = "verification_failed"
-    case webhookApproved = "webhook_approved"
-    case webhookDeclined = "webhook_declined"
-    case webhookError = "webhook_error"
-    case webhookTimeout = "webhook_timeout"
+public struct IssuingAuthorizationRequestReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountDisabled: Self { .init(rawValue: "account_disabled") }
+    public static var cardActive: Self { .init(rawValue: "card_active") }
+    public static var cardCanceled: Self { .init(rawValue: "card_canceled") }
+    public static var cardExpired: Self { .init(rawValue: "card_expired") }
+    public static var cardInactive: Self { .init(rawValue: "card_inactive") }
+    public static var cardholderBlocked: Self { .init(rawValue: "cardholder_blocked") }
+    public static var cardholderInactive: Self { .init(rawValue: "cardholder_inactive") }
+    public static var cardholderVerificationRequired: Self { .init(rawValue: "cardholder_verification_required") }
+    public static var insecureAuthorizationMethod: Self { .init(rawValue: "insecure_authorization_method") }
+    public static var insufficientFunds: Self { .init(rawValue: "insufficient_funds") }
+    public static var networkFallback: Self { .init(rawValue: "network_fallback") }
+    public static var notAllowed: Self { .init(rawValue: "not_allowed") }
+    public static var pinBlocked: Self { .init(rawValue: "pin_blocked") }
+    public static var spendingControls: Self { .init(rawValue: "spending_controls") }
+    public static var stripeInternalError: Self { .init(rawValue: "stripe_internal_error") }
+    public static var suspectedFraud: Self { .init(rawValue: "suspected_fraud") }
+    public static var verificationFailed: Self { .init(rawValue: "verification_failed") }
+    public static var webhookApproved: Self { .init(rawValue: "webhook_approved") }
+    public static var webhookDeclined: Self { .init(rawValue: "webhook_declined") }
+    public static var webhookError: Self { .init(rawValue: "webhook_error") }
+    public static var webhookTimeout: Self { .init(rawValue: "webhook_timeout") }
 }
 
 public struct IssuingAuthorizationRequestList: Codable, Sendable {

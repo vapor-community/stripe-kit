@@ -129,25 +129,53 @@ public struct PaymentMethodDetailsCard: Codable, Sendable {
 }
 
 /// Status of a card based on the card issuer.
-public enum PaymentMethodDetailsCardRegulatedStatus: String, Codable, Sendable {
-    case regulated
-    case unregulated
+public struct PaymentMethodDetailsCardRegulatedStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var regulated: Self { .init(rawValue: "regulated") }
+    public static var unregulated: Self { .init(rawValue: "unregulated") }
 }
 
 /// The payment_method_options.card.setup_credential_usage value that was passed when setup_future_usage
 /// was present at confirmation, one of `recurring`, `unscheduled`, or `installment`
-public enum PaymentMethodDetailsCardSetupCredentialUsage: String, Codable, Sendable {
-    case installment
-    case recurring
-    case unscheduled
+public struct PaymentMethodDetailsCardSetupCredentialUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Use `installment` if the payment method will be used for future off-session installment payments
+    /// that you manage. This is distinct from
+    /// [`payment_method_options.card.installments`](/api/payment_intents/create#create_payment_intent-payment_method_options-card-installments),
+    /// which is used for issuer installments like [Mexico
+    /// installments](/payments/meses-sin-intereses/accept-a-payment) and [Japan
+    /// installments](/payments/jp-installments/accept-a-payment).
+    public static var installment: Self { .init(rawValue: "installment") }
+    /// Use `recurring` if the payment method will be used for off-session payment that occurs at regularly
+    /// scheduled intervals.
+    public static var recurring: Self { .init(rawValue: "recurring") }
+    /// Use `unscheduled` if the payment method will be used for off-session payment that does not occur at
+    /// regular intervals on a scheduled date.
+    public static var unscheduled: Self { .init(rawValue: "unscheduled") }
 }
 
 /// The payment_method_options.card.stored_credential_usage value that was passed for an off session,
 /// merchant-initiated transaction.
-public enum PaymentMethodDetailsCardStoredCredentialUsage: String, Codable, Sendable {
-    case installment
-    case recurring
-    case unscheduled
+public struct PaymentMethodDetailsCardStoredCredentialUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var installment: Self { .init(rawValue: "installment") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
+    public static var unscheduled: Self { .init(rawValue: "unscheduled") }
 }
 
 public struct PaymentMethodDetailsCardList: Codable, Sendable {

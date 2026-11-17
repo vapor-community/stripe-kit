@@ -15,13 +15,19 @@ public struct PaymentMethodOptionsCustomerBalanceEuBankAccount: Codable, Sendabl
 
 /// The desired country code of the bank account information. Permitted values include: `DE`, `FR`,
 /// `IE`, or `NL`.
-public enum PaymentMethodOptionsCustomerBalanceEuBankAccountCountry: String, Codable, Sendable {
-    case be = "BE"
-    case de = "DE"
-    case es = "ES"
-    case fr = "FR"
-    case ie = "IE"
-    case nl = "NL"
+public struct PaymentMethodOptionsCustomerBalanceEuBankAccountCountry: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var be: Self { .init(rawValue: "BE") }
+    public static var de: Self { .init(rawValue: "DE") }
+    public static var es: Self { .init(rawValue: "ES") }
+    public static var fr: Self { .init(rawValue: "FR") }
+    public static var ie: Self { .init(rawValue: "IE") }
+    public static var nl: Self { .init(rawValue: "NL") }
 }
 
 public struct PaymentMethodOptionsCustomerBalanceEuBankAccountList: Codable, Sendable {

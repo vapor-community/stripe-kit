@@ -63,37 +63,80 @@ public struct ReservePlan: Codable, Sendable {
 }
 
 /// Indicates which party created this ReservePlan.
-public enum ReservePlanCreatedBy: String, Codable, Sendable {
-    case application
-    case stripe
+public struct ReservePlanCreatedBy: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var application: Self { .init(rawValue: "application") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 /// The balance destination to which the reserved funds are sent.
-public enum ReservePlanDestination: String, Codable, Sendable {
-    case other
-    case riskReserved = "risk_reserved"
-    case settlementReserved = "settlement_reserved"
+public struct ReservePlanDestination: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Funds are held in another reserve balance.
+    public static var other: Self { .init(rawValue: "other") }
+    /// Funds are held in the risk reserved balance.
+    public static var riskReserved: Self { .init(rawValue: "risk_reserved") }
+    /// Funds are held in the settlement reserved balance.
+    public static var settlementReserved: Self { .init(rawValue: "settlement_reserved") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ReservePlanObject: String, Codable, Sendable {
-    case reservePlan = "reserve.plan"
+public struct ReservePlanObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var reservePlan: Self { .init(rawValue: "reserve.plan") }
 }
 
 /// The current status of the ReservePlan. The ReservePlan only affects charges if it is `active`.
-public enum ReservePlanStatus: String, Codable, Sendable {
-    case active
-    case disabled
-    case expired
-    case other
+public struct ReservePlanStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The ReservePlan is active and reserving funds.
+    public static var active: Self { .init(rawValue: "active") }
+    /// The ReservePlan has been manually disabled and is no longer reserving funds, and its associated
+    /// funds have been released.
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    /// The ReservePlan has expired automatically and is no longer reserving funds, and its associated funds
+    /// have been released.
+    public static var expired: Self { .init(rawValue: "expired") }
+    /// The ReservePlan has another status.
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 /// The type of the ReservePlan.
-public enum ReservePlanType: String, Codable, Sendable {
-    case fixedRelease = "fixed_release"
-    case manualRelease = "manual_release"
-    case other
-    case rollingRelease = "rolling_release"
+public struct ReservePlanType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The ReservePlan releases funds after a fixed duration.
+    public static var fixedRelease: Self { .init(rawValue: "fixed_release") }
+    /// The ReservePlan releases funds when the plan is manually disabled.
+    public static var manualRelease: Self { .init(rawValue: "manual_release") }
+    /// The ReservePlan uses another release behavior.
+    public static var other: Self { .init(rawValue: "other") }
+    /// The ReservePlan releases funds on a rolling basis.
+    public static var rollingRelease: Self { .init(rawValue: "rolling_release") }
 }
 
 public struct ReservePlanList: Codable, Sendable {

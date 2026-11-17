@@ -29,16 +29,28 @@ public struct TaxProductResourceCustomerDetails: Codable, Sendable {
 }
 
 /// The type of customer address provided.
-public enum TaxProductResourceCustomerDetailsAddressSource: String, Codable, Sendable {
-    case billing
-    case shipping
+public struct TaxProductResourceCustomerDetailsAddressSource: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billing: Self { .init(rawValue: "billing") }
+    public static var shipping: Self { .init(rawValue: "shipping") }
 }
 
 /// The taxability override used for taxation.
-public enum TaxProductResourceCustomerDetailsTaxabilityOverride: String, Codable, Sendable {
-    case customerExempt = "customer_exempt"
-    case none
-    case reverseCharge = "reverse_charge"
+public struct TaxProductResourceCustomerDetailsTaxabilityOverride: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerExempt: Self { .init(rawValue: "customer_exempt") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var reverseCharge: Self { .init(rawValue: "reverse_charge") }
 }
 
 public struct TaxProductResourceCustomerDetailsList: Codable, Sendable {

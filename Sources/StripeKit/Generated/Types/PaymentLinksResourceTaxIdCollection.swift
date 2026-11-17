@@ -13,9 +13,15 @@ public struct PaymentLinksResourceTaxIdCollection: Codable, Sendable {
     public var required: PaymentLinksResourceTaxIdCollectionRequired
 }
 
-public enum PaymentLinksResourceTaxIdCollectionRequired: String, Codable, Sendable {
-    case ifSupported = "if_supported"
-    case never
+public struct PaymentLinksResourceTaxIdCollectionRequired: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifSupported: Self { .init(rawValue: "if_supported") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct PaymentLinksResourceTaxIdCollectionList: Codable, Sendable {

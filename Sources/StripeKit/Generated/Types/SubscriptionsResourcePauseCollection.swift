@@ -22,10 +22,19 @@ public struct SubscriptionsResourcePauseCollection: Codable, Sendable {
 }
 
 /// The payment collection behavior for this subscription while paused.
-public enum SubscriptionsResourcePauseCollectionBehavior: String, Codable, Sendable {
-    case keepAsDraft = "keep_as_draft"
-    case markUncollectible = "mark_uncollectible"
-    case void
+public struct SubscriptionsResourcePauseCollectionBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Keep all invoices as `draft` while collection is paused.
+    public static var keepAsDraft: Self { .init(rawValue: "keep_as_draft") }
+    /// Mark all invoices as `uncollectible` while collection is paused.
+    public static var markUncollectible: Self { .init(rawValue: "mark_uncollectible") }
+    /// Void all invoices while collection is paused.
+    public static var void: Self { .init(rawValue: "void") }
 }
 
 public struct SubscriptionsResourcePauseCollectionList: Codable, Sendable {

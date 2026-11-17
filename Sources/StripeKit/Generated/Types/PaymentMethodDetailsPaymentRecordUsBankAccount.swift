@@ -43,15 +43,31 @@ public struct PaymentMethodDetailsPaymentRecordUsBankAccount: Codable, Sendable 
 }
 
 /// The type of entity that holds the account. This can be either 'individual' or 'company'.
-public enum PaymentMethodDetailsPaymentRecordUsBankAccountAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct PaymentMethodDetailsPaymentRecordUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Account belongs to a company
+    public static var company: Self { .init(rawValue: "company") }
+    /// Account belongs to an individual
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 /// The type of the bank account. This can be either 'checking' or 'savings'.
-public enum PaymentMethodDetailsPaymentRecordUsBankAccountAccountType: String, Codable, Sendable {
-    case checking
-    case savings
+public struct PaymentMethodDetailsPaymentRecordUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Bank account type is checking
+    public static var checking: Self { .init(rawValue: "checking") }
+    /// Bank account type is savings
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
 public struct PaymentMethodDetailsPaymentRecordUsBankAccountList: Codable, Sendable {

@@ -15,9 +15,17 @@ public struct PaymentFlowsAmountDetailsResourceError: Codable, Sendable {
 }
 
 /// The code of the error that occurred when validating the current amount details.
-public enum PaymentFlowsAmountDetailsResourceErrorCode: String, Codable, Sendable {
-    case amountDetailsAmountMismatch = "amount_details_amount_mismatch"
-    case amountDetailsTaxShippingDiscountGreaterThanAmount = "amount_details_tax_shipping_discount_greater_than_amount"
+public struct PaymentFlowsAmountDetailsResourceErrorCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The sum of the line items does not match the amount on the PaymentIntent.
+    public static var amountDetailsAmountMismatch: Self { .init(rawValue: "amount_details_amount_mismatch") }
+    /// The sum of tax + shipping - discount is greater than the amount on the PaymentIntent.
+    public static var amountDetailsTaxShippingDiscountGreaterThanAmount: Self { .init(rawValue: "amount_details_tax_shipping_discount_greater_than_amount") }
 }
 
 public struct PaymentFlowsAmountDetailsResourceErrorList: Codable, Sendable {

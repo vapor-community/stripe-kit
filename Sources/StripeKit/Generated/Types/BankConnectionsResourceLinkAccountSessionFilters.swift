@@ -26,10 +26,21 @@ public struct BankConnectionsResourceLinkAccountSessionFilters: Codable, Sendabl
 
 /// Whether the Session should require that linked accounts support payments and retrieve account
 /// numbers before completion.
-public enum BankConnectionsResourceLinkAccountSessionFiltersRequirePaymentMethodSupport: String, Codable, Sendable {
-    case all
-    case atLeastOne = "at_least_one"
-    case none
+public struct BankConnectionsResourceLinkAccountSessionFiltersRequirePaymentMethodSupport: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// All accounts in the Session must be payment-eligible, and at least one payment-eligible account must
+    /// successfully retrieve account and routing numbers before the Session can complete.
+    public static var all: Self { .init(rawValue: "all") }
+    /// At least one account in the Session must be payment-eligible and successfully retrieve account and
+    /// routing numbers before the Session can complete.
+    public static var atLeastOne: Self { .init(rawValue: "at_least_one") }
+    /// Accounts are not required to be payment-eligible.
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct BankConnectionsResourceLinkAccountSessionFiltersList: Codable, Sendable {

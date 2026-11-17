@@ -125,10 +125,16 @@ public struct BillingMeterCreateDefaultAggregation: StripeParams {
     }
 }
 
-public enum BillingMeterCreateDefaultAggregationFormula: String, Codable, Sendable {
-    case count
-    case last
-    case sum
+public struct BillingMeterCreateDefaultAggregationFormula: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var count: Self { .init(rawValue: "count") }
+    public static var last: Self { .init(rawValue: "last") }
+    public static var sum: Self { .init(rawValue: "sum") }
 }
 
 /// Fields that specify how to map a meter event to a customer.
@@ -149,13 +155,25 @@ public struct BillingMeterCreateCustomerMapping: StripeParams {
     }
 }
 
-public enum BillingMeterCreateCustomerMappingType: String, Codable, Sendable {
-    case byId = "by_id"
+public struct BillingMeterCreateCustomerMappingType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var byId: Self { .init(rawValue: "by_id") }
 }
 
-public enum BillingMeterCreateEventTimeWindow: String, Codable, Sendable {
-    case day
-    case hour
+public struct BillingMeterCreateEventTimeWindow: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
 }
 
 /// Fields that specify how to calculate a meter event's value.
@@ -173,7 +191,13 @@ public struct BillingMeterCreateValueSettings: StripeParams {
     }
 }
 
-public enum BillingMeterListStatus: String, Codable, Sendable {
-    case active
-    case inactive
+public struct BillingMeterListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }

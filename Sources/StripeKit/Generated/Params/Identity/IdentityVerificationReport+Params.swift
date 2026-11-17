@@ -56,7 +56,13 @@ public struct IdentityVerificationReportListParams: StripeParams {
     }
 }
 
-public enum IdentityVerificationReportListType: String, Codable, Sendable {
-    case document
-    case idNumber = "id_number"
+public struct IdentityVerificationReportListType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var document: Self { .init(rawValue: "document") }
+    public static var idNumber: Self { .init(rawValue: "id_number") }
 }

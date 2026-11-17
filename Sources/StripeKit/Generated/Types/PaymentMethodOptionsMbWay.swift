@@ -37,8 +37,14 @@ public struct PaymentMethodOptionsMbWay: Codable, Sendable {
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum PaymentMethodOptionsMbWaySetupFutureUsage: String, Codable, Sendable {
-    case none
+public struct PaymentMethodOptionsMbWaySetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct PaymentMethodOptionsMbWayList: Codable, Sendable {

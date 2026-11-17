@@ -46,15 +46,27 @@ public struct TestHelpersTestClock: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TestHelpersTestClockObject: String, Codable, Sendable {
-    case testHelpersTestClock = "test_helpers.test_clock"
+public struct TestHelpersTestClockObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var testHelpersTestClock: Self { .init(rawValue: "test_helpers.test_clock") }
 }
 
 /// The status of the Test Clock.
-public enum TestHelpersTestClockStatus: String, Codable, Sendable {
-    case advancing
-    case internalFailure = "internal_failure"
-    case ready
+public struct TestHelpersTestClockStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var advancing: Self { .init(rawValue: "advancing") }
+    public static var internalFailure: Self { .init(rawValue: "internal_failure") }
+    public static var ready: Self { .init(rawValue: "ready") }
 }
 
 public struct TestHelpersTestClockList: Codable, Sendable {

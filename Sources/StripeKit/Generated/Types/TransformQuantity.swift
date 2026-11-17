@@ -20,9 +20,15 @@ public struct TransformQuantity: Codable, Sendable {
 }
 
 /// After division, either round the result `up` or `down`.
-public enum TransformQuantityRound: String, Codable, Sendable {
-    case down
-    case up
+public struct TransformQuantityRound: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var down: Self { .init(rawValue: "down") }
+    public static var up: Self { .init(rawValue: "up") }
 }
 
 public struct TransformQuantityList: Codable, Sendable {

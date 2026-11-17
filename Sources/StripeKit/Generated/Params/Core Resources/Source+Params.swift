@@ -193,11 +193,17 @@ public struct SourceVerifyParams: StripeParams {
     }
 }
 
-public enum SourceCreateFlow: String, Codable, Sendable {
-    case codeVerification = "code_verification"
-    case none
-    case receiver
-    case redirect
+public struct SourceCreateFlow: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var codeVerification: Self { .init(rawValue: "code_verification") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var receiver: Self { .init(rawValue: "receiver") }
+    public static var redirect: Self { .init(rawValue: "redirect") }
 }
 
 /// Information about a mandate possibility attached to a source object (generally for bank debits) as
@@ -278,11 +284,17 @@ public struct SourceCreateMandateAcceptance: StripeParams {
     }
 }
 
-public enum SourceCreateMandateAcceptanceStatus: String, Codable, Sendable {
-    case accepted
-    case pending
-    case refused
-    case revoked
+public struct SourceCreateMandateAcceptanceStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accepted: Self { .init(rawValue: "accepted") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var refused: Self { .init(rawValue: "refused") }
+    public static var revoked: Self { .init(rawValue: "revoked") }
 }
 
 /// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
@@ -323,23 +335,41 @@ public struct SourceCreateMandateAcceptanceOnline: StripeParams {
     }
 }
 
-public enum SourceCreateMandateAcceptanceType: String, Codable, Sendable {
-    case offline
-    case online
+public struct SourceCreateMandateAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offline: Self { .init(rawValue: "offline") }
+    public static var online: Self { .init(rawValue: "online") }
 }
 
-public enum SourceCreateMandateInterval: String, Codable, Sendable {
-    case oneTime = "one_time"
-    case scheduled
-    case variable
+public struct SourceCreateMandateInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var oneTime: Self { .init(rawValue: "one_time") }
+    public static var scheduled: Self { .init(rawValue: "scheduled") }
+    public static var variable: Self { .init(rawValue: "variable") }
 }
 
-public enum SourceCreateMandateNotificationMethod: String, Codable, Sendable {
-    case deprecatedNone = "deprecated_none"
-    case email
-    case manual
-    case none
-    case stripeEmail = "stripe_email"
+public struct SourceCreateMandateNotificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var deprecatedNone: Self { .init(rawValue: "deprecated_none") }
+    public static var email: Self { .init(rawValue: "email") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var stripeEmail: Self { .init(rawValue: "stripe_email") }
 }
 
 /// Information about the owner of the payment instrument that may be used or required by particular
@@ -414,10 +444,16 @@ public struct SourceCreateReceiver: StripeParams {
     }
 }
 
-public enum SourceCreateReceiverRefundAttributesMethod: String, Codable, Sendable {
-    case email
-    case manual
-    case none
+public struct SourceCreateReceiverRefundAttributesMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var email: Self { .init(rawValue: "email") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Parameters required for the redirect flow. Required if the source is authenticated by a redirect
@@ -472,11 +508,17 @@ public struct SourceCreateSourceOrderItems: StripeParams {
     }
 }
 
-public enum SourceCreateSourceOrderItemsType: String, Codable, Sendable {
-    case discount
-    case shipping
-    case sku
-    case tax
+public struct SourceCreateSourceOrderItemsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var discount: Self { .init(rawValue: "discount") }
+    public static var shipping: Self { .init(rawValue: "shipping") }
+    public static var sku: Self { .init(rawValue: "sku") }
+    public static var tax: Self { .init(rawValue: "tax") }
 }
 
 /// Shipping address for the order. Required if any of the SKUs are for products that have `shippable`
@@ -545,9 +587,15 @@ public struct SourceCreateSourceOrderShippingAddress: StripeParams {
     }
 }
 
-public enum SourceCreateUsage: String, Codable, Sendable {
-    case reusable
-    case singleUse = "single_use"
+public struct SourceCreateUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var reusable: Self { .init(rawValue: "reusable") }
+    public static var singleUse: Self { .init(rawValue: "single_use") }
 }
 
 /// Information about a mandate possibility attached to a source object (generally for bank debits) as
@@ -628,11 +676,17 @@ public struct SourceUpdateMandateAcceptance: StripeParams {
     }
 }
 
-public enum SourceUpdateMandateAcceptanceStatus: String, Codable, Sendable {
-    case accepted
-    case pending
-    case refused
-    case revoked
+public struct SourceUpdateMandateAcceptanceStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accepted: Self { .init(rawValue: "accepted") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var refused: Self { .init(rawValue: "refused") }
+    public static var revoked: Self { .init(rawValue: "revoked") }
 }
 
 /// The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]`
@@ -673,23 +727,41 @@ public struct SourceUpdateMandateAcceptanceOnline: StripeParams {
     }
 }
 
-public enum SourceUpdateMandateAcceptanceType: String, Codable, Sendable {
-    case offline
-    case online
+public struct SourceUpdateMandateAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offline: Self { .init(rawValue: "offline") }
+    public static var online: Self { .init(rawValue: "online") }
 }
 
-public enum SourceUpdateMandateInterval: String, Codable, Sendable {
-    case oneTime = "one_time"
-    case scheduled
-    case variable
+public struct SourceUpdateMandateInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var oneTime: Self { .init(rawValue: "one_time") }
+    public static var scheduled: Self { .init(rawValue: "scheduled") }
+    public static var variable: Self { .init(rawValue: "variable") }
 }
 
-public enum SourceUpdateMandateNotificationMethod: String, Codable, Sendable {
-    case deprecatedNone = "deprecated_none"
-    case email
-    case manual
-    case none
-    case stripeEmail = "stripe_email"
+public struct SourceUpdateMandateNotificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var deprecatedNone: Self { .init(rawValue: "deprecated_none") }
+    public static var email: Self { .init(rawValue: "email") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var stripeEmail: Self { .init(rawValue: "stripe_email") }
 }
 
 /// Information about the owner of the payment instrument that may be used or required by particular
@@ -782,11 +854,17 @@ public struct SourceUpdateSourceOrderItems: StripeParams {
     }
 }
 
-public enum SourceUpdateSourceOrderItemsType: String, Codable, Sendable {
-    case discount
-    case shipping
-    case sku
-    case tax
+public struct SourceUpdateSourceOrderItemsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var discount: Self { .init(rawValue: "discount") }
+    public static var shipping: Self { .init(rawValue: "shipping") }
+    public static var sku: Self { .init(rawValue: "sku") }
+    public static var tax: Self { .init(rawValue: "tax") }
 }
 
 /// Shipping address for the order. Required if any of the SKUs are for products that have `shippable`

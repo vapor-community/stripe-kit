@@ -30,9 +30,15 @@ public struct PaymentMethodOptionsMandateOptionsUpi: Codable, Sendable {
 /// One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged
 /// in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount`
 /// param.
-public enum PaymentMethodOptionsMandateOptionsUpiAmountType: String, Codable, Sendable {
-    case fixed
-    case maximum
+public struct PaymentMethodOptionsMandateOptionsUpiAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fixed: Self { .init(rawValue: "fixed") }
+    public static var maximum: Self { .init(rawValue: "maximum") }
 }
 
 public struct PaymentMethodOptionsMandateOptionsUpiList: Codable, Sendable {

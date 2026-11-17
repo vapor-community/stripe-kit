@@ -54,15 +54,27 @@ public struct RadarPaymentEvaluation: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum RadarPaymentEvaluationObject: String, Codable, Sendable {
-    case radarPaymentEvaluation = "radar.payment_evaluation"
+public struct RadarPaymentEvaluationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var radarPaymentEvaluation: Self { .init(rawValue: "radar.payment_evaluation") }
 }
 
 /// Recommended action based on the score of the `fraudulent_payment` signal. Possible values are
 /// `block`, `continue` and `request_three_d_secure`.
-public enum RadarPaymentEvaluationRecommendedAction: String, Codable, Sendable {
-    case block
-    case `continue` = "continue"
+public struct RadarPaymentEvaluationRecommendedAction: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var block: Self { .init(rawValue: "block") }
+    public static var `continue`: Self { .init(rawValue: "continue") }
 }
 
 public struct RadarPaymentEvaluationList: Codable, Sendable {

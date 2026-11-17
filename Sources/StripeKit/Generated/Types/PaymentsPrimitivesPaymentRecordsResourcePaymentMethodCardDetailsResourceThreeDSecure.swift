@@ -37,58 +37,103 @@ public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsRe
 }
 
 /// For authenticated transactions: Indicates how the issuing bank authenticated the customer.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureAuthenticationFlow: String, Codable, Sendable {
-    case challenge
-    case frictionless
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureAuthenticationFlow: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var challenge: Self { .init(rawValue: "challenge") }
+    public static var frictionless: Self { .init(rawValue: "frictionless") }
 }
 
 /// The Electronic Commerce Indicator (ECI). A protocol-level field indicating what degree of
 /// authentication was performed.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureElectronicCommerceIndicator: String, Codable, Sendable {
-    case v01 = "01"
-    case v02 = "02"
-    case v03 = "03"
-    case v04 = "04"
-    case v05 = "05"
-    case v06 = "06"
-    case v07 = "07"
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureElectronicCommerceIndicator: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// **Mastercard variant:** Attempt acknowledged.
+    public static var v01: Self { .init(rawValue: "01") }
+    /// **Mastercard variant:** Fully authenticated.
+    public static var v02: Self { .init(rawValue: "02") }
+    public static var v03: Self { .init(rawValue: "03") }
+    public static var v04: Self { .init(rawValue: "04") }
+    /// Fully authenticated. The customer likely proved their identity to the issuing bank.
+    public static var v05: Self { .init(rawValue: "05") }
+    /// Attempt acknowledged. The customer, or the entire issuing bank, is not set up for 3D Secure. Or the
+    /// issuing bank is experiencing an outage. **Mastercard variant:** Acquirer SCA exemption.
+    public static var v06: Self { .init(rawValue: "06") }
+    /// **Mastercard variant:** Fully authenticated recurring transaction.
+    public static var v07: Self { .init(rawValue: "07") }
 }
 
 /// The exemption requested via 3DS and accepted by the issuer at authentication time.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureExemptionIndicator: String, Codable, Sendable {
-    case lowRisk = "low_risk"
-    case none
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureExemptionIndicator: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Transaction Risk Analysis (TRA) was performed, a low risk exemption was requested via 3DS and
+    /// granted by the issuer.
+    public static var lowRisk: Self { .init(rawValue: "low_risk") }
+    /// No exemption was requested via 3DS; or, if requested, it was not granted by the issuer.
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Indicates the outcome of 3D Secure authentication.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureResult: String, Codable, Sendable {
-    case attemptAcknowledged = "attempt_acknowledged"
-    case authenticated
-    case dataShareOnly = "data_share_only"
-    case exempted
-    case failed
-    case notSupported = "not_supported"
-    case processingError = "processing_error"
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureResult: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var attemptAcknowledged: Self { .init(rawValue: "attempt_acknowledged") }
+    public static var authenticated: Self { .init(rawValue: "authenticated") }
+    public static var dataShareOnly: Self { .init(rawValue: "data_share_only") }
+    public static var exempted: Self { .init(rawValue: "exempted") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var notSupported: Self { .init(rawValue: "not_supported") }
+    public static var processingError: Self { .init(rawValue: "processing_error") }
 }
 
 /// Additional information about why 3D Secure succeeded or failed, based on the `result`.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureResultReason: String, Codable, Sendable {
-    case abandoned
-    case bypassed
-    case canceled
-    case cardNotEnrolled = "card_not_enrolled"
-    case networkNotSupported = "network_not_supported"
-    case protocolError = "protocol_error"
-    case rejected
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureResultReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var abandoned: Self { .init(rawValue: "abandoned") }
+    public static var bypassed: Self { .init(rawValue: "bypassed") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var cardNotEnrolled: Self { .init(rawValue: "card_not_enrolled") }
+    public static var networkNotSupported: Self { .init(rawValue: "network_not_supported") }
+    public static var protocolError: Self { .init(rawValue: "protocol_error") }
+    public static var rejected: Self { .init(rawValue: "rejected") }
 }
 
 /// The version of 3D Secure that was used.
-public enum PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureVersion: String, Codable, Sendable {
-    case v102 = "1.0.2"
-    case v210 = "2.1.0"
-    case v220 = "2.2.0"
-    case v230 = "2.3.0"
-    case v231 = "2.3.1"
+public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureVersion: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var v102: Self { .init(rawValue: "1.0.2") }
+    public static var v210: Self { .init(rawValue: "2.1.0") }
+    public static var v220: Self { .init(rawValue: "2.2.0") }
+    public static var v230: Self { .init(rawValue: "2.3.0") }
+    public static var v231: Self { .init(rawValue: "2.3.1") }
 }
 
 public struct PaymentsPrimitivesPaymentRecordsResourcePaymentMethodCardDetailsResourceThreeDSecureList: Codable, Sendable {

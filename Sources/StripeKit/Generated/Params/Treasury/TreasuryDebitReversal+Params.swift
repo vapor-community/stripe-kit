@@ -78,13 +78,25 @@ public struct TreasuryDebitReversalListParams: StripeParams {
     }
 }
 
-public enum TreasuryDebitReversalListResolution: String, Codable, Sendable {
-    case lost
-    case won
+public struct TreasuryDebitReversalListResolution: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var lost: Self { .init(rawValue: "lost") }
+    public static var won: Self { .init(rawValue: "won") }
 }
 
-public enum TreasuryDebitReversalListStatus: String, Codable, Sendable {
-    case canceled
-    case completed
-    case processing
+public struct TreasuryDebitReversalListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var completed: Self { .init(rawValue: "completed") }
+    public static var processing: Self { .init(rawValue: "processing") }
 }

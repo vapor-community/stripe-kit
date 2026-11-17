@@ -911,10 +911,16 @@ public struct TerminalConfigurationCreateWifi: StripeParams {
     }
 }
 
-public enum TerminalConfigurationCreateWifiType: String, Codable, Sendable {
-    case enterpriseEapPeap = "enterprise_eap_peap"
-    case enterpriseEapTls = "enterprise_eap_tls"
-    case personalPsk = "personal_psk"
+public struct TerminalConfigurationCreateWifiType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var enterpriseEapPeap: Self { .init(rawValue: "enterprise_eap_peap") }
+    public static var enterpriseEapTls: Self { .init(rawValue: "enterprise_eap_tls") }
+    public static var personalPsk: Self { .init(rawValue: "personal_psk") }
 }
 
 /// Credentials for a WPA-Enterprise WiFi network using the EAP-PEAP authentication method.
@@ -1682,10 +1688,16 @@ public struct TerminalConfigurationUpdateWifi: StripeParams {
     }
 }
 
-public enum TerminalConfigurationUpdateWifiType: String, Codable, Sendable {
-    case enterpriseEapPeap = "enterprise_eap_peap"
-    case enterpriseEapTls = "enterprise_eap_tls"
-    case personalPsk = "personal_psk"
+public struct TerminalConfigurationUpdateWifiType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var enterpriseEapPeap: Self { .init(rawValue: "enterprise_eap_peap") }
+    public static var enterpriseEapTls: Self { .init(rawValue: "enterprise_eap_tls") }
+    public static var personalPsk: Self { .init(rawValue: "personal_psk") }
 }
 
 /// Credentials for a WPA-Enterprise WiFi network using the EAP-PEAP authentication method.

@@ -16,11 +16,17 @@ public struct GelatoSelfieReportError: Codable, Sendable {
 }
 
 /// A short machine-readable string giving the reason for the verification failure.
-public enum GelatoSelfieReportErrorCode: String, Codable, Sendable {
-    case selfieDocumentMissingPhoto = "selfie_document_missing_photo"
-    case selfieFaceMismatch = "selfie_face_mismatch"
-    case selfieManipulated = "selfie_manipulated"
-    case selfieUnverifiedOther = "selfie_unverified_other"
+public struct GelatoSelfieReportErrorCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var selfieDocumentMissingPhoto: Self { .init(rawValue: "selfie_document_missing_photo") }
+    public static var selfieFaceMismatch: Self { .init(rawValue: "selfie_face_mismatch") }
+    public static var selfieManipulated: Self { .init(rawValue: "selfie_manipulated") }
+    public static var selfieUnverifiedOther: Self { .init(rawValue: "selfie_unverified_other") }
 }
 
 public struct GelatoSelfieReportErrorList: Codable, Sendable {

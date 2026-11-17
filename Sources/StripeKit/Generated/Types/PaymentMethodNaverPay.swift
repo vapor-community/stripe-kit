@@ -21,9 +21,15 @@ public struct PaymentMethodNaverPay: Codable, Sendable {
 }
 
 /// Whether to fund this transaction with Naver Pay points or a card.
-public enum PaymentMethodNaverPayFunding: String, Codable, Sendable {
-    case card
-    case points
+public struct PaymentMethodNaverPayFunding: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
+    public static var points: Self { .init(rawValue: "points") }
 }
 
 public struct PaymentMethodNaverPayList: Codable, Sendable {

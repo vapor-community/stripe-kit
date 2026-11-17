@@ -213,14 +213,26 @@ public struct IssuingDisputeCreateEvidenceCanceled: StripeParams {
     }
 }
 
-public enum IssuingDisputeCreateEvidenceCanceledProductType: String, Codable, Sendable {
-    case merchandise
-    case service
+public struct IssuingDisputeCreateEvidenceCanceledProductType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var service: Self { .init(rawValue: "service") }
 }
 
-public enum IssuingDisputeCreateEvidenceCanceledReturnStatus: String, Codable, Sendable {
-    case merchantRejected = "merchant_rejected"
-    case successful
+public struct IssuingDisputeCreateEvidenceCanceledReturnStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchantRejected: Self { .init(rawValue: "merchant_rejected") }
+    public static var successful: Self { .init(rawValue: "successful") }
 }
 
 public struct IssuingDisputeCreateEvidenceDuplicate: StripeParams {
@@ -313,9 +325,15 @@ public struct IssuingDisputeCreateEvidenceMerchandiseNotAsDescribed: StripeParam
     }
 }
 
-public enum IssuingDisputeCreateEvidenceMerchandiseNotAsDescribedReturnStatus: String, Codable, Sendable {
-    case merchantRejected = "merchant_rejected"
-    case successful
+public struct IssuingDisputeCreateEvidenceMerchandiseNotAsDescribedReturnStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchantRejected: Self { .init(rawValue: "merchant_rejected") }
+    public static var successful: Self { .init(rawValue: "successful") }
 }
 
 public struct IssuingDisputeCreateEvidenceNoValidAuthorization: StripeParams {
@@ -366,9 +384,15 @@ public struct IssuingDisputeCreateEvidenceNotReceived: StripeParams {
     }
 }
 
-public enum IssuingDisputeCreateEvidenceNotReceivedProductType: String, Codable, Sendable {
-    case merchandise
-    case service
+public struct IssuingDisputeCreateEvidenceNotReceivedProductType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var service: Self { .init(rawValue: "service") }
 }
 
 public struct IssuingDisputeCreateEvidenceOther: StripeParams {
@@ -397,20 +421,32 @@ public struct IssuingDisputeCreateEvidenceOther: StripeParams {
     }
 }
 
-public enum IssuingDisputeCreateEvidenceOtherProductType: String, Codable, Sendable {
-    case merchandise
-    case service
+public struct IssuingDisputeCreateEvidenceOtherProductType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var service: Self { .init(rawValue: "service") }
 }
 
-public enum IssuingDisputeCreateEvidenceReason: String, Codable, Sendable {
-    case canceled
-    case duplicate
-    case fraudulent
-    case merchandiseNotAsDescribed = "merchandise_not_as_described"
-    case noValidAuthorization = "no_valid_authorization"
-    case notReceived = "not_received"
-    case other
-    case serviceNotAsDescribed = "service_not_as_described"
+public struct IssuingDisputeCreateEvidenceReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var merchandiseNotAsDescribed: Self { .init(rawValue: "merchandise_not_as_described") }
+    public static var noValidAuthorization: Self { .init(rawValue: "no_valid_authorization") }
+    public static var notReceived: Self { .init(rawValue: "not_received") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var serviceNotAsDescribed: Self { .init(rawValue: "service_not_as_described") }
 }
 
 public struct IssuingDisputeCreateEvidenceServiceNotAsDescribed: StripeParams {
@@ -457,12 +493,18 @@ public struct IssuingDisputeCreateTreasury: StripeParams {
     }
 }
 
-public enum IssuingDisputeListStatus: String, Codable, Sendable {
-    case expired
-    case lost
-    case submitted
-    case unsubmitted
-    case won
+public struct IssuingDisputeListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var lost: Self { .init(rawValue: "lost") }
+    public static var submitted: Self { .init(rawValue: "submitted") }
+    public static var unsubmitted: Self { .init(rawValue: "unsubmitted") }
+    public static var won: Self { .init(rawValue: "won") }
 }
 
 /// Evidence provided for the dispute.
@@ -561,14 +603,26 @@ public struct IssuingDisputeUpdateEvidenceCanceled: StripeParams {
     }
 }
 
-public enum IssuingDisputeUpdateEvidenceCanceledProductType: String, Codable, Sendable {
-    case merchandise
-    case service
+public struct IssuingDisputeUpdateEvidenceCanceledProductType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var service: Self { .init(rawValue: "service") }
 }
 
-public enum IssuingDisputeUpdateEvidenceCanceledReturnStatus: String, Codable, Sendable {
-    case merchantRejected = "merchant_rejected"
-    case successful
+public struct IssuingDisputeUpdateEvidenceCanceledReturnStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchantRejected: Self { .init(rawValue: "merchant_rejected") }
+    public static var successful: Self { .init(rawValue: "successful") }
 }
 
 public struct IssuingDisputeUpdateEvidenceDuplicate: StripeParams {
@@ -661,9 +715,15 @@ public struct IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribed: StripeParam
     }
 }
 
-public enum IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribedReturnStatus: String, Codable, Sendable {
-    case merchantRejected = "merchant_rejected"
-    case successful
+public struct IssuingDisputeUpdateEvidenceMerchandiseNotAsDescribedReturnStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchantRejected: Self { .init(rawValue: "merchant_rejected") }
+    public static var successful: Self { .init(rawValue: "successful") }
 }
 
 public struct IssuingDisputeUpdateEvidenceNoValidAuthorization: StripeParams {
@@ -714,9 +774,15 @@ public struct IssuingDisputeUpdateEvidenceNotReceived: StripeParams {
     }
 }
 
-public enum IssuingDisputeUpdateEvidenceNotReceivedProductType: String, Codable, Sendable {
-    case merchandise
-    case service
+public struct IssuingDisputeUpdateEvidenceNotReceivedProductType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var service: Self { .init(rawValue: "service") }
 }
 
 public struct IssuingDisputeUpdateEvidenceOther: StripeParams {
@@ -745,20 +811,32 @@ public struct IssuingDisputeUpdateEvidenceOther: StripeParams {
     }
 }
 
-public enum IssuingDisputeUpdateEvidenceOtherProductType: String, Codable, Sendable {
-    case merchandise
-    case service
+public struct IssuingDisputeUpdateEvidenceOtherProductType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var service: Self { .init(rawValue: "service") }
 }
 
-public enum IssuingDisputeUpdateEvidenceReason: String, Codable, Sendable {
-    case canceled
-    case duplicate
-    case fraudulent
-    case merchandiseNotAsDescribed = "merchandise_not_as_described"
-    case noValidAuthorization = "no_valid_authorization"
-    case notReceived = "not_received"
-    case other
-    case serviceNotAsDescribed = "service_not_as_described"
+public struct IssuingDisputeUpdateEvidenceReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var merchandiseNotAsDescribed: Self { .init(rawValue: "merchandise_not_as_described") }
+    public static var noValidAuthorization: Self { .init(rawValue: "no_valid_authorization") }
+    public static var notReceived: Self { .init(rawValue: "not_received") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var serviceNotAsDescribed: Self { .init(rawValue: "service_not_as_described") }
 }
 
 public struct IssuingDisputeUpdateEvidenceServiceNotAsDescribed: StripeParams {

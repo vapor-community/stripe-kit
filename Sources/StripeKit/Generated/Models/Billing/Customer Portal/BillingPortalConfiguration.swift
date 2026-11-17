@@ -63,8 +63,14 @@ public struct BillingPortalConfiguration: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingPortalConfigurationObject: String, Codable, Sendable {
-    case billingPortalConfiguration = "billing_portal.configuration"
+public struct BillingPortalConfigurationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingPortalConfiguration: Self { .init(rawValue: "billing_portal.configuration") }
 }
 
 public struct BillingPortalConfigurationList: Codable, Sendable {

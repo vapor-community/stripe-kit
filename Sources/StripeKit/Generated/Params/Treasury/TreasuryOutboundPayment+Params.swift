@@ -219,9 +219,15 @@ public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodData: StripeP
     }
 }
 
-public enum TreasuryOutboundPaymentCreateDestinationPaymentMethodDataType: String, Codable, Sendable {
-    case financialAccount = "financial_account"
-    case usBankAccount = "us_bank_account"
+public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var financialAccount: Self { .init(rawValue: "financial_account") }
+    public static var usBankAccount: Self { .init(rawValue: "us_bank_account") }
 }
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
@@ -307,14 +313,26 @@ public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodDataUsBankAcc
     }
 }
 
-public enum TreasuryOutboundPaymentCreateDestinationPaymentMethodDataUsBankAccountAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodDataUsBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public enum TreasuryOutboundPaymentCreateDestinationPaymentMethodDataUsBankAccountAccountType: String, Codable, Sendable {
-    case checking
-    case savings
+public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodDataUsBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var savings: Self { .init(rawValue: "savings") }
 }
 
 /// Payment method-specific configuration for this OutboundPayment.
@@ -342,9 +360,15 @@ public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodOptionsUsBank
     }
 }
 
-public enum TreasuryOutboundPaymentCreateDestinationPaymentMethodOptionsUsBankAccountNetwork: String, Codable, Sendable {
-    case ach
-    case usDomesticWire = "us_domestic_wire"
+public struct TreasuryOutboundPaymentCreateDestinationPaymentMethodOptionsUsBankAccountNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
+    public static var usDomesticWire: Self { .init(rawValue: "us_domestic_wire") }
 }
 
 /// End user details.
@@ -367,12 +391,18 @@ public struct TreasuryOutboundPaymentCreateEndUserDetails: StripeParams {
     }
 }
 
-public enum TreasuryOutboundPaymentListStatus: String, Codable, Sendable {
-    case canceled
-    case failed
-    case posted
-    case processing
-    case returned
+public struct TreasuryOutboundPaymentListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var posted: Self { .init(rawValue: "posted") }
+    public static var processing: Self { .init(rawValue: "processing") }
+    public static var returned: Self { .init(rawValue: "returned") }
 }
 
 /// Optional hash to set the return code.
@@ -385,17 +415,23 @@ public struct TreasuryOutboundPaymentReturnOutboundPaymentReturnedDetails: Strip
     }
 }
 
-public enum TreasuryOutboundPaymentReturnOutboundPaymentReturnedDetailsCode: String, Codable, Sendable {
-    case accountClosed = "account_closed"
-    case accountFrozen = "account_frozen"
-    case bankAccountRestricted = "bank_account_restricted"
-    case bankOwnershipChanged = "bank_ownership_changed"
-    case declined
-    case incorrectAccountHolderName = "incorrect_account_holder_name"
-    case invalidAccountNumber = "invalid_account_number"
-    case invalidCurrency = "invalid_currency"
-    case noAccount = "no_account"
-    case other
+public struct TreasuryOutboundPaymentReturnOutboundPaymentReturnedDetailsCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountClosed: Self { .init(rawValue: "account_closed") }
+    public static var accountFrozen: Self { .init(rawValue: "account_frozen") }
+    public static var bankAccountRestricted: Self { .init(rawValue: "bank_account_restricted") }
+    public static var bankOwnershipChanged: Self { .init(rawValue: "bank_ownership_changed") }
+    public static var declined: Self { .init(rawValue: "declined") }
+    public static var incorrectAccountHolderName: Self { .init(rawValue: "incorrect_account_holder_name") }
+    public static var invalidAccountNumber: Self { .init(rawValue: "invalid_account_number") }
+    public static var invalidCurrency: Self { .init(rawValue: "invalid_currency") }
+    public static var noAccount: Self { .init(rawValue: "no_account") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 /// Details about network-specific tracking information.
@@ -420,9 +456,15 @@ public struct TreasuryOutboundPaymentUpdateTrackingDetails: StripeParams {
     }
 }
 
-public enum TreasuryOutboundPaymentUpdateTrackingDetailsType: String, Codable, Sendable {
-    case ach
-    case usDomesticWire = "us_domestic_wire"
+public struct TreasuryOutboundPaymentUpdateTrackingDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ach: Self { .init(rawValue: "ach") }
+    public static var usDomesticWire: Self { .init(rawValue: "us_domestic_wire") }
 }
 
 /// ACH network tracking details.

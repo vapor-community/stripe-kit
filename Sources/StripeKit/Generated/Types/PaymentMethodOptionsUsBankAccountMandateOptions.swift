@@ -17,8 +17,14 @@ public struct PaymentMethodOptionsUsBankAccountMandateOptions: Codable, Sendable
 }
 
 /// Mandate collection method
-public enum PaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: String, Codable, Sendable {
-    case paper
+public struct PaymentMethodOptionsUsBankAccountMandateOptionsCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paper: Self { .init(rawValue: "paper") }
 }
 
 public struct PaymentMethodOptionsUsBankAccountMandateOptionsList: Codable, Sendable {

@@ -31,23 +31,43 @@ public struct CancellationDetails: Codable, Sendable {
 
 /// The customer submitted reason for why they canceled, if the subscription was canceled explicitly by
 /// the user.
-public enum CancellationDetailsFeedback: String, Codable, Sendable {
-    case customerService = "customer_service"
-    case lowQuality = "low_quality"
-    case missingFeatures = "missing_features"
-    case other
-    case switchedService = "switched_service"
-    case tooComplex = "too_complex"
-    case tooExpensive = "too_expensive"
-    case unused
+public struct CancellationDetailsFeedback: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerService: Self { .init(rawValue: "customer_service") }
+    public static var lowQuality: Self { .init(rawValue: "low_quality") }
+    public static var missingFeatures: Self { .init(rawValue: "missing_features") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var switchedService: Self { .init(rawValue: "switched_service") }
+    public static var tooComplex: Self { .init(rawValue: "too_complex") }
+    public static var tooExpensive: Self { .init(rawValue: "too_expensive") }
+    public static var unused: Self { .init(rawValue: "unused") }
 }
 
 /// Why this subscription was canceled.
-public enum CancellationDetailsReason: String, Codable, Sendable {
-    case canceledByRetentionPolicy = "canceled_by_retention_policy"
-    case cancellationRequested = "cancellation_requested"
-    case paymentDisputed = "payment_disputed"
-    case paymentFailed = "payment_failed"
+public struct CancellationDetailsReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Canceled because our [retention
+    /// policy](https://support.stripe.com/questions/test-mode-subscription-data-retention) automatically
+    /// expires subscriptions with `livemode: false`.
+    public static var canceledByRetentionPolicy: Self { .init(rawValue: "canceled_by_retention_policy") }
+    /// Canceled explicitly through the API or Dashboard.
+    public static var cancellationRequested: Self { .init(rawValue: "cancellation_requested") }
+    /// Canceled automatically after a dispute was opened, according to your [billing
+    /// settings](https://dashboard.stripe.com/settings/billing/subscriptions).
+    public static var paymentDisputed: Self { .init(rawValue: "payment_disputed") }
+    /// Canceled automatically after payment failure, according to your [billing
+    /// settings](https://dashboard.stripe.com/settings/billing/subscriptions).
+    public static var paymentFailed: Self { .init(rawValue: "payment_failed") }
 }
 
 public struct CancellationDetailsList: Codable, Sendable {

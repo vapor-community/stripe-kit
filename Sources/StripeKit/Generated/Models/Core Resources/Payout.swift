@@ -124,23 +124,41 @@ public struct Payout: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum PayoutObject: String, Codable, Sendable {
-    case payout
+public struct PayoutObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var payout: Self { .init(rawValue: "payout") }
 }
 
 /// If `completed`, you can use the [Balance Transactions
 /// API](https://docs.stripe.com/api/balance_transactions/list#balance_transaction_list-payout) to list
 /// all balance transactions that are paid out in this payout.
-public enum PayoutReconciliationStatus: String, Codable, Sendable {
-    case completed
-    case inProgress = "in_progress"
-    case notApplicable = "not_applicable"
+public struct PayoutReconciliationStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var completed: Self { .init(rawValue: "completed") }
+    public static var inProgress: Self { .init(rawValue: "in_progress") }
+    public static var notApplicable: Self { .init(rawValue: "not_applicable") }
 }
 
 /// Can be `bank_account` or `card`.
-public enum PayoutType: String, Codable, Sendable {
-    case bankAccount = "bank_account"
-    case card
+public struct PayoutType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankAccount: Self { .init(rawValue: "bank_account") }
+    public static var card: Self { .init(rawValue: "card") }
 }
 
 public struct PayoutList: Codable, Sendable {

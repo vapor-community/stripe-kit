@@ -29,21 +29,33 @@ public struct TaxProductResourceTaxSettingsDefaults: Codable, Sendable {
 
 /// The tax calculation provider this account uses. Defaults to `stripe` when not using a [third-party
 /// provider](/tax/third-party-apps).
-public enum TaxProductResourceTaxSettingsDefaultsProvider: String, Codable, Sendable {
-    case anrok
-    case avalara
-    case sphere
-    case stripe
+public struct TaxProductResourceTaxSettingsDefaultsProvider: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var anrok: Self { .init(rawValue: "anrok") }
+    public static var avalara: Self { .init(rawValue: "avalara") }
+    public static var sphere: Self { .init(rawValue: "sphere") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 /// Default [tax
 /// behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#tax-behavior) used
 /// to specify whether the price is considered inclusive of taxes or exclusive of taxes. If the item's
 /// price has a tax behavior set, it will take precedence over the default tax behavior.
-public enum TaxProductResourceTaxSettingsDefaultsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case inferredByCurrency = "inferred_by_currency"
+public struct TaxProductResourceTaxSettingsDefaultsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var inferredByCurrency: Self { .init(rawValue: "inferred_by_currency") }
 }
 
 public struct TaxProductResourceTaxSettingsDefaultsList: Codable, Sendable {

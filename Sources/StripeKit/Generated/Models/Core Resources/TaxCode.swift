@@ -26,8 +26,14 @@ public struct TaxCode: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TaxCodeObject: String, Codable, Sendable {
-    case taxCode = "tax_code"
+public struct TaxCodeObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxCode: Self { .init(rawValue: "tax_code") }
 }
 
 public struct TaxCodeList: Codable, Sendable {

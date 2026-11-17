@@ -72,225 +72,237 @@ public struct ApiErrors: Codable, Sendable {
 
 /// For some errors that could be handled programmatically, a short string indicating the [error
 /// code](https://docs.stripe.com/error-codes) reported.
-public enum ApiErrorsCode: String, Codable, Sendable {
-    case accountClosed = "account_closed"
-    case accountCountryInvalidAddress = "account_country_invalid_address"
-    case accountErrorCountryChangeRequiresAdditionalSteps = "account_error_country_change_requires_additional_steps"
-    case accountInformationMismatch = "account_information_mismatch"
-    case accountInvalid = "account_invalid"
-    case accountNumberInvalid = "account_number_invalid"
-    case accountTokenRequiredForV2Account = "account_token_required_for_v2_account"
-    case acssDebitSessionIncomplete = "acss_debit_session_incomplete"
-    case actionBlocked = "action_blocked"
-    case alipayUpgradeRequired = "alipay_upgrade_required"
-    case amountTooLarge = "amount_too_large"
-    case amountTooSmall = "amount_too_small"
-    case anomalousMoneyMovementRequest = "anomalous_money_movement_request"
-    case apiKeyExpired = "api_key_expired"
-    case applicationFeesNotAllowed = "application_fees_not_allowed"
-    case approvalRequired = "approval_required"
-    case authenticationFailure = "authentication_failure"
-    case authenticationRequired = "authentication_required"
-    case balanceInsufficient = "balance_insufficient"
-    case balanceInvalidParameter = "balance_invalid_parameter"
-    case bankAccountBadRoutingNumbers = "bank_account_bad_routing_numbers"
-    case bankAccountDeclined = "bank_account_declined"
-    case bankAccountExists = "bank_account_exists"
-    case bankAccountRestricted = "bank_account_restricted"
-    case bankAccountUnusable = "bank_account_unusable"
-    case bankAccountUnverified = "bank_account_unverified"
-    case bankAccountVerificationFailed = "bank_account_verification_failed"
-    case billingInvalidMandate = "billing_invalid_mandate"
-    case bitcoinUpgradeRequired = "bitcoin_upgrade_required"
-    case capabilityNotActive = "capability_not_active"
-    case captureChargeAuthorizationExpired = "capture_charge_authorization_expired"
-    case captureUnauthorizedPayment = "capture_unauthorized_payment"
-    case cardDeclineRateLimitExceeded = "card_decline_rate_limit_exceeded"
-    case cardDeclined = "card_declined"
-    case cardholderPhoneNumberRequired = "cardholder_phone_number_required"
-    case chargeAlreadyCaptured = "charge_already_captured"
-    case chargeAlreadyRefunded = "charge_already_refunded"
-    case chargeDisputed = "charge_disputed"
-    case chargeExceedsSourceLimit = "charge_exceeds_source_limit"
-    case chargeExceedsTransactionLimit = "charge_exceeds_transaction_limit"
-    case chargeExpiredForCapture = "charge_expired_for_capture"
-    case chargeInvalidParameter = "charge_invalid_parameter"
-    case chargeNotRefundable = "charge_not_refundable"
-    case clearingCodeUnsupported = "clearing_code_unsupported"
-    case countryCodeInvalid = "country_code_invalid"
-    case countryUnsupported = "country_unsupported"
-    case couponExpired = "coupon_expired"
-    case customerMaxPaymentMethods = "customer_max_payment_methods"
-    case customerMaxSubscriptions = "customer_max_subscriptions"
-    case customerSessionExpired = "customer_session_expired"
-    case customerTaxLocationInvalid = "customer_tax_location_invalid"
-    case debitNotAuthorized = "debit_not_authorized"
-    case disputeEvidencePageLimitExceeded = "dispute_evidence_page_limit_exceeded"
-    case emailInvalid = "email_invalid"
-    case expiredCard = "expired_card"
-    case expiredPaymentMethod = "expired_payment_method"
-    case failedTaxCalculation = "failed_tax_calculation"
-    case financialAccountBalanceDoesNotSupportCurrency = "financial_account_balance_does_not_support_currency"
-    case financialAccountCapabilityNotEnabled = "financial_account_capability_not_enabled"
-    case financialAccountCapabilityRestricted = "financial_account_capability_restricted"
-    case financialConnectionsAccountInactive = "financial_connections_account_inactive"
-    case financialConnectionsAccountPendingAccountNumbers = "financial_connections_account_pending_account_numbers"
-    case financialConnectionsAccountUnavailableAccountNumbers = "financial_connections_account_unavailable_account_numbers"
-    case financialConnectionsConsentLocaleInvalid = "financial_connections_consent_locale_invalid"
-    case financialConnectionsConsentLocaleUnsupported = "financial_connections_consent_locale_unsupported"
-    case financialConnectionsNoSuccessfulTransactionRefresh = "financial_connections_no_successful_transaction_refresh"
-    case forwardingApiInactive = "forwarding_api_inactive"
-    case forwardingApiInvalidParameter = "forwarding_api_invalid_parameter"
-    case forwardingApiRetryableUpstreamError = "forwarding_api_retryable_upstream_error"
-    case forwardingApiUpstreamConnectionError = "forwarding_api_upstream_connection_error"
-    case forwardingApiUpstreamConnectionTimeout = "forwarding_api_upstream_connection_timeout"
-    case forwardingApiUpstreamError = "forwarding_api_upstream_error"
-    case idempotencyKeyInUse = "idempotency_key_in_use"
-    case incorrectAddress = "incorrect_address"
-    case incorrectCvc = "incorrect_cvc"
-    case incorrectNumber = "incorrect_number"
-    case incorrectPostalCode = "incorrect_postal_code"
-    case incorrectZip = "incorrect_zip"
-    case indiaRecurringPaymentMandateCanceled = "india_recurring_payment_mandate_canceled"
-    case instantPayoutsConfigDisabled = "instant_payouts_config_disabled"
-    case instantPayoutsCurrencyDisabled = "instant_payouts_currency_disabled"
-    case instantPayoutsLimitExceeded = "instant_payouts_limit_exceeded"
-    case instantPayoutsUnsupported = "instant_payouts_unsupported"
-    case insufficientFunds = "insufficient_funds"
-    case intentInvalidState = "intent_invalid_state"
-    case intentVerificationMethodMissing = "intent_verification_method_missing"
-    case invalidCanceledSubscriptionFields = "invalid_canceled_subscription_fields"
-    case invalidCardType = "invalid_card_type"
-    case invalidCharacters = "invalid_characters"
-    case invalidChargeAmount = "invalid_charge_amount"
-    case invalidCvc = "invalid_cvc"
-    case invalidExpiryMonth = "invalid_expiry_month"
-    case invalidExpiryYear = "invalid_expiry_year"
-    case invalidMandateReferencePrefixFormat = "invalid_mandate_reference_prefix_format"
-    case invalidNumber = "invalid_number"
-    case invalidSourceUsage = "invalid_source_usage"
-    case invalidTaxLocation = "invalid_tax_location"
-    case invoiceNoCustomerLineItems = "invoice_no_customer_line_items"
-    case invoiceNoPaymentMethodTypes = "invoice_no_payment_method_types"
-    case invoiceNoSubscriptionLineItems = "invoice_no_subscription_line_items"
-    case invoiceNotEditable = "invoice_not_editable"
-    case invoiceOnBehalfOfNotEditable = "invoice_on_behalf_of_not_editable"
-    case invoicePaymentIntentRequiresAction = "invoice_payment_intent_requires_action"
-    case invoiceUpcomingNone = "invoice_upcoming_none"
-    case livemodeMismatch = "livemode_mismatch"
-    case lockTimeout = "lock_timeout"
-    case missing
-    case noAccount = "no_account"
-    case notAllowedOnStandardAccount = "not_allowed_on_standard_account"
-    case outOfInventory = "out_of_inventory"
-    case ownershipDeclarationNotAllowed = "ownership_declaration_not_allowed"
-    case parameterInvalidEmpty = "parameter_invalid_empty"
-    case parameterInvalidInteger = "parameter_invalid_integer"
-    case parameterInvalidStringBlank = "parameter_invalid_string_blank"
-    case parameterInvalidStringEmpty = "parameter_invalid_string_empty"
-    case parameterMissing = "parameter_missing"
-    case parameterUnknown = "parameter_unknown"
-    case parametersExclusive = "parameters_exclusive"
-    case paymentEvaluationOnApiVersionNotSupported = "payment_evaluation_on_api_version_not_supported"
-    case paymentIntentActionRequired = "payment_intent_action_required"
-    case paymentIntentAuthenticationFailure = "payment_intent_authentication_failure"
-    case paymentIntentIncompatiblePaymentMethod = "payment_intent_incompatible_payment_method"
-    case paymentIntentInvalidParameter = "payment_intent_invalid_parameter"
-    case paymentIntentKonbiniRejectedConfirmationNumber = "payment_intent_konbini_rejected_confirmation_number"
-    case paymentIntentMandateInvalid = "payment_intent_mandate_invalid"
-    case paymentIntentPaymentAttemptExpired = "payment_intent_payment_attempt_expired"
-    case paymentIntentPaymentAttemptFailed = "payment_intent_payment_attempt_failed"
-    case paymentIntentRateLimitExceeded = "payment_intent_rate_limit_exceeded"
-    case paymentIntentUnexpectedState = "payment_intent_unexpected_state"
-    case paymentMethodBankAccountAlreadyVerified = "payment_method_bank_account_already_verified"
-    case paymentMethodBankAccountBlocked = "payment_method_bank_account_blocked"
-    case paymentMethodBillingDetailsAddressMissing = "payment_method_billing_details_address_missing"
-    case paymentMethodConfigurationFailures = "payment_method_configuration_failures"
-    case paymentMethodCurrencyMismatch = "payment_method_currency_mismatch"
-    case paymentMethodCustomerDecline = "payment_method_customer_decline"
-    case paymentMethodInvalidParameter = "payment_method_invalid_parameter"
-    case paymentMethodInvalidParameterTestmode = "payment_method_invalid_parameter_testmode"
-    case paymentMethodMicrodepositFailed = "payment_method_microdeposit_failed"
-    case paymentMethodMicrodepositProcessingError = "payment_method_microdeposit_processing_error"
-    case paymentMethodMicrodepositVerificationAmountsInvalid = "payment_method_microdeposit_verification_amounts_invalid"
-    case paymentMethodMicrodepositVerificationAmountsMismatch = "payment_method_microdeposit_verification_amounts_mismatch"
-    case paymentMethodMicrodepositVerificationAttemptsExceeded = "payment_method_microdeposit_verification_attempts_exceeded"
-    case paymentMethodMicrodepositVerificationDescriptorCodeMismatch = "payment_method_microdeposit_verification_descriptor_code_mismatch"
-    case paymentMethodMicrodepositVerificationTimeout = "payment_method_microdeposit_verification_timeout"
-    case paymentMethodNotAvailable = "payment_method_not_available"
-    case paymentMethodProviderDecline = "payment_method_provider_decline"
-    case paymentMethodProviderTimeout = "payment_method_provider_timeout"
-    case paymentMethodRestricted = "payment_method_restricted"
-    case paymentMethodUnactivated = "payment_method_unactivated"
-    case paymentMethodUnexpectedState = "payment_method_unexpected_state"
-    case paymentMethodUnsupportedType = "payment_method_unsupported_type"
-    case payoutReconciliationNotReady = "payout_reconciliation_not_ready"
-    case payoutsLimitExceeded = "payouts_limit_exceeded"
-    case payoutsNotAllowed = "payouts_not_allowed"
-    case platformAccountRequired = "platform_account_required"
-    case platformApiKeyExpired = "platform_api_key_expired"
-    case postalCodeInvalid = "postal_code_invalid"
-    case processingError = "processing_error"
-    case productInactive = "product_inactive"
-    case progressiveOnboardingLimitExceeded = "progressive_onboarding_limit_exceeded"
-    case rateLimit = "rate_limit"
-    case referToCustomer = "refer_to_customer"
-    case refundDisputedPayment = "refund_disputed_payment"
-    case requestBlocked = "request_blocked"
-    case resourceAlreadyExists = "resource_already_exists"
-    case resourceMissing = "resource_missing"
-    case returnIntentAlreadyProcessed = "return_intent_already_processed"
-    case routingNumberInvalid = "routing_number_invalid"
-    case secretKeyRequired = "secret_key_required"
-    case sepaUnsupportedAccount = "sepa_unsupported_account"
-    case servicePeriodCouponWithMeteredTieredItemUnsupported = "service_period_coupon_with_metered_tiered_item_unsupported"
-    case setupAttemptFailed = "setup_attempt_failed"
-    case setupIntentAuthenticationFailure = "setup_intent_authentication_failure"
-    case setupIntentInvalidParameter = "setup_intent_invalid_parameter"
-    case setupIntentMandateInvalid = "setup_intent_mandate_invalid"
-    case setupIntentMobileWalletUnsupported = "setup_intent_mobile_wallet_unsupported"
-    case setupIntentSetupAttemptExpired = "setup_intent_setup_attempt_expired"
-    case setupIntentUnexpectedState = "setup_intent_unexpected_state"
-    case shippingAddressInvalid = "shipping_address_invalid"
-    case shippingCalculationFailed = "shipping_calculation_failed"
-    case siretInvalid = "siret_invalid"
-    case skuInactive = "sku_inactive"
-    case smartDisputesNotAvailable = "smart_disputes_not_available"
-    case stateUnsupported = "state_unsupported"
-    case statusTransitionInvalid = "status_transition_invalid"
-    case storerCapabilityMissing = "storer_capability_missing"
-    case storerCapabilityNotActive = "storer_capability_not_active"
-    case stripeTaxInactive = "stripe_tax_inactive"
-    case subscriptionUpdateTrialAfterBillingCycleAnchor = "subscription_update_trial_after_billing_cycle_anchor"
-    case taxIdInvalid = "tax_id_invalid"
-    case taxIdProhibited = "tax_id_prohibited"
-    case taxesCalculationFailed = "taxes_calculation_failed"
-    case terminalLocationCountryUnsupported = "terminal_location_country_unsupported"
-    case terminalReaderBusy = "terminal_reader_busy"
-    case terminalReaderHardwareFault = "terminal_reader_hardware_fault"
-    case terminalReaderInvalidLocationForActivation = "terminal_reader_invalid_location_for_activation"
-    case terminalReaderInvalidLocationForPayment = "terminal_reader_invalid_location_for_payment"
-    case terminalReaderOffline = "terminal_reader_offline"
-    case terminalReaderTimeout = "terminal_reader_timeout"
-    case testmodeChargesOnly = "testmode_charges_only"
-    case threeDSecureAuthenticationNotSupported = "three_d_secure_authentication_not_supported"
-    case threeDSecureAuthenticationUpstreamError = "three_d_secure_authentication_upstream_error"
-    case tlsVersionUnsupported = "tls_version_unsupported"
-    case tokenAlreadyUsed = "token_already_used"
-    case tokenCardNetworkInvalid = "token_card_network_invalid"
-    case tokenInUse = "token_in_use"
-    case transferSourceBalanceParametersMismatch = "transfer_source_balance_parameters_mismatch"
-    case transfersNotAllowed = "transfers_not_allowed"
-    case urlInvalid = "url_invalid"
+public struct ApiErrorsCode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountClosed: Self { .init(rawValue: "account_closed") }
+    public static var accountCountryInvalidAddress: Self { .init(rawValue: "account_country_invalid_address") }
+    public static var accountErrorCountryChangeRequiresAdditionalSteps: Self { .init(rawValue: "account_error_country_change_requires_additional_steps") }
+    public static var accountInformationMismatch: Self { .init(rawValue: "account_information_mismatch") }
+    public static var accountInvalid: Self { .init(rawValue: "account_invalid") }
+    public static var accountNumberInvalid: Self { .init(rawValue: "account_number_invalid") }
+    public static var accountTokenRequiredForV2Account: Self { .init(rawValue: "account_token_required_for_v2_account") }
+    public static var acssDebitSessionIncomplete: Self { .init(rawValue: "acss_debit_session_incomplete") }
+    public static var actionBlocked: Self { .init(rawValue: "action_blocked") }
+    public static var alipayUpgradeRequired: Self { .init(rawValue: "alipay_upgrade_required") }
+    public static var amountTooLarge: Self { .init(rawValue: "amount_too_large") }
+    public static var amountTooSmall: Self { .init(rawValue: "amount_too_small") }
+    public static var anomalousMoneyMovementRequest: Self { .init(rawValue: "anomalous_money_movement_request") }
+    public static var apiKeyExpired: Self { .init(rawValue: "api_key_expired") }
+    public static var applicationFeesNotAllowed: Self { .init(rawValue: "application_fees_not_allowed") }
+    public static var approvalRequired: Self { .init(rawValue: "approval_required") }
+    public static var authenticationFailure: Self { .init(rawValue: "authentication_failure") }
+    public static var authenticationRequired: Self { .init(rawValue: "authentication_required") }
+    public static var balanceInsufficient: Self { .init(rawValue: "balance_insufficient") }
+    public static var balanceInvalidParameter: Self { .init(rawValue: "balance_invalid_parameter") }
+    public static var bankAccountBadRoutingNumbers: Self { .init(rawValue: "bank_account_bad_routing_numbers") }
+    public static var bankAccountDeclined: Self { .init(rawValue: "bank_account_declined") }
+    public static var bankAccountExists: Self { .init(rawValue: "bank_account_exists") }
+    public static var bankAccountRestricted: Self { .init(rawValue: "bank_account_restricted") }
+    public static var bankAccountUnusable: Self { .init(rawValue: "bank_account_unusable") }
+    public static var bankAccountUnverified: Self { .init(rawValue: "bank_account_unverified") }
+    public static var bankAccountVerificationFailed: Self { .init(rawValue: "bank_account_verification_failed") }
+    public static var billingInvalidMandate: Self { .init(rawValue: "billing_invalid_mandate") }
+    public static var bitcoinUpgradeRequired: Self { .init(rawValue: "bitcoin_upgrade_required") }
+    public static var capabilityNotActive: Self { .init(rawValue: "capability_not_active") }
+    public static var captureChargeAuthorizationExpired: Self { .init(rawValue: "capture_charge_authorization_expired") }
+    public static var captureUnauthorizedPayment: Self { .init(rawValue: "capture_unauthorized_payment") }
+    public static var cardDeclineRateLimitExceeded: Self { .init(rawValue: "card_decline_rate_limit_exceeded") }
+    public static var cardDeclined: Self { .init(rawValue: "card_declined") }
+    public static var cardholderPhoneNumberRequired: Self { .init(rawValue: "cardholder_phone_number_required") }
+    public static var chargeAlreadyCaptured: Self { .init(rawValue: "charge_already_captured") }
+    public static var chargeAlreadyRefunded: Self { .init(rawValue: "charge_already_refunded") }
+    public static var chargeDisputed: Self { .init(rawValue: "charge_disputed") }
+    public static var chargeExceedsSourceLimit: Self { .init(rawValue: "charge_exceeds_source_limit") }
+    public static var chargeExceedsTransactionLimit: Self { .init(rawValue: "charge_exceeds_transaction_limit") }
+    public static var chargeExpiredForCapture: Self { .init(rawValue: "charge_expired_for_capture") }
+    public static var chargeInvalidParameter: Self { .init(rawValue: "charge_invalid_parameter") }
+    public static var chargeNotRefundable: Self { .init(rawValue: "charge_not_refundable") }
+    public static var clearingCodeUnsupported: Self { .init(rawValue: "clearing_code_unsupported") }
+    public static var countryCodeInvalid: Self { .init(rawValue: "country_code_invalid") }
+    public static var countryUnsupported: Self { .init(rawValue: "country_unsupported") }
+    public static var couponExpired: Self { .init(rawValue: "coupon_expired") }
+    public static var customerMaxPaymentMethods: Self { .init(rawValue: "customer_max_payment_methods") }
+    public static var customerMaxSubscriptions: Self { .init(rawValue: "customer_max_subscriptions") }
+    public static var customerSessionExpired: Self { .init(rawValue: "customer_session_expired") }
+    public static var customerTaxLocationInvalid: Self { .init(rawValue: "customer_tax_location_invalid") }
+    public static var debitNotAuthorized: Self { .init(rawValue: "debit_not_authorized") }
+    public static var disputeEvidencePageLimitExceeded: Self { .init(rawValue: "dispute_evidence_page_limit_exceeded") }
+    public static var emailInvalid: Self { .init(rawValue: "email_invalid") }
+    public static var expiredCard: Self { .init(rawValue: "expired_card") }
+    public static var expiredPaymentMethod: Self { .init(rawValue: "expired_payment_method") }
+    public static var failedTaxCalculation: Self { .init(rawValue: "failed_tax_calculation") }
+    public static var financialAccountBalanceDoesNotSupportCurrency: Self { .init(rawValue: "financial_account_balance_does_not_support_currency") }
+    public static var financialAccountCapabilityNotEnabled: Self { .init(rawValue: "financial_account_capability_not_enabled") }
+    public static var financialAccountCapabilityRestricted: Self { .init(rawValue: "financial_account_capability_restricted") }
+    public static var financialConnectionsAccountInactive: Self { .init(rawValue: "financial_connections_account_inactive") }
+    public static var financialConnectionsAccountPendingAccountNumbers: Self { .init(rawValue: "financial_connections_account_pending_account_numbers") }
+    public static var financialConnectionsAccountUnavailableAccountNumbers: Self { .init(rawValue: "financial_connections_account_unavailable_account_numbers") }
+    public static var financialConnectionsConsentLocaleInvalid: Self { .init(rawValue: "financial_connections_consent_locale_invalid") }
+    public static var financialConnectionsConsentLocaleUnsupported: Self { .init(rawValue: "financial_connections_consent_locale_unsupported") }
+    public static var financialConnectionsNoSuccessfulTransactionRefresh: Self { .init(rawValue: "financial_connections_no_successful_transaction_refresh") }
+    public static var forwardingApiInactive: Self { .init(rawValue: "forwarding_api_inactive") }
+    public static var forwardingApiInvalidParameter: Self { .init(rawValue: "forwarding_api_invalid_parameter") }
+    public static var forwardingApiRetryableUpstreamError: Self { .init(rawValue: "forwarding_api_retryable_upstream_error") }
+    public static var forwardingApiUpstreamConnectionError: Self { .init(rawValue: "forwarding_api_upstream_connection_error") }
+    public static var forwardingApiUpstreamConnectionTimeout: Self { .init(rawValue: "forwarding_api_upstream_connection_timeout") }
+    public static var forwardingApiUpstreamError: Self { .init(rawValue: "forwarding_api_upstream_error") }
+    public static var idempotencyKeyInUse: Self { .init(rawValue: "idempotency_key_in_use") }
+    public static var incorrectAddress: Self { .init(rawValue: "incorrect_address") }
+    public static var incorrectCvc: Self { .init(rawValue: "incorrect_cvc") }
+    public static var incorrectNumber: Self { .init(rawValue: "incorrect_number") }
+    public static var incorrectPostalCode: Self { .init(rawValue: "incorrect_postal_code") }
+    public static var incorrectZip: Self { .init(rawValue: "incorrect_zip") }
+    public static var indiaRecurringPaymentMandateCanceled: Self { .init(rawValue: "india_recurring_payment_mandate_canceled") }
+    public static var instantPayoutsConfigDisabled: Self { .init(rawValue: "instant_payouts_config_disabled") }
+    public static var instantPayoutsCurrencyDisabled: Self { .init(rawValue: "instant_payouts_currency_disabled") }
+    public static var instantPayoutsLimitExceeded: Self { .init(rawValue: "instant_payouts_limit_exceeded") }
+    public static var instantPayoutsUnsupported: Self { .init(rawValue: "instant_payouts_unsupported") }
+    public static var insufficientFunds: Self { .init(rawValue: "insufficient_funds") }
+    public static var intentInvalidState: Self { .init(rawValue: "intent_invalid_state") }
+    public static var intentVerificationMethodMissing: Self { .init(rawValue: "intent_verification_method_missing") }
+    public static var invalidCanceledSubscriptionFields: Self { .init(rawValue: "invalid_canceled_subscription_fields") }
+    public static var invalidCardType: Self { .init(rawValue: "invalid_card_type") }
+    public static var invalidCharacters: Self { .init(rawValue: "invalid_characters") }
+    public static var invalidChargeAmount: Self { .init(rawValue: "invalid_charge_amount") }
+    public static var invalidCvc: Self { .init(rawValue: "invalid_cvc") }
+    public static var invalidExpiryMonth: Self { .init(rawValue: "invalid_expiry_month") }
+    public static var invalidExpiryYear: Self { .init(rawValue: "invalid_expiry_year") }
+    public static var invalidMandateReferencePrefixFormat: Self { .init(rawValue: "invalid_mandate_reference_prefix_format") }
+    public static var invalidNumber: Self { .init(rawValue: "invalid_number") }
+    public static var invalidSourceUsage: Self { .init(rawValue: "invalid_source_usage") }
+    public static var invalidTaxLocation: Self { .init(rawValue: "invalid_tax_location") }
+    public static var invoiceNoCustomerLineItems: Self { .init(rawValue: "invoice_no_customer_line_items") }
+    public static var invoiceNoPaymentMethodTypes: Self { .init(rawValue: "invoice_no_payment_method_types") }
+    public static var invoiceNoSubscriptionLineItems: Self { .init(rawValue: "invoice_no_subscription_line_items") }
+    public static var invoiceNotEditable: Self { .init(rawValue: "invoice_not_editable") }
+    public static var invoiceOnBehalfOfNotEditable: Self { .init(rawValue: "invoice_on_behalf_of_not_editable") }
+    public static var invoicePaymentIntentRequiresAction: Self { .init(rawValue: "invoice_payment_intent_requires_action") }
+    public static var invoiceUpcomingNone: Self { .init(rawValue: "invoice_upcoming_none") }
+    public static var livemodeMismatch: Self { .init(rawValue: "livemode_mismatch") }
+    public static var lockTimeout: Self { .init(rawValue: "lock_timeout") }
+    public static var missing: Self { .init(rawValue: "missing") }
+    public static var noAccount: Self { .init(rawValue: "no_account") }
+    public static var notAllowedOnStandardAccount: Self { .init(rawValue: "not_allowed_on_standard_account") }
+    public static var outOfInventory: Self { .init(rawValue: "out_of_inventory") }
+    public static var ownershipDeclarationNotAllowed: Self { .init(rawValue: "ownership_declaration_not_allowed") }
+    public static var parameterInvalidEmpty: Self { .init(rawValue: "parameter_invalid_empty") }
+    public static var parameterInvalidInteger: Self { .init(rawValue: "parameter_invalid_integer") }
+    public static var parameterInvalidStringBlank: Self { .init(rawValue: "parameter_invalid_string_blank") }
+    public static var parameterInvalidStringEmpty: Self { .init(rawValue: "parameter_invalid_string_empty") }
+    public static var parameterMissing: Self { .init(rawValue: "parameter_missing") }
+    public static var parameterUnknown: Self { .init(rawValue: "parameter_unknown") }
+    public static var parametersExclusive: Self { .init(rawValue: "parameters_exclusive") }
+    public static var paymentEvaluationOnApiVersionNotSupported: Self { .init(rawValue: "payment_evaluation_on_api_version_not_supported") }
+    public static var paymentIntentActionRequired: Self { .init(rawValue: "payment_intent_action_required") }
+    public static var paymentIntentAuthenticationFailure: Self { .init(rawValue: "payment_intent_authentication_failure") }
+    public static var paymentIntentIncompatiblePaymentMethod: Self { .init(rawValue: "payment_intent_incompatible_payment_method") }
+    public static var paymentIntentInvalidParameter: Self { .init(rawValue: "payment_intent_invalid_parameter") }
+    public static var paymentIntentKonbiniRejectedConfirmationNumber: Self { .init(rawValue: "payment_intent_konbini_rejected_confirmation_number") }
+    public static var paymentIntentMandateInvalid: Self { .init(rawValue: "payment_intent_mandate_invalid") }
+    public static var paymentIntentPaymentAttemptExpired: Self { .init(rawValue: "payment_intent_payment_attempt_expired") }
+    public static var paymentIntentPaymentAttemptFailed: Self { .init(rawValue: "payment_intent_payment_attempt_failed") }
+    public static var paymentIntentRateLimitExceeded: Self { .init(rawValue: "payment_intent_rate_limit_exceeded") }
+    public static var paymentIntentUnexpectedState: Self { .init(rawValue: "payment_intent_unexpected_state") }
+    public static var paymentMethodBankAccountAlreadyVerified: Self { .init(rawValue: "payment_method_bank_account_already_verified") }
+    public static var paymentMethodBankAccountBlocked: Self { .init(rawValue: "payment_method_bank_account_blocked") }
+    public static var paymentMethodBillingDetailsAddressMissing: Self { .init(rawValue: "payment_method_billing_details_address_missing") }
+    public static var paymentMethodConfigurationFailures: Self { .init(rawValue: "payment_method_configuration_failures") }
+    public static var paymentMethodCurrencyMismatch: Self { .init(rawValue: "payment_method_currency_mismatch") }
+    public static var paymentMethodCustomerDecline: Self { .init(rawValue: "payment_method_customer_decline") }
+    public static var paymentMethodInvalidParameter: Self { .init(rawValue: "payment_method_invalid_parameter") }
+    public static var paymentMethodInvalidParameterTestmode: Self { .init(rawValue: "payment_method_invalid_parameter_testmode") }
+    public static var paymentMethodMicrodepositFailed: Self { .init(rawValue: "payment_method_microdeposit_failed") }
+    public static var paymentMethodMicrodepositProcessingError: Self { .init(rawValue: "payment_method_microdeposit_processing_error") }
+    public static var paymentMethodMicrodepositVerificationAmountsInvalid: Self { .init(rawValue: "payment_method_microdeposit_verification_amounts_invalid") }
+    public static var paymentMethodMicrodepositVerificationAmountsMismatch: Self { .init(rawValue: "payment_method_microdeposit_verification_amounts_mismatch") }
+    public static var paymentMethodMicrodepositVerificationAttemptsExceeded: Self { .init(rawValue: "payment_method_microdeposit_verification_attempts_exceeded") }
+    public static var paymentMethodMicrodepositVerificationDescriptorCodeMismatch: Self { .init(rawValue: "payment_method_microdeposit_verification_descriptor_code_mismatch") }
+    public static var paymentMethodMicrodepositVerificationTimeout: Self { .init(rawValue: "payment_method_microdeposit_verification_timeout") }
+    public static var paymentMethodNotAvailable: Self { .init(rawValue: "payment_method_not_available") }
+    public static var paymentMethodProviderDecline: Self { .init(rawValue: "payment_method_provider_decline") }
+    public static var paymentMethodProviderTimeout: Self { .init(rawValue: "payment_method_provider_timeout") }
+    public static var paymentMethodRestricted: Self { .init(rawValue: "payment_method_restricted") }
+    public static var paymentMethodUnactivated: Self { .init(rawValue: "payment_method_unactivated") }
+    public static var paymentMethodUnexpectedState: Self { .init(rawValue: "payment_method_unexpected_state") }
+    public static var paymentMethodUnsupportedType: Self { .init(rawValue: "payment_method_unsupported_type") }
+    public static var payoutReconciliationNotReady: Self { .init(rawValue: "payout_reconciliation_not_ready") }
+    public static var payoutsLimitExceeded: Self { .init(rawValue: "payouts_limit_exceeded") }
+    public static var payoutsNotAllowed: Self { .init(rawValue: "payouts_not_allowed") }
+    public static var platformAccountRequired: Self { .init(rawValue: "platform_account_required") }
+    public static var platformApiKeyExpired: Self { .init(rawValue: "platform_api_key_expired") }
+    public static var postalCodeInvalid: Self { .init(rawValue: "postal_code_invalid") }
+    public static var processingError: Self { .init(rawValue: "processing_error") }
+    public static var productInactive: Self { .init(rawValue: "product_inactive") }
+    public static var progressiveOnboardingLimitExceeded: Self { .init(rawValue: "progressive_onboarding_limit_exceeded") }
+    public static var rateLimit: Self { .init(rawValue: "rate_limit") }
+    public static var referToCustomer: Self { .init(rawValue: "refer_to_customer") }
+    public static var refundDisputedPayment: Self { .init(rawValue: "refund_disputed_payment") }
+    public static var requestBlocked: Self { .init(rawValue: "request_blocked") }
+    public static var resourceAlreadyExists: Self { .init(rawValue: "resource_already_exists") }
+    public static var resourceMissing: Self { .init(rawValue: "resource_missing") }
+    public static var returnIntentAlreadyProcessed: Self { .init(rawValue: "return_intent_already_processed") }
+    public static var routingNumberInvalid: Self { .init(rawValue: "routing_number_invalid") }
+    public static var secretKeyRequired: Self { .init(rawValue: "secret_key_required") }
+    public static var sepaUnsupportedAccount: Self { .init(rawValue: "sepa_unsupported_account") }
+    public static var servicePeriodCouponWithMeteredTieredItemUnsupported: Self { .init(rawValue: "service_period_coupon_with_metered_tiered_item_unsupported") }
+    public static var setupAttemptFailed: Self { .init(rawValue: "setup_attempt_failed") }
+    public static var setupIntentAuthenticationFailure: Self { .init(rawValue: "setup_intent_authentication_failure") }
+    public static var setupIntentInvalidParameter: Self { .init(rawValue: "setup_intent_invalid_parameter") }
+    public static var setupIntentMandateInvalid: Self { .init(rawValue: "setup_intent_mandate_invalid") }
+    public static var setupIntentMobileWalletUnsupported: Self { .init(rawValue: "setup_intent_mobile_wallet_unsupported") }
+    public static var setupIntentSetupAttemptExpired: Self { .init(rawValue: "setup_intent_setup_attempt_expired") }
+    public static var setupIntentUnexpectedState: Self { .init(rawValue: "setup_intent_unexpected_state") }
+    public static var shippingAddressInvalid: Self { .init(rawValue: "shipping_address_invalid") }
+    public static var shippingCalculationFailed: Self { .init(rawValue: "shipping_calculation_failed") }
+    public static var siretInvalid: Self { .init(rawValue: "siret_invalid") }
+    public static var skuInactive: Self { .init(rawValue: "sku_inactive") }
+    public static var smartDisputesNotAvailable: Self { .init(rawValue: "smart_disputes_not_available") }
+    public static var stateUnsupported: Self { .init(rawValue: "state_unsupported") }
+    public static var statusTransitionInvalid: Self { .init(rawValue: "status_transition_invalid") }
+    public static var storerCapabilityMissing: Self { .init(rawValue: "storer_capability_missing") }
+    public static var storerCapabilityNotActive: Self { .init(rawValue: "storer_capability_not_active") }
+    public static var stripeTaxInactive: Self { .init(rawValue: "stripe_tax_inactive") }
+    public static var subscriptionUpdateTrialAfterBillingCycleAnchor: Self { .init(rawValue: "subscription_update_trial_after_billing_cycle_anchor") }
+    public static var taxIdInvalid: Self { .init(rawValue: "tax_id_invalid") }
+    public static var taxIdProhibited: Self { .init(rawValue: "tax_id_prohibited") }
+    public static var taxesCalculationFailed: Self { .init(rawValue: "taxes_calculation_failed") }
+    public static var terminalLocationCountryUnsupported: Self { .init(rawValue: "terminal_location_country_unsupported") }
+    public static var terminalReaderBusy: Self { .init(rawValue: "terminal_reader_busy") }
+    public static var terminalReaderHardwareFault: Self { .init(rawValue: "terminal_reader_hardware_fault") }
+    public static var terminalReaderInvalidLocationForActivation: Self { .init(rawValue: "terminal_reader_invalid_location_for_activation") }
+    public static var terminalReaderInvalidLocationForPayment: Self { .init(rawValue: "terminal_reader_invalid_location_for_payment") }
+    public static var terminalReaderOffline: Self { .init(rawValue: "terminal_reader_offline") }
+    public static var terminalReaderTimeout: Self { .init(rawValue: "terminal_reader_timeout") }
+    public static var testmodeChargesOnly: Self { .init(rawValue: "testmode_charges_only") }
+    public static var threeDSecureAuthenticationNotSupported: Self { .init(rawValue: "three_d_secure_authentication_not_supported") }
+    public static var threeDSecureAuthenticationUpstreamError: Self { .init(rawValue: "three_d_secure_authentication_upstream_error") }
+    public static var tlsVersionUnsupported: Self { .init(rawValue: "tls_version_unsupported") }
+    public static var tokenAlreadyUsed: Self { .init(rawValue: "token_already_used") }
+    public static var tokenCardNetworkInvalid: Self { .init(rawValue: "token_card_network_invalid") }
+    public static var tokenInUse: Self { .init(rawValue: "token_in_use") }
+    public static var transferSourceBalanceParametersMismatch: Self { .init(rawValue: "transfer_source_balance_parameters_mismatch") }
+    public static var transfersNotAllowed: Self { .init(rawValue: "transfers_not_allowed") }
+    public static var urlInvalid: Self { .init(rawValue: "url_invalid") }
 }
 
 /// The type of error returned. One of `api_error`, `card_error`, `idempotency_error`, or
 /// `invalid_request_error`
-public enum ApiErrorsType: String, Codable, Sendable {
-    case apiError = "api_error"
-    case cardError = "card_error"
-    case idempotencyError = "idempotency_error"
-    case invalidRequestError = "invalid_request_error"
+public struct ApiErrorsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var apiError: Self { .init(rawValue: "api_error") }
+    public static var cardError: Self { .init(rawValue: "card_error") }
+    public static var idempotencyError: Self { .init(rawValue: "idempotency_error") }
+    public static var invalidRequestError: Self { .init(rawValue: "invalid_request_error") }
 }
 
 public struct ApiErrorsList: Codable, Sendable {

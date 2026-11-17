@@ -17,9 +17,15 @@ public struct PlatformEarningFeeSource: Codable, Sendable {
 }
 
 /// Type of object that created the application fee.
-public enum PlatformEarningFeeSourceType: String, Codable, Sendable {
-    case charge
-    case payout
+public struct PlatformEarningFeeSourceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var charge: Self { .init(rawValue: "charge") }
+    public static var payout: Self { .init(rawValue: "payout") }
 }
 
 public struct PlatformEarningFeeSourceList: Codable, Sendable {

@@ -40,9 +40,15 @@ public struct CheckoutAcssDebitPaymentMethodOptions: Codable, Sendable {
 }
 
 /// Currency supported by the bank account. Returned when the Session is in `setup` mode.
-public enum CheckoutAcssDebitPaymentMethodOptionsCurrency: String, Codable, Sendable {
-    case cad
-    case usd
+public struct CheckoutAcssDebitPaymentMethodOptionsCurrency: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cad: Self { .init(rawValue: "cad") }
+    public static var usd: Self { .init(rawValue: "usd") }
 }
 
 /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -56,17 +62,29 @@ public enum CheckoutAcssDebitPaymentMethodOptionsCurrency: String, Codable, Send
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum CheckoutAcssDebitPaymentMethodOptionsSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutAcssDebitPaymentMethodOptionsSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 /// Bank account verification method. The default value is `automatic`.
-public enum CheckoutAcssDebitPaymentMethodOptionsVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct CheckoutAcssDebitPaymentMethodOptionsVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
 public struct CheckoutAcssDebitPaymentMethodOptionsList: Codable, Sendable {

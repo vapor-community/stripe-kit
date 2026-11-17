@@ -30,14 +30,20 @@ public struct PaymentMethodOptionsSofort: Codable, Sendable {
 }
 
 /// Preferred language of the SOFORT authorization page that the customer is redirected to.
-public enum PaymentMethodOptionsSofortPreferredLanguage: String, Codable, Sendable {
-    case de
-    case en
-    case es
-    case fr
-    case it
-    case nl
-    case pl
+public struct PaymentMethodOptionsSofortPreferredLanguage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var de: Self { .init(rawValue: "de") }
+    public static var en: Self { .init(rawValue: "en") }
+    public static var es: Self { .init(rawValue: "es") }
+    public static var fr: Self { .init(rawValue: "fr") }
+    public static var it: Self { .init(rawValue: "it") }
+    public static var nl: Self { .init(rawValue: "nl") }
+    public static var pl: Self { .init(rawValue: "pl") }
 }
 
 /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -51,9 +57,15 @@ public enum PaymentMethodOptionsSofortPreferredLanguage: String, Codable, Sendab
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum PaymentMethodOptionsSofortSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
+public struct PaymentMethodOptionsSofortSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 public struct PaymentMethodOptionsSofortList: Codable, Sendable {

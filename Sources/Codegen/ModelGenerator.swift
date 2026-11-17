@@ -127,11 +127,12 @@ struct ModelGenerator {
         
         // Generate standalone enum types for enum-typed properties
         for property in resource.properties {
-            guard case .enum(let cases) = property.type else { continue }
+            guard case .enum(let cases, let valueDescriptions) = property.type else { continue }
             let enumLines = generateStringEnum(
                 name: "\(resource.swiftTypeName)\(capitalize(property.swiftName))",
                 cases: cases,
-                description: property.description
+                description: property.description,
+                valueDescriptions: valueDescriptions
             )
             guard !enumLines.isEmpty else { continue }
             lines.append(contentsOf: enumLines)
@@ -241,14 +242,17 @@ struct ModelGenerator {
             return (id: resourceId, swiftType: swiftType, caseName: caseName)
         }
         
-        lines.append("/// Polymorphic type — discriminated on the `object` field.")
-        lines.append("/// Variants: \(variantInfos.map(\.swiftType).joined(separator: ", "))")
+        precondition(!variantInfos.contains { $0.caseName == undocumentedCase }, "\(resource.swiftTypeName) has a variant named \(undocumentedCase)")
+        lines.append("/// One of several object types, decoded by its `object` field: \(variantInfos.map(\.swiftType).joined(separator: ", ")).")
+        lines.append("/// An object of a type this version of StripeKit doesn't know decodes as `.\(undocumentedCase)`.")
         lines.append("public enum \(resource.swiftTypeName): Codable, Sendable {")
         
         // Enum cases with associated values
         for v in variantInfos {
             lines.append("    case \(v.caseName)(\(v.swiftType))")
         }
+        lines.append("    /// An object of a type this version of StripeKit doesn't know, as raw JSON")
+        lines.append("    case \(undocumentedCase)(JSONValue)")
         
         lines.append("")
         lines.append("    // MARK: - Discriminated Codable")
@@ -268,12 +272,7 @@ struct ModelGenerator {
             lines.append("            self = .\(v.caseName)(try \(v.swiftType)(from: decoder))")
         }
         lines.append("        default:")
-        lines.append("            throw DecodingError.dataCorrupted(")
-        lines.append("                DecodingError.Context(")
-        lines.append("                    codingPath: decoder.codingPath,")
-        lines.append("                    debugDescription: \"Unknown \(resource.swiftTypeName) object type: \\(object)\"")
-        lines.append("                )")
-        lines.append("            )")
+        lines.append("            self = .\(undocumentedCase)(try JSONValue(from: decoder))")
         lines.append("        }")
         lines.append("    }")
         lines.append("")
@@ -285,6 +284,8 @@ struct ModelGenerator {
             lines.append("        case .\(v.caseName)(let value):")
             lines.append("            try value.encode(to: encoder)")
         }
+        lines.append("        case .\(undocumentedCase)(let value):")
+        lines.append("            try value.encode(to: encoder)")
         lines.append("        }")
         lines.append("    }")
         lines.append("")
@@ -316,18 +317,15 @@ struct ModelGenerator {
     }
 
     /// Generate the list type for a polymorphic schema: `data` holds the items in order as the
-    /// enum, decoded by their `object` field, with a read-only array per variant
-    /// (`bankAccounts`, `cards`). Items of a type this version doesn't know are skipped, so a
-    /// new kind of item doesn't fail the whole list.
+    /// enum (an item of an unknown type as `.undocumented`), with a read-only array per variant
+    /// (`bankAccounts`, `cards`).
     private func generatePolymorphicListType(
         resource: StripeResource,
         variantInfos: [(id: String, swiftType: String, caseName: String)]
     ) -> [String] {
         let type = resource.swiftTypeName
-        let knownObjects = variantInfos.map { "\"\(objectValue(forVariant: $0.id))\"" }.joined(separator: ", ")
         var lines: [String] = []
-        lines.append("/// A list of `\(type)`s, each decoded by its `object` field. Items of a type this")
-        lines.append("/// version of StripeKit doesn't know are skipped.")
+        lines.append("/// A list of `\(type)`s, each decoded by its `object` field.")
         lines.append("public struct \(type)List: Codable, Sendable {")
         lines.append("    public var object: String")
         lines.append("    public var hasMore: Bool?")
@@ -348,38 +346,11 @@ struct ModelGenerator {
             "        self.data = data",
             "    }",
             "",
-            "    private enum CodingKeys: String, CodingKey {",
+            "    public enum CodingKeys: String, CodingKey {",
             "        case object",
             "        case hasMore = \"has_more\"",
             "        case url",
             "        case data",
-            "    }",
-            "",
-            "    private struct ObjectDiscriminator: Decodable {",
-            "        let object: String",
-            "    }",
-            "",
-            "    private static let knownObjects: Set<String> = [\(knownObjects)]",
-            "",
-            "    public init(from decoder: Decoder) throws {",
-            "        let container = try decoder.container(keyedBy: CodingKeys.self)",
-            "        object = try container.decode(String.self, forKey: .object)",
-            "        hasMore = try container.decodeIfPresent(Bool.self, forKey: .hasMore)",
-            "        url = try container.decodeIfPresent(String.self, forKey: .url)",
-            "        data = []",
-            "        guard container.contains(.data), try !container.decodeNil(forKey: .data) else { return }",
-            "        // Read each item's `object` first (from a second container over the same array),",
-            "        // then decode it as the enum, or skip it if its type is unknown",
-            "        var discriminators = try container.nestedUnkeyedContainer(forKey: .data)",
-            "        var items = try container.nestedUnkeyedContainer(forKey: .data)",
-            "        while !items.isAtEnd {",
-            "            let itemObject = try discriminators.decode(ObjectDiscriminator.self).object",
-            "            if Self.knownObjects.contains(itemObject) {",
-            "                data.append(try items.decode(\(type).self))",
-            "            } else {",
-            "                _ = try items.decode(ObjectDiscriminator.self)",
-            "            }",
-            "        }",
             "    }",
             "}",
         ])

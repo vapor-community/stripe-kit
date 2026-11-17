@@ -37,20 +37,38 @@ public struct BillingMeterEventAdjustment: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingMeterEventAdjustmentObject: String, Codable, Sendable {
-    case billingMeterEventAdjustment = "billing.meter_event_adjustment"
+public struct BillingMeterEventAdjustmentObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingMeterEventAdjustment: Self { .init(rawValue: "billing.meter_event_adjustment") }
 }
 
 /// The meter event adjustment's status.
-public enum BillingMeterEventAdjustmentStatus: String, Codable, Sendable {
-    case complete
-    case pending
+public struct BillingMeterEventAdjustmentStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var complete: Self { .init(rawValue: "complete") }
+    public static var pending: Self { .init(rawValue: "pending") }
 }
 
 /// Specifies whether to cancel a single event or a range of events for a time period. Time period
 /// cancellation is not supported yet.
-public enum BillingMeterEventAdjustmentType: String, Codable, Sendable {
-    case cancel
+public struct BillingMeterEventAdjustmentType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
 }
 
 public struct BillingMeterEventAdjustmentList: Codable, Sendable {

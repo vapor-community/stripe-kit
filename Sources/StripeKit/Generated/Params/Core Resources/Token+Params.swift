@@ -81,11 +81,17 @@ public struct TokenCreateAccount: StripeParams {
     }
 }
 
-public enum TokenCreateAccountBusinessType: String, Codable, Sendable {
-    case company
-    case governmentEntity = "government_entity"
-    case individual
-    case nonProfit = "non_profit"
+public struct TokenCreateAccountBusinessType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var governmentEntity: Self { .init(rawValue: "government_entity") }
+    public static var individual: Self { .init(rawValue: "individual") }
+    public static var nonProfit: Self { .init(rawValue: "non_profit") }
 }
 
 /// Information about the company or business.
@@ -418,9 +424,15 @@ public struct TokenCreateAccountCompanyOwnershipDeclaration: StripeParams {
     }
 }
 
-public enum TokenCreateAccountCompanyOwnershipExemptionReason: String, Codable, Sendable {
-    case qualifiedEntityExceedsOwnershipThreshold = "qualified_entity_exceeds_ownership_threshold"
-    case qualifiesAsFinancialInstitution = "qualifies_as_financial_institution"
+public struct TokenCreateAccountCompanyOwnershipExemptionReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var qualifiedEntityExceedsOwnershipThreshold: Self { .init(rawValue: "qualified_entity_exceeds_ownership_threshold") }
+    public static var qualifiesAsFinancialInstitution: Self { .init(rawValue: "qualifies_as_financial_institution") }
 }
 
 /// A location where the business has a meaningful physical operating presence.
@@ -529,30 +541,36 @@ public struct TokenCreateAccountCompanyRepresentativeDeclaration: StripeParams {
     }
 }
 
-public enum TokenCreateAccountCompanyStructure: String, Codable, Sendable {
-    case freeZoneEstablishment = "free_zone_establishment"
-    case freeZoneLlc = "free_zone_llc"
-    case governmentInstrumentality = "government_instrumentality"
-    case governmentalUnit = "governmental_unit"
-    case incorporatedNonProfit = "incorporated_non_profit"
-    case incorporatedPartnership = "incorporated_partnership"
-    case limitedLiabilityPartnership = "limited_liability_partnership"
-    case llc
-    case multiMemberLlc = "multi_member_llc"
-    case privateCompany = "private_company"
-    case privateCorporation = "private_corporation"
-    case privatePartnership = "private_partnership"
-    case publicCompany = "public_company"
-    case publicCorporation = "public_corporation"
-    case publicPartnership = "public_partnership"
-    case registeredCharity = "registered_charity"
-    case singleMemberLlc = "single_member_llc"
-    case soleEstablishment = "sole_establishment"
-    case soleProprietorship = "sole_proprietorship"
-    case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
-    case unincorporatedAssociation = "unincorporated_association"
-    case unincorporatedNonProfit = "unincorporated_non_profit"
-    case unincorporatedPartnership = "unincorporated_partnership"
+public struct TokenCreateAccountCompanyStructure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var freeZoneEstablishment: Self { .init(rawValue: "free_zone_establishment") }
+    public static var freeZoneLlc: Self { .init(rawValue: "free_zone_llc") }
+    public static var governmentInstrumentality: Self { .init(rawValue: "government_instrumentality") }
+    public static var governmentalUnit: Self { .init(rawValue: "governmental_unit") }
+    public static var incorporatedNonProfit: Self { .init(rawValue: "incorporated_non_profit") }
+    public static var incorporatedPartnership: Self { .init(rawValue: "incorporated_partnership") }
+    public static var limitedLiabilityPartnership: Self { .init(rawValue: "limited_liability_partnership") }
+    public static var llc: Self { .init(rawValue: "llc") }
+    public static var multiMemberLlc: Self { .init(rawValue: "multi_member_llc") }
+    public static var privateCompany: Self { .init(rawValue: "private_company") }
+    public static var privateCorporation: Self { .init(rawValue: "private_corporation") }
+    public static var privatePartnership: Self { .init(rawValue: "private_partnership") }
+    public static var publicCompany: Self { .init(rawValue: "public_company") }
+    public static var publicCorporation: Self { .init(rawValue: "public_corporation") }
+    public static var publicPartnership: Self { .init(rawValue: "public_partnership") }
+    public static var registeredCharity: Self { .init(rawValue: "registered_charity") }
+    public static var singleMemberLlc: Self { .init(rawValue: "single_member_llc") }
+    public static var soleEstablishment: Self { .init(rawValue: "sole_establishment") }
+    public static var soleProprietorship: Self { .init(rawValue: "sole_proprietorship") }
+    public static var taxExemptGovernmentInstrumentality: Self { .init(rawValue: "tax_exempt_government_instrumentality") }
+    public static var unincorporatedAssociation: Self { .init(rawValue: "unincorporated_association") }
+    public static var unincorporatedNonProfit: Self { .init(rawValue: "unincorporated_non_profit") }
+    public static var unincorporatedPartnership: Self { .init(rawValue: "unincorporated_partnership") }
 }
 
 /// Information on the verification state of the company.
@@ -820,9 +838,15 @@ public struct TokenCreateAccountIndividualDob: StripeParams {
     }
 }
 
-public enum TokenCreateAccountIndividualPoliticalExposure: String, Codable, Sendable {
-    case existing
-    case none
+public struct TokenCreateAccountIndividualPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var existing: Self { .init(rawValue: "existing") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// The individual's registered address.
@@ -998,16 +1022,28 @@ public struct TokenCreateBankAccount: StripeParams {
     }
 }
 
-public enum TokenCreateBankAccountAccountHolderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct TokenCreateBankAccountAccountHolderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
-public enum TokenCreateBankAccountAccountType: String, Codable, Sendable {
-    case checking
-    case futsu
-    case savings
-    case toza
+public struct TokenCreateBankAccountAccountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var checking: Self { .init(rawValue: "checking") }
+    public static var futsu: Self { .init(rawValue: "futsu") }
+    public static var savings: Self { .init(rawValue: "savings") }
+    public static var toza: Self { .init(rawValue: "toza") }
 }
 
 public struct TokenCreateCardCreditCardSpecs: StripeParams {
@@ -1085,10 +1121,16 @@ public struct TokenCreateCardCreditCardSpecsNetworks: StripeParams {
     }
 }
 
-public enum TokenCreateCardCreditCardSpecsNetworksPreferred: String, Codable, Sendable {
-    case cartesBancaires = "cartes_bancaires"
-    case mastercard
-    case visa
+public struct TokenCreateCardCreditCardSpecsNetworksPreferred: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 /// One of the forms `card` accepts.
@@ -1477,9 +1519,15 @@ public struct TokenCreatePersonDocumentsVisa: StripeParams {
     }
 }
 
-public enum TokenCreatePersonPoliticalExposure: String, Codable, Sendable {
-    case existing
-    case none
+public struct TokenCreatePersonPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var existing: Self { .init(rawValue: "existing") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// The person's registered address.
@@ -1603,14 +1651,20 @@ public struct TokenCreatePersonUsCfpbDataEthnicityDetails: StripeParams {
     }
 }
 
-public enum TokenCreatePersonUsCfpbDataEthnicityDetailsEthnicity: String, Codable, Sendable {
-    case cuban
-    case hispanicOrLatino = "hispanic_or_latino"
-    case mexican
-    case notHispanicOrLatino = "not_hispanic_or_latino"
-    case otherHispanicOrLatino = "other_hispanic_or_latino"
-    case preferNotToAnswer = "prefer_not_to_answer"
-    case puertoRican = "puerto_rican"
+public struct TokenCreatePersonUsCfpbDataEthnicityDetailsEthnicity: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cuban: Self { .init(rawValue: "cuban") }
+    public static var hispanicOrLatino: Self { .init(rawValue: "hispanic_or_latino") }
+    public static var mexican: Self { .init(rawValue: "mexican") }
+    public static var notHispanicOrLatino: Self { .init(rawValue: "not_hispanic_or_latino") }
+    public static var otherHispanicOrLatino: Self { .init(rawValue: "other_hispanic_or_latino") }
+    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
+    public static var puertoRican: Self { .init(rawValue: "puerto_rican") }
 }
 
 /// The persons race details
@@ -1631,31 +1685,37 @@ public struct TokenCreatePersonUsCfpbDataRaceDetails: StripeParams {
     }
 }
 
-public enum TokenCreatePersonUsCfpbDataRaceDetailsRace: String, Codable, Sendable {
-    case africanAmerican = "african_american"
-    case americanIndianOrAlaskaNative = "american_indian_or_alaska_native"
-    case asian
-    case asianIndian = "asian_indian"
-    case blackOrAfricanAmerican = "black_or_african_american"
-    case chinese
-    case ethiopian
-    case filipino
-    case guamanianOrChamorro = "guamanian_or_chamorro"
-    case haitian
-    case jamaican
-    case japanese
-    case korean
-    case nativeHawaiian = "native_hawaiian"
-    case nativeHawaiianOrOtherPacificIslander = "native_hawaiian_or_other_pacific_islander"
-    case nigerian
-    case otherAsian = "other_asian"
-    case otherBlackOrAfricanAmerican = "other_black_or_african_american"
-    case otherPacificIslander = "other_pacific_islander"
-    case preferNotToAnswer = "prefer_not_to_answer"
-    case samoan
-    case somali
-    case vietnamese
-    case white
+public struct TokenCreatePersonUsCfpbDataRaceDetailsRace: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var africanAmerican: Self { .init(rawValue: "african_american") }
+    public static var americanIndianOrAlaskaNative: Self { .init(rawValue: "american_indian_or_alaska_native") }
+    public static var asian: Self { .init(rawValue: "asian") }
+    public static var asianIndian: Self { .init(rawValue: "asian_indian") }
+    public static var blackOrAfricanAmerican: Self { .init(rawValue: "black_or_african_american") }
+    public static var chinese: Self { .init(rawValue: "chinese") }
+    public static var ethiopian: Self { .init(rawValue: "ethiopian") }
+    public static var filipino: Self { .init(rawValue: "filipino") }
+    public static var guamanianOrChamorro: Self { .init(rawValue: "guamanian_or_chamorro") }
+    public static var haitian: Self { .init(rawValue: "haitian") }
+    public static var jamaican: Self { .init(rawValue: "jamaican") }
+    public static var japanese: Self { .init(rawValue: "japanese") }
+    public static var korean: Self { .init(rawValue: "korean") }
+    public static var nativeHawaiian: Self { .init(rawValue: "native_hawaiian") }
+    public static var nativeHawaiianOrOtherPacificIslander: Self { .init(rawValue: "native_hawaiian_or_other_pacific_islander") }
+    public static var nigerian: Self { .init(rawValue: "nigerian") }
+    public static var otherAsian: Self { .init(rawValue: "other_asian") }
+    public static var otherBlackOrAfricanAmerican: Self { .init(rawValue: "other_black_or_african_american") }
+    public static var otherPacificIslander: Self { .init(rawValue: "other_pacific_islander") }
+    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
+    public static var samoan: Self { .init(rawValue: "samoan") }
+    public static var somali: Self { .init(rawValue: "somali") }
+    public static var vietnamese: Self { .init(rawValue: "vietnamese") }
+    public static var white: Self { .init(rawValue: "white") }
 }
 
 /// The person's verification status.

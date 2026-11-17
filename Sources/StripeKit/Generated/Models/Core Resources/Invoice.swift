@@ -364,47 +364,77 @@ public struct Invoice: Codable, Sendable {
 /// billing threshold. * `subscription_update`: A subscription was updated. * `upcoming`: Reserved for
 /// upcoming invoices created through the Create Preview Invoice API or when an `invoice.upcoming` event
 /// is generated for an upcoming invoice on a subscription.
-public enum InvoiceBillingReason: String, Codable, Sendable {
-    case automaticPendingInvoiceItemInvoice = "automatic_pending_invoice_item_invoice"
-    case manual
-    case quoteAccept = "quote_accept"
-    case subscription
-    case subscriptionCreate = "subscription_create"
-    case subscriptionCycle = "subscription_cycle"
-    case subscriptionThreshold = "subscription_threshold"
-    case subscriptionUpdate = "subscription_update"
-    case upcoming
+public struct InvoiceBillingReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automaticPendingInvoiceItemInvoice: Self { .init(rawValue: "automatic_pending_invoice_item_invoice") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var quoteAccept: Self { .init(rawValue: "quote_accept") }
+    public static var subscription: Self { .init(rawValue: "subscription") }
+    public static var subscriptionCreate: Self { .init(rawValue: "subscription_create") }
+    public static var subscriptionCycle: Self { .init(rawValue: "subscription_cycle") }
+    public static var subscriptionThreshold: Self { .init(rawValue: "subscription_threshold") }
+    public static var subscriptionUpdate: Self { .init(rawValue: "subscription_update") }
+    public static var upcoming: Self { .init(rawValue: "upcoming") }
 }
 
 /// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt
 /// to pay this invoice using the default source attached to the customer. When sending an invoice,
 /// Stripe will email this invoice to the customer with payment instructions.
-public enum InvoiceCollectionMethod: String, Codable, Sendable {
-    case chargeAutomatically = "charge_automatically"
-    case sendInvoice = "send_invoice"
+public struct InvoiceCollectionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargeAutomatically: Self { .init(rawValue: "charge_automatically") }
+    public static var sendInvoice: Self { .init(rawValue: "send_invoice") }
 }
 
 /// The customer's tax exempt status. Until the invoice is finalized, this field will equal
 /// `customer.tax_exempt`. Once the invoice is finalized, this field will no longer be updated.
-public enum InvoiceCustomerTaxExempt: String, Codable, Sendable {
-    case exempt
-    case none
-    case reverse
+public struct InvoiceCustomerTaxExempt: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exempt: Self { .init(rawValue: "exempt") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var reverse: Self { .init(rawValue: "reverse") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum InvoiceObject: String, Codable, Sendable {
-    case invoice
+public struct InvoiceObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var invoice: Self { .init(rawValue: "invoice") }
 }
 
 /// The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn
 /// more](https://docs.stripe.com/billing/invoices/workflow#workflow-overview)
-public enum InvoiceStatus: String, Codable, Sendable {
-    case draft
-    case `open` = "open"
-    case paid
-    case uncollectible
-    case void
+public struct InvoiceStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var draft: Self { .init(rawValue: "draft") }
+    public static var `open`: Self { .init(rawValue: "open") }
+    public static var paid: Self { .init(rawValue: "paid") }
+    public static var uncollectible: Self { .init(rawValue: "uncollectible") }
+    public static var void: Self { .init(rawValue: "void") }
 }
 
 public struct InvoiceList: Codable, Sendable {

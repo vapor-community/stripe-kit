@@ -200,9 +200,15 @@ public struct ThreeDSecureAuthenticationCreateChannel: StripeParams {
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateChannelType: String, Codable, Sendable {
-    case browser
-    case threeRI = "three_r_i"
+public struct ThreeDSecureAuthenticationCreateChannelType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var browser: Self { .init(rawValue: "browser") }
+    public static var threeRI: Self { .init(rawValue: "three_r_i") }
 }
 
 /// Contains additional details about the browser details you collected.
@@ -289,16 +295,28 @@ public struct ThreeDSecureAuthenticationCreateChannelThreeRI: StripeParams {
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateChannelThreeRIType: String, Codable, Sendable {
-    case delayedShipment = "delayed_shipment"
-    case otherPayment = "other_payment"
-    case recurring
-    case splitShipment = "split_shipment"
+public struct ThreeDSecureAuthenticationCreateChannelThreeRIType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var delayedShipment: Self { .init(rawValue: "delayed_shipment") }
+    public static var otherPayment: Self { .init(rawValue: "other_payment") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
+    public static var splitShipment: Self { .init(rawValue: "split_shipment") }
 }
 
-public enum ThreeDSecureAuthenticationCreateMessageCategory: String, Codable, Sendable {
-    case nonPaymentAuthentication = "non_payment_authentication"
-    case paymentAuthentication = "payment_authentication"
+public struct ThreeDSecureAuthenticationCreateMessageCategory: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var nonPaymentAuthentication: Self { .init(rawValue: "non_payment_authentication") }
+    public static var paymentAuthentication: Self { .init(rawValue: "payment_authentication") }
 }
 
 /// Contains additional details about the acquirer for this 3DS Authentication. Refer to the [Pass
@@ -343,12 +361,18 @@ public struct ThreeDSecureAuthenticationCreateAcquirerDetails: StripeParams {
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateDirectoryServer: String, Codable, Sendable {
-    case americanExpress = "american_express"
-    case cartesBancaires = "cartes_bancaires"
-    case discover
-    case mastercard
-    case visa
+public struct ThreeDSecureAuthenticationCreateDirectoryServer: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var americanExpress: Self { .init(rawValue: "american_express") }
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var discover: Self { .init(rawValue: "discover") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 /// Contains additional details on your flow preference for this 3DS Authentication. Refer to the
@@ -379,10 +403,16 @@ public struct ThreeDSecureAuthenticationCreateFlowPreference: StripeParams {
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateFlowPreferenceType: String, Codable, Sendable {
-    case challenge
-    case dataShare = "data_share"
-    case frictionless
+public struct ThreeDSecureAuthenticationCreateFlowPreferenceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var challenge: Self { .init(rawValue: "challenge") }
+    public static var dataShare: Self { .init(rawValue: "data_share") }
+    public static var frictionless: Self { .init(rawValue: "frictionless") }
 }
 
 /// Contains additional details about your challenge flow preference for this 3DS Authentication.
@@ -395,9 +425,15 @@ public struct ThreeDSecureAuthenticationCreateFlowPreferenceChallenge: StripePar
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateFlowPreferenceChallengeType: String, Codable, Sendable {
-    case mandated
-    case preferred
+public struct ThreeDSecureAuthenticationCreateFlowPreferenceChallengeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var mandated: Self { .init(rawValue: "mandated") }
+    public static var preferred: Self { .init(rawValue: "preferred") }
 }
 
 /// Contains additional details about your data share only flow preference for this 3DS Authentication.
@@ -410,9 +446,15 @@ public struct ThreeDSecureAuthenticationCreateFlowPreferenceDataShare: StripePar
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateFlowPreferenceDataShareType: String, Codable, Sendable {
-    case dsSpecific = "ds_specific"
-    case emvStandard = "emv_standard"
+public struct ThreeDSecureAuthenticationCreateFlowPreferenceDataShareType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var dsSpecific: Self { .init(rawValue: "ds_specific") }
+    public static var emvStandard: Self { .init(rawValue: "emv_standard") }
 }
 
 /// Contains additional details about your frictionless flow preference for this 3DS Authentication.
@@ -425,9 +467,15 @@ public struct ThreeDSecureAuthenticationCreateFlowPreferenceFrictionless: Stripe
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateFlowPreferenceFrictionlessType: String, Codable, Sendable {
-    case lowRisk = "low_risk"
-    case none
+public struct ThreeDSecureAuthenticationCreateFlowPreferenceFrictionlessType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var lowRisk: Self { .init(rawValue: "low_risk") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Contains information about future usage of this 3DS Authentication
@@ -446,10 +494,16 @@ public struct ThreeDSecureAuthenticationCreateFutureUsage: StripeParams {
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateFutureUsageType: String, Codable, Sendable {
-    case cardOnFile = "card_on_file"
-    case installment
-    case recurring
+public struct ThreeDSecureAuthenticationCreateFutureUsageType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cardOnFile: Self { .init(rawValue: "card_on_file") }
+    public static var installment: Self { .init(rawValue: "installment") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
 }
 
 /// Parameters related to an installment payment.
@@ -497,13 +551,25 @@ public struct ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiry: Stri
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiryType: String, Codable, Sendable {
-    case date
-    case never
+public struct ThreeDSecureAuthenticationCreateFutureUsageInstallmentExpiryType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var date: Self { .init(rawValue: "date") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum ThreeDSecureAuthenticationCreateFutureUsageInstallmentInterval: String, Codable, Sendable {
-    case day
+public struct ThreeDSecureAuthenticationCreateFutureUsageInstallmentInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
 }
 
 /// Parameters related to a recurring payment.
@@ -547,13 +613,25 @@ public struct ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiry: Stripe
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiryType: String, Codable, Sendable {
-    case date
-    case never
+public struct ThreeDSecureAuthenticationCreateFutureUsageRecurringExpiryType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var date: Self { .init(rawValue: "date") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum ThreeDSecureAuthenticationCreateFutureUsageRecurringInterval: String, Codable, Sendable {
-    case day
+public struct ThreeDSecureAuthenticationCreateFutureUsageRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
 }
 
 /// Hash used to generate the PaymentMethod to be used for this Authentication. This is mutually
@@ -631,8 +709,14 @@ public enum ThreeDSecureAuthenticationCreatePaymentMethodDataCard: Codable, Send
     }
 }
 
-public enum ThreeDSecureAuthenticationCreatePaymentMethodDataType: String, Codable, Sendable {
-    case card
+public struct ThreeDSecureAuthenticationCreatePaymentMethodDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
 }
 
 /// Billing information associated with the PaymentMethod that may be used or required by particular
@@ -689,12 +773,34 @@ public struct ThreeDSecureAuthenticationCreatePaymentMethodDataBillingDetailsAdd
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateReason: String, Codable, Sendable {
-    case cardholderAuthentication = "cardholder_authentication"
-    case issuerRequested = "issuer_requested"
-    case liabilityShift = "liability_shift"
-    case processingCosts = "processing_costs"
-    case regulatoryCompliance = "regulatory_compliance"
+public struct ThreeDSecureAuthenticationCreateReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The authentication is performed to attempt to require the cardholder to actively complete a
+    /// challenge.
+    public static var cardholderAuthentication: Self { .init(rawValue: "cardholder_authentication") }
+    /// The authentication is performed when the issuer soft declines the transaction. This option should be
+    /// used when you have tried authorization without 3DS authentication and the bank responded in a soft
+    /// decline. Stripe will then trigger 3DS, post which you can retry authorization with the issuer.
+    public static var issuerRequested: Self { .init(rawValue: "issuer_requested") }
+    /// The authentication is performed to try to shift liability away from the merchant and onto the issuer
+    /// to reduce the cost implications from disputes. **Note**: If you don't select `liability_shift` as
+    /// your reason, the 3DS flow won't prioritize liability shift as a desired outcome. And even when
+    /// `liability_shift` is selected, liability shift is not guaranteed, since that decision is made by the
+    /// network and not Stripe([source](/payments/3d-secure/authentication-flow#disputed-payments)).
+    public static var liabilityShift: Self { .init(rawValue: "liability_shift") }
+    /// The authentication is performed to optimize payments processing cost.
+    public static var processingCosts: Self { .init(rawValue: "processing_costs") }
+    /// The authentication is performed solely to enable compliance with local regulations such as SCA
+    /// (Strong Customer Authentication). Use this option when your sole requirement is compliance with
+    /// local regulations, such as SCA or other 3DS-related mandates. The authentication will be performed
+    /// only as necessary for compliance purposes. **Note:** This `reason` parameter value will always apply
+    /// even when you do not choose this value explicitly.
+    public static var regulatoryCompliance: Self { .init(rawValue: "regulatory_compliance") }
 }
 
 /// The shipping address requested by the cardholder. You should try to include as complete address
@@ -732,17 +838,29 @@ public struct ThreeDSecureAuthenticationCreateShippingAddress: StripeParams {
     }
 }
 
-public enum ThreeDSecureAuthenticationCreateSubmit: String, Codable, Sendable {
-    case always
-    case ifFingerprintingNotSupported = "if_fingerprinting_not_supported"
-    case never
+public struct ThreeDSecureAuthenticationCreateSubmit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var ifFingerprintingNotSupported: Self { .init(rawValue: "if_fingerprinting_not_supported") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
-public enum ThreeDSecureAuthenticationListStatus: String, Codable, Sendable {
-    case canceled
-    case error
-    case failed
-    case requiresChallenge = "requires_challenge"
-    case requiresSubmission = "requires_submission"
-    case succeeded
+public struct ThreeDSecureAuthenticationListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var error: Self { .init(rawValue: "error") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var requiresChallenge: Self { .init(rawValue: "requires_challenge") }
+    public static var requiresSubmission: Self { .init(rawValue: "requires_submission") }
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }

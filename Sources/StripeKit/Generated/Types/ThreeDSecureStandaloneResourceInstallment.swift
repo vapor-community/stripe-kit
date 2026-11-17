@@ -30,8 +30,14 @@ public struct ThreeDSecureStandaloneResourceInstallment: Codable, Sendable {
 }
 
 /// The unit of time for `interval_count`.
-public enum ThreeDSecureStandaloneResourceInstallmentInterval: String, Codable, Sendable {
-    case day
+public struct ThreeDSecureStandaloneResourceInstallmentInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
 }
 
 public struct ThreeDSecureStandaloneResourceInstallmentList: Codable, Sendable {

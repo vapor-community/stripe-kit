@@ -22,9 +22,15 @@ public struct ThreeDSecureStandaloneResourceChannel: Codable, Sendable {
 }
 
 /// Type of channel you would prefer to use for this 3DS Authentication. Only browser.
-public enum ThreeDSecureStandaloneResourceChannelType: String, Codable, Sendable {
-    case browser
-    case threeRI = "three_r_i"
+public struct ThreeDSecureStandaloneResourceChannelType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var browser: Self { .init(rawValue: "browser") }
+    public static var threeRI: Self { .init(rawValue: "three_r_i") }
 }
 
 public struct ThreeDSecureStandaloneResourceChannelList: Codable, Sendable {

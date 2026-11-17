@@ -41,8 +41,14 @@ public struct EntitlementsFeature: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum EntitlementsFeatureObject: String, Codable, Sendable {
-    case entitlementsFeature = "entitlements.feature"
+public struct EntitlementsFeatureObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var entitlementsFeature: Self { .init(rawValue: "entitlements.feature") }
 }
 
 public struct EntitlementsFeatureList: Codable, Sendable {

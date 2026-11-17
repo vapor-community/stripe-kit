@@ -155,13 +155,25 @@ public struct PayoutUpdateParams: StripeParams {
     }
 }
 
-public enum PayoutCreateMethod: String, Codable, Sendable {
-    case instant
-    case standard
+public struct PayoutCreateMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
-public enum PayoutCreateSourceType: String, Codable, Sendable {
-    case bankAccount = "bank_account"
-    case card
-    case fpx
+public struct PayoutCreateSourceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bankAccount: Self { .init(rawValue: "bank_account") }
+    public static var card: Self { .init(rawValue: "card") }
+    public static var fpx: Self { .init(rawValue: "fpx") }
 }

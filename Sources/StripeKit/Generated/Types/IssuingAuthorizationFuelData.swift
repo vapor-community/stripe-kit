@@ -33,24 +33,36 @@ public struct IssuingAuthorizationFuelData: Codable, Sendable {
 }
 
 /// The type of fuel that was purchased.
-public enum IssuingAuthorizationFuelDataType: String, Codable, Sendable {
-    case diesel
-    case other
-    case unleadedPlus = "unleaded_plus"
-    case unleadedRegular = "unleaded_regular"
-    case unleadedSuper = "unleaded_super"
+public struct IssuingAuthorizationFuelDataType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var diesel: Self { .init(rawValue: "diesel") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var unleadedPlus: Self { .init(rawValue: "unleaded_plus") }
+    public static var unleadedRegular: Self { .init(rawValue: "unleaded_regular") }
+    public static var unleadedSuper: Self { .init(rawValue: "unleaded_super") }
 }
 
 /// The units for `quantity_decimal`.
-public enum IssuingAuthorizationFuelDataUnit: String, Codable, Sendable {
-    case chargingMinute = "charging_minute"
-    case imperialGallon = "imperial_gallon"
-    case kilogram
-    case kilowattHour = "kilowatt_hour"
-    case liter
-    case other
-    case pound
-    case usGallon = "us_gallon"
+public struct IssuingAuthorizationFuelDataUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var chargingMinute: Self { .init(rawValue: "charging_minute") }
+    public static var imperialGallon: Self { .init(rawValue: "imperial_gallon") }
+    public static var kilogram: Self { .init(rawValue: "kilogram") }
+    public static var kilowattHour: Self { .init(rawValue: "kilowatt_hour") }
+    public static var liter: Self { .init(rawValue: "liter") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var pound: Self { .init(rawValue: "pound") }
+    public static var usGallon: Self { .init(rawValue: "us_gallon") }
 }
 
 public struct IssuingAuthorizationFuelDataList: Codable, Sendable {

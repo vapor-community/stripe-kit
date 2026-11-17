@@ -14,12 +14,23 @@ public struct SubscriptionSchedulesResourcePauseScheduleResumeStatus: Codable, S
 }
 
 /// The lifecycle state of the resume operation.
-public enum SubscriptionSchedulesResourcePauseScheduleResumeStatusType: String, Codable, Sendable {
-    case error
-    case pending
-    case requiresAction = "requires_action"
-    case scheduled
-    case succeeded
+public struct SubscriptionSchedulesResourcePauseScheduleResumeStatusType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The resume failed. See `error` for details.
+    public static var error: Self { .init(rawValue: "error") }
+    /// Stripe is retrying payment automatically (`resume_on_payment_success` only).
+    public static var pending: Self { .init(rawValue: "pending") }
+    /// An open invoice is awaiting payment (`resume_on_payment_attempt`).
+    public static var requiresAction: Self { .init(rawValue: "requires_action") }
+    /// The `resume_at` date hasn't been reached.
+    public static var scheduled: Self { .init(rawValue: "scheduled") }
+    /// The subscription is `active` or `past_due`.
+    public static var succeeded: Self { .init(rawValue: "succeeded") }
 }
 
 public struct SubscriptionSchedulesResourcePauseScheduleResumeStatusList: Codable, Sendable {

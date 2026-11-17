@@ -22,11 +22,17 @@ public struct IssuingCardholderRequirements: Codable, Sendable {
 
 /// If `disabled_reason` is present, all cards will decline authorizations with
 /// `cardholder_verification_required` reason.
-public enum IssuingCardholderRequirementsDisabledReason: String, Codable, Sendable {
-    case listed
-    case rejectedListed = "rejected.listed"
-    case requirementsPastDue = "requirements.past_due"
-    case underReview = "under_review"
+public struct IssuingCardholderRequirementsDisabledReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var listed: Self { .init(rawValue: "listed") }
+    public static var rejectedListed: Self { .init(rawValue: "rejected.listed") }
+    public static var requirementsPastDue: Self { .init(rawValue: "requirements.past_due") }
+    public static var underReview: Self { .init(rawValue: "under_review") }
 }
 
 public struct IssuingCardholderRequirementsList: Codable, Sendable {

@@ -62,15 +62,27 @@ public struct TaxCalculationLineItem: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TaxCalculationLineItemObject: String, Codable, Sendable {
-    case taxCalculationLineItem = "tax.calculation_line_item"
+public struct TaxCalculationLineItemObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxCalculationLineItem: Self { .init(rawValue: "tax.calculation_line_item") }
 }
 
 /// Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes
 /// taxes.
-public enum TaxCalculationLineItemTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
+public struct TaxCalculationLineItemTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
 }
 
 public struct TaxCalculationLineItemList: Codable, Sendable {

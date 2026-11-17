@@ -34,9 +34,15 @@ public struct CustomerSessionResourceComponentsResourceCustomerSheetResourceFeat
 /// method. Removing the payment method detaches the [`customer`
 /// object](https://docs.stripe.com/api/payment_methods/object#payment_method_object-customer) from that
 /// [PaymentMethod](https://docs.stripe.com/api/payment_methods).
-public enum CustomerSessionResourceComponentsResourceCustomerSheetResourceFeaturesPaymentMethodRemove: String, Codable, Sendable {
-    case disabled
-    case enabled
+public struct CustomerSessionResourceComponentsResourceCustomerSheetResourceFeaturesPaymentMethodRemove: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var disabled: Self { .init(rawValue: "disabled") }
+    public static var enabled: Self { .init(rawValue: "enabled") }
 }
 
 public struct CustomerSessionResourceComponentsResourceCustomerSheetResourceFeaturesList: Codable, Sendable {

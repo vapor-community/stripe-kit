@@ -20,8 +20,14 @@ public struct SetupIntentPaymentMethodOptionsMandateOptionsBlik: Codable, Sendab
 }
 
 /// Type of the mandate.
-public enum SetupIntentPaymentMethodOptionsMandateOptionsBlikType: String, Codable, Sendable {
-    case offSession = "off_session"
+public struct SetupIntentPaymentMethodOptionsMandateOptionsBlikType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offSession: Self { .init(rawValue: "off_session") }
 }
 
 public struct SetupIntentPaymentMethodOptionsMandateOptionsBlikList: Codable, Sendable {

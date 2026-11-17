@@ -13,9 +13,17 @@ public struct SubscriptionSchedulesResourcePauseScheduleOutstandingUsageThrough:
 }
 
 /// The type of outstanding usage billing behavior.
-public enum SubscriptionSchedulesResourcePauseScheduleOutstandingUsageThroughType: String, Codable, Sendable {
-    case none
-    case pauseAt = "pause_at"
+public struct SubscriptionSchedulesResourcePauseScheduleOutstandingUsageThroughType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Do not collect outstanding metered usage.
+    public static var none: Self { .init(rawValue: "none") }
+    /// Collect metered usage accrued through the pause date.
+    public static var pauseAt: Self { .init(rawValue: "pause_at") }
 }
 
 public struct SubscriptionSchedulesResourcePauseScheduleOutstandingUsageThroughList: Codable, Sendable {

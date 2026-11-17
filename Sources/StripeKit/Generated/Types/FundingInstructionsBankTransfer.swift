@@ -23,9 +23,15 @@ public struct FundingInstructionsBankTransfer: Codable, Sendable {
 }
 
 /// The bank_transfer type
-public enum FundingInstructionsBankTransferType: String, Codable, Sendable {
-    case euBankTransfer = "eu_bank_transfer"
-    case jpBankTransfer = "jp_bank_transfer"
+public struct FundingInstructionsBankTransferType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var euBankTransfer: Self { .init(rawValue: "eu_bank_transfer") }
+    public static var jpBankTransfer: Self { .init(rawValue: "jp_bank_transfer") }
 }
 
 public struct FundingInstructionsBankTransferList: Codable, Sendable {

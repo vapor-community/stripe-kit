@@ -71,34 +71,64 @@ public struct CheckoutCardPaymentMethodOptions: Codable, Sendable {
 }
 
 /// Controls when the funds will be captured from the customer's account.
-public enum CheckoutCardPaymentMethodOptionsCaptureMethod: String, Codable, Sendable {
-    case manual
+public struct CheckoutCardPaymentMethodOptionsCaptureMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var manual: Self { .init(rawValue: "manual") }
 }
 
 /// Request ability to [capture beyond the standard authorization validity
 /// window](/payments/extended-authorization) for this CheckoutSession.
-public enum CheckoutCardPaymentMethodOptionsRequestExtendedAuthorization: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct CheckoutCardPaymentMethodOptionsRequestExtendedAuthorization: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Request ability to [increment the authorization](/payments/incremental-authorization) for this
 /// CheckoutSession.
-public enum CheckoutCardPaymentMethodOptionsRequestIncrementalAuthorization: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct CheckoutCardPaymentMethodOptionsRequestIncrementalAuthorization: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Request ability to make [multiple captures](/payments/multicapture) for this CheckoutSession.
-public enum CheckoutCardPaymentMethodOptionsRequestMulticapture: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct CheckoutCardPaymentMethodOptionsRequestMulticapture: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// Request ability to [overcapture](/payments/overcapture) for this CheckoutSession.
-public enum CheckoutCardPaymentMethodOptionsRequestOvercapture: String, Codable, Sendable {
-    case ifAvailable = "if_available"
-    case never
+public struct CheckoutCardPaymentMethodOptionsRequestOvercapture: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ifAvailable: Self { .init(rawValue: "if_available") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for
@@ -108,10 +138,16 @@ public enum CheckoutCardPaymentMethodOptionsRequestOvercapture: String, Codable,
 /// this value defaults to `automatic`. Read our guide on [manually requesting 3D
 /// Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more
 /// information on how this configuration interacts with Radar and our SCA Engine.
-public enum CheckoutCardPaymentMethodOptionsRequestThreeDSecure: String, Codable, Sendable {
-    case any
-    case automatic
-    case challenge
+public struct CheckoutCardPaymentMethodOptionsRequestThreeDSecure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var any: Self { .init(rawValue: "any") }
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var challenge: Self { .init(rawValue: "challenge") }
 }
 
 /// Indicates that you intend to make future payments with this PaymentIntent's payment method. If you
@@ -125,10 +161,16 @@ public enum CheckoutCardPaymentMethodOptionsRequestThreeDSecure: String, Codable
 /// payment method representing the card to the Customer instead. When processing card payments, Stripe
 /// uses `setup_future_usage` to help you comply with regional legislation and network rules, such as
 /// [SCA](/strong-customer-authentication).
-public enum CheckoutCardPaymentMethodOptionsSetupFutureUsage: String, Codable, Sendable {
-    case none
-    case offSession = "off_session"
-    case onSession = "on_session"
+public struct CheckoutCardPaymentMethodOptionsSetupFutureUsage: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var offSession: Self { .init(rawValue: "off_session") }
+    public static var onSession: Self { .init(rawValue: "on_session") }
 }
 
 public struct CheckoutCardPaymentMethodOptionsList: Codable, Sendable {

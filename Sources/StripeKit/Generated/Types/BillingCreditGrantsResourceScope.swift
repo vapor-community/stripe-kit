@@ -26,8 +26,14 @@ public struct BillingCreditGrantsResourceScope: Codable, Sendable {
 /// The price type that credit grants can apply to. We currently only support the `metered` price type.
 /// This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter)
 /// attached to them. Cannot be used in combination with `prices`.
-public enum BillingCreditGrantsResourceScopePriceType: String, Codable, Sendable {
-    case metered
+public struct BillingCreditGrantsResourceScopePriceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var metered: Self { .init(rawValue: "metered") }
 }
 
 public struct BillingCreditGrantsResourceScopeList: Codable, Sendable {

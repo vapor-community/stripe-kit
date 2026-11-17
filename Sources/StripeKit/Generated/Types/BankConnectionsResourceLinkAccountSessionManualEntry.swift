@@ -13,9 +13,15 @@ public struct BankConnectionsResourceLinkAccountSessionManualEntry: Codable, Sen
 }
 
 /// Controls how manual entry of bank account details is presented to the user.
-public enum BankConnectionsResourceLinkAccountSessionManualEntryMode: String, Codable, Sendable {
-    case automatic
-    case disabled
+public struct BankConnectionsResourceLinkAccountSessionManualEntryMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var disabled: Self { .init(rawValue: "disabled") }
 }
 
 public struct BankConnectionsResourceLinkAccountSessionManualEntryList: Codable, Sendable {

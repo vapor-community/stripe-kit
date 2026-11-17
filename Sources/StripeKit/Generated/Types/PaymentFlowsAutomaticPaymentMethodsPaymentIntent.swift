@@ -30,9 +30,15 @@ public struct PaymentFlowsAutomaticPaymentMethodsPaymentIntent: Codable, Sendabl
 /// [confirm](https://docs.stripe.com/api/payment_intents/confirm) this PaymentIntent, you may be
 /// required to provide a `return_url` to redirect customers back to your site after they authenticate
 /// or complete the payment.
-public enum PaymentFlowsAutomaticPaymentMethodsPaymentIntentAllowRedirects: String, Codable, Sendable {
-    case always
-    case never
+public struct PaymentFlowsAutomaticPaymentMethodsPaymentIntentAllowRedirects: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
 }
 
 public struct PaymentFlowsAutomaticPaymentMethodsPaymentIntentList: Codable, Sendable {

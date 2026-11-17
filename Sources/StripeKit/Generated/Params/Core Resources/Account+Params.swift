@@ -406,12 +406,18 @@ public struct AccountCreateBusinessProfileAnnualRevenue: StripeParams {
     }
 }
 
-public enum AccountCreateBusinessProfileMinorityOwnedBusinessDesignation: String, Codable, Sendable {
-    case lgbtqiOwnedBusiness = "lgbtqi_owned_business"
-    case minorityOwnedBusiness = "minority_owned_business"
-    case noneOfTheseApply = "none_of_these_apply"
-    case preferNotToAnswer = "prefer_not_to_answer"
-    case womenOwnedBusiness = "women_owned_business"
+public struct AccountCreateBusinessProfileMinorityOwnedBusinessDesignation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var lgbtqiOwnedBusiness: Self { .init(rawValue: "lgbtqi_owned_business") }
+    public static var minorityOwnedBusiness: Self { .init(rawValue: "minority_owned_business") }
+    public static var noneOfTheseApply: Self { .init(rawValue: "none_of_these_apply") }
+    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
+    public static var womenOwnedBusiness: Self { .init(rawValue: "women_owned_business") }
 }
 
 /// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
@@ -463,11 +469,17 @@ public struct AccountCreateBusinessProfileSupportAddress: StripeParams {
     }
 }
 
-public enum AccountCreateBusinessType: String, Codable, Sendable {
-    case company
-    case governmentEntity = "government_entity"
-    case individual
-    case nonProfit = "non_profit"
+public struct AccountCreateBusinessType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var governmentEntity: Self { .init(rawValue: "government_entity") }
+    public static var individual: Self { .init(rawValue: "individual") }
+    public static var nonProfit: Self { .init(rawValue: "non_profit") }
 }
 
 /// Each key of the dictionary represents a capability, and each capability maps to its settings (for
@@ -1934,9 +1946,15 @@ public struct AccountCreateCompanyOwnershipDeclaration: StripeParams {
     }
 }
 
-public enum AccountCreateCompanyOwnershipExemptionReason: String, Codable, Sendable {
-    case qualifiedEntityExceedsOwnershipThreshold = "qualified_entity_exceeds_ownership_threshold"
-    case qualifiesAsFinancialInstitution = "qualifies_as_financial_institution"
+public struct AccountCreateCompanyOwnershipExemptionReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var qualifiedEntityExceedsOwnershipThreshold: Self { .init(rawValue: "qualified_entity_exceeds_ownership_threshold") }
+    public static var qualifiesAsFinancialInstitution: Self { .init(rawValue: "qualifies_as_financial_institution") }
 }
 
 /// A location where the business has a meaningful physical operating presence.
@@ -2045,30 +2063,36 @@ public struct AccountCreateCompanyRepresentativeDeclaration: StripeParams {
     }
 }
 
-public enum AccountCreateCompanyStructure: String, Codable, Sendable {
-    case freeZoneEstablishment = "free_zone_establishment"
-    case freeZoneLlc = "free_zone_llc"
-    case governmentInstrumentality = "government_instrumentality"
-    case governmentalUnit = "governmental_unit"
-    case incorporatedNonProfit = "incorporated_non_profit"
-    case incorporatedPartnership = "incorporated_partnership"
-    case limitedLiabilityPartnership = "limited_liability_partnership"
-    case llc
-    case multiMemberLlc = "multi_member_llc"
-    case privateCompany = "private_company"
-    case privateCorporation = "private_corporation"
-    case privatePartnership = "private_partnership"
-    case publicCompany = "public_company"
-    case publicCorporation = "public_corporation"
-    case publicPartnership = "public_partnership"
-    case registeredCharity = "registered_charity"
-    case singleMemberLlc = "single_member_llc"
-    case soleEstablishment = "sole_establishment"
-    case soleProprietorship = "sole_proprietorship"
-    case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
-    case unincorporatedAssociation = "unincorporated_association"
-    case unincorporatedNonProfit = "unincorporated_non_profit"
-    case unincorporatedPartnership = "unincorporated_partnership"
+public struct AccountCreateCompanyStructure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var freeZoneEstablishment: Self { .init(rawValue: "free_zone_establishment") }
+    public static var freeZoneLlc: Self { .init(rawValue: "free_zone_llc") }
+    public static var governmentInstrumentality: Self { .init(rawValue: "government_instrumentality") }
+    public static var governmentalUnit: Self { .init(rawValue: "governmental_unit") }
+    public static var incorporatedNonProfit: Self { .init(rawValue: "incorporated_non_profit") }
+    public static var incorporatedPartnership: Self { .init(rawValue: "incorporated_partnership") }
+    public static var limitedLiabilityPartnership: Self { .init(rawValue: "limited_liability_partnership") }
+    public static var llc: Self { .init(rawValue: "llc") }
+    public static var multiMemberLlc: Self { .init(rawValue: "multi_member_llc") }
+    public static var privateCompany: Self { .init(rawValue: "private_company") }
+    public static var privateCorporation: Self { .init(rawValue: "private_corporation") }
+    public static var privatePartnership: Self { .init(rawValue: "private_partnership") }
+    public static var publicCompany: Self { .init(rawValue: "public_company") }
+    public static var publicCorporation: Self { .init(rawValue: "public_corporation") }
+    public static var publicPartnership: Self { .init(rawValue: "public_partnership") }
+    public static var registeredCharity: Self { .init(rawValue: "registered_charity") }
+    public static var singleMemberLlc: Self { .init(rawValue: "single_member_llc") }
+    public static var soleEstablishment: Self { .init(rawValue: "sole_establishment") }
+    public static var soleProprietorship: Self { .init(rawValue: "sole_proprietorship") }
+    public static var taxExemptGovernmentInstrumentality: Self { .init(rawValue: "tax_exempt_government_instrumentality") }
+    public static var unincorporatedAssociation: Self { .init(rawValue: "unincorporated_association") }
+    public static var unincorporatedNonProfit: Self { .init(rawValue: "unincorporated_non_profit") }
+    public static var unincorporatedPartnership: Self { .init(rawValue: "unincorporated_partnership") }
 }
 
 /// Information on the verification state of the company.
@@ -2142,9 +2166,15 @@ public struct AccountCreateControllerFees: StripeParams {
     }
 }
 
-public enum AccountCreateControllerFeesPayer: String, Codable, Sendable {
-    case account
-    case application
+public struct AccountCreateControllerFeesPayer: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var account: Self { .init(rawValue: "account") }
+    public static var application: Self { .init(rawValue: "application") }
 }
 
 /// A hash of configuration for products that have negative balance liability, and whether Stripe or a
@@ -2161,14 +2191,26 @@ public struct AccountCreateControllerLosses: StripeParams {
     }
 }
 
-public enum AccountCreateControllerLossesPayments: String, Codable, Sendable {
-    case application
-    case stripe
+public struct AccountCreateControllerLossesPayments: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var application: Self { .init(rawValue: "application") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
-public enum AccountCreateControllerRequirementCollection: String, Codable, Sendable {
-    case application
-    case stripe
+public struct AccountCreateControllerRequirementCollection: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var application: Self { .init(rawValue: "application") }
+    public static var stripe: Self { .init(rawValue: "stripe") }
 }
 
 /// A hash of configuration for Stripe-hosted dashboards.
@@ -2182,10 +2224,16 @@ public struct AccountCreateControllerStripeDashboard: StripeParams {
     }
 }
 
-public enum AccountCreateControllerStripeDashboardType: String, Codable, Sendable {
-    case express
-    case full
-    case none
+public struct AccountCreateControllerStripeDashboardType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var express: Self { .init(rawValue: "express") }
+    public static var full: Self { .init(rawValue: "full") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// Documents that may be submitted to satisfy various informational requests.
@@ -2616,9 +2664,15 @@ public struct AccountCreateIndividualDob: StripeParams {
     }
 }
 
-public enum AccountCreateIndividualPoliticalExposure: String, Codable, Sendable {
-    case existing
-    case none
+public struct AccountCreateIndividualPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var existing: Self { .init(rawValue: "existing") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// The individual's registered address.
@@ -2951,10 +3005,16 @@ public struct AccountCreateSettingsInvoices: StripeParams {
     }
 }
 
-public enum AccountCreateSettingsInvoicesHostedPaymentMethodSave: String, Codable, Sendable {
-    case always
-    case never
-    case offer
+public struct AccountCreateSettingsInvoicesHostedPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
+    public static var offer: Self { .init(rawValue: "offer") }
 }
 
 /// Settings that apply across payment methods for charging on the account.
@@ -3094,29 +3154,47 @@ public enum AccountCreateSettingsPayoutsScheduleDelayDays: Codable, Sendable, Ex
     }
 }
 
-public enum AccountCreateSettingsPayoutsScheduleInterval: String, Codable, Sendable {
-    case daily
-    case manual
-    case monthly
-    case weekly
+public struct AccountCreateSettingsPayoutsScheduleInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var daily: Self { .init(rawValue: "daily") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
 }
 
-public enum AccountCreateSettingsPayoutsScheduleWeeklyAnchor: String, Codable, Sendable {
-    case friday
-    case monday
-    case saturday
-    case sunday
-    case thursday
-    case tuesday
-    case wednesday
+public struct AccountCreateSettingsPayoutsScheduleWeeklyAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var friday: Self { .init(rawValue: "friday") }
+    public static var monday: Self { .init(rawValue: "monday") }
+    public static var saturday: Self { .init(rawValue: "saturday") }
+    public static var sunday: Self { .init(rawValue: "sunday") }
+    public static var thursday: Self { .init(rawValue: "thursday") }
+    public static var tuesday: Self { .init(rawValue: "tuesday") }
+    public static var wednesday: Self { .init(rawValue: "wednesday") }
 }
 
-public enum AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays: String, Codable, Sendable {
-    case friday
-    case monday
-    case thursday
-    case tuesday
-    case wednesday
+public struct AccountCreateSettingsPayoutsScheduleWeeklyPayoutDays: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var friday: Self { .init(rawValue: "friday") }
+    public static var monday: Self { .init(rawValue: "monday") }
+    public static var thursday: Self { .init(rawValue: "thursday") }
+    public static var tuesday: Self { .init(rawValue: "tuesday") }
+    public static var wednesday: Self { .init(rawValue: "wednesday") }
 }
 
 /// Settings specific to the PayPay payments method.
@@ -3142,9 +3220,15 @@ public struct AccountCreateSettingsPaypayPayments: StripeParams {
     }
 }
 
-public enum AccountCreateSettingsPaypayPaymentsGoodsType: String, Codable, Sendable {
-    case digitalContent = "digital_content"
-    case other
+public struct AccountCreateSettingsPaypayPaymentsGoodsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var digitalContent: Self { .init(rawValue: "digital_content") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 /// Details regarding your business's website.
@@ -3200,10 +3284,16 @@ public struct AccountCreateSettingsPaypayPaymentsSiteRestricted: StripeParams {
     }
 }
 
-public enum AccountCreateSettingsPaypayPaymentsSiteType: String, Codable, Sendable {
-    case accessible
-    case inDevelopment = "in_development"
-    case restricted
+public struct AccountCreateSettingsPaypayPaymentsSiteType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accessible: Self { .init(rawValue: "accessible") }
+    public static var inDevelopment: Self { .init(rawValue: "in_development") }
+    public static var restricted: Self { .init(rawValue: "restricted") }
 }
 
 /// Settings specific to SEPA Direct Debit payments.
@@ -3288,25 +3378,43 @@ public struct AccountCreateTosAcceptance: StripeParams {
     }
 }
 
-public enum AccountCreateType: String, Codable, Sendable {
-    case custom
-    case express
-    case standard
+public struct AccountCreateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var custom: Self { .init(rawValue: "custom") }
+    public static var express: Self { .init(rawValue: "express") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
-public enum AccountRejectReason: String, Codable, Sendable {
-    case credit
-    case fraudNoIntentToFulfill = "fraud_no_intent_to_fulfill"
-    case fraudOther = "fraud_other"
-    case fraudPaymentMethodCasher = "fraud_payment_method_casher"
-    case fraudPaymentMethodTester = "fraud_payment_method_tester"
-    case other
-    case termsOfService = "terms_of_service"
+public struct AccountRejectReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var credit: Self { .init(rawValue: "credit") }
+    public static var fraudNoIntentToFulfill: Self { .init(rawValue: "fraud_no_intent_to_fulfill") }
+    public static var fraudOther: Self { .init(rawValue: "fraud_other") }
+    public static var fraudPaymentMethodCasher: Self { .init(rawValue: "fraud_payment_method_casher") }
+    public static var fraudPaymentMethodTester: Self { .init(rawValue: "fraud_payment_method_tester") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var termsOfService: Self { .init(rawValue: "terms_of_service") }
 }
 
-public enum AccountRejectPayoutsAction: String, Codable, Sendable {
-    case none
-    case pause
+public struct AccountRejectPayoutsAction: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var none: Self { .init(rawValue: "none") }
+    public static var pause: Self { .init(rawValue: "pause") }
 }
 
 /// Business information about the account.
@@ -3400,12 +3508,18 @@ public struct AccountUpdateBusinessProfileAnnualRevenue: StripeParams {
     }
 }
 
-public enum AccountUpdateBusinessProfileMinorityOwnedBusinessDesignation: String, Codable, Sendable {
-    case lgbtqiOwnedBusiness = "lgbtqi_owned_business"
-    case minorityOwnedBusiness = "minority_owned_business"
-    case noneOfTheseApply = "none_of_these_apply"
-    case preferNotToAnswer = "prefer_not_to_answer"
-    case womenOwnedBusiness = "women_owned_business"
+public struct AccountUpdateBusinessProfileMinorityOwnedBusinessDesignation: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var lgbtqiOwnedBusiness: Self { .init(rawValue: "lgbtqi_owned_business") }
+    public static var minorityOwnedBusiness: Self { .init(rawValue: "minority_owned_business") }
+    public static var noneOfTheseApply: Self { .init(rawValue: "none_of_these_apply") }
+    public static var preferNotToAnswer: Self { .init(rawValue: "prefer_not_to_answer") }
+    public static var womenOwnedBusiness: Self { .init(rawValue: "women_owned_business") }
 }
 
 /// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
@@ -3457,11 +3571,17 @@ public struct AccountUpdateBusinessProfileSupportAddress: StripeParams {
     }
 }
 
-public enum AccountUpdateBusinessType: String, Codable, Sendable {
-    case company
-    case governmentEntity = "government_entity"
-    case individual
-    case nonProfit = "non_profit"
+public struct AccountUpdateBusinessType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var governmentEntity: Self { .init(rawValue: "government_entity") }
+    public static var individual: Self { .init(rawValue: "individual") }
+    public static var nonProfit: Self { .init(rawValue: "non_profit") }
 }
 
 /// Each key of the dictionary represents a capability, and each capability maps to its settings (for
@@ -4927,9 +5047,15 @@ public struct AccountUpdateCompanyOwnershipDeclaration: StripeParams {
     }
 }
 
-public enum AccountUpdateCompanyOwnershipExemptionReason: String, Codable, Sendable {
-    case qualifiedEntityExceedsOwnershipThreshold = "qualified_entity_exceeds_ownership_threshold"
-    case qualifiesAsFinancialInstitution = "qualifies_as_financial_institution"
+public struct AccountUpdateCompanyOwnershipExemptionReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var qualifiedEntityExceedsOwnershipThreshold: Self { .init(rawValue: "qualified_entity_exceeds_ownership_threshold") }
+    public static var qualifiesAsFinancialInstitution: Self { .init(rawValue: "qualifies_as_financial_institution") }
 }
 
 /// A location where the business has a meaningful physical operating presence.
@@ -5038,30 +5164,36 @@ public struct AccountUpdateCompanyRepresentativeDeclaration: StripeParams {
     }
 }
 
-public enum AccountUpdateCompanyStructure: String, Codable, Sendable {
-    case freeZoneEstablishment = "free_zone_establishment"
-    case freeZoneLlc = "free_zone_llc"
-    case governmentInstrumentality = "government_instrumentality"
-    case governmentalUnit = "governmental_unit"
-    case incorporatedNonProfit = "incorporated_non_profit"
-    case incorporatedPartnership = "incorporated_partnership"
-    case limitedLiabilityPartnership = "limited_liability_partnership"
-    case llc
-    case multiMemberLlc = "multi_member_llc"
-    case privateCompany = "private_company"
-    case privateCorporation = "private_corporation"
-    case privatePartnership = "private_partnership"
-    case publicCompany = "public_company"
-    case publicCorporation = "public_corporation"
-    case publicPartnership = "public_partnership"
-    case registeredCharity = "registered_charity"
-    case singleMemberLlc = "single_member_llc"
-    case soleEstablishment = "sole_establishment"
-    case soleProprietorship = "sole_proprietorship"
-    case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
-    case unincorporatedAssociation = "unincorporated_association"
-    case unincorporatedNonProfit = "unincorporated_non_profit"
-    case unincorporatedPartnership = "unincorporated_partnership"
+public struct AccountUpdateCompanyStructure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var freeZoneEstablishment: Self { .init(rawValue: "free_zone_establishment") }
+    public static var freeZoneLlc: Self { .init(rawValue: "free_zone_llc") }
+    public static var governmentInstrumentality: Self { .init(rawValue: "government_instrumentality") }
+    public static var governmentalUnit: Self { .init(rawValue: "governmental_unit") }
+    public static var incorporatedNonProfit: Self { .init(rawValue: "incorporated_non_profit") }
+    public static var incorporatedPartnership: Self { .init(rawValue: "incorporated_partnership") }
+    public static var limitedLiabilityPartnership: Self { .init(rawValue: "limited_liability_partnership") }
+    public static var llc: Self { .init(rawValue: "llc") }
+    public static var multiMemberLlc: Self { .init(rawValue: "multi_member_llc") }
+    public static var privateCompany: Self { .init(rawValue: "private_company") }
+    public static var privateCorporation: Self { .init(rawValue: "private_corporation") }
+    public static var privatePartnership: Self { .init(rawValue: "private_partnership") }
+    public static var publicCompany: Self { .init(rawValue: "public_company") }
+    public static var publicCorporation: Self { .init(rawValue: "public_corporation") }
+    public static var publicPartnership: Self { .init(rawValue: "public_partnership") }
+    public static var registeredCharity: Self { .init(rawValue: "registered_charity") }
+    public static var singleMemberLlc: Self { .init(rawValue: "single_member_llc") }
+    public static var soleEstablishment: Self { .init(rawValue: "sole_establishment") }
+    public static var soleProprietorship: Self { .init(rawValue: "sole_proprietorship") }
+    public static var taxExemptGovernmentInstrumentality: Self { .init(rawValue: "tax_exempt_government_instrumentality") }
+    public static var unincorporatedAssociation: Self { .init(rawValue: "unincorporated_association") }
+    public static var unincorporatedNonProfit: Self { .init(rawValue: "unincorporated_non_profit") }
+    public static var unincorporatedPartnership: Self { .init(rawValue: "unincorporated_partnership") }
 }
 
 /// Information on the verification state of the company.
@@ -5549,9 +5681,15 @@ public struct AccountUpdateIndividualDob: StripeParams {
     }
 }
 
-public enum AccountUpdateIndividualPoliticalExposure: String, Codable, Sendable {
-    case existing
-    case none
+public struct AccountUpdateIndividualPoliticalExposure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var existing: Self { .init(rawValue: "existing") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 /// The individual's registered address.
@@ -5889,10 +6027,16 @@ public struct AccountUpdateSettingsInvoices: StripeParams {
     }
 }
 
-public enum AccountUpdateSettingsInvoicesHostedPaymentMethodSave: String, Codable, Sendable {
-    case always
-    case never
-    case offer
+public struct AccountUpdateSettingsInvoicesHostedPaymentMethodSave: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var always: Self { .init(rawValue: "always") }
+    public static var never: Self { .init(rawValue: "never") }
+    public static var offer: Self { .init(rawValue: "offer") }
 }
 
 /// Settings that apply across payment methods for charging on the account.
@@ -6032,29 +6176,47 @@ public enum AccountUpdateSettingsPayoutsScheduleDelayDays: Codable, Sendable, Ex
     }
 }
 
-public enum AccountUpdateSettingsPayoutsScheduleInterval: String, Codable, Sendable {
-    case daily
-    case manual
-    case monthly
-    case weekly
+public struct AccountUpdateSettingsPayoutsScheduleInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var daily: Self { .init(rawValue: "daily") }
+    public static var manual: Self { .init(rawValue: "manual") }
+    public static var monthly: Self { .init(rawValue: "monthly") }
+    public static var weekly: Self { .init(rawValue: "weekly") }
 }
 
-public enum AccountUpdateSettingsPayoutsScheduleWeeklyAnchor: String, Codable, Sendable {
-    case friday
-    case monday
-    case saturday
-    case sunday
-    case thursday
-    case tuesday
-    case wednesday
+public struct AccountUpdateSettingsPayoutsScheduleWeeklyAnchor: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var friday: Self { .init(rawValue: "friday") }
+    public static var monday: Self { .init(rawValue: "monday") }
+    public static var saturday: Self { .init(rawValue: "saturday") }
+    public static var sunday: Self { .init(rawValue: "sunday") }
+    public static var thursday: Self { .init(rawValue: "thursday") }
+    public static var tuesday: Self { .init(rawValue: "tuesday") }
+    public static var wednesday: Self { .init(rawValue: "wednesday") }
 }
 
-public enum AccountUpdateSettingsPayoutsScheduleWeeklyPayoutDays: String, Codable, Sendable {
-    case friday
-    case monday
-    case thursday
-    case tuesday
-    case wednesday
+public struct AccountUpdateSettingsPayoutsScheduleWeeklyPayoutDays: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var friday: Self { .init(rawValue: "friday") }
+    public static var monday: Self { .init(rawValue: "monday") }
+    public static var thursday: Self { .init(rawValue: "thursday") }
+    public static var tuesday: Self { .init(rawValue: "tuesday") }
+    public static var wednesday: Self { .init(rawValue: "wednesday") }
 }
 
 /// Settings specific to the PayPay payments method.
@@ -6080,9 +6242,15 @@ public struct AccountUpdateSettingsPaypayPayments: StripeParams {
     }
 }
 
-public enum AccountUpdateSettingsPaypayPaymentsGoodsType: String, Codable, Sendable {
-    case digitalContent = "digital_content"
-    case other
+public struct AccountUpdateSettingsPaypayPaymentsGoodsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var digitalContent: Self { .init(rawValue: "digital_content") }
+    public static var other: Self { .init(rawValue: "other") }
 }
 
 /// Details regarding your business's website.
@@ -6138,10 +6306,16 @@ public struct AccountUpdateSettingsPaypayPaymentsSiteRestricted: StripeParams {
     }
 }
 
-public enum AccountUpdateSettingsPaypayPaymentsSiteType: String, Codable, Sendable {
-    case accessible
-    case inDevelopment = "in_development"
-    case restricted
+public struct AccountUpdateSettingsPaypayPaymentsSiteType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accessible: Self { .init(rawValue: "accessible") }
+    public static var inDevelopment: Self { .init(rawValue: "in_development") }
+    public static var restricted: Self { .init(rawValue: "restricted") }
 }
 
 /// Settings specific to SEPA Direct Debit payments.

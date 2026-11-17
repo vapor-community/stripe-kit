@@ -21,8 +21,14 @@ public struct EntitlementsActiveEntitlementSummary: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum EntitlementsActiveEntitlementSummaryObject: String, Codable, Sendable {
-    case entitlementsActiveEntitlementSummary = "entitlements.active_entitlement_summary"
+public struct EntitlementsActiveEntitlementSummaryObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var entitlementsActiveEntitlementSummary: Self { .init(rawValue: "entitlements.active_entitlement_summary") }
 }
 
 public struct EntitlementsActiveEntitlementSummaryList: Codable, Sendable {

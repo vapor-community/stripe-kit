@@ -113,628 +113,640 @@ public struct ReportingReportRunCreateParameters: StripeParams {
     }
 }
 
-public enum ReportingReportRunCreateParametersReportingCategory: String, Codable, Sendable {
-    case advance
-    case advanceFunding = "advance_funding"
-    case anticipationRepayment = "anticipation_repayment"
-    case charge
-    case chargeFailure = "charge_failure"
-    case climateOrderPurchase = "climate_order_purchase"
-    case climateOrderRefund = "climate_order_refund"
-    case connectCollectionTransfer = "connect_collection_transfer"
-    case connectReservedFunds = "connect_reserved_funds"
-    case contribution
-    case dispute
-    case disputeReversal = "dispute_reversal"
-    case fee
-    case financingPaydown = "financing_paydown"
-    case financingPaydownReversal = "financing_paydown_reversal"
-    case financingPayout = "financing_payout"
-    case financingPayoutReversal = "financing_payout_reversal"
-    case issuingAuthorizationHold = "issuing_authorization_hold"
-    case issuingAuthorizationRelease = "issuing_authorization_release"
-    case issuingDispute = "issuing_dispute"
-    case issuingTransaction = "issuing_transaction"
-    case networkCost = "network_cost"
-    case otherAdjustment = "other_adjustment"
-    case partialCaptureReversal = "partial_capture_reversal"
-    case payout
-    case payoutReversal = "payout_reversal"
-    case platformEarning = "platform_earning"
-    case platformEarningRefund = "platform_earning_refund"
-    case refund
-    case refundFailure = "refund_failure"
-    case riskReservedFunds = "risk_reserved_funds"
-    case tax
-    case topup
-    case topupReversal = "topup_reversal"
-    case transfer
-    case transferReversal = "transfer_reversal"
-    case unreconciledCustomerFunds = "unreconciled_customer_funds"
+public struct ReportingReportRunCreateParametersReportingCategory: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var advance: Self { .init(rawValue: "advance") }
+    public static var advanceFunding: Self { .init(rawValue: "advance_funding") }
+    public static var anticipationRepayment: Self { .init(rawValue: "anticipation_repayment") }
+    public static var charge: Self { .init(rawValue: "charge") }
+    public static var chargeFailure: Self { .init(rawValue: "charge_failure") }
+    public static var climateOrderPurchase: Self { .init(rawValue: "climate_order_purchase") }
+    public static var climateOrderRefund: Self { .init(rawValue: "climate_order_refund") }
+    public static var connectCollectionTransfer: Self { .init(rawValue: "connect_collection_transfer") }
+    public static var connectReservedFunds: Self { .init(rawValue: "connect_reserved_funds") }
+    public static var contribution: Self { .init(rawValue: "contribution") }
+    public static var dispute: Self { .init(rawValue: "dispute") }
+    public static var disputeReversal: Self { .init(rawValue: "dispute_reversal") }
+    public static var fee: Self { .init(rawValue: "fee") }
+    public static var financingPaydown: Self { .init(rawValue: "financing_paydown") }
+    public static var financingPaydownReversal: Self { .init(rawValue: "financing_paydown_reversal") }
+    public static var financingPayout: Self { .init(rawValue: "financing_payout") }
+    public static var financingPayoutReversal: Self { .init(rawValue: "financing_payout_reversal") }
+    public static var issuingAuthorizationHold: Self { .init(rawValue: "issuing_authorization_hold") }
+    public static var issuingAuthorizationRelease: Self { .init(rawValue: "issuing_authorization_release") }
+    public static var issuingDispute: Self { .init(rawValue: "issuing_dispute") }
+    public static var issuingTransaction: Self { .init(rawValue: "issuing_transaction") }
+    public static var networkCost: Self { .init(rawValue: "network_cost") }
+    public static var otherAdjustment: Self { .init(rawValue: "other_adjustment") }
+    public static var partialCaptureReversal: Self { .init(rawValue: "partial_capture_reversal") }
+    public static var payout: Self { .init(rawValue: "payout") }
+    public static var payoutReversal: Self { .init(rawValue: "payout_reversal") }
+    public static var platformEarning: Self { .init(rawValue: "platform_earning") }
+    public static var platformEarningRefund: Self { .init(rawValue: "platform_earning_refund") }
+    public static var refund: Self { .init(rawValue: "refund") }
+    public static var refundFailure: Self { .init(rawValue: "refund_failure") }
+    public static var riskReservedFunds: Self { .init(rawValue: "risk_reserved_funds") }
+    public static var tax: Self { .init(rawValue: "tax") }
+    public static var topup: Self { .init(rawValue: "topup") }
+    public static var topupReversal: Self { .init(rawValue: "topup_reversal") }
+    public static var transfer: Self { .init(rawValue: "transfer") }
+    public static var transferReversal: Self { .init(rawValue: "transfer_reversal") }
+    public static var unreconciledCustomerFunds: Self { .init(rawValue: "unreconciled_customer_funds") }
 }
 
-public enum ReportingReportRunCreateParametersTimezone: String, Codable, Sendable {
-    case africaAbidjan = "Africa/Abidjan"
-    case africaAccra = "Africa/Accra"
-    case africaAddisAbaba = "Africa/Addis_Ababa"
-    case africaAlgiers = "Africa/Algiers"
-    case africaAsmara = "Africa/Asmara"
-    case africaAsmera = "Africa/Asmera"
-    case africaBamako = "Africa/Bamako"
-    case africaBangui = "Africa/Bangui"
-    case africaBanjul = "Africa/Banjul"
-    case africaBissau = "Africa/Bissau"
-    case africaBlantyre = "Africa/Blantyre"
-    case africaBrazzaville = "Africa/Brazzaville"
-    case africaBujumbura = "Africa/Bujumbura"
-    case africaCairo = "Africa/Cairo"
-    case africaCasablanca = "Africa/Casablanca"
-    case africaCeuta = "Africa/Ceuta"
-    case africaConakry = "Africa/Conakry"
-    case africaDakar = "Africa/Dakar"
-    case africaDarEsSalaam = "Africa/Dar_es_Salaam"
-    case africaDjibouti = "Africa/Djibouti"
-    case africaDouala = "Africa/Douala"
-    case africaElAaiun = "Africa/El_Aaiun"
-    case africaFreetown = "Africa/Freetown"
-    case africaGaborone = "Africa/Gaborone"
-    case africaHarare = "Africa/Harare"
-    case africaJohannesburg = "Africa/Johannesburg"
-    case africaJuba = "Africa/Juba"
-    case africaKampala = "Africa/Kampala"
-    case africaKhartoum = "Africa/Khartoum"
-    case africaKigali = "Africa/Kigali"
-    case africaKinshasa = "Africa/Kinshasa"
-    case africaLagos = "Africa/Lagos"
-    case africaLibreville = "Africa/Libreville"
-    case africaLome = "Africa/Lome"
-    case africaLuanda = "Africa/Luanda"
-    case africaLubumbashi = "Africa/Lubumbashi"
-    case africaLusaka = "Africa/Lusaka"
-    case africaMalabo = "Africa/Malabo"
-    case africaMaputo = "Africa/Maputo"
-    case africaMaseru = "Africa/Maseru"
-    case africaMbabane = "Africa/Mbabane"
-    case africaMogadishu = "Africa/Mogadishu"
-    case africaMonrovia = "Africa/Monrovia"
-    case africaNairobi = "Africa/Nairobi"
-    case africaNdjamena = "Africa/Ndjamena"
-    case africaNiamey = "Africa/Niamey"
-    case africaNouakchott = "Africa/Nouakchott"
-    case africaOuagadougou = "Africa/Ouagadougou"
-    case africaPortoNovo = "Africa/Porto-Novo"
-    case africaSaoTome = "Africa/Sao_Tome"
-    case africaTimbuktu = "Africa/Timbuktu"
-    case africaTripoli = "Africa/Tripoli"
-    case africaTunis = "Africa/Tunis"
-    case africaWindhoek = "Africa/Windhoek"
-    case americaAdak = "America/Adak"
-    case americaAnchorage = "America/Anchorage"
-    case americaAnguilla = "America/Anguilla"
-    case americaAntigua = "America/Antigua"
-    case americaAraguaina = "America/Araguaina"
-    case americaArgentinaBuenosAires = "America/Argentina/Buenos_Aires"
-    case americaArgentinaCatamarca = "America/Argentina/Catamarca"
-    case americaArgentinaComodrivadavia = "America/Argentina/ComodRivadavia"
-    case americaArgentinaCordoba = "America/Argentina/Cordoba"
-    case americaArgentinaJujuy = "America/Argentina/Jujuy"
-    case americaArgentinaLaRioja = "America/Argentina/La_Rioja"
-    case americaArgentinaMendoza = "America/Argentina/Mendoza"
-    case americaArgentinaRioGallegos = "America/Argentina/Rio_Gallegos"
-    case americaArgentinaSalta = "America/Argentina/Salta"
-    case americaArgentinaSanJuan = "America/Argentina/San_Juan"
-    case americaArgentinaSanLuis = "America/Argentina/San_Luis"
-    case americaArgentinaTucuman = "America/Argentina/Tucuman"
-    case americaArgentinaUshuaia = "America/Argentina/Ushuaia"
-    case americaAruba = "America/Aruba"
-    case americaAsuncion = "America/Asuncion"
-    case americaAtikokan = "America/Atikokan"
-    case americaAtka = "America/Atka"
-    case americaBahia = "America/Bahia"
-    case americaBahiaBanderas = "America/Bahia_Banderas"
-    case americaBarbados = "America/Barbados"
-    case americaBelem = "America/Belem"
-    case americaBelize = "America/Belize"
-    case americaBlancSablon = "America/Blanc-Sablon"
-    case americaBoaVista = "America/Boa_Vista"
-    case americaBogota = "America/Bogota"
-    case americaBoise = "America/Boise"
-    case americaBuenosAires = "America/Buenos_Aires"
-    case americaCambridgeBay = "America/Cambridge_Bay"
-    case americaCampoGrande = "America/Campo_Grande"
-    case americaCancun = "America/Cancun"
-    case americaCaracas = "America/Caracas"
-    case americaCatamarca = "America/Catamarca"
-    case americaCayenne = "America/Cayenne"
-    case americaCayman = "America/Cayman"
-    case americaChicago = "America/Chicago"
-    case americaChihuahua = "America/Chihuahua"
-    case americaCiudadJuarez = "America/Ciudad_Juarez"
-    case americaCoralHarbour = "America/Coral_Harbour"
-    case americaCordoba = "America/Cordoba"
-    case americaCostaRica = "America/Costa_Rica"
-    case americaCoyhaique = "America/Coyhaique"
-    case americaCreston = "America/Creston"
-    case americaCuiaba = "America/Cuiaba"
-    case americaCuracao = "America/Curacao"
-    case americaDanmarkshavn = "America/Danmarkshavn"
-    case americaDawson = "America/Dawson"
-    case americaDawsonCreek = "America/Dawson_Creek"
-    case americaDenver = "America/Denver"
-    case americaDetroit = "America/Detroit"
-    case americaDominica = "America/Dominica"
-    case americaEdmonton = "America/Edmonton"
-    case americaEirunepe = "America/Eirunepe"
-    case americaElSalvador = "America/El_Salvador"
-    case americaEnsenada = "America/Ensenada"
-    case americaFortNelson = "America/Fort_Nelson"
-    case americaFortWayne = "America/Fort_Wayne"
-    case americaFortaleza = "America/Fortaleza"
-    case americaGlaceBay = "America/Glace_Bay"
-    case americaGodthab = "America/Godthab"
-    case americaGooseBay = "America/Goose_Bay"
-    case americaGrandTurk = "America/Grand_Turk"
-    case americaGrenada = "America/Grenada"
-    case americaGuadeloupe = "America/Guadeloupe"
-    case americaGuatemala = "America/Guatemala"
-    case americaGuayaquil = "America/Guayaquil"
-    case americaGuyana = "America/Guyana"
-    case americaHalifax = "America/Halifax"
-    case americaHavana = "America/Havana"
-    case americaHermosillo = "America/Hermosillo"
-    case americaIndianaIndianapolis = "America/Indiana/Indianapolis"
-    case americaIndianaKnox = "America/Indiana/Knox"
-    case americaIndianaMarengo = "America/Indiana/Marengo"
-    case americaIndianaPetersburg = "America/Indiana/Petersburg"
-    case americaIndianaTellCity = "America/Indiana/Tell_City"
-    case americaIndianaVevay = "America/Indiana/Vevay"
-    case americaIndianaVincennes = "America/Indiana/Vincennes"
-    case americaIndianaWinamac = "America/Indiana/Winamac"
-    case americaIndianapolis = "America/Indianapolis"
-    case americaInuvik = "America/Inuvik"
-    case americaIqaluit = "America/Iqaluit"
-    case americaJamaica = "America/Jamaica"
-    case americaJujuy = "America/Jujuy"
-    case americaJuneau = "America/Juneau"
-    case americaKentuckyLouisville = "America/Kentucky/Louisville"
-    case americaKentuckyMonticello = "America/Kentucky/Monticello"
-    case americaKnoxIn = "America/Knox_IN"
-    case americaKralendijk = "America/Kralendijk"
-    case americaLaPaz = "America/La_Paz"
-    case americaLima = "America/Lima"
-    case americaLosAngeles = "America/Los_Angeles"
-    case americaLouisville = "America/Louisville"
-    case americaLowerPrinces = "America/Lower_Princes"
-    case americaMaceio = "America/Maceio"
-    case americaManagua = "America/Managua"
-    case americaManaus = "America/Manaus"
-    case americaMarigot = "America/Marigot"
-    case americaMartinique = "America/Martinique"
-    case americaMatamoros = "America/Matamoros"
-    case americaMazatlan = "America/Mazatlan"
-    case americaMendoza = "America/Mendoza"
-    case americaMenominee = "America/Menominee"
-    case americaMerida = "America/Merida"
-    case americaMetlakatla = "America/Metlakatla"
-    case americaMexicoCity = "America/Mexico_City"
-    case americaMiquelon = "America/Miquelon"
-    case americaMoncton = "America/Moncton"
-    case americaMonterrey = "America/Monterrey"
-    case americaMontevideo = "America/Montevideo"
-    case americaMontreal = "America/Montreal"
-    case americaMontserrat = "America/Montserrat"
-    case americaNassau = "America/Nassau"
-    case americaNewYork = "America/New_York"
-    case americaNipigon = "America/Nipigon"
-    case americaNome = "America/Nome"
-    case americaNoronha = "America/Noronha"
-    case americaNorthDakotaBeulah = "America/North_Dakota/Beulah"
-    case americaNorthDakotaCenter = "America/North_Dakota/Center"
-    case americaNorthDakotaNewSalem = "America/North_Dakota/New_Salem"
-    case americaNuuk = "America/Nuuk"
-    case americaOjinaga = "America/Ojinaga"
-    case americaPanama = "America/Panama"
-    case americaPangnirtung = "America/Pangnirtung"
-    case americaParamaribo = "America/Paramaribo"
-    case americaPhoenix = "America/Phoenix"
-    case americaPortAuPrince = "America/Port-au-Prince"
-    case americaPortOfSpain = "America/Port_of_Spain"
-    case americaPortoAcre = "America/Porto_Acre"
-    case americaPortoVelho = "America/Porto_Velho"
-    case americaPuertoRico = "America/Puerto_Rico"
-    case americaPuntaArenas = "America/Punta_Arenas"
-    case americaRainyRiver = "America/Rainy_River"
-    case americaRankinInlet = "America/Rankin_Inlet"
-    case americaRecife = "America/Recife"
-    case americaRegina = "America/Regina"
-    case americaResolute = "America/Resolute"
-    case americaRioBranco = "America/Rio_Branco"
-    case americaRosario = "America/Rosario"
-    case americaSantaIsabel = "America/Santa_Isabel"
-    case americaSantarem = "America/Santarem"
-    case americaSantiago = "America/Santiago"
-    case americaSantoDomingo = "America/Santo_Domingo"
-    case americaSaoPaulo = "America/Sao_Paulo"
-    case americaScoresbysund = "America/Scoresbysund"
-    case americaShiprock = "America/Shiprock"
-    case americaSitka = "America/Sitka"
-    case americaStBarthelemy = "America/St_Barthelemy"
-    case americaStJohns = "America/St_Johns"
-    case americaStKitts = "America/St_Kitts"
-    case americaStLucia = "America/St_Lucia"
-    case americaStThomas = "America/St_Thomas"
-    case americaStVincent = "America/St_Vincent"
-    case americaSwiftCurrent = "America/Swift_Current"
-    case americaTegucigalpa = "America/Tegucigalpa"
-    case americaThule = "America/Thule"
-    case americaThunderBay = "America/Thunder_Bay"
-    case americaTijuana = "America/Tijuana"
-    case americaToronto = "America/Toronto"
-    case americaTortola = "America/Tortola"
-    case americaVancouver = "America/Vancouver"
-    case americaVirgin = "America/Virgin"
-    case americaWhitehorse = "America/Whitehorse"
-    case americaWinnipeg = "America/Winnipeg"
-    case americaYakutat = "America/Yakutat"
-    case americaYellowknife = "America/Yellowknife"
-    case antarcticaCasey = "Antarctica/Casey"
-    case antarcticaDavis = "Antarctica/Davis"
-    case antarcticaDumontdurville = "Antarctica/DumontDUrville"
-    case antarcticaMacquarie = "Antarctica/Macquarie"
-    case antarcticaMawson = "Antarctica/Mawson"
-    case antarcticaMcmurdo = "Antarctica/McMurdo"
-    case antarcticaPalmer = "Antarctica/Palmer"
-    case antarcticaRothera = "Antarctica/Rothera"
-    case antarcticaSouthPole = "Antarctica/South_Pole"
-    case antarcticaSyowa = "Antarctica/Syowa"
-    case antarcticaTroll = "Antarctica/Troll"
-    case antarcticaVostok = "Antarctica/Vostok"
-    case arcticLongyearbyen = "Arctic/Longyearbyen"
-    case asiaAden = "Asia/Aden"
-    case asiaAlmaty = "Asia/Almaty"
-    case asiaAmman = "Asia/Amman"
-    case asiaAnadyr = "Asia/Anadyr"
-    case asiaAqtau = "Asia/Aqtau"
-    case asiaAqtobe = "Asia/Aqtobe"
-    case asiaAshgabat = "Asia/Ashgabat"
-    case asiaAshkhabad = "Asia/Ashkhabad"
-    case asiaAtyrau = "Asia/Atyrau"
-    case asiaBaghdad = "Asia/Baghdad"
-    case asiaBahrain = "Asia/Bahrain"
-    case asiaBaku = "Asia/Baku"
-    case asiaBangkok = "Asia/Bangkok"
-    case asiaBarnaul = "Asia/Barnaul"
-    case asiaBeirut = "Asia/Beirut"
-    case asiaBishkek = "Asia/Bishkek"
-    case asiaBrunei = "Asia/Brunei"
-    case asiaCalcutta = "Asia/Calcutta"
-    case asiaChita = "Asia/Chita"
-    case asiaChoibalsan = "Asia/Choibalsan"
-    case asiaChongqing = "Asia/Chongqing"
-    case asiaChungking = "Asia/Chungking"
-    case asiaColombo = "Asia/Colombo"
-    case asiaDacca = "Asia/Dacca"
-    case asiaDamascus = "Asia/Damascus"
-    case asiaDhaka = "Asia/Dhaka"
-    case asiaDili = "Asia/Dili"
-    case asiaDubai = "Asia/Dubai"
-    case asiaDushanbe = "Asia/Dushanbe"
-    case asiaFamagusta = "Asia/Famagusta"
-    case asiaGaza = "Asia/Gaza"
-    case asiaHarbin = "Asia/Harbin"
-    case asiaHebron = "Asia/Hebron"
-    case asiaHoChiMinh = "Asia/Ho_Chi_Minh"
-    case asiaHongKong = "Asia/Hong_Kong"
-    case asiaHovd = "Asia/Hovd"
-    case asiaIrkutsk = "Asia/Irkutsk"
-    case asiaIstanbul = "Asia/Istanbul"
-    case asiaJakarta = "Asia/Jakarta"
-    case asiaJayapura = "Asia/Jayapura"
-    case asiaJerusalem = "Asia/Jerusalem"
-    case asiaKabul = "Asia/Kabul"
-    case asiaKamchatka = "Asia/Kamchatka"
-    case asiaKarachi = "Asia/Karachi"
-    case asiaKashgar = "Asia/Kashgar"
-    case asiaKathmandu = "Asia/Kathmandu"
-    case asiaKatmandu = "Asia/Katmandu"
-    case asiaKhandyga = "Asia/Khandyga"
-    case asiaKolkata = "Asia/Kolkata"
-    case asiaKrasnoyarsk = "Asia/Krasnoyarsk"
-    case asiaKualaLumpur = "Asia/Kuala_Lumpur"
-    case asiaKuching = "Asia/Kuching"
-    case asiaKuwait = "Asia/Kuwait"
-    case asiaMacao = "Asia/Macao"
-    case asiaMacau = "Asia/Macau"
-    case asiaMagadan = "Asia/Magadan"
-    case asiaMakassar = "Asia/Makassar"
-    case asiaManila = "Asia/Manila"
-    case asiaMuscat = "Asia/Muscat"
-    case asiaNicosia = "Asia/Nicosia"
-    case asiaNovokuznetsk = "Asia/Novokuznetsk"
-    case asiaNovosibirsk = "Asia/Novosibirsk"
-    case asiaOmsk = "Asia/Omsk"
-    case asiaOral = "Asia/Oral"
-    case asiaPhnomPenh = "Asia/Phnom_Penh"
-    case asiaPontianak = "Asia/Pontianak"
-    case asiaPyongyang = "Asia/Pyongyang"
-    case asiaQatar = "Asia/Qatar"
-    case asiaQostanay = "Asia/Qostanay"
-    case asiaQyzylorda = "Asia/Qyzylorda"
-    case asiaRangoon = "Asia/Rangoon"
-    case asiaRiyadh = "Asia/Riyadh"
-    case asiaSaigon = "Asia/Saigon"
-    case asiaSakhalin = "Asia/Sakhalin"
-    case asiaSamarkand = "Asia/Samarkand"
-    case asiaSeoul = "Asia/Seoul"
-    case asiaShanghai = "Asia/Shanghai"
-    case asiaSingapore = "Asia/Singapore"
-    case asiaSrednekolymsk = "Asia/Srednekolymsk"
-    case asiaTaipei = "Asia/Taipei"
-    case asiaTashkent = "Asia/Tashkent"
-    case asiaTbilisi = "Asia/Tbilisi"
-    case asiaTehran = "Asia/Tehran"
-    case asiaTelAviv = "Asia/Tel_Aviv"
-    case asiaThimbu = "Asia/Thimbu"
-    case asiaThimphu = "Asia/Thimphu"
-    case asiaTokyo = "Asia/Tokyo"
-    case asiaTomsk = "Asia/Tomsk"
-    case asiaUjungPandang = "Asia/Ujung_Pandang"
-    case asiaUlaanbaatar = "Asia/Ulaanbaatar"
-    case asiaUlanBator = "Asia/Ulan_Bator"
-    case asiaUrumqi = "Asia/Urumqi"
-    case asiaUstNera = "Asia/Ust-Nera"
-    case asiaVientiane = "Asia/Vientiane"
-    case asiaVladivostok = "Asia/Vladivostok"
-    case asiaYakutsk = "Asia/Yakutsk"
-    case asiaYangon = "Asia/Yangon"
-    case asiaYekaterinburg = "Asia/Yekaterinburg"
-    case asiaYerevan = "Asia/Yerevan"
-    case atlanticAzores = "Atlantic/Azores"
-    case atlanticBermuda = "Atlantic/Bermuda"
-    case atlanticCanary = "Atlantic/Canary"
-    case atlanticCapeVerde = "Atlantic/Cape_Verde"
-    case atlanticFaeroe = "Atlantic/Faeroe"
-    case atlanticFaroe = "Atlantic/Faroe"
-    case atlanticJanMayen = "Atlantic/Jan_Mayen"
-    case atlanticMadeira = "Atlantic/Madeira"
-    case atlanticReykjavik = "Atlantic/Reykjavik"
-    case atlanticSouthGeorgia = "Atlantic/South_Georgia"
-    case atlanticStHelena = "Atlantic/St_Helena"
-    case atlanticStanley = "Atlantic/Stanley"
-    case australiaAct = "Australia/ACT"
-    case australiaAdelaide = "Australia/Adelaide"
-    case australiaBrisbane = "Australia/Brisbane"
-    case australiaBrokenHill = "Australia/Broken_Hill"
-    case australiaCanberra = "Australia/Canberra"
-    case australiaCurrie = "Australia/Currie"
-    case australiaDarwin = "Australia/Darwin"
-    case australiaEucla = "Australia/Eucla"
-    case australiaHobart = "Australia/Hobart"
-    case australiaLhi = "Australia/LHI"
-    case australiaLindeman = "Australia/Lindeman"
-    case australiaLordHowe = "Australia/Lord_Howe"
-    case australiaMelbourne = "Australia/Melbourne"
-    case australiaNsw = "Australia/NSW"
-    case australiaNorth = "Australia/North"
-    case australiaPerth = "Australia/Perth"
-    case australiaQueensland = "Australia/Queensland"
-    case australiaSouth = "Australia/South"
-    case australiaSydney = "Australia/Sydney"
-    case australiaTasmania = "Australia/Tasmania"
-    case australiaVictoria = "Australia/Victoria"
-    case australiaWest = "Australia/West"
-    case australiaYancowinna = "Australia/Yancowinna"
-    case brazilAcre = "Brazil/Acre"
-    case brazilDenoronha = "Brazil/DeNoronha"
-    case brazilEast = "Brazil/East"
-    case brazilWest = "Brazil/West"
-    case cet = "CET"
-    case cst6cdt = "CST6CDT"
-    case canadaAtlantic = "Canada/Atlantic"
-    case canadaCentral = "Canada/Central"
-    case canadaEastern = "Canada/Eastern"
-    case canadaMountain = "Canada/Mountain"
-    case canadaNewfoundland = "Canada/Newfoundland"
-    case canadaPacific = "Canada/Pacific"
-    case canadaSaskatchewan = "Canada/Saskatchewan"
-    case canadaYukon = "Canada/Yukon"
-    case chileContinental = "Chile/Continental"
-    case chileEasterisland = "Chile/EasterIsland"
-    case cuba = "Cuba"
-    case eet = "EET"
-    case est = "EST"
-    case est5edt = "EST5EDT"
-    case egypt = "Egypt"
-    case eire = "Eire"
-    case etcGmt = "Etc/GMT"
-    case etcGmt0 = "Etc/GMT+0"
-    case etcGmt1 = "Etc/GMT+1"
-    case etcGmt10 = "Etc/GMT+10"
-    case etcGmt11 = "Etc/GMT+11"
-    case etcGmt12 = "Etc/GMT+12"
-    case etcGmt2 = "Etc/GMT+2"
-    case etcGmt3 = "Etc/GMT+3"
-    case etcGmt4 = "Etc/GMT+4"
-    case etcGmt5 = "Etc/GMT+5"
-    case etcGmt6 = "Etc/GMT+6"
-    case etcGmt7 = "Etc/GMT+7"
-    case etcGmt8 = "Etc/GMT+8"
-    case etcGmt9 = "Etc/GMT+9"
-    case etcGmt13 = "Etc/GMT-13"
-    case etcGmt14 = "Etc/GMT-14"
-    case etcGreenwich = "Etc/Greenwich"
-    case etcUct = "Etc/UCT"
-    case etcUtc = "Etc/UTC"
-    case etcUniversal = "Etc/Universal"
-    case etcZulu = "Etc/Zulu"
-    case europeAmsterdam = "Europe/Amsterdam"
-    case europeAndorra = "Europe/Andorra"
-    case europeAstrakhan = "Europe/Astrakhan"
-    case europeAthens = "Europe/Athens"
-    case europeBelfast = "Europe/Belfast"
-    case europeBelgrade = "Europe/Belgrade"
-    case europeBerlin = "Europe/Berlin"
-    case europeBratislava = "Europe/Bratislava"
-    case europeBrussels = "Europe/Brussels"
-    case europeBucharest = "Europe/Bucharest"
-    case europeBudapest = "Europe/Budapest"
-    case europeBusingen = "Europe/Busingen"
-    case europeChisinau = "Europe/Chisinau"
-    case europeCopenhagen = "Europe/Copenhagen"
-    case europeDublin = "Europe/Dublin"
-    case europeGibraltar = "Europe/Gibraltar"
-    case europeGuernsey = "Europe/Guernsey"
-    case europeHelsinki = "Europe/Helsinki"
-    case europeIsleOfMan = "Europe/Isle_of_Man"
-    case europeIstanbul = "Europe/Istanbul"
-    case europeJersey = "Europe/Jersey"
-    case europeKaliningrad = "Europe/Kaliningrad"
-    case europeKiev = "Europe/Kiev"
-    case europeKirov = "Europe/Kirov"
-    case europeKyiv = "Europe/Kyiv"
-    case europeLisbon = "Europe/Lisbon"
-    case europeLjubljana = "Europe/Ljubljana"
-    case europeLondon = "Europe/London"
-    case europeLuxembourg = "Europe/Luxembourg"
-    case europeMadrid = "Europe/Madrid"
-    case europeMalta = "Europe/Malta"
-    case europeMariehamn = "Europe/Mariehamn"
-    case europeMinsk = "Europe/Minsk"
-    case europeMonaco = "Europe/Monaco"
-    case europeMoscow = "Europe/Moscow"
-    case europeNicosia = "Europe/Nicosia"
-    case europeOslo = "Europe/Oslo"
-    case europeParis = "Europe/Paris"
-    case europePodgorica = "Europe/Podgorica"
-    case europePrague = "Europe/Prague"
-    case europeRiga = "Europe/Riga"
-    case europeRome = "Europe/Rome"
-    case europeSamara = "Europe/Samara"
-    case europeSanMarino = "Europe/San_Marino"
-    case europeSarajevo = "Europe/Sarajevo"
-    case europeSaratov = "Europe/Saratov"
-    case europeSimferopol = "Europe/Simferopol"
-    case europeSkopje = "Europe/Skopje"
-    case europeSofia = "Europe/Sofia"
-    case europeStockholm = "Europe/Stockholm"
-    case europeTallinn = "Europe/Tallinn"
-    case europeTirane = "Europe/Tirane"
-    case europeTiraspol = "Europe/Tiraspol"
-    case europeUlyanovsk = "Europe/Ulyanovsk"
-    case europeUzhgorod = "Europe/Uzhgorod"
-    case europeVaduz = "Europe/Vaduz"
-    case europeVatican = "Europe/Vatican"
-    case europeVienna = "Europe/Vienna"
-    case europeVilnius = "Europe/Vilnius"
-    case europeVolgograd = "Europe/Volgograd"
-    case europeWarsaw = "Europe/Warsaw"
-    case europeZagreb = "Europe/Zagreb"
-    case europeZaporozhye = "Europe/Zaporozhye"
-    case europeZurich = "Europe/Zurich"
-    case factory = "Factory"
-    case gb = "GB"
-    case gbEire = "GB-Eire"
-    case gmt = "GMT"
-    case gmt0 = "GMT+0"
-    case greenwich = "Greenwich"
-    case hst = "HST"
-    case hongkong = "Hongkong"
-    case iceland = "Iceland"
-    case indianAntananarivo = "Indian/Antananarivo"
-    case indianChagos = "Indian/Chagos"
-    case indianChristmas = "Indian/Christmas"
-    case indianCocos = "Indian/Cocos"
-    case indianComoro = "Indian/Comoro"
-    case indianKerguelen = "Indian/Kerguelen"
-    case indianMahe = "Indian/Mahe"
-    case indianMaldives = "Indian/Maldives"
-    case indianMauritius = "Indian/Mauritius"
-    case indianMayotte = "Indian/Mayotte"
-    case indianReunion = "Indian/Reunion"
-    case iran = "Iran"
-    case israel = "Israel"
-    case jamaica = "Jamaica"
-    case japan = "Japan"
-    case kwajalein = "Kwajalein"
-    case libya = "Libya"
-    case met = "MET"
-    case mst = "MST"
-    case mst7mdt = "MST7MDT"
-    case mexicoBajanorte = "Mexico/BajaNorte"
-    case mexicoBajasur = "Mexico/BajaSur"
-    case mexicoGeneral = "Mexico/General"
-    case nz = "NZ"
-    case nzChat = "NZ-CHAT"
-    case navajo = "Navajo"
-    case prc = "PRC"
-    case pst8pdt = "PST8PDT"
-    case pacificApia = "Pacific/Apia"
-    case pacificAuckland = "Pacific/Auckland"
-    case pacificBougainville = "Pacific/Bougainville"
-    case pacificChatham = "Pacific/Chatham"
-    case pacificChuuk = "Pacific/Chuuk"
-    case pacificEaster = "Pacific/Easter"
-    case pacificEfate = "Pacific/Efate"
-    case pacificEnderbury = "Pacific/Enderbury"
-    case pacificFakaofo = "Pacific/Fakaofo"
-    case pacificFiji = "Pacific/Fiji"
-    case pacificFunafuti = "Pacific/Funafuti"
-    case pacificGalapagos = "Pacific/Galapagos"
-    case pacificGambier = "Pacific/Gambier"
-    case pacificGuadalcanal = "Pacific/Guadalcanal"
-    case pacificGuam = "Pacific/Guam"
-    case pacificHonolulu = "Pacific/Honolulu"
-    case pacificJohnston = "Pacific/Johnston"
-    case pacificKanton = "Pacific/Kanton"
-    case pacificKiritimati = "Pacific/Kiritimati"
-    case pacificKosrae = "Pacific/Kosrae"
-    case pacificKwajalein = "Pacific/Kwajalein"
-    case pacificMajuro = "Pacific/Majuro"
-    case pacificMarquesas = "Pacific/Marquesas"
-    case pacificMidway = "Pacific/Midway"
-    case pacificNauru = "Pacific/Nauru"
-    case pacificNiue = "Pacific/Niue"
-    case pacificNorfolk = "Pacific/Norfolk"
-    case pacificNoumea = "Pacific/Noumea"
-    case pacificPagoPago = "Pacific/Pago_Pago"
-    case pacificPalau = "Pacific/Palau"
-    case pacificPitcairn = "Pacific/Pitcairn"
-    case pacificPohnpei = "Pacific/Pohnpei"
-    case pacificPonape = "Pacific/Ponape"
-    case pacificPortMoresby = "Pacific/Port_Moresby"
-    case pacificRarotonga = "Pacific/Rarotonga"
-    case pacificSaipan = "Pacific/Saipan"
-    case pacificSamoa = "Pacific/Samoa"
-    case pacificTahiti = "Pacific/Tahiti"
-    case pacificTarawa = "Pacific/Tarawa"
-    case pacificTongatapu = "Pacific/Tongatapu"
-    case pacificTruk = "Pacific/Truk"
-    case pacificWake = "Pacific/Wake"
-    case pacificWallis = "Pacific/Wallis"
-    case pacificYap = "Pacific/Yap"
-    case poland = "Poland"
-    case portugal = "Portugal"
-    case roc = "ROC"
-    case rok = "ROK"
-    case singapore = "Singapore"
-    case turkey = "Turkey"
-    case uct = "UCT"
-    case usAlaska = "US/Alaska"
-    case usAleutian = "US/Aleutian"
-    case usArizona = "US/Arizona"
-    case usCentral = "US/Central"
-    case usEastIndiana = "US/East-Indiana"
-    case usEastern = "US/Eastern"
-    case usHawaii = "US/Hawaii"
-    case usIndianaStarke = "US/Indiana-Starke"
-    case usMichigan = "US/Michigan"
-    case usMountain = "US/Mountain"
-    case usPacific = "US/Pacific"
-    case usPacificNew = "US/Pacific-New"
-    case usSamoa = "US/Samoa"
-    case utc = "UTC"
-    case universal = "Universal"
-    case wSu = "W-SU"
-    case wet = "WET"
-    case zulu = "Zulu"
+public struct ReportingReportRunCreateParametersTimezone: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var africaAbidjan: Self { .init(rawValue: "Africa/Abidjan") }
+    public static var africaAccra: Self { .init(rawValue: "Africa/Accra") }
+    public static var africaAddisAbaba: Self { .init(rawValue: "Africa/Addis_Ababa") }
+    public static var africaAlgiers: Self { .init(rawValue: "Africa/Algiers") }
+    public static var africaAsmara: Self { .init(rawValue: "Africa/Asmara") }
+    public static var africaAsmera: Self { .init(rawValue: "Africa/Asmera") }
+    public static var africaBamako: Self { .init(rawValue: "Africa/Bamako") }
+    public static var africaBangui: Self { .init(rawValue: "Africa/Bangui") }
+    public static var africaBanjul: Self { .init(rawValue: "Africa/Banjul") }
+    public static var africaBissau: Self { .init(rawValue: "Africa/Bissau") }
+    public static var africaBlantyre: Self { .init(rawValue: "Africa/Blantyre") }
+    public static var africaBrazzaville: Self { .init(rawValue: "Africa/Brazzaville") }
+    public static var africaBujumbura: Self { .init(rawValue: "Africa/Bujumbura") }
+    public static var africaCairo: Self { .init(rawValue: "Africa/Cairo") }
+    public static var africaCasablanca: Self { .init(rawValue: "Africa/Casablanca") }
+    public static var africaCeuta: Self { .init(rawValue: "Africa/Ceuta") }
+    public static var africaConakry: Self { .init(rawValue: "Africa/Conakry") }
+    public static var africaDakar: Self { .init(rawValue: "Africa/Dakar") }
+    public static var africaDarEsSalaam: Self { .init(rawValue: "Africa/Dar_es_Salaam") }
+    public static var africaDjibouti: Self { .init(rawValue: "Africa/Djibouti") }
+    public static var africaDouala: Self { .init(rawValue: "Africa/Douala") }
+    public static var africaElAaiun: Self { .init(rawValue: "Africa/El_Aaiun") }
+    public static var africaFreetown: Self { .init(rawValue: "Africa/Freetown") }
+    public static var africaGaborone: Self { .init(rawValue: "Africa/Gaborone") }
+    public static var africaHarare: Self { .init(rawValue: "Africa/Harare") }
+    public static var africaJohannesburg: Self { .init(rawValue: "Africa/Johannesburg") }
+    public static var africaJuba: Self { .init(rawValue: "Africa/Juba") }
+    public static var africaKampala: Self { .init(rawValue: "Africa/Kampala") }
+    public static var africaKhartoum: Self { .init(rawValue: "Africa/Khartoum") }
+    public static var africaKigali: Self { .init(rawValue: "Africa/Kigali") }
+    public static var africaKinshasa: Self { .init(rawValue: "Africa/Kinshasa") }
+    public static var africaLagos: Self { .init(rawValue: "Africa/Lagos") }
+    public static var africaLibreville: Self { .init(rawValue: "Africa/Libreville") }
+    public static var africaLome: Self { .init(rawValue: "Africa/Lome") }
+    public static var africaLuanda: Self { .init(rawValue: "Africa/Luanda") }
+    public static var africaLubumbashi: Self { .init(rawValue: "Africa/Lubumbashi") }
+    public static var africaLusaka: Self { .init(rawValue: "Africa/Lusaka") }
+    public static var africaMalabo: Self { .init(rawValue: "Africa/Malabo") }
+    public static var africaMaputo: Self { .init(rawValue: "Africa/Maputo") }
+    public static var africaMaseru: Self { .init(rawValue: "Africa/Maseru") }
+    public static var africaMbabane: Self { .init(rawValue: "Africa/Mbabane") }
+    public static var africaMogadishu: Self { .init(rawValue: "Africa/Mogadishu") }
+    public static var africaMonrovia: Self { .init(rawValue: "Africa/Monrovia") }
+    public static var africaNairobi: Self { .init(rawValue: "Africa/Nairobi") }
+    public static var africaNdjamena: Self { .init(rawValue: "Africa/Ndjamena") }
+    public static var africaNiamey: Self { .init(rawValue: "Africa/Niamey") }
+    public static var africaNouakchott: Self { .init(rawValue: "Africa/Nouakchott") }
+    public static var africaOuagadougou: Self { .init(rawValue: "Africa/Ouagadougou") }
+    public static var africaPortoNovo: Self { .init(rawValue: "Africa/Porto-Novo") }
+    public static var africaSaoTome: Self { .init(rawValue: "Africa/Sao_Tome") }
+    public static var africaTimbuktu: Self { .init(rawValue: "Africa/Timbuktu") }
+    public static var africaTripoli: Self { .init(rawValue: "Africa/Tripoli") }
+    public static var africaTunis: Self { .init(rawValue: "Africa/Tunis") }
+    public static var africaWindhoek: Self { .init(rawValue: "Africa/Windhoek") }
+    public static var americaAdak: Self { .init(rawValue: "America/Adak") }
+    public static var americaAnchorage: Self { .init(rawValue: "America/Anchorage") }
+    public static var americaAnguilla: Self { .init(rawValue: "America/Anguilla") }
+    public static var americaAntigua: Self { .init(rawValue: "America/Antigua") }
+    public static var americaAraguaina: Self { .init(rawValue: "America/Araguaina") }
+    public static var americaArgentinaBuenosAires: Self { .init(rawValue: "America/Argentina/Buenos_Aires") }
+    public static var americaArgentinaCatamarca: Self { .init(rawValue: "America/Argentina/Catamarca") }
+    public static var americaArgentinaComodrivadavia: Self { .init(rawValue: "America/Argentina/ComodRivadavia") }
+    public static var americaArgentinaCordoba: Self { .init(rawValue: "America/Argentina/Cordoba") }
+    public static var americaArgentinaJujuy: Self { .init(rawValue: "America/Argentina/Jujuy") }
+    public static var americaArgentinaLaRioja: Self { .init(rawValue: "America/Argentina/La_Rioja") }
+    public static var americaArgentinaMendoza: Self { .init(rawValue: "America/Argentina/Mendoza") }
+    public static var americaArgentinaRioGallegos: Self { .init(rawValue: "America/Argentina/Rio_Gallegos") }
+    public static var americaArgentinaSalta: Self { .init(rawValue: "America/Argentina/Salta") }
+    public static var americaArgentinaSanJuan: Self { .init(rawValue: "America/Argentina/San_Juan") }
+    public static var americaArgentinaSanLuis: Self { .init(rawValue: "America/Argentina/San_Luis") }
+    public static var americaArgentinaTucuman: Self { .init(rawValue: "America/Argentina/Tucuman") }
+    public static var americaArgentinaUshuaia: Self { .init(rawValue: "America/Argentina/Ushuaia") }
+    public static var americaAruba: Self { .init(rawValue: "America/Aruba") }
+    public static var americaAsuncion: Self { .init(rawValue: "America/Asuncion") }
+    public static var americaAtikokan: Self { .init(rawValue: "America/Atikokan") }
+    public static var americaAtka: Self { .init(rawValue: "America/Atka") }
+    public static var americaBahia: Self { .init(rawValue: "America/Bahia") }
+    public static var americaBahiaBanderas: Self { .init(rawValue: "America/Bahia_Banderas") }
+    public static var americaBarbados: Self { .init(rawValue: "America/Barbados") }
+    public static var americaBelem: Self { .init(rawValue: "America/Belem") }
+    public static var americaBelize: Self { .init(rawValue: "America/Belize") }
+    public static var americaBlancSablon: Self { .init(rawValue: "America/Blanc-Sablon") }
+    public static var americaBoaVista: Self { .init(rawValue: "America/Boa_Vista") }
+    public static var americaBogota: Self { .init(rawValue: "America/Bogota") }
+    public static var americaBoise: Self { .init(rawValue: "America/Boise") }
+    public static var americaBuenosAires: Self { .init(rawValue: "America/Buenos_Aires") }
+    public static var americaCambridgeBay: Self { .init(rawValue: "America/Cambridge_Bay") }
+    public static var americaCampoGrande: Self { .init(rawValue: "America/Campo_Grande") }
+    public static var americaCancun: Self { .init(rawValue: "America/Cancun") }
+    public static var americaCaracas: Self { .init(rawValue: "America/Caracas") }
+    public static var americaCatamarca: Self { .init(rawValue: "America/Catamarca") }
+    public static var americaCayenne: Self { .init(rawValue: "America/Cayenne") }
+    public static var americaCayman: Self { .init(rawValue: "America/Cayman") }
+    public static var americaChicago: Self { .init(rawValue: "America/Chicago") }
+    public static var americaChihuahua: Self { .init(rawValue: "America/Chihuahua") }
+    public static var americaCiudadJuarez: Self { .init(rawValue: "America/Ciudad_Juarez") }
+    public static var americaCoralHarbour: Self { .init(rawValue: "America/Coral_Harbour") }
+    public static var americaCordoba: Self { .init(rawValue: "America/Cordoba") }
+    public static var americaCostaRica: Self { .init(rawValue: "America/Costa_Rica") }
+    public static var americaCoyhaique: Self { .init(rawValue: "America/Coyhaique") }
+    public static var americaCreston: Self { .init(rawValue: "America/Creston") }
+    public static var americaCuiaba: Self { .init(rawValue: "America/Cuiaba") }
+    public static var americaCuracao: Self { .init(rawValue: "America/Curacao") }
+    public static var americaDanmarkshavn: Self { .init(rawValue: "America/Danmarkshavn") }
+    public static var americaDawson: Self { .init(rawValue: "America/Dawson") }
+    public static var americaDawsonCreek: Self { .init(rawValue: "America/Dawson_Creek") }
+    public static var americaDenver: Self { .init(rawValue: "America/Denver") }
+    public static var americaDetroit: Self { .init(rawValue: "America/Detroit") }
+    public static var americaDominica: Self { .init(rawValue: "America/Dominica") }
+    public static var americaEdmonton: Self { .init(rawValue: "America/Edmonton") }
+    public static var americaEirunepe: Self { .init(rawValue: "America/Eirunepe") }
+    public static var americaElSalvador: Self { .init(rawValue: "America/El_Salvador") }
+    public static var americaEnsenada: Self { .init(rawValue: "America/Ensenada") }
+    public static var americaFortNelson: Self { .init(rawValue: "America/Fort_Nelson") }
+    public static var americaFortWayne: Self { .init(rawValue: "America/Fort_Wayne") }
+    public static var americaFortaleza: Self { .init(rawValue: "America/Fortaleza") }
+    public static var americaGlaceBay: Self { .init(rawValue: "America/Glace_Bay") }
+    public static var americaGodthab: Self { .init(rawValue: "America/Godthab") }
+    public static var americaGooseBay: Self { .init(rawValue: "America/Goose_Bay") }
+    public static var americaGrandTurk: Self { .init(rawValue: "America/Grand_Turk") }
+    public static var americaGrenada: Self { .init(rawValue: "America/Grenada") }
+    public static var americaGuadeloupe: Self { .init(rawValue: "America/Guadeloupe") }
+    public static var americaGuatemala: Self { .init(rawValue: "America/Guatemala") }
+    public static var americaGuayaquil: Self { .init(rawValue: "America/Guayaquil") }
+    public static var americaGuyana: Self { .init(rawValue: "America/Guyana") }
+    public static var americaHalifax: Self { .init(rawValue: "America/Halifax") }
+    public static var americaHavana: Self { .init(rawValue: "America/Havana") }
+    public static var americaHermosillo: Self { .init(rawValue: "America/Hermosillo") }
+    public static var americaIndianaIndianapolis: Self { .init(rawValue: "America/Indiana/Indianapolis") }
+    public static var americaIndianaKnox: Self { .init(rawValue: "America/Indiana/Knox") }
+    public static var americaIndianaMarengo: Self { .init(rawValue: "America/Indiana/Marengo") }
+    public static var americaIndianaPetersburg: Self { .init(rawValue: "America/Indiana/Petersburg") }
+    public static var americaIndianaTellCity: Self { .init(rawValue: "America/Indiana/Tell_City") }
+    public static var americaIndianaVevay: Self { .init(rawValue: "America/Indiana/Vevay") }
+    public static var americaIndianaVincennes: Self { .init(rawValue: "America/Indiana/Vincennes") }
+    public static var americaIndianaWinamac: Self { .init(rawValue: "America/Indiana/Winamac") }
+    public static var americaIndianapolis: Self { .init(rawValue: "America/Indianapolis") }
+    public static var americaInuvik: Self { .init(rawValue: "America/Inuvik") }
+    public static var americaIqaluit: Self { .init(rawValue: "America/Iqaluit") }
+    public static var americaJamaica: Self { .init(rawValue: "America/Jamaica") }
+    public static var americaJujuy: Self { .init(rawValue: "America/Jujuy") }
+    public static var americaJuneau: Self { .init(rawValue: "America/Juneau") }
+    public static var americaKentuckyLouisville: Self { .init(rawValue: "America/Kentucky/Louisville") }
+    public static var americaKentuckyMonticello: Self { .init(rawValue: "America/Kentucky/Monticello") }
+    public static var americaKnoxIn: Self { .init(rawValue: "America/Knox_IN") }
+    public static var americaKralendijk: Self { .init(rawValue: "America/Kralendijk") }
+    public static var americaLaPaz: Self { .init(rawValue: "America/La_Paz") }
+    public static var americaLima: Self { .init(rawValue: "America/Lima") }
+    public static var americaLosAngeles: Self { .init(rawValue: "America/Los_Angeles") }
+    public static var americaLouisville: Self { .init(rawValue: "America/Louisville") }
+    public static var americaLowerPrinces: Self { .init(rawValue: "America/Lower_Princes") }
+    public static var americaMaceio: Self { .init(rawValue: "America/Maceio") }
+    public static var americaManagua: Self { .init(rawValue: "America/Managua") }
+    public static var americaManaus: Self { .init(rawValue: "America/Manaus") }
+    public static var americaMarigot: Self { .init(rawValue: "America/Marigot") }
+    public static var americaMartinique: Self { .init(rawValue: "America/Martinique") }
+    public static var americaMatamoros: Self { .init(rawValue: "America/Matamoros") }
+    public static var americaMazatlan: Self { .init(rawValue: "America/Mazatlan") }
+    public static var americaMendoza: Self { .init(rawValue: "America/Mendoza") }
+    public static var americaMenominee: Self { .init(rawValue: "America/Menominee") }
+    public static var americaMerida: Self { .init(rawValue: "America/Merida") }
+    public static var americaMetlakatla: Self { .init(rawValue: "America/Metlakatla") }
+    public static var americaMexicoCity: Self { .init(rawValue: "America/Mexico_City") }
+    public static var americaMiquelon: Self { .init(rawValue: "America/Miquelon") }
+    public static var americaMoncton: Self { .init(rawValue: "America/Moncton") }
+    public static var americaMonterrey: Self { .init(rawValue: "America/Monterrey") }
+    public static var americaMontevideo: Self { .init(rawValue: "America/Montevideo") }
+    public static var americaMontreal: Self { .init(rawValue: "America/Montreal") }
+    public static var americaMontserrat: Self { .init(rawValue: "America/Montserrat") }
+    public static var americaNassau: Self { .init(rawValue: "America/Nassau") }
+    public static var americaNewYork: Self { .init(rawValue: "America/New_York") }
+    public static var americaNipigon: Self { .init(rawValue: "America/Nipigon") }
+    public static var americaNome: Self { .init(rawValue: "America/Nome") }
+    public static var americaNoronha: Self { .init(rawValue: "America/Noronha") }
+    public static var americaNorthDakotaBeulah: Self { .init(rawValue: "America/North_Dakota/Beulah") }
+    public static var americaNorthDakotaCenter: Self { .init(rawValue: "America/North_Dakota/Center") }
+    public static var americaNorthDakotaNewSalem: Self { .init(rawValue: "America/North_Dakota/New_Salem") }
+    public static var americaNuuk: Self { .init(rawValue: "America/Nuuk") }
+    public static var americaOjinaga: Self { .init(rawValue: "America/Ojinaga") }
+    public static var americaPanama: Self { .init(rawValue: "America/Panama") }
+    public static var americaPangnirtung: Self { .init(rawValue: "America/Pangnirtung") }
+    public static var americaParamaribo: Self { .init(rawValue: "America/Paramaribo") }
+    public static var americaPhoenix: Self { .init(rawValue: "America/Phoenix") }
+    public static var americaPortAuPrince: Self { .init(rawValue: "America/Port-au-Prince") }
+    public static var americaPortOfSpain: Self { .init(rawValue: "America/Port_of_Spain") }
+    public static var americaPortoAcre: Self { .init(rawValue: "America/Porto_Acre") }
+    public static var americaPortoVelho: Self { .init(rawValue: "America/Porto_Velho") }
+    public static var americaPuertoRico: Self { .init(rawValue: "America/Puerto_Rico") }
+    public static var americaPuntaArenas: Self { .init(rawValue: "America/Punta_Arenas") }
+    public static var americaRainyRiver: Self { .init(rawValue: "America/Rainy_River") }
+    public static var americaRankinInlet: Self { .init(rawValue: "America/Rankin_Inlet") }
+    public static var americaRecife: Self { .init(rawValue: "America/Recife") }
+    public static var americaRegina: Self { .init(rawValue: "America/Regina") }
+    public static var americaResolute: Self { .init(rawValue: "America/Resolute") }
+    public static var americaRioBranco: Self { .init(rawValue: "America/Rio_Branco") }
+    public static var americaRosario: Self { .init(rawValue: "America/Rosario") }
+    public static var americaSantaIsabel: Self { .init(rawValue: "America/Santa_Isabel") }
+    public static var americaSantarem: Self { .init(rawValue: "America/Santarem") }
+    public static var americaSantiago: Self { .init(rawValue: "America/Santiago") }
+    public static var americaSantoDomingo: Self { .init(rawValue: "America/Santo_Domingo") }
+    public static var americaSaoPaulo: Self { .init(rawValue: "America/Sao_Paulo") }
+    public static var americaScoresbysund: Self { .init(rawValue: "America/Scoresbysund") }
+    public static var americaShiprock: Self { .init(rawValue: "America/Shiprock") }
+    public static var americaSitka: Self { .init(rawValue: "America/Sitka") }
+    public static var americaStBarthelemy: Self { .init(rawValue: "America/St_Barthelemy") }
+    public static var americaStJohns: Self { .init(rawValue: "America/St_Johns") }
+    public static var americaStKitts: Self { .init(rawValue: "America/St_Kitts") }
+    public static var americaStLucia: Self { .init(rawValue: "America/St_Lucia") }
+    public static var americaStThomas: Self { .init(rawValue: "America/St_Thomas") }
+    public static var americaStVincent: Self { .init(rawValue: "America/St_Vincent") }
+    public static var americaSwiftCurrent: Self { .init(rawValue: "America/Swift_Current") }
+    public static var americaTegucigalpa: Self { .init(rawValue: "America/Tegucigalpa") }
+    public static var americaThule: Self { .init(rawValue: "America/Thule") }
+    public static var americaThunderBay: Self { .init(rawValue: "America/Thunder_Bay") }
+    public static var americaTijuana: Self { .init(rawValue: "America/Tijuana") }
+    public static var americaToronto: Self { .init(rawValue: "America/Toronto") }
+    public static var americaTortola: Self { .init(rawValue: "America/Tortola") }
+    public static var americaVancouver: Self { .init(rawValue: "America/Vancouver") }
+    public static var americaVirgin: Self { .init(rawValue: "America/Virgin") }
+    public static var americaWhitehorse: Self { .init(rawValue: "America/Whitehorse") }
+    public static var americaWinnipeg: Self { .init(rawValue: "America/Winnipeg") }
+    public static var americaYakutat: Self { .init(rawValue: "America/Yakutat") }
+    public static var americaYellowknife: Self { .init(rawValue: "America/Yellowknife") }
+    public static var antarcticaCasey: Self { .init(rawValue: "Antarctica/Casey") }
+    public static var antarcticaDavis: Self { .init(rawValue: "Antarctica/Davis") }
+    public static var antarcticaDumontdurville: Self { .init(rawValue: "Antarctica/DumontDUrville") }
+    public static var antarcticaMacquarie: Self { .init(rawValue: "Antarctica/Macquarie") }
+    public static var antarcticaMawson: Self { .init(rawValue: "Antarctica/Mawson") }
+    public static var antarcticaMcmurdo: Self { .init(rawValue: "Antarctica/McMurdo") }
+    public static var antarcticaPalmer: Self { .init(rawValue: "Antarctica/Palmer") }
+    public static var antarcticaRothera: Self { .init(rawValue: "Antarctica/Rothera") }
+    public static var antarcticaSouthPole: Self { .init(rawValue: "Antarctica/South_Pole") }
+    public static var antarcticaSyowa: Self { .init(rawValue: "Antarctica/Syowa") }
+    public static var antarcticaTroll: Self { .init(rawValue: "Antarctica/Troll") }
+    public static var antarcticaVostok: Self { .init(rawValue: "Antarctica/Vostok") }
+    public static var arcticLongyearbyen: Self { .init(rawValue: "Arctic/Longyearbyen") }
+    public static var asiaAden: Self { .init(rawValue: "Asia/Aden") }
+    public static var asiaAlmaty: Self { .init(rawValue: "Asia/Almaty") }
+    public static var asiaAmman: Self { .init(rawValue: "Asia/Amman") }
+    public static var asiaAnadyr: Self { .init(rawValue: "Asia/Anadyr") }
+    public static var asiaAqtau: Self { .init(rawValue: "Asia/Aqtau") }
+    public static var asiaAqtobe: Self { .init(rawValue: "Asia/Aqtobe") }
+    public static var asiaAshgabat: Self { .init(rawValue: "Asia/Ashgabat") }
+    public static var asiaAshkhabad: Self { .init(rawValue: "Asia/Ashkhabad") }
+    public static var asiaAtyrau: Self { .init(rawValue: "Asia/Atyrau") }
+    public static var asiaBaghdad: Self { .init(rawValue: "Asia/Baghdad") }
+    public static var asiaBahrain: Self { .init(rawValue: "Asia/Bahrain") }
+    public static var asiaBaku: Self { .init(rawValue: "Asia/Baku") }
+    public static var asiaBangkok: Self { .init(rawValue: "Asia/Bangkok") }
+    public static var asiaBarnaul: Self { .init(rawValue: "Asia/Barnaul") }
+    public static var asiaBeirut: Self { .init(rawValue: "Asia/Beirut") }
+    public static var asiaBishkek: Self { .init(rawValue: "Asia/Bishkek") }
+    public static var asiaBrunei: Self { .init(rawValue: "Asia/Brunei") }
+    public static var asiaCalcutta: Self { .init(rawValue: "Asia/Calcutta") }
+    public static var asiaChita: Self { .init(rawValue: "Asia/Chita") }
+    public static var asiaChoibalsan: Self { .init(rawValue: "Asia/Choibalsan") }
+    public static var asiaChongqing: Self { .init(rawValue: "Asia/Chongqing") }
+    public static var asiaChungking: Self { .init(rawValue: "Asia/Chungking") }
+    public static var asiaColombo: Self { .init(rawValue: "Asia/Colombo") }
+    public static var asiaDacca: Self { .init(rawValue: "Asia/Dacca") }
+    public static var asiaDamascus: Self { .init(rawValue: "Asia/Damascus") }
+    public static var asiaDhaka: Self { .init(rawValue: "Asia/Dhaka") }
+    public static var asiaDili: Self { .init(rawValue: "Asia/Dili") }
+    public static var asiaDubai: Self { .init(rawValue: "Asia/Dubai") }
+    public static var asiaDushanbe: Self { .init(rawValue: "Asia/Dushanbe") }
+    public static var asiaFamagusta: Self { .init(rawValue: "Asia/Famagusta") }
+    public static var asiaGaza: Self { .init(rawValue: "Asia/Gaza") }
+    public static var asiaHarbin: Self { .init(rawValue: "Asia/Harbin") }
+    public static var asiaHebron: Self { .init(rawValue: "Asia/Hebron") }
+    public static var asiaHoChiMinh: Self { .init(rawValue: "Asia/Ho_Chi_Minh") }
+    public static var asiaHongKong: Self { .init(rawValue: "Asia/Hong_Kong") }
+    public static var asiaHovd: Self { .init(rawValue: "Asia/Hovd") }
+    public static var asiaIrkutsk: Self { .init(rawValue: "Asia/Irkutsk") }
+    public static var asiaIstanbul: Self { .init(rawValue: "Asia/Istanbul") }
+    public static var asiaJakarta: Self { .init(rawValue: "Asia/Jakarta") }
+    public static var asiaJayapura: Self { .init(rawValue: "Asia/Jayapura") }
+    public static var asiaJerusalem: Self { .init(rawValue: "Asia/Jerusalem") }
+    public static var asiaKabul: Self { .init(rawValue: "Asia/Kabul") }
+    public static var asiaKamchatka: Self { .init(rawValue: "Asia/Kamchatka") }
+    public static var asiaKarachi: Self { .init(rawValue: "Asia/Karachi") }
+    public static var asiaKashgar: Self { .init(rawValue: "Asia/Kashgar") }
+    public static var asiaKathmandu: Self { .init(rawValue: "Asia/Kathmandu") }
+    public static var asiaKatmandu: Self { .init(rawValue: "Asia/Katmandu") }
+    public static var asiaKhandyga: Self { .init(rawValue: "Asia/Khandyga") }
+    public static var asiaKolkata: Self { .init(rawValue: "Asia/Kolkata") }
+    public static var asiaKrasnoyarsk: Self { .init(rawValue: "Asia/Krasnoyarsk") }
+    public static var asiaKualaLumpur: Self { .init(rawValue: "Asia/Kuala_Lumpur") }
+    public static var asiaKuching: Self { .init(rawValue: "Asia/Kuching") }
+    public static var asiaKuwait: Self { .init(rawValue: "Asia/Kuwait") }
+    public static var asiaMacao: Self { .init(rawValue: "Asia/Macao") }
+    public static var asiaMacau: Self { .init(rawValue: "Asia/Macau") }
+    public static var asiaMagadan: Self { .init(rawValue: "Asia/Magadan") }
+    public static var asiaMakassar: Self { .init(rawValue: "Asia/Makassar") }
+    public static var asiaManila: Self { .init(rawValue: "Asia/Manila") }
+    public static var asiaMuscat: Self { .init(rawValue: "Asia/Muscat") }
+    public static var asiaNicosia: Self { .init(rawValue: "Asia/Nicosia") }
+    public static var asiaNovokuznetsk: Self { .init(rawValue: "Asia/Novokuznetsk") }
+    public static var asiaNovosibirsk: Self { .init(rawValue: "Asia/Novosibirsk") }
+    public static var asiaOmsk: Self { .init(rawValue: "Asia/Omsk") }
+    public static var asiaOral: Self { .init(rawValue: "Asia/Oral") }
+    public static var asiaPhnomPenh: Self { .init(rawValue: "Asia/Phnom_Penh") }
+    public static var asiaPontianak: Self { .init(rawValue: "Asia/Pontianak") }
+    public static var asiaPyongyang: Self { .init(rawValue: "Asia/Pyongyang") }
+    public static var asiaQatar: Self { .init(rawValue: "Asia/Qatar") }
+    public static var asiaQostanay: Self { .init(rawValue: "Asia/Qostanay") }
+    public static var asiaQyzylorda: Self { .init(rawValue: "Asia/Qyzylorda") }
+    public static var asiaRangoon: Self { .init(rawValue: "Asia/Rangoon") }
+    public static var asiaRiyadh: Self { .init(rawValue: "Asia/Riyadh") }
+    public static var asiaSaigon: Self { .init(rawValue: "Asia/Saigon") }
+    public static var asiaSakhalin: Self { .init(rawValue: "Asia/Sakhalin") }
+    public static var asiaSamarkand: Self { .init(rawValue: "Asia/Samarkand") }
+    public static var asiaSeoul: Self { .init(rawValue: "Asia/Seoul") }
+    public static var asiaShanghai: Self { .init(rawValue: "Asia/Shanghai") }
+    public static var asiaSingapore: Self { .init(rawValue: "Asia/Singapore") }
+    public static var asiaSrednekolymsk: Self { .init(rawValue: "Asia/Srednekolymsk") }
+    public static var asiaTaipei: Self { .init(rawValue: "Asia/Taipei") }
+    public static var asiaTashkent: Self { .init(rawValue: "Asia/Tashkent") }
+    public static var asiaTbilisi: Self { .init(rawValue: "Asia/Tbilisi") }
+    public static var asiaTehran: Self { .init(rawValue: "Asia/Tehran") }
+    public static var asiaTelAviv: Self { .init(rawValue: "Asia/Tel_Aviv") }
+    public static var asiaThimbu: Self { .init(rawValue: "Asia/Thimbu") }
+    public static var asiaThimphu: Self { .init(rawValue: "Asia/Thimphu") }
+    public static var asiaTokyo: Self { .init(rawValue: "Asia/Tokyo") }
+    public static var asiaTomsk: Self { .init(rawValue: "Asia/Tomsk") }
+    public static var asiaUjungPandang: Self { .init(rawValue: "Asia/Ujung_Pandang") }
+    public static var asiaUlaanbaatar: Self { .init(rawValue: "Asia/Ulaanbaatar") }
+    public static var asiaUlanBator: Self { .init(rawValue: "Asia/Ulan_Bator") }
+    public static var asiaUrumqi: Self { .init(rawValue: "Asia/Urumqi") }
+    public static var asiaUstNera: Self { .init(rawValue: "Asia/Ust-Nera") }
+    public static var asiaVientiane: Self { .init(rawValue: "Asia/Vientiane") }
+    public static var asiaVladivostok: Self { .init(rawValue: "Asia/Vladivostok") }
+    public static var asiaYakutsk: Self { .init(rawValue: "Asia/Yakutsk") }
+    public static var asiaYangon: Self { .init(rawValue: "Asia/Yangon") }
+    public static var asiaYekaterinburg: Self { .init(rawValue: "Asia/Yekaterinburg") }
+    public static var asiaYerevan: Self { .init(rawValue: "Asia/Yerevan") }
+    public static var atlanticAzores: Self { .init(rawValue: "Atlantic/Azores") }
+    public static var atlanticBermuda: Self { .init(rawValue: "Atlantic/Bermuda") }
+    public static var atlanticCanary: Self { .init(rawValue: "Atlantic/Canary") }
+    public static var atlanticCapeVerde: Self { .init(rawValue: "Atlantic/Cape_Verde") }
+    public static var atlanticFaeroe: Self { .init(rawValue: "Atlantic/Faeroe") }
+    public static var atlanticFaroe: Self { .init(rawValue: "Atlantic/Faroe") }
+    public static var atlanticJanMayen: Self { .init(rawValue: "Atlantic/Jan_Mayen") }
+    public static var atlanticMadeira: Self { .init(rawValue: "Atlantic/Madeira") }
+    public static var atlanticReykjavik: Self { .init(rawValue: "Atlantic/Reykjavik") }
+    public static var atlanticSouthGeorgia: Self { .init(rawValue: "Atlantic/South_Georgia") }
+    public static var atlanticStHelena: Self { .init(rawValue: "Atlantic/St_Helena") }
+    public static var atlanticStanley: Self { .init(rawValue: "Atlantic/Stanley") }
+    public static var australiaAct: Self { .init(rawValue: "Australia/ACT") }
+    public static var australiaAdelaide: Self { .init(rawValue: "Australia/Adelaide") }
+    public static var australiaBrisbane: Self { .init(rawValue: "Australia/Brisbane") }
+    public static var australiaBrokenHill: Self { .init(rawValue: "Australia/Broken_Hill") }
+    public static var australiaCanberra: Self { .init(rawValue: "Australia/Canberra") }
+    public static var australiaCurrie: Self { .init(rawValue: "Australia/Currie") }
+    public static var australiaDarwin: Self { .init(rawValue: "Australia/Darwin") }
+    public static var australiaEucla: Self { .init(rawValue: "Australia/Eucla") }
+    public static var australiaHobart: Self { .init(rawValue: "Australia/Hobart") }
+    public static var australiaLhi: Self { .init(rawValue: "Australia/LHI") }
+    public static var australiaLindeman: Self { .init(rawValue: "Australia/Lindeman") }
+    public static var australiaLordHowe: Self { .init(rawValue: "Australia/Lord_Howe") }
+    public static var australiaMelbourne: Self { .init(rawValue: "Australia/Melbourne") }
+    public static var australiaNsw: Self { .init(rawValue: "Australia/NSW") }
+    public static var australiaNorth: Self { .init(rawValue: "Australia/North") }
+    public static var australiaPerth: Self { .init(rawValue: "Australia/Perth") }
+    public static var australiaQueensland: Self { .init(rawValue: "Australia/Queensland") }
+    public static var australiaSouth: Self { .init(rawValue: "Australia/South") }
+    public static var australiaSydney: Self { .init(rawValue: "Australia/Sydney") }
+    public static var australiaTasmania: Self { .init(rawValue: "Australia/Tasmania") }
+    public static var australiaVictoria: Self { .init(rawValue: "Australia/Victoria") }
+    public static var australiaWest: Self { .init(rawValue: "Australia/West") }
+    public static var australiaYancowinna: Self { .init(rawValue: "Australia/Yancowinna") }
+    public static var brazilAcre: Self { .init(rawValue: "Brazil/Acre") }
+    public static var brazilDenoronha: Self { .init(rawValue: "Brazil/DeNoronha") }
+    public static var brazilEast: Self { .init(rawValue: "Brazil/East") }
+    public static var brazilWest: Self { .init(rawValue: "Brazil/West") }
+    public static var cet: Self { .init(rawValue: "CET") }
+    public static var cst6cdt: Self { .init(rawValue: "CST6CDT") }
+    public static var canadaAtlantic: Self { .init(rawValue: "Canada/Atlantic") }
+    public static var canadaCentral: Self { .init(rawValue: "Canada/Central") }
+    public static var canadaEastern: Self { .init(rawValue: "Canada/Eastern") }
+    public static var canadaMountain: Self { .init(rawValue: "Canada/Mountain") }
+    public static var canadaNewfoundland: Self { .init(rawValue: "Canada/Newfoundland") }
+    public static var canadaPacific: Self { .init(rawValue: "Canada/Pacific") }
+    public static var canadaSaskatchewan: Self { .init(rawValue: "Canada/Saskatchewan") }
+    public static var canadaYukon: Self { .init(rawValue: "Canada/Yukon") }
+    public static var chileContinental: Self { .init(rawValue: "Chile/Continental") }
+    public static var chileEasterisland: Self { .init(rawValue: "Chile/EasterIsland") }
+    public static var cuba: Self { .init(rawValue: "Cuba") }
+    public static var eet: Self { .init(rawValue: "EET") }
+    public static var est: Self { .init(rawValue: "EST") }
+    public static var est5edt: Self { .init(rawValue: "EST5EDT") }
+    public static var egypt: Self { .init(rawValue: "Egypt") }
+    public static var eire: Self { .init(rawValue: "Eire") }
+    public static var etcGmt: Self { .init(rawValue: "Etc/GMT") }
+    public static var etcGmt0: Self { .init(rawValue: "Etc/GMT+0") }
+    public static var etcGmt1: Self { .init(rawValue: "Etc/GMT+1") }
+    public static var etcGmt10: Self { .init(rawValue: "Etc/GMT+10") }
+    public static var etcGmt11: Self { .init(rawValue: "Etc/GMT+11") }
+    public static var etcGmt12: Self { .init(rawValue: "Etc/GMT+12") }
+    public static var etcGmt2: Self { .init(rawValue: "Etc/GMT+2") }
+    public static var etcGmt3: Self { .init(rawValue: "Etc/GMT+3") }
+    public static var etcGmt4: Self { .init(rawValue: "Etc/GMT+4") }
+    public static var etcGmt5: Self { .init(rawValue: "Etc/GMT+5") }
+    public static var etcGmt6: Self { .init(rawValue: "Etc/GMT+6") }
+    public static var etcGmt7: Self { .init(rawValue: "Etc/GMT+7") }
+    public static var etcGmt8: Self { .init(rawValue: "Etc/GMT+8") }
+    public static var etcGmt9: Self { .init(rawValue: "Etc/GMT+9") }
+    public static var etcGmt13: Self { .init(rawValue: "Etc/GMT-13") }
+    public static var etcGmt14: Self { .init(rawValue: "Etc/GMT-14") }
+    public static var etcGreenwich: Self { .init(rawValue: "Etc/Greenwich") }
+    public static var etcUct: Self { .init(rawValue: "Etc/UCT") }
+    public static var etcUtc: Self { .init(rawValue: "Etc/UTC") }
+    public static var etcUniversal: Self { .init(rawValue: "Etc/Universal") }
+    public static var etcZulu: Self { .init(rawValue: "Etc/Zulu") }
+    public static var europeAmsterdam: Self { .init(rawValue: "Europe/Amsterdam") }
+    public static var europeAndorra: Self { .init(rawValue: "Europe/Andorra") }
+    public static var europeAstrakhan: Self { .init(rawValue: "Europe/Astrakhan") }
+    public static var europeAthens: Self { .init(rawValue: "Europe/Athens") }
+    public static var europeBelfast: Self { .init(rawValue: "Europe/Belfast") }
+    public static var europeBelgrade: Self { .init(rawValue: "Europe/Belgrade") }
+    public static var europeBerlin: Self { .init(rawValue: "Europe/Berlin") }
+    public static var europeBratislava: Self { .init(rawValue: "Europe/Bratislava") }
+    public static var europeBrussels: Self { .init(rawValue: "Europe/Brussels") }
+    public static var europeBucharest: Self { .init(rawValue: "Europe/Bucharest") }
+    public static var europeBudapest: Self { .init(rawValue: "Europe/Budapest") }
+    public static var europeBusingen: Self { .init(rawValue: "Europe/Busingen") }
+    public static var europeChisinau: Self { .init(rawValue: "Europe/Chisinau") }
+    public static var europeCopenhagen: Self { .init(rawValue: "Europe/Copenhagen") }
+    public static var europeDublin: Self { .init(rawValue: "Europe/Dublin") }
+    public static var europeGibraltar: Self { .init(rawValue: "Europe/Gibraltar") }
+    public static var europeGuernsey: Self { .init(rawValue: "Europe/Guernsey") }
+    public static var europeHelsinki: Self { .init(rawValue: "Europe/Helsinki") }
+    public static var europeIsleOfMan: Self { .init(rawValue: "Europe/Isle_of_Man") }
+    public static var europeIstanbul: Self { .init(rawValue: "Europe/Istanbul") }
+    public static var europeJersey: Self { .init(rawValue: "Europe/Jersey") }
+    public static var europeKaliningrad: Self { .init(rawValue: "Europe/Kaliningrad") }
+    public static var europeKiev: Self { .init(rawValue: "Europe/Kiev") }
+    public static var europeKirov: Self { .init(rawValue: "Europe/Kirov") }
+    public static var europeKyiv: Self { .init(rawValue: "Europe/Kyiv") }
+    public static var europeLisbon: Self { .init(rawValue: "Europe/Lisbon") }
+    public static var europeLjubljana: Self { .init(rawValue: "Europe/Ljubljana") }
+    public static var europeLondon: Self { .init(rawValue: "Europe/London") }
+    public static var europeLuxembourg: Self { .init(rawValue: "Europe/Luxembourg") }
+    public static var europeMadrid: Self { .init(rawValue: "Europe/Madrid") }
+    public static var europeMalta: Self { .init(rawValue: "Europe/Malta") }
+    public static var europeMariehamn: Self { .init(rawValue: "Europe/Mariehamn") }
+    public static var europeMinsk: Self { .init(rawValue: "Europe/Minsk") }
+    public static var europeMonaco: Self { .init(rawValue: "Europe/Monaco") }
+    public static var europeMoscow: Self { .init(rawValue: "Europe/Moscow") }
+    public static var europeNicosia: Self { .init(rawValue: "Europe/Nicosia") }
+    public static var europeOslo: Self { .init(rawValue: "Europe/Oslo") }
+    public static var europeParis: Self { .init(rawValue: "Europe/Paris") }
+    public static var europePodgorica: Self { .init(rawValue: "Europe/Podgorica") }
+    public static var europePrague: Self { .init(rawValue: "Europe/Prague") }
+    public static var europeRiga: Self { .init(rawValue: "Europe/Riga") }
+    public static var europeRome: Self { .init(rawValue: "Europe/Rome") }
+    public static var europeSamara: Self { .init(rawValue: "Europe/Samara") }
+    public static var europeSanMarino: Self { .init(rawValue: "Europe/San_Marino") }
+    public static var europeSarajevo: Self { .init(rawValue: "Europe/Sarajevo") }
+    public static var europeSaratov: Self { .init(rawValue: "Europe/Saratov") }
+    public static var europeSimferopol: Self { .init(rawValue: "Europe/Simferopol") }
+    public static var europeSkopje: Self { .init(rawValue: "Europe/Skopje") }
+    public static var europeSofia: Self { .init(rawValue: "Europe/Sofia") }
+    public static var europeStockholm: Self { .init(rawValue: "Europe/Stockholm") }
+    public static var europeTallinn: Self { .init(rawValue: "Europe/Tallinn") }
+    public static var europeTirane: Self { .init(rawValue: "Europe/Tirane") }
+    public static var europeTiraspol: Self { .init(rawValue: "Europe/Tiraspol") }
+    public static var europeUlyanovsk: Self { .init(rawValue: "Europe/Ulyanovsk") }
+    public static var europeUzhgorod: Self { .init(rawValue: "Europe/Uzhgorod") }
+    public static var europeVaduz: Self { .init(rawValue: "Europe/Vaduz") }
+    public static var europeVatican: Self { .init(rawValue: "Europe/Vatican") }
+    public static var europeVienna: Self { .init(rawValue: "Europe/Vienna") }
+    public static var europeVilnius: Self { .init(rawValue: "Europe/Vilnius") }
+    public static var europeVolgograd: Self { .init(rawValue: "Europe/Volgograd") }
+    public static var europeWarsaw: Self { .init(rawValue: "Europe/Warsaw") }
+    public static var europeZagreb: Self { .init(rawValue: "Europe/Zagreb") }
+    public static var europeZaporozhye: Self { .init(rawValue: "Europe/Zaporozhye") }
+    public static var europeZurich: Self { .init(rawValue: "Europe/Zurich") }
+    public static var factory: Self { .init(rawValue: "Factory") }
+    public static var gb: Self { .init(rawValue: "GB") }
+    public static var gbEire: Self { .init(rawValue: "GB-Eire") }
+    public static var gmt: Self { .init(rawValue: "GMT") }
+    public static var gmt0: Self { .init(rawValue: "GMT+0") }
+    public static var greenwich: Self { .init(rawValue: "Greenwich") }
+    public static var hst: Self { .init(rawValue: "HST") }
+    public static var hongkong: Self { .init(rawValue: "Hongkong") }
+    public static var iceland: Self { .init(rawValue: "Iceland") }
+    public static var indianAntananarivo: Self { .init(rawValue: "Indian/Antananarivo") }
+    public static var indianChagos: Self { .init(rawValue: "Indian/Chagos") }
+    public static var indianChristmas: Self { .init(rawValue: "Indian/Christmas") }
+    public static var indianCocos: Self { .init(rawValue: "Indian/Cocos") }
+    public static var indianComoro: Self { .init(rawValue: "Indian/Comoro") }
+    public static var indianKerguelen: Self { .init(rawValue: "Indian/Kerguelen") }
+    public static var indianMahe: Self { .init(rawValue: "Indian/Mahe") }
+    public static var indianMaldives: Self { .init(rawValue: "Indian/Maldives") }
+    public static var indianMauritius: Self { .init(rawValue: "Indian/Mauritius") }
+    public static var indianMayotte: Self { .init(rawValue: "Indian/Mayotte") }
+    public static var indianReunion: Self { .init(rawValue: "Indian/Reunion") }
+    public static var iran: Self { .init(rawValue: "Iran") }
+    public static var israel: Self { .init(rawValue: "Israel") }
+    public static var jamaica: Self { .init(rawValue: "Jamaica") }
+    public static var japan: Self { .init(rawValue: "Japan") }
+    public static var kwajalein: Self { .init(rawValue: "Kwajalein") }
+    public static var libya: Self { .init(rawValue: "Libya") }
+    public static var met: Self { .init(rawValue: "MET") }
+    public static var mst: Self { .init(rawValue: "MST") }
+    public static var mst7mdt: Self { .init(rawValue: "MST7MDT") }
+    public static var mexicoBajanorte: Self { .init(rawValue: "Mexico/BajaNorte") }
+    public static var mexicoBajasur: Self { .init(rawValue: "Mexico/BajaSur") }
+    public static var mexicoGeneral: Self { .init(rawValue: "Mexico/General") }
+    public static var nz: Self { .init(rawValue: "NZ") }
+    public static var nzChat: Self { .init(rawValue: "NZ-CHAT") }
+    public static var navajo: Self { .init(rawValue: "Navajo") }
+    public static var prc: Self { .init(rawValue: "PRC") }
+    public static var pst8pdt: Self { .init(rawValue: "PST8PDT") }
+    public static var pacificApia: Self { .init(rawValue: "Pacific/Apia") }
+    public static var pacificAuckland: Self { .init(rawValue: "Pacific/Auckland") }
+    public static var pacificBougainville: Self { .init(rawValue: "Pacific/Bougainville") }
+    public static var pacificChatham: Self { .init(rawValue: "Pacific/Chatham") }
+    public static var pacificChuuk: Self { .init(rawValue: "Pacific/Chuuk") }
+    public static var pacificEaster: Self { .init(rawValue: "Pacific/Easter") }
+    public static var pacificEfate: Self { .init(rawValue: "Pacific/Efate") }
+    public static var pacificEnderbury: Self { .init(rawValue: "Pacific/Enderbury") }
+    public static var pacificFakaofo: Self { .init(rawValue: "Pacific/Fakaofo") }
+    public static var pacificFiji: Self { .init(rawValue: "Pacific/Fiji") }
+    public static var pacificFunafuti: Self { .init(rawValue: "Pacific/Funafuti") }
+    public static var pacificGalapagos: Self { .init(rawValue: "Pacific/Galapagos") }
+    public static var pacificGambier: Self { .init(rawValue: "Pacific/Gambier") }
+    public static var pacificGuadalcanal: Self { .init(rawValue: "Pacific/Guadalcanal") }
+    public static var pacificGuam: Self { .init(rawValue: "Pacific/Guam") }
+    public static var pacificHonolulu: Self { .init(rawValue: "Pacific/Honolulu") }
+    public static var pacificJohnston: Self { .init(rawValue: "Pacific/Johnston") }
+    public static var pacificKanton: Self { .init(rawValue: "Pacific/Kanton") }
+    public static var pacificKiritimati: Self { .init(rawValue: "Pacific/Kiritimati") }
+    public static var pacificKosrae: Self { .init(rawValue: "Pacific/Kosrae") }
+    public static var pacificKwajalein: Self { .init(rawValue: "Pacific/Kwajalein") }
+    public static var pacificMajuro: Self { .init(rawValue: "Pacific/Majuro") }
+    public static var pacificMarquesas: Self { .init(rawValue: "Pacific/Marquesas") }
+    public static var pacificMidway: Self { .init(rawValue: "Pacific/Midway") }
+    public static var pacificNauru: Self { .init(rawValue: "Pacific/Nauru") }
+    public static var pacificNiue: Self { .init(rawValue: "Pacific/Niue") }
+    public static var pacificNorfolk: Self { .init(rawValue: "Pacific/Norfolk") }
+    public static var pacificNoumea: Self { .init(rawValue: "Pacific/Noumea") }
+    public static var pacificPagoPago: Self { .init(rawValue: "Pacific/Pago_Pago") }
+    public static var pacificPalau: Self { .init(rawValue: "Pacific/Palau") }
+    public static var pacificPitcairn: Self { .init(rawValue: "Pacific/Pitcairn") }
+    public static var pacificPohnpei: Self { .init(rawValue: "Pacific/Pohnpei") }
+    public static var pacificPonape: Self { .init(rawValue: "Pacific/Ponape") }
+    public static var pacificPortMoresby: Self { .init(rawValue: "Pacific/Port_Moresby") }
+    public static var pacificRarotonga: Self { .init(rawValue: "Pacific/Rarotonga") }
+    public static var pacificSaipan: Self { .init(rawValue: "Pacific/Saipan") }
+    public static var pacificSamoa: Self { .init(rawValue: "Pacific/Samoa") }
+    public static var pacificTahiti: Self { .init(rawValue: "Pacific/Tahiti") }
+    public static var pacificTarawa: Self { .init(rawValue: "Pacific/Tarawa") }
+    public static var pacificTongatapu: Self { .init(rawValue: "Pacific/Tongatapu") }
+    public static var pacificTruk: Self { .init(rawValue: "Pacific/Truk") }
+    public static var pacificWake: Self { .init(rawValue: "Pacific/Wake") }
+    public static var pacificWallis: Self { .init(rawValue: "Pacific/Wallis") }
+    public static var pacificYap: Self { .init(rawValue: "Pacific/Yap") }
+    public static var poland: Self { .init(rawValue: "Poland") }
+    public static var portugal: Self { .init(rawValue: "Portugal") }
+    public static var roc: Self { .init(rawValue: "ROC") }
+    public static var rok: Self { .init(rawValue: "ROK") }
+    public static var singapore: Self { .init(rawValue: "Singapore") }
+    public static var turkey: Self { .init(rawValue: "Turkey") }
+    public static var uct: Self { .init(rawValue: "UCT") }
+    public static var usAlaska: Self { .init(rawValue: "US/Alaska") }
+    public static var usAleutian: Self { .init(rawValue: "US/Aleutian") }
+    public static var usArizona: Self { .init(rawValue: "US/Arizona") }
+    public static var usCentral: Self { .init(rawValue: "US/Central") }
+    public static var usEastIndiana: Self { .init(rawValue: "US/East-Indiana") }
+    public static var usEastern: Self { .init(rawValue: "US/Eastern") }
+    public static var usHawaii: Self { .init(rawValue: "US/Hawaii") }
+    public static var usIndianaStarke: Self { .init(rawValue: "US/Indiana-Starke") }
+    public static var usMichigan: Self { .init(rawValue: "US/Michigan") }
+    public static var usMountain: Self { .init(rawValue: "US/Mountain") }
+    public static var usPacific: Self { .init(rawValue: "US/Pacific") }
+    public static var usPacificNew: Self { .init(rawValue: "US/Pacific-New") }
+    public static var usSamoa: Self { .init(rawValue: "US/Samoa") }
+    public static var utc: Self { .init(rawValue: "UTC") }
+    public static var universal: Self { .init(rawValue: "Universal") }
+    public static var wSu: Self { .init(rawValue: "W-SU") }
+    public static var wet: Self { .init(rawValue: "WET") }
+    public static var zulu: Self { .init(rawValue: "Zulu") }
 }

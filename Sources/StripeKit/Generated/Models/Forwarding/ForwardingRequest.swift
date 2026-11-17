@@ -61,8 +61,14 @@ public struct ForwardingRequest: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ForwardingRequestObject: String, Codable, Sendable {
-    case forwardingRequest = "forwarding.request"
+public struct ForwardingRequestObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var forwardingRequest: Self { .init(rawValue: "forwarding.request") }
 }
 
 public struct ForwardingRequestList: Codable, Sendable {

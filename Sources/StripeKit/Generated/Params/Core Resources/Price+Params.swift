@@ -252,9 +252,15 @@ public struct PriceUpdateParams: StripeParams {
     }
 }
 
-public enum PriceCreateBillingScheme: String, Codable, Sendable {
-    case perUnit = "per_unit"
-    case tiered
+public struct PriceCreateBillingScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var perUnit: Self { .init(rawValue: "per_unit") }
+    public static var tiered: Self { .init(rawValue: "tiered") }
 }
 
 public struct PriceCreateCurrencyOptions: StripeParams {
@@ -315,10 +321,16 @@ public struct PriceCreateCurrencyOptionsCustomUnitAmount: StripeParams {
     }
 }
 
-public enum PriceCreateCurrencyOptionsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct PriceCreateCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 public struct PriceCreateCurrencyOptionsTiers: StripeParams {
@@ -514,22 +526,40 @@ public struct PriceCreateRecurring: StripeParams {
     }
 }
 
-public enum PriceCreateRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct PriceCreateRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum PriceCreateRecurringUsageType: String, Codable, Sendable {
-    case licensed
-    case metered
+public struct PriceCreateRecurringUsageType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var licensed: Self { .init(rawValue: "licensed") }
+    public static var metered: Self { .init(rawValue: "metered") }
 }
 
-public enum PriceCreateTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct PriceCreateTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 public struct PriceCreateTiers: StripeParams {
@@ -596,9 +626,15 @@ public enum PriceCreateTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral
     }
 }
 
-public enum PriceCreateTiersMode: String, Codable, Sendable {
-    case graduated
-    case volume
+public struct PriceCreateTiersMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var graduated: Self { .init(rawValue: "graduated") }
+    public static var volume: Self { .init(rawValue: "volume") }
 }
 
 /// Apply a transformation to the reported usage or set quantity before computing the billed price.
@@ -620,9 +656,15 @@ public struct PriceCreateTransformQuantity: StripeParams {
     }
 }
 
-public enum PriceCreateTransformQuantityRound: String, Codable, Sendable {
-    case down
-    case up
+public struct PriceCreateTransformQuantityRound: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var down: Self { .init(rawValue: "down") }
+    public static var up: Self { .init(rawValue: "up") }
 }
 
 /// Only return prices with these recurring fields.
@@ -647,21 +689,39 @@ public struct PriceListRecurring: StripeParams {
     }
 }
 
-public enum PriceListRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct PriceListRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum PriceListRecurringUsageType: String, Codable, Sendable {
-    case licensed
-    case metered
+public struct PriceListRecurringUsageType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var licensed: Self { .init(rawValue: "licensed") }
+    public static var metered: Self { .init(rawValue: "metered") }
 }
 
-public enum PriceListType: String, Codable, Sendable {
-    case oneTime = "one_time"
-    case recurring
+public struct PriceListType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var oneTime: Self { .init(rawValue: "one_time") }
+    public static var recurring: Self { .init(rawValue: "recurring") }
 }
 
 public struct PriceUpdateCurrencyOptions: StripeParams {
@@ -722,10 +782,16 @@ public struct PriceUpdateCurrencyOptionsCustomUnitAmount: StripeParams {
     }
 }
 
-public enum PriceUpdateCurrencyOptionsTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct PriceUpdateCurrencyOptionsTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 public struct PriceUpdateCurrencyOptionsTiers: StripeParams {
@@ -792,8 +858,14 @@ public enum PriceUpdateCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleB
     }
 }
 
-public enum PriceUpdateTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct PriceUpdateTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }

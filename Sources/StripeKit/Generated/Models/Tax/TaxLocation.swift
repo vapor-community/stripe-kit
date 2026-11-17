@@ -26,13 +26,25 @@ public struct TaxLocation: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum TaxLocationObject: String, Codable, Sendable {
-    case taxLocation = "tax.location"
+public struct TaxLocationObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var taxLocation: Self { .init(rawValue: "tax.location") }
 }
 
 /// The type of tax location to be defined. Currently the only option is `performance`.
-public enum TaxLocationType: String, Codable, Sendable {
-    case performance
+public struct TaxLocationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var performance: Self { .init(rawValue: "performance") }
 }
 
 public struct TaxLocationList: Codable, Sendable {

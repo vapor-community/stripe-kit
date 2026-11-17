@@ -52,8 +52,14 @@ public struct ScheduledQueryRun: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ScheduledQueryRunObject: String, Codable, Sendable {
-    case scheduledQueryRun = "scheduled_query_run"
+public struct ScheduledQueryRunObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var scheduledQueryRun: Self { .init(rawValue: "scheduled_query_run") }
 }
 
 public struct ScheduledQueryRunList: Codable, Sendable {

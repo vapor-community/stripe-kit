@@ -30,20 +30,26 @@ public struct SubscriptionPaymentMethodOptionsCard: Codable, Sendable {
 
 /// Selected network to process this Subscription on. Depends on the available networks of the card
 /// attached to the Subscription. Can be only set confirm-time.
-public enum SubscriptionPaymentMethodOptionsCardNetwork: String, Codable, Sendable {
-    case amex
-    case cartesBancaires = "cartes_bancaires"
-    case diners
-    case discover
-    case eftposAu = "eftpos_au"
-    case girocard
-    case interac
-    case jcb
-    case link
-    case mastercard
-    case unionpay
-    case unknown
-    case visa
+public struct SubscriptionPaymentMethodOptionsCardNetwork: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var amex: Self { .init(rawValue: "amex") }
+    public static var cartesBancaires: Self { .init(rawValue: "cartes_bancaires") }
+    public static var diners: Self { .init(rawValue: "diners") }
+    public static var discover: Self { .init(rawValue: "discover") }
+    public static var eftposAu: Self { .init(rawValue: "eftpos_au") }
+    public static var girocard: Self { .init(rawValue: "girocard") }
+    public static var interac: Self { .init(rawValue: "interac") }
+    public static var jcb: Self { .init(rawValue: "jcb") }
+    public static var link: Self { .init(rawValue: "link") }
+    public static var mastercard: Self { .init(rawValue: "mastercard") }
+    public static var unionpay: Self { .init(rawValue: "unionpay") }
+    public static var unknown: Self { .init(rawValue: "unknown") }
+    public static var visa: Self { .init(rawValue: "visa") }
 }
 
 /// We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for
@@ -53,10 +59,16 @@ public enum SubscriptionPaymentMethodOptionsCardNetwork: String, Codable, Sendab
 /// [manually requesting 3D
 /// Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more
 /// information on how this configuration interacts with Radar and our SCA Engine.
-public enum SubscriptionPaymentMethodOptionsCardRequestThreeDSecure: String, Codable, Sendable {
-    case any
-    case automatic
-    case challenge
+public struct SubscriptionPaymentMethodOptionsCardRequestThreeDSecure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var any: Self { .init(rawValue: "any") }
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var challenge: Self { .init(rawValue: "challenge") }
 }
 
 public struct SubscriptionPaymentMethodOptionsCardList: Codable, Sendable {

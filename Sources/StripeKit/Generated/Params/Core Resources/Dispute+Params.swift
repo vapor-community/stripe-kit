@@ -376,9 +376,15 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3Disput
     }
 }
 
-public enum DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices: String, Codable, Sendable {
-    case merchandise
-    case services
+public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompellingEvidence3DisputedTransactionMerchandiseOrServices: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var merchandise: Self { .init(rawValue: "merchandise") }
+    public static var services: Self { .init(rawValue: "services") }
 }
 
 /// The address to which a physical product was shipped. All fields are required for Visa Compelling
@@ -512,9 +518,23 @@ public struct DisputeUpdateEvidenceEnhancedEvidenceVisaCompliance: StripeParams 
     }
 }
 
-public enum DisputeUpdateIntendedSubmissionMethod: String, Codable, Sendable {
-    case manual
-    case preferManual = "prefer_manual"
-    case preferSmartDisputes = "prefer_smart_disputes"
-    case smartDisputes = "smart_disputes"
+public struct DisputeUpdateIntendedSubmissionMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// You'll submit the manual packet if you upload evidence and won't ever use Smart Disputes to respond
+    /// to the dispute.
+    public static var manual: Self { .init(rawValue: "manual") }
+    /// You'll submit the manual packet if you upload evidence, but use Smart Disputes if you have no
+    /// evidence to add to the dispute response.
+    public static var preferManual: Self { .init(rawValue: "prefer_manual") }
+    /// You'll let Smart Disputes submit the dispute response if it detects Stripe evidence, but use the
+    /// manual packet otherwise.
+    public static var preferSmartDisputes: Self { .init(rawValue: "prefer_smart_disputes") }
+    /// You'll let Smart Disputes submit the dispute response if it detects Stripe evidence, and won't use
+    /// the manual packet.
+    public static var smartDisputes: Self { .init(rawValue: "smart_disputes") }
 }

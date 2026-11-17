@@ -16,8 +16,14 @@ public struct PromotionCodesResourcePromotion: Codable, Sendable {
 }
 
 /// The type of promotion.
-public enum PromotionCodesResourcePromotionType: String, Codable, Sendable {
-    case coupon
+public struct PromotionCodesResourcePromotionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var coupon: Self { .init(rawValue: "coupon") }
 }
 
 public struct PromotionCodesResourcePromotionList: Codable, Sendable {

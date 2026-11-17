@@ -36,16 +36,28 @@ public struct GelatoIdNumberReport: Codable, Sendable {
 }
 
 /// Type of ID number.
-public enum GelatoIdNumberReportIdNumberType: String, Codable, Sendable {
-    case brCpf = "br_cpf"
-    case sgNric = "sg_nric"
-    case usSsn = "us_ssn"
+public struct GelatoIdNumberReportIdNumberType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var brCpf: Self { .init(rawValue: "br_cpf") }
+    public static var sgNric: Self { .init(rawValue: "sg_nric") }
+    public static var usSsn: Self { .init(rawValue: "us_ssn") }
 }
 
 /// Status of this `id_number` check.
-public enum GelatoIdNumberReportStatus: String, Codable, Sendable {
-    case unverified
-    case verified
+public struct GelatoIdNumberReportStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var unverified: Self { .init(rawValue: "unverified") }
+    public static var verified: Self { .init(rawValue: "verified") }
 }
 
 public struct GelatoIdNumberReportList: Codable, Sendable {

@@ -250,11 +250,42 @@ public struct SubscriptionItemCreateDiscounts: StripeParams {
     }
 }
 
-public enum SubscriptionItemCreatePaymentBehavior: String, Codable, Sendable {
-    case allowIncomplete = "allow_incomplete"
-    case defaultIncomplete = "default_incomplete"
-    case errorIfIncomplete = "error_if_incomplete"
-    case pendingIfIncomplete = "pending_if_incomplete"
+public struct SubscriptionItemCreatePaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// This is the default behavior since
+    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails).
+    /// Transition the subscription to `status=past_due` if payment fails. If you have payment retries
+    /// configured, Stripe automatically retries the payment. If the payment requires action, you receive an
+    /// `invoice.payment_action_required` webhook and must manage additional user actions. For example, SCA
+    /// regulations might require 3DS authentication to complete payment. See the [SCA Migration
+    /// Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for Billing to
+    /// learn more.
+    public static var allowIncomplete: Self { .init(rawValue: "allow_incomplete") }
+    /// When payment is required, transition the subscription to `status=past_due` without attempting
+    /// payment. You must request explicit confirmation of the Invoice's PaymentIntent. The resulting
+    /// Invoice has
+    /// [auto_advance=false](https://docs.stripe.com/api/invoices/object#invoice_object-auto_advance), so
+    /// Stripe doesn't automatically attempt payment, retry payment, or finalize the subscription.
+    public static var defaultIncomplete: Self { .init(rawValue: "default_incomplete") }
+    /// If payment fails, return an HTTP `402` status code and don't update the subscription. This behavior
+    /// doesn't support payments that require user action, such as 3DS authentication, because it returns an
+    /// error instead of creating a PaymentIntent with `status=requires_action`. To handle payments that
+    /// require action, use `allow_incomplete` or `default_incomplete` instead. This behavior was the
+    /// default for API versions before
+    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails).
+    public static var errorIfIncomplete: Self { .init(rawValue: "error_if_incomplete") }
+    /// If payment fails, Stripe creates a [pending
+    /// update](https://docs.stripe.com/billing/subscriptions/pending-updates), which applies only if the
+    /// payment eventually succeeds. This behavior doesn't support all [attributes and payment
+    /// methods](https://docs.stripe.com/billing/pending-updates-reference#supported-attributes). This
+    /// option is the simplest way to ensure the customer completes payment before Stripe applies the
+    /// update.
+    public static var pendingIfIncomplete: Self { .init(rawValue: "pending_if_incomplete") }
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
@@ -319,23 +350,41 @@ public struct SubscriptionItemCreatePriceDataRecurring: StripeParams {
     }
 }
 
-public enum SubscriptionItemCreatePriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct SubscriptionItemCreatePriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum SubscriptionItemCreatePriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct SubscriptionItemCreatePriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum SubscriptionItemCreateProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct SubscriptionItemCreateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }
 
 public struct SubscriptionItemUpdateBillingThresholds: StripeParams {
@@ -388,11 +437,42 @@ public struct SubscriptionItemUpdateDiscounts: StripeParams {
     }
 }
 
-public enum SubscriptionItemUpdatePaymentBehavior: String, Codable, Sendable {
-    case allowIncomplete = "allow_incomplete"
-    case defaultIncomplete = "default_incomplete"
-    case errorIfIncomplete = "error_if_incomplete"
-    case pendingIfIncomplete = "pending_if_incomplete"
+public struct SubscriptionItemUpdatePaymentBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// This is the default behavior since
+    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails).
+    /// Transition the subscription to `status=past_due` if payment fails. If you have payment retries
+    /// configured, Stripe automatically retries the payment. If the payment requires action, you receive an
+    /// `invoice.payment_action_required` webhook and must manage additional user actions. For example, SCA
+    /// regulations might require 3DS authentication to complete payment. See the [SCA Migration
+    /// Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for Billing to
+    /// learn more.
+    public static var allowIncomplete: Self { .init(rawValue: "allow_incomplete") }
+    /// When payment is required, transition the subscription to `status=past_due` without attempting
+    /// payment. You must request explicit confirmation of the Invoice's PaymentIntent. The resulting
+    /// Invoice has
+    /// [auto_advance=false](https://docs.stripe.com/api/invoices/object#invoice_object-auto_advance), so
+    /// Stripe doesn't automatically attempt payment, retry payment, or finalize the subscription.
+    public static var defaultIncomplete: Self { .init(rawValue: "default_incomplete") }
+    /// If payment fails, return an HTTP `402` status code and don't update the subscription. This behavior
+    /// doesn't support payments that require user action, such as 3DS authentication, because it returns an
+    /// error instead of creating a PaymentIntent with `status=requires_action`. To handle payments that
+    /// require action, use `allow_incomplete` or `default_incomplete` instead. This behavior was the
+    /// default for API versions before
+    /// [2019-03-14](changelog/2019-03-14/subscriptions-successfully-created-first-payment-fails).
+    public static var errorIfIncomplete: Self { .init(rawValue: "error_if_incomplete") }
+    /// If payment fails, Stripe creates a [pending
+    /// update](https://docs.stripe.com/billing/subscriptions/pending-updates), which applies only if the
+    /// payment eventually succeeds. This behavior doesn't support all [attributes and payment
+    /// methods](https://docs.stripe.com/billing/pending-updates-reference#supported-attributes). This
+    /// option is the simplest way to ensure the customer completes payment before Stripe applies the
+    /// update.
+    public static var pendingIfIncomplete: Self { .init(rawValue: "pending_if_incomplete") }
 }
 
 /// Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. You can use
@@ -459,21 +539,39 @@ public struct SubscriptionItemUpdatePriceDataRecurring: StripeParams {
     }
 }
 
-public enum SubscriptionItemUpdatePriceDataRecurringInterval: String, Codable, Sendable {
-    case day
-    case month
-    case week
-    case year
+public struct SubscriptionItemUpdatePriceDataRecurringInterval: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var day: Self { .init(rawValue: "day") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
+    public static var year: Self { .init(rawValue: "year") }
 }
 
-public enum SubscriptionItemUpdatePriceDataTaxBehavior: String, Codable, Sendable {
-    case exclusive
-    case inclusive
-    case unspecified
+public struct SubscriptionItemUpdatePriceDataTaxBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exclusive: Self { .init(rawValue: "exclusive") }
+    public static var inclusive: Self { .init(rawValue: "inclusive") }
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
-public enum SubscriptionItemUpdateProrationBehavior: String, Codable, Sendable {
-    case alwaysInvoice = "always_invoice"
-    case createProrations = "create_prorations"
-    case none
+public struct SubscriptionItemUpdateProrationBehavior: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var alwaysInvoice: Self { .init(rawValue: "always_invoice") }
+    public static var createProrations: Self { .init(rawValue: "create_prorations") }
+    public static var none: Self { .init(rawValue: "none") }
 }

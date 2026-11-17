@@ -33,16 +33,28 @@ public struct AutomaticTax: Codable, Sendable {
 }
 
 /// If Stripe disabled automatic tax, this enum describes why.
-public enum AutomaticTaxDisabledReason: String, Codable, Sendable {
-    case finalizationRequiresLocationInputs = "finalization_requires_location_inputs"
-    case finalizationSystemError = "finalization_system_error"
+public struct AutomaticTaxDisabledReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var finalizationRequiresLocationInputs: Self { .init(rawValue: "finalization_requires_location_inputs") }
+    public static var finalizationSystemError: Self { .init(rawValue: "finalization_system_error") }
 }
 
 /// The status of the most recent automated tax calculation for this invoice.
-public enum AutomaticTaxStatus: String, Codable, Sendable {
-    case complete
-    case failed
-    case requiresLocationInputs = "requires_location_inputs"
+public struct AutomaticTaxStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var complete: Self { .init(rawValue: "complete") }
+    public static var failed: Self { .init(rawValue: "failed") }
+    public static var requiresLocationInputs: Self { .init(rawValue: "requires_location_inputs") }
 }
 
 public struct AutomaticTaxList: Codable, Sendable {

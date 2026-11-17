@@ -28,21 +28,41 @@ public struct SubscriptionPaymentMethodOptionsBillieCompanyDetails: Codable, Sen
 }
 
 /// Type of registration the company or entity holds in their registered country.
-public enum SubscriptionPaymentMethodOptionsBillieCompanyDetailsRegistrationType: String, Codable, Sendable {
-    case chEin = "ch_ein"
-    case deHrb = "de_hrb"
-    case dkCvr = "dk_cvr"
-    case esCif = "es_cif"
-    case fiTunnus = "fi_tunnus"
-    case frSiren = "fr_siren"
-    case frSiret = "fr_siret"
-    case itRea = "it_rea"
-    case nlKvk = "nl_kvk"
-    case noOrgNumber = "no_org_number"
-    case noPno = "no_pno"
-    case seOrgNumber = "se_org_number"
-    case sePno = "se_pno"
-    case ukCrn = "uk_crn"
+public struct SubscriptionPaymentMethodOptionsBillieCompanyDetailsRegistrationType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Switzerland Enterprise Identification Number
+    public static var chEin: Self { .init(rawValue: "ch_ein") }
+    /// Germany Handelsregisternummer
+    public static var deHrb: Self { .init(rawValue: "de_hrb") }
+    /// Denmark CVR number
+    public static var dkCvr: Self { .init(rawValue: "dk_cvr") }
+    /// Spain Código de Identificación Fiscal
+    public static var esCif: Self { .init(rawValue: "es_cif") }
+    /// Finland Business ID
+    public static var fiTunnus: Self { .init(rawValue: "fi_tunnus") }
+    /// France SIREN code
+    public static var frSiren: Self { .init(rawValue: "fr_siren") }
+    /// France SIRET code
+    public static var frSiret: Self { .init(rawValue: "fr_siret") }
+    /// Italy Economic and Administrative Directory (REA)
+    public static var itRea: Self { .init(rawValue: "it_rea") }
+    /// Netherlands KvK number
+    public static var nlKvk: Self { .init(rawValue: "nl_kvk") }
+    /// Norway Registration Number (companies)
+    public static var noOrgNumber: Self { .init(rawValue: "no_org_number") }
+    /// Norway Personal Identification Number (persons)
+    public static var noPno: Self { .init(rawValue: "no_pno") }
+    /// Sweden Registration Number (companies)
+    public static var seOrgNumber: Self { .init(rawValue: "se_org_number") }
+    /// Sweden Personal Identity Number
+    public static var sePno: Self { .init(rawValue: "se_pno") }
+    /// United Kingdom Company Registration Number
+    public static var ukCrn: Self { .init(rawValue: "uk_crn") }
 }
 
 public struct SubscriptionPaymentMethodOptionsBillieCompanyDetailsList: Codable, Sendable {

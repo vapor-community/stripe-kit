@@ -123,9 +123,15 @@ public struct TaxTransactionListLineItemsParams: StripeParams {
     }
 }
 
-public enum TaxTransactionCreateReversalMode: String, Codable, Sendable {
-    case full
-    case partial
+public struct TaxTransactionCreateReversalMode: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var full: Self { .init(rawValue: "full") }
+    public static var partial: Self { .init(rawValue: "partial") }
 }
 
 public struct TaxTransactionCreateReversalLineItems: StripeParams {

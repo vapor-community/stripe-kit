@@ -157,8 +157,14 @@ public struct BillingCreditGrantCreateAmount: StripeParams {
     }
 }
 
-public enum BillingCreditGrantCreateAmountType: String, Codable, Sendable {
-    case monetary
+public struct BillingCreditGrantCreateAmountType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var monetary: Self { .init(rawValue: "monetary") }
 }
 
 /// The monetary amount.
@@ -206,8 +212,14 @@ public struct BillingCreditGrantCreateApplicabilityConfigScope: StripeParams {
     }
 }
 
-public enum BillingCreditGrantCreateApplicabilityConfigScopePriceType: String, Codable, Sendable {
-    case metered
+public struct BillingCreditGrantCreateApplicabilityConfigScopePriceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var metered: Self { .init(rawValue: "metered") }
 }
 
 public struct BillingCreditGrantCreateApplicabilityConfigScopePrices: StripeParams {
@@ -219,7 +231,13 @@ public struct BillingCreditGrantCreateApplicabilityConfigScopePrices: StripePara
     }
 }
 
-public enum BillingCreditGrantCreateCategory: String, Codable, Sendable {
-    case paid
-    case promotional
+public struct BillingCreditGrantCreateCategory: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paid: Self { .init(rawValue: "paid") }
+    public static var promotional: Self { .init(rawValue: "promotional") }
 }

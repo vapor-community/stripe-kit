@@ -60,8 +60,14 @@ public struct Item: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ItemObject: String, Codable, Sendable {
-    case item
+public struct ItemObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var item: Self { .init(rawValue: "item") }
 }
 
 public struct ItemList: Codable, Sendable {

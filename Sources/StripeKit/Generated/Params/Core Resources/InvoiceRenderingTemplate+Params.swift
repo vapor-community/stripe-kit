@@ -71,7 +71,13 @@ public struct InvoiceRenderingTemplateUnarchiveParams: StripeParams {
     }
 }
 
-public enum InvoiceRenderingTemplateListStatus: String, Codable, Sendable {
-    case active
-    case archived
+public struct InvoiceRenderingTemplateListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var archived: Self { .init(rawValue: "archived") }
 }

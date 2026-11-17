@@ -13,9 +13,15 @@ public struct ThreeDSecureStandaloneResourceChallengeDetails: Codable, Sendable 
 }
 
 /// Type of challenge flow you requested for this 3DS Authentication.
-public enum ThreeDSecureStandaloneResourceChallengeDetailsType: String, Codable, Sendable {
-    case mandated
-    case preferred
+public struct ThreeDSecureStandaloneResourceChallengeDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var mandated: Self { .init(rawValue: "mandated") }
+    public static var preferred: Self { .init(rawValue: "preferred") }
 }
 
 public struct ThreeDSecureStandaloneResourceChallengeDetailsList: Codable, Sendable {

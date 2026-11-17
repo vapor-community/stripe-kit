@@ -169,7 +169,8 @@ struct FixtureDecodingTests {
     }
 
     /// A list of several object types (a customer's `sources`) keeps its items in order in
-    /// `data`, skips items of an unknown type, and encodes everything it decoded.
+    /// `data`, an item of an unknown type as `.undocumented` raw JSON, and encodes everything
+    /// it decoded.
     @Test("Polymorphic lists decode in order and round-trip")
     func polymorphicListsRoundTrip() throws {
         let card = try JSONSerialization.jsonObject(with: Fixtures.all["card"]!)
@@ -179,14 +180,19 @@ struct FixtureDecodingTests {
             "data": [source, ["object": "not_a_stripe_kit_type", "id": "x_1"], card],
         ]
         let decoded = try Fixtures.decoder.decode(PaymentSourceList.self, from: JSONSerialization.data(withJSONObject: list))
-        #expect(decoded.data.count == 2)
+        #expect(decoded.data.count == 3)
         #expect(decoded.data.first?.source != nil)
+        guard case .undocumented(let unknown) = decoded.data[1] else {
+            Issue.record("expected .undocumented, got \(decoded.data[1])")
+            return
+        }
+        #expect(unknown["object"]?.stringValue == "not_a_stripe_kit_type")
         #expect(decoded.data.last?.card != nil)
         #expect(decoded.cards.count == 1)
         #expect(decoded.sources.count == 1)
 
         let roundTripped = try Fixtures.decoder.decode(PaymentSourceList.self, from: Fixtures.encoder.encode(decoded))
-        #expect(roundTripped.data.count == 2)
+        #expect(roundTripped.data.count == 3)
         #expect(roundTripped.cards.first?.id == decoded.cards.first?.id)
     }
 

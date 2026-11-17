@@ -24,10 +24,16 @@ public struct ThreeDSecureStandaloneResourceFlowPreference: Codable, Sendable {
 }
 
 /// Type of flow you requested for this 3DS Authentication.
-public enum ThreeDSecureStandaloneResourceFlowPreferenceType: String, Codable, Sendable {
-    case challenge
-    case dataShare = "data_share"
-    case frictionless
+public struct ThreeDSecureStandaloneResourceFlowPreferenceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var challenge: Self { .init(rawValue: "challenge") }
+    public static var dataShare: Self { .init(rawValue: "data_share") }
+    public static var frictionless: Self { .init(rawValue: "frictionless") }
 }
 
 public struct ThreeDSecureStandaloneResourceFlowPreferenceList: Codable, Sendable {

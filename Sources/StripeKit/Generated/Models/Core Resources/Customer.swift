@@ -139,16 +139,28 @@ public struct Customer: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CustomerObject: String, Codable, Sendable {
-    case customer
+public struct CustomerObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customer: Self { .init(rawValue: "customer") }
 }
 
 /// Describes the customer's tax exemption status, which is `none`, `exempt`, or `reverse`. When set to
 /// `reverse`, invoice and receipt PDFs include the following text: **"Reverse charge"**.
-public enum CustomerTaxExempt: String, Codable, Sendable {
-    case exempt
-    case none
-    case reverse
+public struct CustomerTaxExempt: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var exempt: Self { .init(rawValue: "exempt") }
+    public static var none: Self { .init(rawValue: "none") }
+    public static var reverse: Self { .init(rawValue: "reverse") }
 }
 
 public struct CustomerList: Codable, Sendable {

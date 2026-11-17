@@ -76,13 +76,25 @@ public struct InvoicePaymentListPayment: StripeParams {
     }
 }
 
-public enum InvoicePaymentListPaymentType: String, Codable, Sendable {
-    case paymentIntent = "payment_intent"
-    case paymentRecord = "payment_record"
+public struct InvoicePaymentListPaymentType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var paymentIntent: Self { .init(rawValue: "payment_intent") }
+    public static var paymentRecord: Self { .init(rawValue: "payment_record") }
 }
 
-public enum InvoicePaymentListStatus: String, Codable, Sendable {
-    case canceled
-    case `open` = "open"
-    case paid
+public struct InvoicePaymentListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var `open`: Self { .init(rawValue: "open") }
+    public static var paid: Self { .init(rawValue: "paid") }
 }

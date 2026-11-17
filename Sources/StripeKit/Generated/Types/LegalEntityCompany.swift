@@ -116,9 +116,15 @@ public struct LegalEntityCompany: Codable, Sendable {
 /// article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and
 /// [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api)
 /// for more details.
-public enum LegalEntityCompanyOwnershipExemptionReason: String, Codable, Sendable {
-    case qualifiedEntityExceedsOwnershipThreshold = "qualified_entity_exceeds_ownership_threshold"
-    case qualifiesAsFinancialInstitution = "qualifies_as_financial_institution"
+public struct LegalEntityCompanyOwnershipExemptionReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var qualifiedEntityExceedsOwnershipThreshold: Self { .init(rawValue: "qualified_entity_exceeds_ownership_threshold") }
+    public static var qualifiesAsFinancialInstitution: Self { .init(rawValue: "qualifies_as_financial_institution") }
 }
 
 /// The category identifying the legal structure of the company or legal entity. Also available for
@@ -127,30 +133,36 @@ public enum LegalEntityCompanyOwnershipExemptionReason: String, Codable, Sendabl
 /// is `stripe`. See [Business
 /// structure](https://docs.stripe.com/connect/identity-verification#business-structure) for more
 /// details.
-public enum LegalEntityCompanyStructure: String, Codable, Sendable {
-    case freeZoneEstablishment = "free_zone_establishment"
-    case freeZoneLlc = "free_zone_llc"
-    case governmentInstrumentality = "government_instrumentality"
-    case governmentalUnit = "governmental_unit"
-    case incorporatedNonProfit = "incorporated_non_profit"
-    case incorporatedPartnership = "incorporated_partnership"
-    case limitedLiabilityPartnership = "limited_liability_partnership"
-    case llc
-    case multiMemberLlc = "multi_member_llc"
-    case privateCompany = "private_company"
-    case privateCorporation = "private_corporation"
-    case privatePartnership = "private_partnership"
-    case publicCompany = "public_company"
-    case publicCorporation = "public_corporation"
-    case publicPartnership = "public_partnership"
-    case registeredCharity = "registered_charity"
-    case singleMemberLlc = "single_member_llc"
-    case soleEstablishment = "sole_establishment"
-    case soleProprietorship = "sole_proprietorship"
-    case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
-    case unincorporatedAssociation = "unincorporated_association"
-    case unincorporatedNonProfit = "unincorporated_non_profit"
-    case unincorporatedPartnership = "unincorporated_partnership"
+public struct LegalEntityCompanyStructure: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var freeZoneEstablishment: Self { .init(rawValue: "free_zone_establishment") }
+    public static var freeZoneLlc: Self { .init(rawValue: "free_zone_llc") }
+    public static var governmentInstrumentality: Self { .init(rawValue: "government_instrumentality") }
+    public static var governmentalUnit: Self { .init(rawValue: "governmental_unit") }
+    public static var incorporatedNonProfit: Self { .init(rawValue: "incorporated_non_profit") }
+    public static var incorporatedPartnership: Self { .init(rawValue: "incorporated_partnership") }
+    public static var limitedLiabilityPartnership: Self { .init(rawValue: "limited_liability_partnership") }
+    public static var llc: Self { .init(rawValue: "llc") }
+    public static var multiMemberLlc: Self { .init(rawValue: "multi_member_llc") }
+    public static var privateCompany: Self { .init(rawValue: "private_company") }
+    public static var privateCorporation: Self { .init(rawValue: "private_corporation") }
+    public static var privatePartnership: Self { .init(rawValue: "private_partnership") }
+    public static var publicCompany: Self { .init(rawValue: "public_company") }
+    public static var publicCorporation: Self { .init(rawValue: "public_corporation") }
+    public static var publicPartnership: Self { .init(rawValue: "public_partnership") }
+    public static var registeredCharity: Self { .init(rawValue: "registered_charity") }
+    public static var singleMemberLlc: Self { .init(rawValue: "single_member_llc") }
+    public static var soleEstablishment: Self { .init(rawValue: "sole_establishment") }
+    public static var soleProprietorship: Self { .init(rawValue: "sole_proprietorship") }
+    public static var taxExemptGovernmentInstrumentality: Self { .init(rawValue: "tax_exempt_government_instrumentality") }
+    public static var unincorporatedAssociation: Self { .init(rawValue: "unincorporated_association") }
+    public static var unincorporatedNonProfit: Self { .init(rawValue: "unincorporated_non_profit") }
+    public static var unincorporatedPartnership: Self { .init(rawValue: "unincorporated_partnership") }
 }
 
 public struct LegalEntityCompanyList: Codable, Sendable {

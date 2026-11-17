@@ -61,16 +61,28 @@ public struct IssuingPersonalizationDesign: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum IssuingPersonalizationDesignObject: String, Codable, Sendable {
-    case issuingPersonalizationDesign = "issuing.personalization_design"
+public struct IssuingPersonalizationDesignObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var issuingPersonalizationDesign: Self { .init(rawValue: "issuing.personalization_design") }
 }
 
 /// Whether this personalization design can be used to create cards.
-public enum IssuingPersonalizationDesignStatus: String, Codable, Sendable {
-    case active
-    case inactive
-    case rejected
-    case review
+public struct IssuingPersonalizationDesignStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var rejected: Self { .init(rawValue: "rejected") }
+    public static var review: Self { .init(rawValue: "review") }
 }
 
 public struct IssuingPersonalizationDesignList: Codable, Sendable {

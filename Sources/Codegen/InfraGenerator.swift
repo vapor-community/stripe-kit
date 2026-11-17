@@ -175,30 +175,12 @@ struct InfraGenerator {
         lines.append("")
         lines.append("import Foundation")
         lines.append("")
-        lines.append("/// The type of a Stripe webhook event.")
-        lines.append("/// Generated from the OpenAPI spec's `event.type` enum values.")
-        lines.append("public enum StripeEventType: String, Codable, Sendable {")
-        
-        // Extract enum cases from the event schema's type property
-        if let eventSchema = spec.components.schemas["event"],
-           let typeProperty = eventSchema.properties?["type"],
-           let enumCases = typeProperty.enum {
-            for rawValue in enumCases.sorted() {
-                let caseName = enumCaseToSwift(rawValue)
-                lines.append("    case \(caseName) = \"\(rawValue)\"")
-            }
-        }
-        
-        lines.append("")
-        lines.append("    /// An event type not yet known to this version of StripeKit.")
-        lines.append("    case unknown")
-        lines.append("")
-        lines.append("    public init(from decoder: Decoder) throws {")
-        lines.append("        let container = try decoder.singleValueContainer()")
-        lines.append("        let rawValue = try container.decode(String.self)")
-        lines.append("        self = Self(rawValue: rawValue) ?? .unknown")
-        lines.append("    }")
-        lines.append("}")
+        let eventTypes = spec.components.schemas["event"]?.properties?["type"]?.enum ?? []
+        lines.append(contentsOf: generateStringEnum(
+            name: "StripeEventType",
+            cases: eventTypes.sorted(),
+            description: "The type of a Stripe event, from the spec's `event.type` values. An event type newer than this version of StripeKit still decodes; its `rawValue` names it."
+        ))
         lines.append("")
         
         return lines.joined(separator: "\n")

@@ -31,12 +31,27 @@ public struct DisputePaymentMethodDetailsCard: Codable, Sendable {
 }
 
 /// The type of dispute opened. Different case types may have varying fees and financial impact.
-public enum DisputePaymentMethodDetailsCardCaseType: String, Codable, Sendable {
-    case block
-    case chargeback
-    case compliance
-    case inquiry
-    case resolution
+public struct DisputePaymentMethodDetailsCardCaseType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// A dispute opened by a cardholder that the card network blocked before it could become a chargeback.
+    public static var block: Self { .init(rawValue: "block") }
+    /// The action taken by a cardholder's bank to debit a business's account in response to a dispute from
+    /// the cardholder. The debited funds are held until the dispute is resolved.
+    public static var chargeback: Self { .init(rawValue: "chargeback") }
+    /// An action taken by the card network when they believe the merchant does not conform to network
+    /// rules.
+    public static var compliance: Self { .init(rawValue: "compliance") }
+    /// A pre-dispute request from a card issuer, asking for information about a charge. Based on the
+    /// response from the business, an inquiry might or might not escalate to a full chargeback. Inquiries
+    /// are sometimes called retrievals or requests for information.
+    public static var inquiry: Self { .init(rawValue: "inquiry") }
+    /// A dispute opened by a cardholder that was resolved (refunded) before it could become a chargeback.
+    public static var resolution: Self { .init(rawValue: "resolution") }
 }
 
 public struct DisputePaymentMethodDetailsCardList: Codable, Sendable {

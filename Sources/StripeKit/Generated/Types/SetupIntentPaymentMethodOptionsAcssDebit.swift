@@ -22,16 +22,28 @@ public struct SetupIntentPaymentMethodOptionsAcssDebit: Codable, Sendable {
 }
 
 /// Currency supported by the bank account
-public enum SetupIntentPaymentMethodOptionsAcssDebitCurrency: String, Codable, Sendable {
-    case cad
-    case usd
+public struct SetupIntentPaymentMethodOptionsAcssDebitCurrency: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cad: Self { .init(rawValue: "cad") }
+    public static var usd: Self { .init(rawValue: "usd") }
 }
 
 /// Bank account verification method. The default value is `automatic`.
-public enum SetupIntentPaymentMethodOptionsAcssDebitVerificationMethod: String, Codable, Sendable {
-    case automatic
-    case instant
-    case microdeposits
+public struct SetupIntentPaymentMethodOptionsAcssDebitVerificationMethod: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var automatic: Self { .init(rawValue: "automatic") }
+    public static var instant: Self { .init(rawValue: "instant") }
+    public static var microdeposits: Self { .init(rawValue: "microdeposits") }
 }
 
 public struct SetupIntentPaymentMethodOptionsAcssDebitList: Codable, Sendable {

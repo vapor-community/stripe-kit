@@ -48,8 +48,14 @@ public struct Balance: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BalanceObject: String, Codable, Sendable {
-    case balance
+public struct BalanceObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var balance: Self { .init(rawValue: "balance") }
 }
 
 public struct BalanceList: Codable, Sendable {

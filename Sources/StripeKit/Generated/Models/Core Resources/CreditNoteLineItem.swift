@@ -69,16 +69,28 @@ public struct CreditNoteLineItem: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CreditNoteLineItemObject: String, Codable, Sendable {
-    case creditNoteLineItem = "credit_note_line_item"
+public struct CreditNoteLineItemObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var creditNoteLineItem: Self { .init(rawValue: "credit_note_line_item") }
 }
 
 /// The type of the credit note line item, one of `invoice_line_item` or `custom_line_item`. When the
 /// type is `invoice_line_item` there is an additional `invoice_line_item` property on the resource the
 /// value of which is the id of the credited line item on the invoice.
-public enum CreditNoteLineItemType: String, Codable, Sendable {
-    case customLineItem = "custom_line_item"
-    case invoiceLineItem = "invoice_line_item"
+public struct CreditNoteLineItemType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customLineItem: Self { .init(rawValue: "custom_line_item") }
+    public static var invoiceLineItem: Self { .init(rawValue: "invoice_line_item") }
 }
 
 public struct CreditNoteLineItemList: Codable, Sendable {

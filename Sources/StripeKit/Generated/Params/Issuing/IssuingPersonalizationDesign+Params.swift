@@ -252,11 +252,17 @@ public struct IssuingPersonalizationDesignListPreferences: StripeParams {
     }
 }
 
-public enum IssuingPersonalizationDesignListStatus: String, Codable, Sendable {
-    case active
-    case inactive
-    case rejected
-    case review
+public struct IssuingPersonalizationDesignListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
+    public static var rejected: Self { .init(rawValue: "rejected") }
+    public static var review: Self { .init(rawValue: "review") }
 }
 
 /// The reason(s) the personalization design was rejected.
@@ -277,25 +283,37 @@ public struct IssuingPersonalizationDesignRejectRejectionReasons: StripeParams {
     }
 }
 
-public enum IssuingPersonalizationDesignRejectRejectionReasonsCardLogo: String, Codable, Sendable {
-    case geographicLocation = "geographic_location"
-    case inappropriate
-    case networkName = "network_name"
-    case nonBinaryImage = "non_binary_image"
-    case nonFiatCurrency = "non_fiat_currency"
-    case other
-    case otherEntity = "other_entity"
-    case promotionalMaterial = "promotional_material"
+public struct IssuingPersonalizationDesignRejectRejectionReasonsCardLogo: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var geographicLocation: Self { .init(rawValue: "geographic_location") }
+    public static var inappropriate: Self { .init(rawValue: "inappropriate") }
+    public static var networkName: Self { .init(rawValue: "network_name") }
+    public static var nonBinaryImage: Self { .init(rawValue: "non_binary_image") }
+    public static var nonFiatCurrency: Self { .init(rawValue: "non_fiat_currency") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var otherEntity: Self { .init(rawValue: "other_entity") }
+    public static var promotionalMaterial: Self { .init(rawValue: "promotional_material") }
 }
 
-public enum IssuingPersonalizationDesignRejectRejectionReasonsCarrierText: String, Codable, Sendable {
-    case geographicLocation = "geographic_location"
-    case inappropriate
-    case networkName = "network_name"
-    case nonFiatCurrency = "non_fiat_currency"
-    case other
-    case otherEntity = "other_entity"
-    case promotionalMaterial = "promotional_material"
+public struct IssuingPersonalizationDesignRejectRejectionReasonsCarrierText: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var geographicLocation: Self { .init(rawValue: "geographic_location") }
+    public static var inappropriate: Self { .init(rawValue: "inappropriate") }
+    public static var networkName: Self { .init(rawValue: "network_name") }
+    public static var nonFiatCurrency: Self { .init(rawValue: "non_fiat_currency") }
+    public static var other: Self { .init(rawValue: "other") }
+    public static var otherEntity: Self { .init(rawValue: "other_entity") }
+    public static var promotionalMaterial: Self { .init(rawValue: "promotional_material") }
 }
 
 public struct IssuingPersonalizationDesignUpdateCarrierText: StripeParams {

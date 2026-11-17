@@ -68,36 +68,60 @@ public struct IssuingCardShipping: Codable, Sendable {
 }
 
 /// The delivery company that shipped a card.
-public enum IssuingCardShippingCarrier: String, Codable, Sendable {
-    case correos
-    case dhl
-    case fedex
-    case royalMail = "royal_mail"
-    case usps
+public struct IssuingCardShippingCarrier: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var correos: Self { .init(rawValue: "correos") }
+    public static var dhl: Self { .init(rawValue: "dhl") }
+    public static var fedex: Self { .init(rawValue: "fedex") }
+    public static var royalMail: Self { .init(rawValue: "royal_mail") }
+    public static var usps: Self { .init(rawValue: "usps") }
 }
 
 /// Shipment service, such as `standard` or `express`.
-public enum IssuingCardShippingService: String, Codable, Sendable {
-    case express
-    case priority
-    case standard
+public struct IssuingCardShippingService: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var express: Self { .init(rawValue: "express") }
+    public static var priority: Self { .init(rawValue: "priority") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// The delivery status of the card.
-public enum IssuingCardShippingStatus: String, Codable, Sendable {
-    case canceled
-    case delivered
-    case failure
-    case pending
-    case returned
-    case shipped
-    case submitted
+public struct IssuingCardShippingStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var delivered: Self { .init(rawValue: "delivered") }
+    public static var failure: Self { .init(rawValue: "failure") }
+    public static var pending: Self { .init(rawValue: "pending") }
+    public static var returned: Self { .init(rawValue: "returned") }
+    public static var shipped: Self { .init(rawValue: "shipped") }
+    public static var submitted: Self { .init(rawValue: "submitted") }
 }
 
 /// Packaging options.
-public enum IssuingCardShippingType: String, Codable, Sendable {
-    case bulk
-    case individual
+public struct IssuingCardShippingType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var bulk: Self { .init(rawValue: "bulk") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 public struct IssuingCardShippingList: Codable, Sendable {

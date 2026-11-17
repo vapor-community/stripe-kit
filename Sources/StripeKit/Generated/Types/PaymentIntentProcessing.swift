@@ -14,8 +14,14 @@ public struct PaymentIntentProcessing: Codable, Sendable {
 }
 
 /// Type of the payment method for which payment is in `processing` state, one of `card`.
-public enum PaymentIntentProcessingType: String, Codable, Sendable {
-    case card
+public struct PaymentIntentProcessingType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
 }
 
 public struct PaymentIntentProcessingList: Codable, Sendable {

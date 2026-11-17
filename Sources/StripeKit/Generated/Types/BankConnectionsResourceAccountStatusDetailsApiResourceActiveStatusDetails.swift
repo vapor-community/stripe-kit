@@ -23,16 +23,34 @@ public struct BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatus
 }
 
 /// The action (if any) to proactively relink the Account.
-public enum BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetailsAction: String, Codable, Sendable {
-    case none
-    case relinkRequired = "relink_required"
+public struct BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetailsAction: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// There is no action recommended at this time to resolve the upcoming Account deactivation.
+    public static var none: Self { .init(rawValue: "none") }
+    /// You may proactively relink the Account by having your end user complete the [streamlined relink
+    /// flow](https://docs.stripe.com/financial-connections/relink).
+    public static var relinkRequired: Self { .init(rawValue: "relink_required") }
 }
 
 /// The underlying cause of the Account becoming inactive.
-public enum BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetailsCause: String, Codable, Sendable {
-    case accessExpired = "access_expired"
-    case institutionRequirement = "institution_requirement"
-    case unspecified
+public struct BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetailsCause: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Access to the account will expire.
+    public static var accessExpired: Self { .init(rawValue: "access_expired") }
+    /// The institution is introducing a change which will break existing connections shortly.
+    public static var institutionRequirement: Self { .init(rawValue: "institution_requirement") }
+    /// The account is expected to become inactive for an unspecified or ambiguous reason.
+    public static var unspecified: Self { .init(rawValue: "unspecified") }
 }
 
 public struct BankConnectionsResourceAccountStatusDetailsApiResourceActiveStatusDetailsList: Codable, Sendable {

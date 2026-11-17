@@ -98,8 +98,14 @@ public struct BillingAlertListParams: StripeParams {
     }
 }
 
-public enum BillingAlertCreateAlertType: String, Codable, Sendable {
-    case usageThreshold = "usage_threshold"
+public struct BillingAlertCreateAlertType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var usageThreshold: Self { .init(rawValue: "usage_threshold") }
 }
 
 /// The configuration of the usage threshold.
@@ -122,8 +128,14 @@ public struct BillingAlertCreateUsageThreshold: StripeParams {
     }
 }
 
-public enum BillingAlertCreateUsageThresholdRecurrence: String, Codable, Sendable {
-    case oneTime = "one_time"
+public struct BillingAlertCreateUsageThresholdRecurrence: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var oneTime: Self { .init(rawValue: "one_time") }
 }
 
 public struct BillingAlertCreateUsageThresholdFilters: StripeParams {
@@ -138,10 +150,22 @@ public struct BillingAlertCreateUsageThresholdFilters: StripeParams {
     }
 }
 
-public enum BillingAlertCreateUsageThresholdFiltersType: String, Codable, Sendable {
-    case customer
+public struct BillingAlertCreateUsageThresholdFiltersType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customer: Self { .init(rawValue: "customer") }
 }
 
-public enum BillingAlertListAlertType: String, Codable, Sendable {
-    case usageThreshold = "usage_threshold"
+public struct BillingAlertListAlertType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var usageThreshold: Self { .init(rawValue: "usage_threshold") }
 }

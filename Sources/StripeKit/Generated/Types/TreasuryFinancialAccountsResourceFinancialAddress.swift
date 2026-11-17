@@ -23,8 +23,14 @@ public struct TreasuryFinancialAccountsResourceFinancialAddress: Codable, Sendab
 }
 
 /// The type of financial address
-public enum TreasuryFinancialAccountsResourceFinancialAddressType: String, Codable, Sendable {
-    case aba
+public struct TreasuryFinancialAccountsResourceFinancialAddressType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var aba: Self { .init(rawValue: "aba") }
 }
 
 public struct TreasuryFinancialAccountsResourceFinancialAddressList: Codable, Sendable {

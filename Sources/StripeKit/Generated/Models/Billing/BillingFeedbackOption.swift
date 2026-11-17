@@ -36,14 +36,28 @@ public struct BillingFeedbackOption: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum BillingFeedbackOptionObject: String, Codable, Sendable {
-    case billingFeedbackOption = "billing.feedback_option"
+public struct BillingFeedbackOptionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var billingFeedbackOption: Self { .init(rawValue: "billing.feedback_option") }
 }
 
 /// The feedback option's status.
-public enum BillingFeedbackOptionStatus: String, Codable, Sendable {
-    case active
-    case inactive
+public struct BillingFeedbackOptionStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The feedback option is active and available for use.
+    public static var active: Self { .init(rawValue: "active") }
+    /// The feedback option has been deactivated and is no longer available for use.
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
 public struct BillingFeedbackOptionList: Codable, Sendable {

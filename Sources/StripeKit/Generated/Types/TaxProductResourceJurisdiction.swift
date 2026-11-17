@@ -27,12 +27,18 @@ public struct TaxProductResourceJurisdiction: Codable, Sendable {
 }
 
 /// Indicates the level of the jurisdiction imposing the tax.
-public enum TaxProductResourceJurisdictionLevel: String, Codable, Sendable {
-    case city
-    case country
-    case county
-    case district
-    case state
+public struct TaxProductResourceJurisdictionLevel: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var city: Self { .init(rawValue: "city") }
+    public static var country: Self { .init(rawValue: "country") }
+    public static var county: Self { .init(rawValue: "county") }
+    public static var district: Self { .init(rawValue: "district") }
+    public static var state: Self { .init(rawValue: "state") }
 }
 
 public struct TaxProductResourceJurisdictionList: Codable, Sendable {

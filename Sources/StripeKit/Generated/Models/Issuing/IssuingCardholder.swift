@@ -73,22 +73,40 @@ public struct IssuingCardholder: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum IssuingCardholderObject: String, Codable, Sendable {
-    case issuingCardholder = "issuing.cardholder"
+public struct IssuingCardholderObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var issuingCardholder: Self { .init(rawValue: "issuing.cardholder") }
 }
 
 /// Specifies whether to permit authorizations on this cardholder's cards.
-public enum IssuingCardholderStatus: String, Codable, Sendable {
-    case active
-    case blocked
-    case inactive
+public struct IssuingCardholderStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var blocked: Self { .init(rawValue: "blocked") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
 /// One of `individual` or `company`. See [Choose a cardholder
 /// type](https://docs.stripe.com/issuing/other/choose-cardholder) for more details.
-public enum IssuingCardholderType: String, Codable, Sendable {
-    case company
-    case individual
+public struct IssuingCardholderType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var company: Self { .init(rawValue: "company") }
+    public static var individual: Self { .init(rawValue: "individual") }
 }
 
 public struct IssuingCardholderList: Codable, Sendable {

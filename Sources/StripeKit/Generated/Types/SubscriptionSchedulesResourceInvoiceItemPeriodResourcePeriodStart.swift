@@ -16,10 +16,16 @@ public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStart:
 }
 
 /// Select how to calculate the start of the invoice item period.
-public enum SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStartType: String, Codable, Sendable {
-    case maxItemPeriodStart = "max_item_period_start"
-    case phaseStart = "phase_start"
-    case timestamp
+public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStartType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var maxItemPeriodStart: Self { .init(rawValue: "max_item_period_start") }
+    public static var phaseStart: Self { .init(rawValue: "phase_start") }
+    public static var timestamp: Self { .init(rawValue: "timestamp") }
 }
 
 public struct SubscriptionSchedulesResourceInvoiceItemPeriodResourcePeriodStartList: Codable, Sendable {

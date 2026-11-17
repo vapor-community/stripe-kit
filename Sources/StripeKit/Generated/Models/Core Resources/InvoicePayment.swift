@@ -62,8 +62,14 @@ public struct InvoicePayment: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum InvoicePaymentObject: String, Codable, Sendable {
-    case invoicePayment = "invoice_payment"
+public struct InvoicePaymentObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var invoicePayment: Self { .init(rawValue: "invoice_payment") }
 }
 
 public struct InvoicePaymentList: Codable, Sendable {

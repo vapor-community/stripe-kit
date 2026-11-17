@@ -464,8 +464,14 @@ public struct TaxRegistrationCreateCountryOptionsAe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAeType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -482,9 +488,15 @@ public struct TaxRegistrationCreateCountryOptionsAeStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in AL.
@@ -500,8 +512,14 @@ public struct TaxRegistrationCreateCountryOptionsAl: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAlType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAlType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -518,9 +536,15 @@ public struct TaxRegistrationCreateCountryOptionsAlStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAlStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAlStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in AM.
@@ -533,8 +557,14 @@ public struct TaxRegistrationCreateCountryOptionsAm: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAmType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsAmType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in AO.
@@ -550,8 +580,14 @@ public struct TaxRegistrationCreateCountryOptionsAo: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAoType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAoType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -568,9 +604,15 @@ public struct TaxRegistrationCreateCountryOptionsAoStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAoStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAoStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in AT.
@@ -586,11 +628,17 @@ public struct TaxRegistrationCreateCountryOptionsAt: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAtType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAtType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -607,10 +655,16 @@ public struct TaxRegistrationCreateCountryOptionsAtStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in AU.
@@ -626,8 +680,14 @@ public struct TaxRegistrationCreateCountryOptionsAu: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAuType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAuType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -644,9 +704,15 @@ public struct TaxRegistrationCreateCountryOptionsAuStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAuStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in AW.
@@ -662,8 +728,14 @@ public struct TaxRegistrationCreateCountryOptionsAw: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAwType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAwType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -680,9 +752,15 @@ public struct TaxRegistrationCreateCountryOptionsAwStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAwStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsAwStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in AZ.
@@ -695,8 +773,14 @@ public struct TaxRegistrationCreateCountryOptionsAz: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsAzType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsAzType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in BA.
@@ -712,8 +796,14 @@ public struct TaxRegistrationCreateCountryOptionsBa: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBaType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBaType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -730,9 +820,15 @@ public struct TaxRegistrationCreateCountryOptionsBaStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBaStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBaStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in BB.
@@ -748,8 +844,14 @@ public struct TaxRegistrationCreateCountryOptionsBb: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBbType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBbType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -766,9 +868,15 @@ public struct TaxRegistrationCreateCountryOptionsBbStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBbStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBbStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in BD.
@@ -784,8 +892,14 @@ public struct TaxRegistrationCreateCountryOptionsBd: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBdType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBdType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -802,9 +916,15 @@ public struct TaxRegistrationCreateCountryOptionsBdStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBdStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBdStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in BE.
@@ -820,11 +940,17 @@ public struct TaxRegistrationCreateCountryOptionsBe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBeType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -841,10 +967,16 @@ public struct TaxRegistrationCreateCountryOptionsBeStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in BF.
@@ -860,8 +992,14 @@ public struct TaxRegistrationCreateCountryOptionsBf: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBfType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBfType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -878,9 +1016,15 @@ public struct TaxRegistrationCreateCountryOptionsBfStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBfStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBfStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in BG.
@@ -896,11 +1040,17 @@ public struct TaxRegistrationCreateCountryOptionsBg: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBgType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBgType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -917,10 +1067,16 @@ public struct TaxRegistrationCreateCountryOptionsBgStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBgStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBgStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in BH.
@@ -936,8 +1092,14 @@ public struct TaxRegistrationCreateCountryOptionsBh: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBhType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBhType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -954,9 +1116,15 @@ public struct TaxRegistrationCreateCountryOptionsBhStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBhStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBhStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in BJ.
@@ -969,8 +1137,14 @@ public struct TaxRegistrationCreateCountryOptionsBj: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBjType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsBjType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in BS.
@@ -986,8 +1160,14 @@ public struct TaxRegistrationCreateCountryOptionsBs: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBsType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1004,9 +1184,15 @@ public struct TaxRegistrationCreateCountryOptionsBsStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBsStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsBsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in BW.
@@ -1019,8 +1205,14 @@ public struct TaxRegistrationCreateCountryOptionsBw: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsBwType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsBwType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in BY.
@@ -1033,8 +1225,14 @@ public struct TaxRegistrationCreateCountryOptionsBy: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsByType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsByType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in CA.
@@ -1055,10 +1253,16 @@ public struct TaxRegistrationCreateCountryOptionsCa: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCaType: String, Codable, Sendable {
-    case provinceStandard = "province_standard"
-    case simplified
-    case standard
+public struct TaxRegistrationCreateCountryOptionsCaType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var provinceStandard: Self { .init(rawValue: "province_standard") }
+    public static var simplified: Self { .init(rawValue: "simplified") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the provincial tax registration.
@@ -1084,8 +1288,14 @@ public struct TaxRegistrationCreateCountryOptionsCd: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCdType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsCdType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1102,9 +1312,15 @@ public struct TaxRegistrationCreateCountryOptionsCdStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCdStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsCdStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in CH.
@@ -1120,8 +1336,14 @@ public struct TaxRegistrationCreateCountryOptionsCh: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsChType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsChType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1138,9 +1360,15 @@ public struct TaxRegistrationCreateCountryOptionsChStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsChStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsChStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in CI.
@@ -1153,8 +1381,14 @@ public struct TaxRegistrationCreateCountryOptionsCi: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCiType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsCiType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in CL.
@@ -1167,8 +1401,14 @@ public struct TaxRegistrationCreateCountryOptionsCl: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsClType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsClType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in CM.
@@ -1181,8 +1421,14 @@ public struct TaxRegistrationCreateCountryOptionsCm: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCmType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsCmType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in CO.
@@ -1195,8 +1441,14 @@ public struct TaxRegistrationCreateCountryOptionsCo: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCoType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsCoType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in CR.
@@ -1209,8 +1461,14 @@ public struct TaxRegistrationCreateCountryOptionsCr: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCrType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsCrType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in CV.
@@ -1223,8 +1481,14 @@ public struct TaxRegistrationCreateCountryOptionsCv: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCvType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsCvType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in CY.
@@ -1240,11 +1504,17 @@ public struct TaxRegistrationCreateCountryOptionsCy: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCyType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsCyType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1261,10 +1531,16 @@ public struct TaxRegistrationCreateCountryOptionsCyStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCyStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsCyStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in CZ.
@@ -1280,11 +1556,17 @@ public struct TaxRegistrationCreateCountryOptionsCz: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCzType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsCzType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1301,10 +1583,16 @@ public struct TaxRegistrationCreateCountryOptionsCzStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsCzStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsCzStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in DE.
@@ -1320,11 +1608,17 @@ public struct TaxRegistrationCreateCountryOptionsDe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsDeType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsDeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1341,10 +1635,16 @@ public struct TaxRegistrationCreateCountryOptionsDeStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsDeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsDeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in DK.
@@ -1360,11 +1660,17 @@ public struct TaxRegistrationCreateCountryOptionsDk: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsDkType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsDkType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1381,10 +1687,16 @@ public struct TaxRegistrationCreateCountryOptionsDkStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsDkStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsDkStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in EC.
@@ -1397,8 +1709,14 @@ public struct TaxRegistrationCreateCountryOptionsEc: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsEcType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsEcType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in EE.
@@ -1414,11 +1732,17 @@ public struct TaxRegistrationCreateCountryOptionsEe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsEeType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsEeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1435,10 +1759,16 @@ public struct TaxRegistrationCreateCountryOptionsEeStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsEeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsEeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in EG.
@@ -1451,8 +1781,14 @@ public struct TaxRegistrationCreateCountryOptionsEg: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsEgType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsEgType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in ES.
@@ -1468,11 +1804,21 @@ public struct TaxRegistrationCreateCountryOptionsEs: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsEsType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsEsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// Common for businesses shipping goods below EUR 150 from non-EU countries to EU customers.
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    /// Common for businesses established outside of the EU selling services to customers in the EU.
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    /// Common for businesses established in the EU selling goods and services to customers in the EU.
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    /// Common for businesses selling goods and services to customers in this country.
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1489,10 +1835,16 @@ public struct TaxRegistrationCreateCountryOptionsEsStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsEsStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsEsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in ET.
@@ -1508,8 +1860,14 @@ public struct TaxRegistrationCreateCountryOptionsEt: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsEtType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsEtType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1526,9 +1884,15 @@ public struct TaxRegistrationCreateCountryOptionsEtStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsEtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsEtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in FI.
@@ -1544,11 +1908,17 @@ public struct TaxRegistrationCreateCountryOptionsFi: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsFiType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsFiType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1565,10 +1935,16 @@ public struct TaxRegistrationCreateCountryOptionsFiStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsFiStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsFiStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in FR.
@@ -1584,11 +1960,17 @@ public struct TaxRegistrationCreateCountryOptionsFr: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsFrType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsFrType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1605,10 +1987,16 @@ public struct TaxRegistrationCreateCountryOptionsFrStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsFrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsFrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in GB.
@@ -1624,8 +2012,14 @@ public struct TaxRegistrationCreateCountryOptionsGb: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsGbType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsGbType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1642,9 +2036,15 @@ public struct TaxRegistrationCreateCountryOptionsGbStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsGbStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsGbStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in GE.
@@ -1657,8 +2057,14 @@ public struct TaxRegistrationCreateCountryOptionsGe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsGeType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsGeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in GH.
@@ -1671,8 +2077,14 @@ public struct TaxRegistrationCreateCountryOptionsGh: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsGhType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsGhType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in GN.
@@ -1688,8 +2100,14 @@ public struct TaxRegistrationCreateCountryOptionsGn: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsGnType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsGnType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1706,9 +2124,15 @@ public struct TaxRegistrationCreateCountryOptionsGnStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsGnStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsGnStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in GR.
@@ -1724,11 +2148,17 @@ public struct TaxRegistrationCreateCountryOptionsGr: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsGrType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsGrType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1745,10 +2175,16 @@ public struct TaxRegistrationCreateCountryOptionsGrStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsGrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsGrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in HR.
@@ -1764,11 +2200,17 @@ public struct TaxRegistrationCreateCountryOptionsHr: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsHrType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsHrType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1785,10 +2227,16 @@ public struct TaxRegistrationCreateCountryOptionsHrStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsHrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsHrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in HU.
@@ -1804,11 +2252,17 @@ public struct TaxRegistrationCreateCountryOptionsHu: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsHuType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsHuType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1825,10 +2279,16 @@ public struct TaxRegistrationCreateCountryOptionsHuStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsHuStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsHuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in ID.
@@ -1841,8 +2301,14 @@ public struct TaxRegistrationCreateCountryOptionsId: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsIdType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsIdType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in IE.
@@ -1858,11 +2324,17 @@ public struct TaxRegistrationCreateCountryOptionsIe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsIeType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsIeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1879,10 +2351,16 @@ public struct TaxRegistrationCreateCountryOptionsIeStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsIeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsIeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in IN.
@@ -1895,8 +2373,14 @@ public struct TaxRegistrationCreateCountryOptionsIn: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsInType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsInType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in IS.
@@ -1912,8 +2396,14 @@ public struct TaxRegistrationCreateCountryOptionsIs: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsIsType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsIsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1930,9 +2420,15 @@ public struct TaxRegistrationCreateCountryOptionsIsStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsIsStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsIsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in IT.
@@ -1948,11 +2444,17 @@ public struct TaxRegistrationCreateCountryOptionsIt: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsItType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsItType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -1969,10 +2471,16 @@ public struct TaxRegistrationCreateCountryOptionsItStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsItStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsItStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in JP.
@@ -1988,8 +2496,14 @@ public struct TaxRegistrationCreateCountryOptionsJp: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsJpType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsJpType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2006,9 +2520,15 @@ public struct TaxRegistrationCreateCountryOptionsJpStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsJpStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsJpStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in KE.
@@ -2021,8 +2541,14 @@ public struct TaxRegistrationCreateCountryOptionsKe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsKeType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsKeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in KG.
@@ -2035,8 +2561,14 @@ public struct TaxRegistrationCreateCountryOptionsKg: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsKgType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsKgType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in KH.
@@ -2049,8 +2581,14 @@ public struct TaxRegistrationCreateCountryOptionsKh: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsKhType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsKhType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in KR.
@@ -2063,8 +2601,14 @@ public struct TaxRegistrationCreateCountryOptionsKr: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsKrType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsKrType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in KZ.
@@ -2077,8 +2621,14 @@ public struct TaxRegistrationCreateCountryOptionsKz: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsKzType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsKzType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in LA.
@@ -2091,8 +2641,14 @@ public struct TaxRegistrationCreateCountryOptionsLa: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsLaType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsLaType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in LK.
@@ -2105,8 +2661,14 @@ public struct TaxRegistrationCreateCountryOptionsLk: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsLkType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsLkType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in LT.
@@ -2122,11 +2684,17 @@ public struct TaxRegistrationCreateCountryOptionsLt: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsLtType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsLtType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2143,10 +2711,16 @@ public struct TaxRegistrationCreateCountryOptionsLtStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsLtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsLtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in LU.
@@ -2162,11 +2736,17 @@ public struct TaxRegistrationCreateCountryOptionsLu: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsLuType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsLuType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2183,10 +2763,16 @@ public struct TaxRegistrationCreateCountryOptionsLuStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsLuStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsLuStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in LV.
@@ -2202,11 +2788,17 @@ public struct TaxRegistrationCreateCountryOptionsLv: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsLvType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsLvType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2223,10 +2815,16 @@ public struct TaxRegistrationCreateCountryOptionsLvStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsLvStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsLvStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in MA.
@@ -2239,8 +2837,14 @@ public struct TaxRegistrationCreateCountryOptionsMa: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMaType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsMaType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in MD.
@@ -2253,8 +2857,14 @@ public struct TaxRegistrationCreateCountryOptionsMd: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMdType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsMdType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in ME.
@@ -2270,8 +2880,14 @@ public struct TaxRegistrationCreateCountryOptionsMe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMeType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsMeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2288,9 +2904,15 @@ public struct TaxRegistrationCreateCountryOptionsMeStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsMeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in MK.
@@ -2306,8 +2928,14 @@ public struct TaxRegistrationCreateCountryOptionsMk: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMkType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsMkType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2324,9 +2952,15 @@ public struct TaxRegistrationCreateCountryOptionsMkStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMkStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsMkStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in MR.
@@ -2342,8 +2976,14 @@ public struct TaxRegistrationCreateCountryOptionsMr: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMrType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsMrType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2360,9 +3000,15 @@ public struct TaxRegistrationCreateCountryOptionsMrStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsMrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in MT.
@@ -2378,11 +3024,17 @@ public struct TaxRegistrationCreateCountryOptionsMt: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMtType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsMtType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2399,10 +3051,16 @@ public struct TaxRegistrationCreateCountryOptionsMtStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsMtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in MU.
@@ -2415,8 +3073,14 @@ public struct TaxRegistrationCreateCountryOptionsMu: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMuType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsMuType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in MX.
@@ -2429,8 +3093,14 @@ public struct TaxRegistrationCreateCountryOptionsMx: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMxType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsMxType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in MY.
@@ -2443,8 +3113,14 @@ public struct TaxRegistrationCreateCountryOptionsMy: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsMyType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsMyType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in NG.
@@ -2457,8 +3133,14 @@ public struct TaxRegistrationCreateCountryOptionsNg: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsNgType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsNgType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in NL.
@@ -2474,11 +3156,17 @@ public struct TaxRegistrationCreateCountryOptionsNl: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsNlType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsNlType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2495,10 +3183,16 @@ public struct TaxRegistrationCreateCountryOptionsNlStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsNlStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsNlStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in NO.
@@ -2514,8 +3208,14 @@ public struct TaxRegistrationCreateCountryOptionsNo: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsNoType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsNoType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2532,9 +3232,15 @@ public struct TaxRegistrationCreateCountryOptionsNoStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsNoStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsNoStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in NP.
@@ -2547,8 +3253,14 @@ public struct TaxRegistrationCreateCountryOptionsNp: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsNpType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsNpType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in NZ.
@@ -2564,8 +3276,14 @@ public struct TaxRegistrationCreateCountryOptionsNz: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsNzType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsNzType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2582,9 +3300,15 @@ public struct TaxRegistrationCreateCountryOptionsNzStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsNzStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsNzStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in OM.
@@ -2600,8 +3324,14 @@ public struct TaxRegistrationCreateCountryOptionsOm: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsOmType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsOmType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2618,9 +3348,15 @@ public struct TaxRegistrationCreateCountryOptionsOmStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsOmStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsOmStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in PE.
@@ -2633,8 +3369,14 @@ public struct TaxRegistrationCreateCountryOptionsPe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsPeType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsPeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in PH.
@@ -2647,8 +3389,14 @@ public struct TaxRegistrationCreateCountryOptionsPh: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsPhType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsPhType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in PL.
@@ -2664,11 +3412,17 @@ public struct TaxRegistrationCreateCountryOptionsPl: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsPlType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsPlType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2685,10 +3439,16 @@ public struct TaxRegistrationCreateCountryOptionsPlStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsPlStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsPlStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in PT.
@@ -2704,11 +3464,17 @@ public struct TaxRegistrationCreateCountryOptionsPt: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsPtType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsPtType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2725,10 +3491,16 @@ public struct TaxRegistrationCreateCountryOptionsPtStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsPtStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsPtStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in RO.
@@ -2744,11 +3516,17 @@ public struct TaxRegistrationCreateCountryOptionsRo: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsRoType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsRoType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2765,10 +3543,16 @@ public struct TaxRegistrationCreateCountryOptionsRoStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsRoStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsRoStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in RS.
@@ -2784,8 +3568,14 @@ public struct TaxRegistrationCreateCountryOptionsRs: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsRsType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsRsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2802,9 +3592,15 @@ public struct TaxRegistrationCreateCountryOptionsRsStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsRsStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsRsStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in RU.
@@ -2817,8 +3613,14 @@ public struct TaxRegistrationCreateCountryOptionsRu: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsRuType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsRuType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in SA.
@@ -2831,8 +3633,14 @@ public struct TaxRegistrationCreateCountryOptionsSa: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSaType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsSaType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in SE.
@@ -2848,11 +3656,17 @@ public struct TaxRegistrationCreateCountryOptionsSe: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSeType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSeType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2869,10 +3683,16 @@ public struct TaxRegistrationCreateCountryOptionsSeStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSeStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSeStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in SG.
@@ -2888,8 +3708,14 @@ public struct TaxRegistrationCreateCountryOptionsSg: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSgType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSgType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2906,9 +3732,15 @@ public struct TaxRegistrationCreateCountryOptionsSgStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSgStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSgStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in SI.
@@ -2924,11 +3756,17 @@ public struct TaxRegistrationCreateCountryOptionsSi: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSiType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSiType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2945,10 +3783,16 @@ public struct TaxRegistrationCreateCountryOptionsSiStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSiStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSiStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in SK.
@@ -2964,11 +3808,17 @@ public struct TaxRegistrationCreateCountryOptionsSk: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSkType: String, Codable, Sendable {
-    case ioss
-    case ossNonUnion = "oss_non_union"
-    case ossUnion = "oss_union"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSkType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var ioss: Self { .init(rawValue: "ioss") }
+    public static var ossNonUnion: Self { .init(rawValue: "oss_non_union") }
+    public static var ossUnion: Self { .init(rawValue: "oss_union") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -2985,10 +3835,16 @@ public struct TaxRegistrationCreateCountryOptionsSkStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSkStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case smallSeller = "small_seller"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSkStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var smallSeller: Self { .init(rawValue: "small_seller") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in SN.
@@ -3001,8 +3857,14 @@ public struct TaxRegistrationCreateCountryOptionsSn: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSnType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsSnType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in SR.
@@ -3018,8 +3880,14 @@ public struct TaxRegistrationCreateCountryOptionsSr: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSrType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSrType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -3036,9 +3904,15 @@ public struct TaxRegistrationCreateCountryOptionsSrStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsSrStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsSrStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in TH.
@@ -3051,8 +3925,15 @@ public struct TaxRegistrationCreateCountryOptionsTh: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsThType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsThType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// A simplified Tax Registration in Thailand to collect VAT.
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in TJ.
@@ -3065,8 +3946,14 @@ public struct TaxRegistrationCreateCountryOptionsTj: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsTjType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsTjType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in TR.
@@ -3079,8 +3966,14 @@ public struct TaxRegistrationCreateCountryOptionsTr: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsTrType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsTrType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in TW.
@@ -3093,8 +3986,14 @@ public struct TaxRegistrationCreateCountryOptionsTw: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsTwType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsTwType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in TZ.
@@ -3107,8 +4006,14 @@ public struct TaxRegistrationCreateCountryOptionsTz: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsTzType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsTzType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in UA.
@@ -3121,8 +4026,14 @@ public struct TaxRegistrationCreateCountryOptionsUa: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsUaType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsUaType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in UG.
@@ -3135,8 +4046,14 @@ public struct TaxRegistrationCreateCountryOptionsUg: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsUgType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsUgType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in US.
@@ -3213,24 +4130,47 @@ public struct TaxRegistrationCreateCountryOptionsUs: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsUsType: String, Codable, Sendable {
-    case admissionsTax = "admissions_tax"
-    case attendanceTax = "attendance_tax"
-    case digitalExciseTax = "digital_excise_tax"
-    case entertainmentTax = "entertainment_tax"
-    case grossReceiptsTax = "gross_receipts_tax"
-    case hospitalityTax = "hospitality_tax"
-    case localAmusementTax = "local_amusement_tax"
-    case localLeaseTax = "local_lease_tax"
-    case luxuryTax = "luxury_tax"
-    case massTransitParkingTax = "mass_transit_parking_tax"
-    case parkingTax = "parking_tax"
-    case resortTax = "resort_tax"
-    case stateCommunicationsTax = "state_communications_tax"
-    case stateRetailDeliveryFee = "state_retail_delivery_fee"
-    case stateSalesTax = "state_sales_tax"
-    case tourismTax = "tourism_tax"
-    case utilityUsersTax = "utility_users_tax"
+public struct TaxRegistrationCreateCountryOptionsUsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// A Tax Registration in the specified US state to collect admissions tax.
+    public static var admissionsTax: Self { .init(rawValue: "admissions_tax") }
+    /// A Tax Registration in the specified US state to collect attendance tax.
+    public static var attendanceTax: Self { .init(rawValue: "attendance_tax") }
+    /// A Tax Registration in the specified US state to collect digital excise tax.
+    public static var digitalExciseTax: Self { .init(rawValue: "digital_excise_tax") }
+    /// A Tax Registration in the specified US state to collect entertainment tax.
+    public static var entertainmentTax: Self { .init(rawValue: "entertainment_tax") }
+    /// A Tax Registration in the specified US state to collect gross receipts tax.
+    public static var grossReceiptsTax: Self { .init(rawValue: "gross_receipts_tax") }
+    /// A Tax Registration in the specified US state to collect hospitality tax.
+    public static var hospitalityTax: Self { .init(rawValue: "hospitality_tax") }
+    /// A Tax Registration in the specified US state to collect local amusement tax.
+    public static var localAmusementTax: Self { .init(rawValue: "local_amusement_tax") }
+    /// A Tax Registration in the specified US state to collect local lease tax.
+    public static var localLeaseTax: Self { .init(rawValue: "local_lease_tax") }
+    /// A Tax Registration in the specified US state to collect luxury tax.
+    public static var luxuryTax: Self { .init(rawValue: "luxury_tax") }
+    /// A Tax Registration in the specified US state to collect mass transit parking tax.
+    public static var massTransitParkingTax: Self { .init(rawValue: "mass_transit_parking_tax") }
+    /// A Tax Registration in the specified US state to collect parking tax.
+    public static var parkingTax: Self { .init(rawValue: "parking_tax") }
+    /// A Tax Registration in the specified US state to collect resort tax.
+    public static var resortTax: Self { .init(rawValue: "resort_tax") }
+    /// A Tax Registration in the specified US state to collect communications tax.
+    public static var stateCommunicationsTax: Self { .init(rawValue: "state_communications_tax") }
+    /// A Tax Registration in the specified US state to collect state retail delivery fee.
+    public static var stateRetailDeliveryFee: Self { .init(rawValue: "state_retail_delivery_fee") }
+    /// A Tax Registration in the specified US state to collect sales tax.
+    public static var stateSalesTax: Self { .init(rawValue: "state_sales_tax") }
+    /// A Tax Registration in the specified US state to collect tourism tax.
+    public static var tourismTax: Self { .init(rawValue: "tourism_tax") }
+    /// A Tax Registration in the specified local jurisdiction to collect utility users tax.
+    public static var utilityUsersTax: Self { .init(rawValue: "utility_users_tax") }
 }
 
 /// Options for the admission tax registration.
@@ -3377,10 +4317,16 @@ public struct TaxRegistrationCreateCountryOptionsUsStateSalesTaxElections: Strip
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsUsStateSalesTaxElectionsType: String, Codable, Sendable {
-    case localUseTax = "local_use_tax"
-    case simplifiedSellersUseTax = "simplified_sellers_use_tax"
-    case singleLocalUseTax = "single_local_use_tax"
+public struct TaxRegistrationCreateCountryOptionsUsStateSalesTaxElectionsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var localUseTax: Self { .init(rawValue: "local_use_tax") }
+    public static var simplifiedSellersUseTax: Self { .init(rawValue: "simplified_sellers_use_tax") }
+    public static var singleLocalUseTax: Self { .init(rawValue: "single_local_use_tax") }
 }
 
 /// Options for the tourism tax registration.
@@ -3418,8 +4364,14 @@ public struct TaxRegistrationCreateCountryOptionsUy: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsUyType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsUyType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -3436,9 +4388,15 @@ public struct TaxRegistrationCreateCountryOptionsUyStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsUyStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsUyStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in UZ.
@@ -3451,8 +4409,14 @@ public struct TaxRegistrationCreateCountryOptionsUz: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsUzType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsUzType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in VN.
@@ -3465,8 +4429,14 @@ public struct TaxRegistrationCreateCountryOptionsVn: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsVnType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsVnType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in ZA.
@@ -3482,8 +4452,14 @@ public struct TaxRegistrationCreateCountryOptionsZa: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsZaType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsZaType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -3500,9 +4476,15 @@ public struct TaxRegistrationCreateCountryOptionsZaStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsZaStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsZaStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the registration in ZM.
@@ -3515,8 +4497,14 @@ public struct TaxRegistrationCreateCountryOptionsZm: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsZmType: String, Codable, Sendable {
-    case simplified
+public struct TaxRegistrationCreateCountryOptionsZmType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var simplified: Self { .init(rawValue: "simplified") }
 }
 
 /// Options for the registration in ZW.
@@ -3532,8 +4520,14 @@ public struct TaxRegistrationCreateCountryOptionsZw: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsZwType: String, Codable, Sendable {
-    case standard
+public struct TaxRegistrationCreateCountryOptionsZwType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
 /// Options for the standard registration.
@@ -3550,16 +4544,28 @@ public struct TaxRegistrationCreateCountryOptionsZwStandard: StripeParams {
     }
 }
 
-public enum TaxRegistrationCreateCountryOptionsZwStandardPlaceOfSupplyScheme: String, Codable, Sendable {
-    case inboundGoods = "inbound_goods"
-    case standard
+public struct TaxRegistrationCreateCountryOptionsZwStandardPlaceOfSupplyScheme: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var inboundGoods: Self { .init(rawValue: "inbound_goods") }
+    public static var standard: Self { .init(rawValue: "standard") }
 }
 
-public enum TaxRegistrationListStatus: String, Codable, Sendable {
-    case active
-    case all
-    case expired
-    case scheduled
+public struct TaxRegistrationListStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var all: Self { .init(rawValue: "all") }
+    public static var expired: Self { .init(rawValue: "expired") }
+    public static var scheduled: Self { .init(rawValue: "scheduled") }
 }
 
 /// One of the forms `active_from` accepts.

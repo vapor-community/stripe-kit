@@ -15,12 +15,18 @@ public struct ShippingRateDeliveryEstimateBound: Codable, Sendable {
 }
 
 /// A unit of time.
-public enum ShippingRateDeliveryEstimateBoundUnit: String, Codable, Sendable {
-    case businessDay = "business_day"
-    case day
-    case hour
-    case month
-    case week
+public struct ShippingRateDeliveryEstimateBoundUnit: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var businessDay: Self { .init(rawValue: "business_day") }
+    public static var day: Self { .init(rawValue: "day") }
+    public static var hour: Self { .init(rawValue: "hour") }
+    public static var month: Self { .init(rawValue: "month") }
+    public static var week: Self { .init(rawValue: "week") }
 }
 
 public struct ShippingRateDeliveryEstimateBoundList: Codable, Sendable {

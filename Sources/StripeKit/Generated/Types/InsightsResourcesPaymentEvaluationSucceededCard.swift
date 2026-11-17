@@ -25,28 +25,46 @@ public struct InsightsResourcesPaymentEvaluationSucceededCard: Codable, Sendable
 }
 
 /// Result of the address line 1 check.
-public enum InsightsResourcesPaymentEvaluationSucceededCardAddressLine1Check: String, Codable, Sendable {
-    case fail
-    case pass
-    case unavailable
-    case unchecked
+public struct InsightsResourcesPaymentEvaluationSucceededCardAddressLine1Check: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fail: Self { .init(rawValue: "fail") }
+    public static var pass: Self { .init(rawValue: "pass") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
 
 /// Indicates whether the cardholder provided a postal code and if it matched the cardholder’s billing
 /// address.
-public enum InsightsResourcesPaymentEvaluationSucceededCardAddressPostalCodeCheck: String, Codable, Sendable {
-    case fail
-    case pass
-    case unavailable
-    case unchecked
+public struct InsightsResourcesPaymentEvaluationSucceededCardAddressPostalCodeCheck: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fail: Self { .init(rawValue: "fail") }
+    public static var pass: Self { .init(rawValue: "pass") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
 
 /// Result of the CVC check.
-public enum InsightsResourcesPaymentEvaluationSucceededCardCvcCheck: String, Codable, Sendable {
-    case fail
-    case pass
-    case unavailable
-    case unchecked
+public struct InsightsResourcesPaymentEvaluationSucceededCardCvcCheck: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var fail: Self { .init(rawValue: "fail") }
+    public static var pass: Self { .init(rawValue: "pass") }
+    public static var unavailable: Self { .init(rawValue: "unavailable") }
+    public static var unchecked: Self { .init(rawValue: "unchecked") }
 }
 
 public struct InsightsResourcesPaymentEvaluationSucceededCardList: Codable, Sendable {

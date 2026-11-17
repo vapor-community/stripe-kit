@@ -21,18 +21,24 @@ public struct InsightsResourcesPaymentEvaluationDisputeOpened: Codable, Sendable
 }
 
 /// Reason given by cardholder for dispute.
-public enum InsightsResourcesPaymentEvaluationDisputeOpenedReason: String, Codable, Sendable {
-    case accountNotAvailable = "account_not_available"
-    case creditNotProcessed = "credit_not_processed"
-    case customerInitiated = "customer_initiated"
-    case duplicate
-    case fraudulent
-    case general
-    case noncompliant
-    case productNotReceived = "product_not_received"
-    case productUnacceptable = "product_unacceptable"
-    case subscriptionCanceled = "subscription_canceled"
-    case unrecognized
+public struct InsightsResourcesPaymentEvaluationDisputeOpenedReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountNotAvailable: Self { .init(rawValue: "account_not_available") }
+    public static var creditNotProcessed: Self { .init(rawValue: "credit_not_processed") }
+    public static var customerInitiated: Self { .init(rawValue: "customer_initiated") }
+    public static var duplicate: Self { .init(rawValue: "duplicate") }
+    public static var fraudulent: Self { .init(rawValue: "fraudulent") }
+    public static var general: Self { .init(rawValue: "general") }
+    public static var noncompliant: Self { .init(rawValue: "noncompliant") }
+    public static var productNotReceived: Self { .init(rawValue: "product_not_received") }
+    public static var productUnacceptable: Self { .init(rawValue: "product_unacceptable") }
+    public static var subscriptionCanceled: Self { .init(rawValue: "subscription_canceled") }
+    public static var unrecognized: Self { .init(rawValue: "unrecognized") }
 }
 
 public struct InsightsResourcesPaymentEvaluationDisputeOpenedList: Codable, Sendable {

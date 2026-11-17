@@ -24,9 +24,15 @@ public struct CustomerAcceptance: Codable, Sendable {
 }
 
 /// The mandate includes the type of customer acceptance information, such as: `online` or `offline`.
-public enum CustomerAcceptanceType: String, Codable, Sendable {
-    case offline
-    case online
+public struct CustomerAcceptanceType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var offline: Self { .init(rawValue: "offline") }
+    public static var online: Self { .init(rawValue: "online") }
 }
 
 public struct CustomerAcceptanceList: Codable, Sendable {

@@ -55,14 +55,26 @@ public struct AccountLinkCreateParams: StripeParams {
     }
 }
 
-public enum AccountLinkCreateType: String, Codable, Sendable {
-    case accountOnboarding = "account_onboarding"
-    case accountUpdate = "account_update"
+public struct AccountLinkCreateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var accountOnboarding: Self { .init(rawValue: "account_onboarding") }
+    public static var accountUpdate: Self { .init(rawValue: "account_update") }
 }
 
-public enum AccountLinkCreateCollect: String, Codable, Sendable {
-    case currentlyDue = "currently_due"
-    case eventuallyDue = "eventually_due"
+public struct AccountLinkCreateCollect: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var currentlyDue: Self { .init(rawValue: "currently_due") }
+    public static var eventuallyDue: Self { .init(rawValue: "eventually_due") }
 }
 
 /// Specifies the requirements that Stripe collects from connected accounts in the Connect Onboarding
@@ -87,12 +99,24 @@ public struct AccountLinkCreateCollectionOptions: StripeParams {
     }
 }
 
-public enum AccountLinkCreateCollectionOptionsFields: String, Codable, Sendable {
-    case currentlyDue = "currently_due"
-    case eventuallyDue = "eventually_due"
+public struct AccountLinkCreateCollectionOptionsFields: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var currentlyDue: Self { .init(rawValue: "currently_due") }
+    public static var eventuallyDue: Self { .init(rawValue: "eventually_due") }
 }
 
-public enum AccountLinkCreateCollectionOptionsFutureRequirements: String, Codable, Sendable {
-    case include
-    case omit
+public struct AccountLinkCreateCollectionOptionsFutureRequirements: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var include: Self { .init(rawValue: "include") }
+    public static var omit: Self { .init(rawValue: "omit") }
 }

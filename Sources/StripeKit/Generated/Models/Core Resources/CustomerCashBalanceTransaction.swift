@@ -68,22 +68,34 @@ public struct CustomerCashBalanceTransaction: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum CustomerCashBalanceTransactionObject: String, Codable, Sendable {
-    case customerCashBalanceTransaction = "customer_cash_balance_transaction"
+public struct CustomerCashBalanceTransactionObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var customerCashBalanceTransaction: Self { .init(rawValue: "customer_cash_balance_transaction") }
 }
 
 /// The type of the cash balance transaction. New types may be added in future. See [Customer
 /// Balance](https://docs.stripe.com/payments/customer-balance#types) to learn more about these types.
-public enum CustomerCashBalanceTransactionType: String, Codable, Sendable {
-    case adjustedForOverdraft = "adjusted_for_overdraft"
-    case appliedToPayment = "applied_to_payment"
-    case funded
-    case fundingReversed = "funding_reversed"
-    case refundedFromPayment = "refunded_from_payment"
-    case returnCanceled = "return_canceled"
-    case returnInitiated = "return_initiated"
-    case transferredToBalance = "transferred_to_balance"
-    case unappliedFromPayment = "unapplied_from_payment"
+public struct CustomerCashBalanceTransactionType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var adjustedForOverdraft: Self { .init(rawValue: "adjusted_for_overdraft") }
+    public static var appliedToPayment: Self { .init(rawValue: "applied_to_payment") }
+    public static var funded: Self { .init(rawValue: "funded") }
+    public static var fundingReversed: Self { .init(rawValue: "funding_reversed") }
+    public static var refundedFromPayment: Self { .init(rawValue: "refunded_from_payment") }
+    public static var returnCanceled: Self { .init(rawValue: "return_canceled") }
+    public static var returnInitiated: Self { .init(rawValue: "return_initiated") }
+    public static var transferredToBalance: Self { .init(rawValue: "transferred_to_balance") }
+    public static var unappliedFromPayment: Self { .init(rawValue: "unapplied_from_payment") }
 }
 
 public struct CustomerCashBalanceTransactionList: Codable, Sendable {

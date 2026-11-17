@@ -113,39 +113,80 @@ public struct IssuingCard: Codable, Sendable {
 }
 
 /// The reason why the card was canceled.
-public enum IssuingCardCancellationReason: String, Codable, Sendable {
-    case designRejected = "design_rejected"
-    case fulfillmentError = "fulfillment_error"
-    case lost
-    case stolen
+public struct IssuingCardCancellationReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The design of this card was rejected by Stripe for violating our [partner
+    /// guidelines](https://docs.stripe.com/issuing/cards/physical#design-review).
+    public static var designRejected: Self { .init(rawValue: "design_rejected") }
+    /// There was an error in fulfilling the card. This reason is only valid for cards of type `physical`.
+    public static var fulfillmentError: Self { .init(rawValue: "fulfillment_error") }
+    /// The card was lost.
+    public static var lost: Self { .init(rawValue: "lost") }
+    /// The card was stolen.
+    public static var stolen: Self { .init(rawValue: "stolen") }
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum IssuingCardObject: String, Codable, Sendable {
-    case issuingCard = "issuing.card"
+public struct IssuingCardObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var issuingCard: Self { .init(rawValue: "issuing.card") }
 }
 
 /// The reason why the previous card needed to be replaced.
-public enum IssuingCardReplacementReason: String, Codable, Sendable {
-    case damaged
-    case expired
-    case fulfillmentError = "fulfillment_error"
-    case lost
-    case stolen
+public struct IssuingCardReplacementReason: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    /// The physical card has been damaged and cannot be used at terminals. This reason is only valid for
+    /// cards of type `physical`.
+    public static var damaged: Self { .init(rawValue: "damaged") }
+    /// The expiration date has passed or is imminent.
+    public static var expired: Self { .init(rawValue: "expired") }
+    /// There was an error in fulfilling the card. This reason is only valid for cards of type `physical`.
+    public static var fulfillmentError: Self { .init(rawValue: "fulfillment_error") }
+    /// The card was lost. This status is only valid if the card it replaces is marked as lost.
+    public static var lost: Self { .init(rawValue: "lost") }
+    /// The card was stolen. This status is only valid if the card it replaces is marked as stolen.
+    public static var stolen: Self { .init(rawValue: "stolen") }
 }
 
 /// Whether authorizations can be approved on this card. May be blocked from activating cards depending
 /// on past-due Cardholder requirements. Defaults to `inactive`.
-public enum IssuingCardStatus: String, Codable, Sendable {
-    case active
-    case canceled
-    case inactive
+public struct IssuingCardStatus: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var active: Self { .init(rawValue: "active") }
+    public static var canceled: Self { .init(rawValue: "canceled") }
+    public static var inactive: Self { .init(rawValue: "inactive") }
 }
 
 /// The type of the card.
-public enum IssuingCardType: String, Codable, Sendable {
-    case physical
-    case virtual
+public struct IssuingCardType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var physical: Self { .init(rawValue: "physical") }
+    public static var virtual: Self { .init(rawValue: "virtual") }
 }
 
 public struct IssuingCardList: Codable, Sendable {

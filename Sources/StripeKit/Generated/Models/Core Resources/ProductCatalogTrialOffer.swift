@@ -43,8 +43,14 @@ public struct ProductCatalogTrialOffer: Codable, Sendable {
 }
 
 /// String representing the object's type. Objects of the same type share the same value.
-public enum ProductCatalogTrialOfferObject: String, Codable, Sendable {
-    case productCatalogTrialOffer = "product_catalog.trial_offer"
+public struct ProductCatalogTrialOfferObject: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var productCatalogTrialOffer: Self { .init(rawValue: "product_catalog.trial_offer") }
 }
 
 public struct ProductCatalogTrialOfferList: Codable, Sendable {

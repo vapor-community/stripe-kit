@@ -33,8 +33,14 @@ public struct BillingMeterEventAdjustmentCreateParams: StripeParams {
     }
 }
 
-public enum BillingMeterEventAdjustmentCreateType: String, Codable, Sendable {
-    case cancel
+public struct BillingMeterEventAdjustmentCreateType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var cancel: Self { .init(rawValue: "cancel") }
 }
 
 /// Specifies which event to cancel.

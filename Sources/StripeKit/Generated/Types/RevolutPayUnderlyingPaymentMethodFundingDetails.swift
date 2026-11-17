@@ -14,8 +14,14 @@ public struct RevolutPayUnderlyingPaymentMethodFundingDetails: Codable, Sendable
 }
 
 /// funding type of the underlying payment method.
-public enum RevolutPayUnderlyingPaymentMethodFundingDetailsType: String, Codable, Sendable {
-    case card
+public struct RevolutPayUnderlyingPaymentMethodFundingDetailsType: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var card: Self { .init(rawValue: "card") }
 }
 
 public struct RevolutPayUnderlyingPaymentMethodFundingDetailsList: Codable, Sendable {

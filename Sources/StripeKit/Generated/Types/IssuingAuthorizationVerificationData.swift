@@ -38,32 +38,56 @@ public struct IssuingAuthorizationVerificationData: Codable, Sendable {
 
 /// Whether the cardholder provided an address first line and if it matched the cardholder’s
 /// `billing.address.line1`.
-public enum IssuingAuthorizationVerificationDataAddressLine1Check: String, Codable, Sendable {
-    case match
-    case mismatch
-    case notProvided = "not_provided"
+public struct IssuingAuthorizationVerificationDataAddressLine1Check: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var match: Self { .init(rawValue: "match") }
+    public static var mismatch: Self { .init(rawValue: "mismatch") }
+    public static var notProvided: Self { .init(rawValue: "not_provided") }
 }
 
 /// Whether the cardholder provided a postal code and if it matched the cardholder’s
 /// `billing.address.postal_code`.
-public enum IssuingAuthorizationVerificationDataAddressPostalCodeCheck: String, Codable, Sendable {
-    case match
-    case mismatch
-    case notProvided = "not_provided"
+public struct IssuingAuthorizationVerificationDataAddressPostalCodeCheck: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var match: Self { .init(rawValue: "match") }
+    public static var mismatch: Self { .init(rawValue: "mismatch") }
+    public static var notProvided: Self { .init(rawValue: "not_provided") }
 }
 
 /// Whether the cardholder provided a CVC and if it matched Stripe’s record.
-public enum IssuingAuthorizationVerificationDataCvcCheck: String, Codable, Sendable {
-    case match
-    case mismatch
-    case notProvided = "not_provided"
+public struct IssuingAuthorizationVerificationDataCvcCheck: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var match: Self { .init(rawValue: "match") }
+    public static var mismatch: Self { .init(rawValue: "mismatch") }
+    public static var notProvided: Self { .init(rawValue: "not_provided") }
 }
 
 /// Whether the cardholder provided an expiry date and if it matched Stripe’s record.
-public enum IssuingAuthorizationVerificationDataExpiryCheck: String, Codable, Sendable {
-    case match
-    case mismatch
-    case notProvided = "not_provided"
+public struct IssuingAuthorizationVerificationDataExpiryCheck: RawRepresentable, Codable, Hashable, Sendable {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public static var match: Self { .init(rawValue: "match") }
+    public static var mismatch: Self { .init(rawValue: "mismatch") }
+    public static var notProvided: Self { .init(rawValue: "not_provided") }
 }
 
 public struct IssuingAuthorizationVerificationDataList: Codable, Sendable {
