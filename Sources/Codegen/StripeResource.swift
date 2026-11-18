@@ -11,13 +11,12 @@ struct StripeResource: Sendable {
     let swiftTypeName: String
     let description: String
     let properties: [StripeProperty]
-    let requiredFields: Set<String>
-    /// For polymorphic `anyOf` schemas (e.g., external_account → [bank_account, card]).
-    /// Contains the x-resourceId values of each variant.
+    /// For polymorphic `anyOf` schemas (e.g., external_account → [bank_account, card]): the
+    /// schema name each variant `$ref` points to.
     let anyOfVariants: [String]?
 }
 
-/// A property on a Stripe resource 
+/// A property on a Stripe resource
 struct StripeProperty: Sendable {
     let name: String
     let swiftName: String
@@ -25,7 +24,6 @@ struct StripeProperty: Sendable {
     let type: StripePropertyType
     let isRequired: Bool
     let isNullable: Bool
-    let enumCases: [String]?
 }
 
 /// The resolved Swift type for a property

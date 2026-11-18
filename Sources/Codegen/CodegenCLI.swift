@@ -5,8 +5,9 @@
 // What gets regenerated:
 //   Sources/StripeKit/Generated/
 //     ├── Models/           — Codable structs per resource (Account.swift, Customer.swift, ...)
-//     ├── Routes/           — @Sendable closure-based route structs + .live(handler:) factories
-//     ├── Params/           — Typed param structs for create/update operations
+//     ├── Routes/           — Route structs: a replaceable closure and a labeled method per
+//     │                       operation, plus a .live(handler:) factory
+//     ├── Params/           — Typed params structs for request bodies and query parameters
 //     ├── Types/            — Inline schemas (shared sub-types referenced by resources)
 //     ├── StripeClient.swift — Auto-wired client with all route properties
 //     ├── StripeEventType.swift — Enum of the spec's event types
@@ -16,8 +17,10 @@
 //     └── GeneratedOperations.swift — Operation manifest checked by SpecCoverageTests
 //
 // What stays hand-written (Infrastructure/):
-//     ├── StripeAPIHandler.swift   — HTTP transport
-//     ├── StripeClient+Scoping.swift — Connected-account and idempotency scoping
+//     ├── StripeAPIHandler.swift   — HTTP transport, retries
+//     ├── RequestOptions.swift     — Per-request connected account and idempotency key
+//     ├── StripePath.swift         — Request paths that escape their interpolated values
+//     ├── StripeClient+Scoping.swift — onBehalfOf(_:) and the test client
 //     ├── StripeExpandable.swift   — @Expandable / @ExpandableCollection property wrappers
 //     ├── Indirect.swift           — @Indirect, storing embedded resources out of line
 //     ├── StripeError.swift        — Error types
@@ -25,6 +28,7 @@
 //     ├── JSONValue.swift          — Any JSON value (free-form objects, raw event data)
 //     ├── StripeParams.swift       — StripeParams protocol and form encoding
 //     ├── StripeRangeQuery.swift   — Range filters for list params (`created`, …)
+//     ├── StripeList.swift         — List responses (`CustomerList` = `StripeList<Customer>`)
 //     ├── StripeSearchResult.swift — Search endpoint responses
 //     └── ObjectOrDeleted.swift    — Object-or-deleted-object responses
 //

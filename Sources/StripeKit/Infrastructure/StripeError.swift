@@ -7,7 +7,8 @@
 
 import Foundation
 
-/// A Stripe API error, suitable for typed `throws(StripeError)`.
+/// An error response from the Stripe API. Routes throw it for any non-2xx response; network
+/// and decoding failures are thrown as the underlying error.
 public struct StripeError: Swift.Error, Codable, Sendable {
     public var error: StripeAPIError?
 }
@@ -44,6 +45,8 @@ public typealias StripeErrorType = ApiErrorsType
 /// `rawValue`) instead of failing the error response.
 public typealias StripeErrorCode = ApiErrorsCode
 
+/// A card issuer's reason for declining a payment (`insufficient_funds`, …). A string, since
+/// the spec doesn't list the values.
 public typealias StripeDeclineCode = String
 
 /// Errors during webhook signature verification.

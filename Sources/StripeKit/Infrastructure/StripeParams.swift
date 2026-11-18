@@ -18,13 +18,14 @@ extension StripeParams {
     /// Form-encodes the params using Stripe's bracket conventions.
     ///
     /// The params are encoded with `JSONEncoder` first, so the generated `CodingKeys`
-    /// decide the wire names (`ssnLast4` → `ssn_last_4`) and String-backed enums encode
-    /// their raw value (`.offSession` → `off_session`). The JSON is then flattened:
+    /// decide the wire names (`ssnLast4` → `ssn_last_4`) and enum values encode their raw
+    /// value (`.offSession` → `off_session`). The JSON is then flattened:
     ///
     /// - Nested objects and dictionaries: `parent[child]=value`
     /// - Arrays of scalars (strings, numbers, enums): `key[]=value`
     /// - Arrays of objects: `key[0][field]=value`
     /// - `nil` optionals and empty arrays/objects are omitted.
+    /// - Fields to clear (see `ClearableParams`) are sent empty: `field=`.
     public func toFormBody() -> String {
         let json: JSONValue
         do {
@@ -54,12 +55,12 @@ extension StripeParams {
 public protocol StripeClearableField: RawRepresentable, Codable, Hashable, Sendable where RawValue == String {}
 
 /// Params with fields Stripe lets you clear by sending them empty (`field=`), as its API
-/// reference describes for e.g. `metadata`, `discounts` or `invoice_settings`. stripe-go calls
-/// this unsetting a field.
+/// reference describes for e.g. `metadata`, `shipping` or `discounts`. stripe-go calls this
+/// unsetting a field.
 ///
 /// ```swift
 /// var params = CustomerUpdateParams()
-/// params.clear(.invoiceSettings)   // invoice_settings=
+/// params.clear(.shipping)   // shipping=
 /// ```
 public protocol ClearableParams: StripeParams {
     /// The fields Stripe lets you clear on these params

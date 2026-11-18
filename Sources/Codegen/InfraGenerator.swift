@@ -40,7 +40,7 @@ struct InfraGenerator {
             w.line("/// header on every request, so responses match the generated models.")
             w.line("public static let apiVersion = \"\(spec.info.version)\"")
             w.line()
-            w.line("/// The API handler used for requests. Stored to support `onBehalfOf()` scoping.")
+            w.line("/// The API handler used for requests. Stored to support `onBehalfOf(_:)` scoping.")
             w.line("public let handler: StripeAPIHandler")
             w.line()
             for property in coreProperties {

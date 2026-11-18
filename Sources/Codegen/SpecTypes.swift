@@ -247,8 +247,6 @@ struct PathItem: Decodable {
     let get: OperationObject?
     let post: OperationObject?
     let delete: OperationObject?
-    let put: OperationObject?
-    let patch: OperationObject?
 }
 
 /// An operation (method) on a path

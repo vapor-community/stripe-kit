@@ -2,8 +2,7 @@
 //  StripeClient+Scoping.swift
 //  StripeKit
 //
-//  Hand-written convenience extensions for StripeClient.
-//  These don't depend on the spec and are never regenerated.
+//  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
 import Foundation

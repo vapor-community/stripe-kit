@@ -16,7 +16,7 @@ public struct StripeClient: Sendable {
     /// header on every request, so responses match the generated models.
     public static let apiVersion = "2026-10-28.endive"
 
-    /// The API handler used for requests. Stored to support `onBehalfOf()` scoping.
+    /// The API handler used for requests. Stored to support `onBehalfOf(_:)` scoping.
     public let handler: StripeAPIHandler
 
     public var accounts: AccountRoutes

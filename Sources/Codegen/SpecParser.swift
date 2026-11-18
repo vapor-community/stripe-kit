@@ -99,9 +99,8 @@ struct SpecParser {
     }
 
     /// Build a deterministic mapping of schema name → API paths by scanning response $refs.
-    /// This replaces naive pluralization with the spec's actual data. Operations whose
-    /// `x-stripeOperations` owner differs from their response type go to the owner instead
-    /// (see `reassignedOwner`).
+    /// Operations whose `x-stripeOperations` owner differs from their response type go to the
+    /// owner instead (see `reassignedOwner`).
     func buildPathMapping() -> [String: [(method: String, path: String)]] {
         var mapping: [String: [(method: String, path: String)]] = [:]
         
@@ -195,7 +194,6 @@ struct SpecParser {
                 swiftTypeName: schemaNameToSwiftType(resourceId),
                 description: schema.description ?? "",
                 properties: properties,
-                requiredFields: Set(required),
                 anyOfVariants: anyOfVariants
             ))
         }
@@ -228,7 +226,6 @@ struct SpecParser {
                 swiftTypeName: schemaNameToSwiftType(schemaName),
                 description: schema.description ?? "",
                 properties: properties,
-                requiredFields: Set(required),
                 // Polymorphic deleted objects (deleted_external_account → deleted_bank_account | deleted_card)
                 anyOfVariants: isDeleted ? schema.anyOf.map { refs in
                     refs.compactMap { $0.ref.map(refToSchemaName) }
@@ -256,8 +253,7 @@ struct SpecParser {
                 .trimmingCharacters(in: .whitespaces),
             type: type,
             isRequired: isRequired,
-            isNullable: property.nullable ?? false,
-            enumCases: property.enum
+            isNullable: property.nullable ?? false
         )
     }
     
@@ -318,14 +314,6 @@ struct SpecParser {
                     let elementTypeName = refToSchemaName(ref)
                     let swiftElementType = schemaNameToSwiftType(elementTypeName)
                     return .object(name: "StripeList<\(swiftElementType)>")
-                }
-                // Polymorphic anyOf (e.g., external_accounts → [bank_account, card])
-                // Use the field name to derive the list type, since Stripe has dedicated
-                // schemas like "external_account" and "payment_source" for these.
-                if items.anyOf != nil {
-                    let singular = fieldName.hasSuffix("s") ? String(fieldName.dropLast()) : fieldName
-                    let swiftType = schemaNameToSwiftType(singular)
-                    return .object(name: "StripeList<\(swiftType)>")
                 }
             }
             // Any other object (inline fields or none) is a free-form hash

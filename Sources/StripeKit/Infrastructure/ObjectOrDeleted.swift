@@ -1,3 +1,10 @@
+//
+//  ObjectOrDeleted.swift
+//  StripeKit
+//
+//  Hand-written infrastructure (not emitted by stripe-kit-codegen).
+//
+
 import Foundation
 
 /// A response that is either the full object or a deleted object, as declared by Stripe's API spec.
@@ -6,7 +13,7 @@ import Foundation
 /// `{"id": "cus_123", "object": "customer", "deleted": true}` instead of the customer:
 ///
 /// ```swift
-/// switch try await stripe.customers.retrieve("cus_123", nil) {
+/// switch try await stripe.customers.retrieve("cus_123") {
 /// case .object(let customer): print(customer.email ?? "")
 /// case .deleted(let deleted): print("\(deleted.id) was deleted")
 /// }
