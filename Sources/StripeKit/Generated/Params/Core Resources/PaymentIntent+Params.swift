@@ -1796,14 +1796,14 @@ public enum PaymentIntentConfirmMandateData: Codable, Sendable {
     case secretKey(PaymentIntentMandateDataSecretKey)
     case clientKey(PaymentIntentMandateDataClientKey)
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? PaymentIntentMandateDataSecretKey(from: decoder) { self = .secretKey(value); return }
         if let value = try? PaymentIntentMandateDataClientKey(from: decoder) { self = .clientKey(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentIntentConfirmMandateData matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .secretKey(let value):
             try value.encode(to: encoder)
@@ -1823,7 +1823,7 @@ public enum PaymentIntentOffSession: Codable, Sendable, ExpressibleByBooleanLite
 
     public init(booleanLiteral value: Bool) { self = .value(value) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -1836,7 +1836,7 @@ public enum PaymentIntentOffSession: Codable, Sendable, ExpressibleByBooleanLite
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentIntentOffSession matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .oneOff:
             var container = encoder.singleValueContainer()

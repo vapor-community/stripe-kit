@@ -843,7 +843,7 @@ public enum QuoteSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleBy
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -855,7 +855,7 @@ public enum QuoteSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleBy
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of QuoteSubscriptionDataEffectiveDate matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .currentPeriodEnd:
             var container = encoder.singleValueContainer()

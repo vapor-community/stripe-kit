@@ -3212,7 +3212,7 @@ public enum AccountSettingsPayoutsScheduleDelayDays: Codable, Sendable, Expressi
 
     public init(integerLiteral value: Int) { self = .value(value) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -3224,7 +3224,7 @@ public enum AccountSettingsPayoutsScheduleDelayDays: Codable, Sendable, Expressi
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of AccountSettingsPayoutsScheduleDelayDays matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .minimum:
             var container = encoder.singleValueContainer()

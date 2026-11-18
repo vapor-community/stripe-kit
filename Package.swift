@@ -1,6 +1,12 @@
 // swift-tools-version:6.0
 import PackageDescription
 
+/// Settings for every target
+let swiftSettings: [SwiftSetting] = [
+    // Existential types are spelled `any P`, so they can't be mistaken for generics
+    .enableUpcomingFeature("ExistentialAny"),
+]
+
 let package = Package(
     name: "stripe-kit",
     platforms: [
@@ -24,7 +30,7 @@ let package = Package(
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "NIO", package: "swift-nio"),
             .product(name: "NIOHTTP1", package: "swift-nio"),
-        ], swiftSettings: [
+        ], swiftSettings: swiftSettings + [
             // Each file must import the modules whose members it uses, so the Foundation
             // imports stay accurate
             .enableUpcomingFeature("MemberImportVisibility"),
@@ -34,7 +40,8 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ],
-            path: "Sources/Codegen"
+            path: "Sources/Codegen",
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "StripeKitTests",
@@ -44,7 +51,8 @@ let package = Package(
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "NIOPosix", package: "swift-nio"),
                 .product(name: "NIOHTTP1", package: "swift-nio"),
-            ]
+            ],
+            swiftSettings: swiftSettings
         )
     ]
 )

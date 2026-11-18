@@ -219,7 +219,7 @@ struct ModelGenerator {
             w.block("private enum CodingKeys: String, CodingKey {") { $0.line("case object") }
             w.line()
 
-            w.block("public init(from decoder: Decoder) throws {") { w in
+            w.block("public init(from decoder: any Decoder) throws {") { w in
                 w.line("let container = try decoder.container(keyedBy: CodingKeys.self)")
                 w.line("let object = try container.decode(String.self, forKey: .object)")
                 w.line("switch object {")
@@ -233,7 +233,7 @@ struct ModelGenerator {
             }
             w.line()
 
-            w.block("public func encode(to encoder: Encoder) throws {") { w in
+            w.block("public func encode(to encoder: any Encoder) throws {") { w in
                 w.line("switch self {")
                 for caseName in variantInfos.map(\.caseName) + [undocumentedCase] {
                     w.line("case .\(caseName)(let value):")

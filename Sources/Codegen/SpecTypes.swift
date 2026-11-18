@@ -66,7 +66,7 @@ struct SchemaObject: Decodable {
         case xStripeOperations = "x-stripeOperations"
     }
     
-    init(from decoder: Decoder) throws {
+    init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         type = try container.decodeIfPresent(String.self, forKey: .type)
         description = try container.decodeIfPresent(String.self, forKey: .description)
@@ -129,7 +129,7 @@ final class PropertyObject: Decodable {
         let oneOf: [PropertyObject]
     }
     
-    required init(from decoder: Decoder) throws {
+    required init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         type = try container.decodeIfPresent(String.self, forKey: .type)
         format = try container.decodeIfPresent(String.self, forKey: .format)
@@ -212,7 +212,7 @@ final class PropertyObject: Decodable {
 struct MixedEnumArray: Decodable {
     let values: [String]
     
-    init(from decoder: Decoder) throws {
+    init(from decoder: any Decoder) throws {
         var container = try decoder.unkeyedContainer()
         var result: [String] = []
         
@@ -237,7 +237,7 @@ struct MixedEnumArray: Decodable {
 
 /// Sink for unknown/unneeded JSON values
 struct AnyCodable: Decodable {
-    init(from decoder: Decoder) throws {
+    init(from decoder: any Decoder) throws {
         _ = try? decoder.singleValueContainer()
     }
 }

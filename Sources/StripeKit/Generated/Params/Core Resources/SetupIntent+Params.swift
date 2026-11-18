@@ -664,14 +664,14 @@ public enum SetupIntentConfirmMandateData: Codable, Sendable {
     case secretKey(SetupIntentMandateDataSecretKey)
     case clientKey(SetupIntentMandateDataClientKey)
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? SetupIntentMandateDataSecretKey(from: decoder) { self = .secretKey(value); return }
         if let value = try? SetupIntentMandateDataClientKey(from: decoder) { self = .clientKey(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SetupIntentConfirmMandateData matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .secretKey(let value):
             try value.encode(to: encoder)

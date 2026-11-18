@@ -4202,7 +4202,7 @@ public enum InvoiceScheduleDetailsPhasesEndDate: Codable, Sendable, ExpressibleB
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -4214,7 +4214,7 @@ public enum InvoiceScheduleDetailsPhasesEndDate: Codable, Sendable, ExpressibleB
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceScheduleDetailsPhasesEndDate matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()
@@ -4304,7 +4304,7 @@ public enum InvoiceScheduleDetailsPhasesStartDate: Codable, Sendable, Expressibl
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -4316,7 +4316,7 @@ public enum InvoiceScheduleDetailsPhasesStartDate: Codable, Sendable, Expressibl
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceScheduleDetailsPhasesStartDate matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()
@@ -4357,7 +4357,7 @@ public enum InvoiceScheduleDetailsPhasesTrialEnd: Codable, Sendable, Expressible
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -4369,7 +4369,7 @@ public enum InvoiceScheduleDetailsPhasesTrialEnd: Codable, Sendable, Expressible
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceScheduleDetailsPhasesTrialEnd matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()
@@ -4700,7 +4700,7 @@ public enum InvoiceSubscriptionDetailsCancelAt: Codable, Sendable, ExpressibleBy
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -4714,7 +4714,7 @@ public enum InvoiceSubscriptionDetailsCancelAt: Codable, Sendable, ExpressibleBy
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceSubscriptionDetailsCancelAt matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .maxBilledUntil:
             var container = encoder.singleValueContainer()
@@ -5100,7 +5100,7 @@ public enum InvoiceSubscriptionDetailsTrialEnd: Codable, Sendable, ExpressibleBy
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -5112,7 +5112,7 @@ public enum InvoiceSubscriptionDetailsTrialEnd: Codable, Sendable, ExpressibleBy
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceSubscriptionDetailsTrialEnd matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()

@@ -719,14 +719,14 @@ public enum ThreeDSecureAuthenticationPaymentMethodDataCard: Codable, Sendable {
     case card(ThreeDSecureAuthenticationPaymentMethodDataCardCard)
     case cardToken(ThreeDSecureAuthenticationPaymentMethodDataCardCardToken)
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? ThreeDSecureAuthenticationPaymentMethodDataCardCard(from: decoder) { self = .card(value); return }
         if let value = try? ThreeDSecureAuthenticationPaymentMethodDataCardCardToken(from: decoder) { self = .cardToken(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of ThreeDSecureAuthenticationPaymentMethodDataCard matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .card(let value):
             try value.encode(to: encoder)

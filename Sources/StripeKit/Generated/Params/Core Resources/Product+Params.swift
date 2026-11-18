@@ -442,7 +442,7 @@ public enum ProductDefaultPriceDataCurrencyOptionsTiersUpTo: Codable, Sendable, 
 
     public init(integerLiteral value: Int) { self = .value(value) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -454,7 +454,7 @@ public enum ProductDefaultPriceDataCurrencyOptionsTiersUpTo: Codable, Sendable, 
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of ProductDefaultPriceDataCurrencyOptionsTiersUpTo matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .inf:
             var container = encoder.singleValueContainer()

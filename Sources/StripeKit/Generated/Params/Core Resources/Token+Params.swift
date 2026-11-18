@@ -1172,14 +1172,14 @@ public enum TokenCard: Codable, Sendable, ExpressibleByStringLiteral {
 
     public init(stringLiteral value: String) { self = .value(value) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(String.self) { self = .value(value); return }
         if let value = try? TokenCardCreditCardSpecs(from: decoder) { self = .creditCardSpecs(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TokenCard matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .creditCardSpecs(let value):
             try value.encode(to: encoder)

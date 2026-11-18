@@ -47,7 +47,7 @@ public struct Expandable<Model: Codable & Sendable>: Codable, Sendable {
         self._state = .empty
     }
     
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         if let container = try decoder.singleValueContainerIfPresentAndNotNull() {
             do {
                 self._state = .unexpanded(try container.decode(String.self))
@@ -61,7 +61,7 @@ public struct Expandable<Model: Codable & Sendable>: Codable, Sendable {
     
     private var _state: ExpandableState
     
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         switch _state {
         case let .unexpanded(id):
@@ -125,7 +125,7 @@ public struct ExpandableCollection<Model: Codable & Sendable>: Codable, Sendable
         }
     }
     
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         if let container = try decoder.singleValueContainerIfPresentAndNotNull() {
             do {
                 self._state = .unexpanded(try container.decode([String].self))
@@ -139,7 +139,7 @@ public struct ExpandableCollection<Model: Codable & Sendable>: Codable, Sendable
     
     private var _state: ExpandableState
     
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         switch _state {
         case let .unexpanded(ids):
@@ -173,7 +173,7 @@ public struct ExpandableCollection<Model: Codable & Sendable>: Codable, Sendable
 // MARK: - Decoder Helper
 
 internal extension Decoder {
-    func singleValueContainerIfPresentAndNotNull() throws -> SingleValueDecodingContainer? {
+    func singleValueContainerIfPresentAndNotNull() throws -> (any SingleValueDecodingContainer)? {
         do {
             let container = try self.singleValueContainer()
             if container.decodeNil() {

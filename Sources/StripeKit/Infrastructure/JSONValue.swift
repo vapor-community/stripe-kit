@@ -24,7 +24,7 @@ public enum JSONValue: Codable, Sendable, Hashable {
     case array([JSONValue])
     case object([String: JSONValue])
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         // Bool before numbers: JSONDecoder won't read a number as a Bool or the reverse,
         // so this order keeps `true` and `1` apart on every platform.
@@ -45,7 +45,7 @@ public enum JSONValue: Codable, Sendable, Hashable {
         }
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
         case .null: try container.encodeNil()

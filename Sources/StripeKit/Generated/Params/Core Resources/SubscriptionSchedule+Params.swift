@@ -1677,7 +1677,7 @@ public enum SubscriptionScheduleStartDate: Codable, Sendable, ExpressibleByInteg
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -1689,7 +1689,7 @@ public enum SubscriptionScheduleStartDate: Codable, Sendable, ExpressibleByInteg
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleStartDate matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()
@@ -1935,7 +1935,7 @@ public enum SubscriptionSchedulePhasesEndDate: Codable, Sendable, ExpressibleByI
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -1947,7 +1947,7 @@ public enum SubscriptionSchedulePhasesEndDate: Codable, Sendable, ExpressibleByI
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionSchedulePhasesEndDate matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()
@@ -1967,7 +1967,7 @@ public enum SubscriptionSchedulePhasesStartDate: Codable, Sendable, ExpressibleB
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -1979,7 +1979,7 @@ public enum SubscriptionSchedulePhasesStartDate: Codable, Sendable, ExpressibleB
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionSchedulePhasesStartDate matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()
@@ -1999,7 +1999,7 @@ public enum SubscriptionSchedulePhasesTrialEnd: Codable, Sendable, ExpressibleBy
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -2011,7 +2011,7 @@ public enum SubscriptionSchedulePhasesTrialEnd: Codable, Sendable, ExpressibleBy
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionSchedulePhasesTrialEnd matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()

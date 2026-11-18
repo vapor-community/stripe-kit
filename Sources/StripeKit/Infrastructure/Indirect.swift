@@ -33,11 +33,11 @@ public struct Indirect<Value: Codable & Sendable>: Codable, Sendable {
         set { box = Box(newValue) }
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         box = Box(try Value(from: decoder))
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         try box.value.encode(to: encoder)
     }
 }

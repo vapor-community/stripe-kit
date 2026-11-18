@@ -524,7 +524,7 @@ struct ParamGenerator {
 
             // Decoding: keywords and the scalar from a single value, then each object form in turn
             w.line()
-            w.block("public init(from decoder: Decoder) throws {") { w in
+            w.block("public init(from decoder: any Decoder) throws {") { w in
                 w.line("let container = try decoder.singleValueContainer()")
                 if !keywordCases.isEmpty {
                     w.block("if let keyword = try? container.decode(String.self) {") { w in
@@ -547,7 +547,7 @@ struct ParamGenerator {
 
             // Encoding: keywords as their string, the scalar as itself, an object form as its fields
             w.line()
-            w.block("public func encode(to encoder: Encoder) throws {") { w in
+            w.block("public func encode(to encoder: any Encoder) throws {") { w in
                 w.line("switch self {")
                 for keyword in keywordCases {
                     w.line("case .\(escapedSwiftName(keyword.name)):")

@@ -680,14 +680,14 @@ public enum PaymentMethodCreateCard: Codable, Sendable {
     case cardDetails(PaymentMethodCardCardDetails)
     case token(PaymentMethodCardToken)
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? PaymentMethodCardCardDetails(from: decoder) { self = .cardDetails(value); return }
         if let value = try? PaymentMethodCardToken(from: decoder) { self = .token(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentMethodCreateCard matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .cardDetails(let value):
             try value.encode(to: encoder)

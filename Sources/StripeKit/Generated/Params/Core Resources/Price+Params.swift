@@ -380,7 +380,7 @@ public enum PriceCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByInteg
 
     public init(integerLiteral value: Int) { self = .value(value) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -392,7 +392,7 @@ public enum PriceCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByInteg
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceCurrencyOptionsTiersUpTo matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .inf:
             var container = encoder.singleValueContainer()
@@ -617,7 +617,7 @@ public enum PriceTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
 
     public init(integerLiteral value: Int) { self = .value(value) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -629,7 +629,7 @@ public enum PriceTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceTiersUpTo matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .inf:
             var container = encoder.singleValueContainer()

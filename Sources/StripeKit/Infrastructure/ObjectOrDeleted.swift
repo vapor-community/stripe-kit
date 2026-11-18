@@ -26,7 +26,7 @@ public enum ObjectOrDeleted<Object: Codable & Sendable, Deleted: Codable & Senda
         case deleted
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if try container.decodeIfPresent(Bool.self, forKey: .deleted) == true {
             self = .deleted(try Deleted(from: decoder))
@@ -35,7 +35,7 @@ public enum ObjectOrDeleted<Object: Codable & Sendable, Deleted: Codable & Senda
         }
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .object(let value): try value.encode(to: encoder)
         case .deleted(let value): try value.encode(to: encoder)

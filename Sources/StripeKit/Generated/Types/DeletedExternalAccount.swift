@@ -19,7 +19,7 @@ public enum DeletedExternalAccount: Codable, Sendable {
         case object
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let object = try container.decode(String.self, forKey: .object)
         switch object {
@@ -32,7 +32,7 @@ public enum DeletedExternalAccount: Codable, Sendable {
         }
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .deletedBankAccount(let value):
             try value.encode(to: encoder)

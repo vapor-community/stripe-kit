@@ -117,7 +117,7 @@ public enum TaxRegistrationActiveFrom: Codable, Sendable, ExpressibleByIntegerLi
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -129,7 +129,7 @@ public enum TaxRegistrationActiveFrom: Codable, Sendable, ExpressibleByIntegerLi
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TaxRegistrationActiveFrom matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()
@@ -4588,7 +4588,7 @@ public enum TaxRegistrationExpiresAt: Codable, Sendable, ExpressibleByIntegerLit
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -4600,7 +4600,7 @@ public enum TaxRegistrationExpiresAt: Codable, Sendable, ExpressibleByIntegerLit
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TaxRegistrationExpiresAt matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .now:
             var container = encoder.singleValueContainer()

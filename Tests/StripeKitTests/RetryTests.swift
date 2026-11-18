@@ -113,7 +113,7 @@ final class StubServer: @unchecked Sendable {
     private let lock = NSLock()
     private var responses: [(status: UInt, headers: [String: String])]
     private var requests: [HTTPRequestHead] = []
-    private var channel: Channel?
+    private var channel: (any Channel)?
 
     var url: String { "http://127.0.0.1:\(channel!.localAddress!.port!)" }
     var received: [HTTPRequestHead] { lock.withLock { requests } }

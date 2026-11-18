@@ -318,14 +318,14 @@ public enum PlanProduct: Codable, Sendable, ExpressibleByStringLiteral {
 
     public init(stringLiteral value: String) { self = .value(value) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(String.self) { self = .value(value); return }
         if let value = try? PlanProductInlineProduct(from: decoder) { self = .inlineProduct(value); return }
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PlanProduct matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .inlineProduct(let value):
             try value.encode(to: encoder)
@@ -376,7 +376,7 @@ public enum PlanTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
 
     public init(integerLiteral value: Int) { self = .value(value) }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let keyword = try? container.decode(String.self) {
             switch keyword {
@@ -388,7 +388,7 @@ public enum PlanTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PlanTiersUpTo matches")
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .inf:
             var container = encoder.singleValueContainer()

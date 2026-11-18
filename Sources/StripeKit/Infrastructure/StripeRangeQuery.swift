@@ -22,7 +22,7 @@ public enum StripeRangeQuery: Codable, Sendable, Equatable {
         case gt, gte, lt, lte
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: any Encoder) throws {
         switch self {
         case .equals(let value):
             var container = encoder.singleValueContainer()
@@ -36,7 +36,7 @@ public enum StripeRangeQuery: Codable, Sendable, Equatable {
         }
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         if let value = try? decoder.singleValueContainer().decode(Int.self) {
             self = .equals(value)
             return
