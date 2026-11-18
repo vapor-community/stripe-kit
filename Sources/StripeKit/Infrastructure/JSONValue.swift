@@ -5,7 +5,11 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
 
 /// Any JSON value, for the parts of Stripe's API with no fixed shape: free-form objects in
 /// models (`[String: JSONValue]`) and a webhook event's raw `data.object`.

@@ -5,8 +5,6 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
-import Foundation
-
 /// A page of a list (`object: "list"`), from a list endpoint such as `GET /v1/customers` or a
 /// list-valued field such as a customer's `sources`.
 ///

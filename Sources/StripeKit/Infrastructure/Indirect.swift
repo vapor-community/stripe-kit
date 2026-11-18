@@ -5,8 +5,6 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
-import Foundation
-
 /// Stores a property's value out of line (Rust SDKs use `Box<T>` for the same thing).
 ///
 /// stripe-kit-codegen marks a property `@Indirect` when it embeds another API resource, such

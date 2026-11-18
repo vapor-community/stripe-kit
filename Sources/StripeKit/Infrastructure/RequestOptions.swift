@@ -5,8 +5,6 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
-import Foundation
-
 /// Options for a single request, like the request options Stripe's other SDKs take:
 ///
 /// ```swift

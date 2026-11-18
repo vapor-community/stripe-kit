@@ -24,6 +24,10 @@ let package = Package(
             .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "NIO", package: "swift-nio"),
             .product(name: "NIOHTTP1", package: "swift-nio"),
+        ], swiftSettings: [
+            // Each file must import the modules whose members it uses, so the Foundation
+            // imports stay accurate
+            .enableUpcomingFeature("MemberImportVisibility"),
         ]),
         .executableTarget(
             name: "stripe-kit-codegen",

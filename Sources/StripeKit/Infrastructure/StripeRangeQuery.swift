@@ -5,8 +5,6 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
-import Foundation
-
 /// An integer filter on a list endpoint, such as `created` or `amount`. The spec types
 /// these as `integer | range_query_specs`.
 ///

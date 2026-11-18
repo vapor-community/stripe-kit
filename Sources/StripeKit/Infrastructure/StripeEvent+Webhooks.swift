@@ -6,7 +6,11 @@
 //  generated from the spec's `event` schema; these are the parts the spec doesn't describe.
 //
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
 import Crypto
 
 /// The `data` of an event: the object it's about, and for `*.updated` events the values its
@@ -95,7 +99,9 @@ extension StripeEvent {
         var signedPayload = Data("\(timestamp).".utf8)
         signedPayload.append(payload)
         let signature = HMAC<SHA256>.authenticationCode(for: signedPayload, using: SymmetricKey(data: Data(secret.utf8)))
-        let expected = Array(signature.map { String(format: "%02x", $0) }.joined().utf8)
+        // Lowercase hex, as ASCII bytes
+        let hexDigits = Array("0123456789abcdef".utf8)
+        let expected = signature.flatMap { [hexDigits[Int($0 >> 4)], hexDigits[Int($0 & 0x0F)]] }
 
         guard signatures.contains(where: { constantTimeEquals(Array($0.utf8), expected) }) else {
             throw StripeSignatureError.noMatchingSignatureFound

@@ -30,7 +30,7 @@ struct InfraGenerator {
         let clientNames = ["apiVersion", "handler"] + coreProperties.map(\.name) + namespaceProperties.map(\.name)
         precondition(Set(clientNames).count == clientNames.count, "StripeClient property names collide: \(clientNames)")
 
-        var w = fileHeader("StripeClient.swift", apiVersion: spec.info.version, imports: ["Foundation", "AsyncHTTPClient"])
+        var w = fileHeader("StripeClient.swift", apiVersion: spec.info.version, imports: ["AsyncHTTPClient"])
 
         // Client struct
         w.line("/// The entry point for the Stripe API: `stripe.customers`, `stripe.terminal.readers`, ….")

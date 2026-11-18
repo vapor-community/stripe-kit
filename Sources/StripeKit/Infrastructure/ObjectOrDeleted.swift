@@ -5,8 +5,6 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
-import Foundation
-
 /// A response that is either the full object or a deleted object, as declared by Stripe's API spec.
 ///
 /// For example, retrieving a customer that was deleted returns

@@ -5,7 +5,11 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
 import AsyncHTTPClient
 import NIO
 import NIOHTTP1
@@ -207,7 +211,7 @@ public struct StripeAPIHandler: Sendable {
     /// capped at 5s, with jitter (50–100% of it, but never under 0.5s), and at least as long as
     /// a `Retry-After` of up to 60 seconds asks. `random` is the jitter, in 0...1.
     static func retryDelay(retry: Int, retryAfter: String?, random: Double = .random(in: 0...1)) -> TimeInterval {
-        var delay = min(initialRetryDelay * pow(2, Double(retry - 1)), maxRetryDelay)
+        var delay = min(initialRetryDelay * Double(sign: .plus, exponent: retry - 1, significand: 1), maxRetryDelay)
         delay *= 0.5 * (1 + random)
         delay = max(initialRetryDelay, delay)
         if let retryAfter = retryAfter.flatMap({ TimeInterval($0) }), retryAfter <= 60 {

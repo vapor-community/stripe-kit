@@ -5,8 +5,6 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
-import Foundation
-
 /// The response of a Stripe search endpoint (`object: "search_result"`), e.g.
 /// `GET /v1/customers/search`.
 ///

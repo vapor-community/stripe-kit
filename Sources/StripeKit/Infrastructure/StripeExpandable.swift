@@ -5,8 +5,6 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
-import Foundation
-
 // MARK: - Decoder Helpers
 
 extension KeyedDecodingContainer {

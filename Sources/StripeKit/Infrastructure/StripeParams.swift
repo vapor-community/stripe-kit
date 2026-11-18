@@ -5,7 +5,11 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
 
 /// Protocol for typed API parameter structs.
 /// Conforming types automatically get form-encoded body generation.

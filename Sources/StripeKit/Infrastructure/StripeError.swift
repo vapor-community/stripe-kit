@@ -5,8 +5,6 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
-import Foundation
-
 /// An error response from the Stripe API. Routes throw it for any non-2xx response; network
 /// and decoding failures are thrown as the underlying error.
 public struct StripeError: Swift.Error, Codable, Sendable {

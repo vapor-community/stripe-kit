@@ -5,7 +5,11 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
 
 /// A request path whose interpolated values are each escaped as one path segment.
 ///

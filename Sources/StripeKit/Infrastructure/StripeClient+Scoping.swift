@@ -5,7 +5,6 @@
 //  Hand-written infrastructure (not emitted by stripe-kit-codegen).
 //
 
-import Foundation
 import AsyncHTTPClient
 
 extension StripeClient {
