@@ -10,6 +10,9 @@ import FoundationEssentials
 #else
 import Foundation
 #endif
+import StripeKitCore
+import StripeKitModels
+import StripeKitParams
 import NIOHTTP1
 
 // MARK: - File Routes

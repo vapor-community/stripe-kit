@@ -86,7 +86,7 @@ struct ModelGenerator {
         }
 
         let type = resource.swiftTypeName
-        var w = fileHeader("\(type).swift")
+        var w = fileHeader("\(type).swift", in: .models)
         w.doc(resource.description)
         w.block("public struct \(type): Codable, Sendable {") { w in
             for property in resource.properties {
@@ -144,22 +144,27 @@ struct ModelGenerator {
         }
         let optionalMark = (isNonOptional && !isExpandableType) ? "" : "?"
         
+        var wrappers: [String] = []
         if indirectProperties.contains("\(resource.swiftTypeName).\(property.swiftName)") {
-            w.line("@Indirect")
+            wrappers.append("@Indirect")
         }
-
-        // Expandable property wrapper annotations
         switch property.type {
         case .expandable(let wrappedType):
-            w.line("@Expandable<\(wrappedType)>")
+            wrappers.append("@Expandable<\(wrappedType)>")
         case .expandableCollection(let wrappedType):
-            w.line("@ExpandableCollection<\(wrappedType)>")
+            wrappers.append("@ExpandableCollection<\(wrappedType)>")
         default:
             break
         }
-        
+        wrappers.forEach { w.line($0) }
+
+        // Models are decoded from Stripe's responses, not built or changed by callers, so their
+        // properties are constants: no setter or modify accessor to compile for each of them,
+        // which is about a fifth of the models' release build memory. A property wrapper needs
+        // a `var`.
+        let keyword = wrappers.isEmpty ? "let" : "var"
         let swiftType = swiftTypeString(for: property, resource: resource)
-        w.line("public var \(escapedSwiftName(property.swiftName)): \(swiftType)\(optionalMark)")
+        w.line("public \(keyword) \(escapedSwiftName(property.swiftName)): \(swiftType)\(optionalMark)")
     }
     
     // MARK: - Type Mapping
@@ -204,7 +209,7 @@ struct ModelGenerator {
         }
         precondition(!variantInfos.contains { $0.caseName == undocumentedCase }, "\(type) has a variant named \(undocumentedCase)")
 
-        var w = fileHeader("\(type).swift")
+        var w = fileHeader("\(type).swift", in: .models)
         w.line("/// One of several object types, decoded by its `object` field: \(variantInfos.map(\.swiftType).joined(separator: ", ")).")
         w.line("/// An object of a type this version of StripeKit doesn't know decodes as `.\(undocumentedCase)`.")
         w.block("public enum \(type): Codable, Sendable {") { w in

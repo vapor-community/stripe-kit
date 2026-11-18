@@ -50,7 +50,7 @@ struct ParamGenerator {
         let names = sharedNames(resource: resource, nested: probed)
 
         // Generate for real with those names
-        var w = fileHeader("\(resource.swiftTypeName)+Params.swift")
+        var w = fileHeader("\(resource.swiftTypeName)+Params.swift", in: .params)
         var nestedTypes: [NestedParamsType] = []
         for (action, schema, requiredFields) in operations {
             let (structLines, nested) = generateParamStruct(

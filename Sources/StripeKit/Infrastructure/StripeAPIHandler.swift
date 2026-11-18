@@ -13,6 +13,8 @@ import Foundation
 import AsyncHTTPClient
 import NIO
 import NIOHTTP1
+import StripeKitCore
+import StripeKitModels
 
 /// Handles sending requests to the Stripe API.
 public struct StripeAPIHandler: Sendable {

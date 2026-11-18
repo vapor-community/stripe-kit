@@ -6,6 +6,7 @@
 //
 
 import AsyncHTTPClient
+import StripeKitCore
 
 extension StripeClient {
     /// Returns a scoped client that makes every request as the given connected account, by

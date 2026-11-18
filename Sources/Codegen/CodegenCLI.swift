@@ -2,21 +2,23 @@
 //
 // Generates Swift types, routes, and params from the Stripe OpenAPI spec.
 //
-// What gets regenerated:
-//   Sources/StripeKit/Generated/
+// What gets regenerated, split across modules (see `GeneratedModule`):
+//   Sources/StripeKitModels/Generated/
 //     ├── Models/           — Codable structs per resource (Account.swift, Customer.swift, ...)
-//     ├── Routes/           — Route structs: a replaceable closure and a labeled method per
-//     │                       operation, plus a .live(handler:) factory
-//     ├── Params/           — Typed params structs for request bodies and query parameters
 //     ├── Types/            — Inline schemas (shared sub-types referenced by resources)
-//     ├── StripeClient.swift — Auto-wired client with all route properties
 //     ├── StripeEventType.swift — Enum of the spec's event types
 //     └── StripeEvent.swift  — The event struct, from the spec's `event` schema
+//   Sources/StripeKitParams/Generated/
+//     └── Params/           — Typed params structs for request bodies and query parameters
+//   Sources/StripeKit/Generated/
+//     ├── Routes/           — Route structs: a replaceable closure and a labeled method per
+//     │                       operation, plus a .live(handler:) factory
+//     └── StripeClient.swift — Auto-wired client with all route properties
 //   Tests/StripeKitTests/Generated/
 //     ├── FixtureTypes.swift — Schema name → Swift type map for fixture decoding tests
 //     └── GeneratedOperations.swift — Operation manifest checked by SpecCoverageTests
 //
-// What stays hand-written (Infrastructure/):
+// What stays hand-written (StripeKitCore/, and Infrastructure/ in the other modules):
 //     ├── StripeAPIHandler.swift   — HTTP transport, retries
 //     ├── RequestOptions.swift     — Per-request connected account and idempotency key
 //     ├── StripePath.swift         — Request paths that escape their interpolated values
@@ -48,8 +50,8 @@ struct CodegenCLI: AsyncParsableCommand {
     @Option(name: [.long, .customShort("s")], help: "Path to OpenAPI spec")
     var spec: String = "spec3.sdk.json"
 
-    @Option(name: [.long, .customShort("o")], help: "Output directory")
-    var output: String = "Sources/StripeKit"
+    @Option(name: [.long, .customShort("o")], help: "Sources directory; each module's code goes in <output>/<module>/Generated/")
+    var output: String = "Sources"
 
     @Option(name: [.long, .customShort("t")], help: "Test target directory (for the fixture type registry)")
     var testsOutput: String = "Tests/StripeKitTests"
@@ -105,13 +107,18 @@ struct CodegenCLI: AsyncParsableCommand {
         let operations = Dictionary(uniqueKeysWithValues: resources.map { ($0.schemaName, routeGen.findOperations(for: $0)) })
         
         let outputURL = URL(filePath: output)
-        
-        // Clean generated directory (preserves hand-written Infrastructure/)
-        let generatedURL = outputURL.appending(path: "Generated")
-        // path(percentEncoded: false): path() percent-encodes, so a checkout path containing a
-        // space never matched and stale files from earlier runs were left behind.
-        if FileManager.default.fileExists(atPath: generatedURL.path(percentEncoded: false)) {
-            try FileManager.default.removeItem(at: generatedURL)
+        func generatedURL(_ module: GeneratedModule) -> URL {
+            outputURL.appending(path: module.rawValue).appending(path: "Generated")
+        }
+
+        // Clean each module's generated directory (preserves the hand-written code beside it)
+        for module in [GeneratedModule.models, .params, .client] {
+            let url = generatedURL(module)
+            // path(percentEncoded: false): path() percent-encodes, so a checkout path containing a
+            // space never matched and stale files from earlier runs were left behind.
+            if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) {
+                try FileManager.default.removeItem(at: url)
+            }
         }
         
         var modelCount = 0
@@ -128,7 +135,7 @@ struct CodegenCLI: AsyncParsableCommand {
             let paramOperations = paramGen.paramOperations(for: resource, routes: routeOperations)
             
             // Model
-            let modelDir = generatedURL
+            let modelDir = generatedURL(.models)
                 .appending(path: "Models")
                 .appending(path: domain)
             try FileManager.default.createDirectory(at: modelDir, withIntermediateDirectories: true)
@@ -140,7 +147,7 @@ struct CodegenCLI: AsyncParsableCommand {
             
             // Routes
             if let routeSource = routeGen.generate(resource: resource, operations: routeOperations) {
-                let routeDir = generatedURL
+                let routeDir = generatedURL(.client)
                     .appending(path: "Routes")
                     .appending(path: domain)
                 try FileManager.default.createDirectory(at: routeDir, withIntermediateDirectories: true)
@@ -152,7 +159,7 @@ struct CodegenCLI: AsyncParsableCommand {
             
             // Params
             if let paramSource = paramGen.generate(resource: resource, operations: paramOperations) {
-                let paramDir = generatedURL
+                let paramDir = generatedURL(.params)
                     .appending(path: "Params")
                     .appending(path: domain)
                 try FileManager.default.createDirectory(at: paramDir, withIntermediateDirectories: true)
@@ -164,7 +171,7 @@ struct CodegenCLI: AsyncParsableCommand {
         }
         
         // ── 5. Generate inline types ──────────────────────────────
-        let typesDir = generatedURL.appending(path: "Types")
+        let typesDir = generatedURL(.models).appending(path: "Types")
         try FileManager.default.createDirectory(at: typesDir, withIntermediateDirectories: true)
         
         for inline in inlineSchemas {
@@ -183,7 +190,7 @@ struct CodegenCLI: AsyncParsableCommand {
         )
         let clientSource = infraGen.generateStripeClient()
         try clientSource.write(
-            to: generatedURL.appending(path: "StripeClient.swift"),
+            to: generatedURL(.client).appending(path: "StripeClient.swift"),
             atomically: true,
             encoding: .utf8
         )
@@ -191,7 +198,7 @@ struct CodegenCLI: AsyncParsableCommand {
         // ── 7. Generate StripeEventType enum ──────────────────────
         let eventTypeSource = infraGen.generateEventType()
         try eventTypeSource.write(
-            to: generatedURL.appending(path: "StripeEventType.swift"),
+            to: generatedURL(.models).appending(path: "StripeEventType.swift"),
             atomically: true,
             encoding: .utf8
         )
@@ -199,7 +206,7 @@ struct CodegenCLI: AsyncParsableCommand {
         // ── 8. Generate StripeEvent struct ────────────────────────
         let eventSource = infraGen.generateStripeEvent()
         try eventSource.write(
-            to: generatedURL.appending(path: "StripeEvent.swift"),
+            to: generatedURL(.models).appending(path: "StripeEvent.swift"),
             atomically: true,
             encoding: .utf8
         )
@@ -243,7 +250,7 @@ struct CodegenCLI: AsyncParsableCommand {
         print("📦 \(modelCount + inlineCount) types, \(routeCount) routes, \(paramCount) params")
         print("🔔 StripeEventType enum + StripeEvent struct")
         print(" API Version: \(openAPISpec.info.version)")
-        print("📂 Output: \(output)/Generated/")
+        print("📂 Output: \(output)/{StripeKitModels,StripeKitParams,StripeKit}/Generated/")
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         print()
         print("🔍 Coverage: \(coverage.operations.count) operations generated, \(coverage.skipped.count) skipped, \(coverage.accepted.count) accepted deviations")

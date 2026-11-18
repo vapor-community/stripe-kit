@@ -6,6 +6,9 @@
 //  API Version: 2026-10-28.endive
 //
 
+import StripeKitCore
+import StripeKitModels
+import StripeKitParams
 import AsyncHTTPClient
 
 /// The entry point for the Stripe API: `stripe.customers`, `stripe.terminal.readers`, ….

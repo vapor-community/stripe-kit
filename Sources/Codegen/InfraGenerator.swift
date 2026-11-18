@@ -30,7 +30,7 @@ struct InfraGenerator {
         let clientNames = ["apiVersion", "handler"] + coreProperties.map(\.name) + namespaceProperties.map(\.name)
         precondition(Set(clientNames).count == clientNames.count, "StripeClient property names collide: \(clientNames)")
 
-        var w = fileHeader("StripeClient.swift", apiVersion: spec.info.version, imports: ["AsyncHTTPClient"])
+        var w = fileHeader("StripeClient.swift", in: .client, apiVersion: spec.info.version, imports: ["AsyncHTTPClient"])
 
         // Client struct
         w.line("/// The entry point for the Stripe API: `stripe.customers`, `stripe.terminal.readers`, ….")
@@ -142,7 +142,7 @@ struct InfraGenerator {
 
     /// Generate the StripeEventType enum from the spec's event.type enum values
     func generateEventType() -> String {
-        var w = fileHeader("StripeEventType.swift")
+        var w = fileHeader("StripeEventType.swift", in: .models)
         let eventTypes = spec.components.schemas["event"]?.properties?["type"]?.enum ?? []
         w.append(generateStringEnum(
             name: "StripeEventType",
@@ -158,7 +158,7 @@ struct InfraGenerator {
     /// Generate the StripeEvent struct from the spec's event schema. Its `data` and `request`
     /// types and signature verification are hand-written (Infrastructure/StripeEvent+Webhooks.swift).
     func generateStripeEvent() -> String {
-        var w = fileHeader("StripeEvent.swift")
+        var w = fileHeader("StripeEvent.swift", in: .models)
         
         // Build property list from the event schema
         guard let eventSchema = spec.components.schemas["event"] else {

@@ -7,6 +7,12 @@ let swiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("ExistentialAny"),
 ]
 
+/// Settings for the library targets
+let librarySettings = swiftSettings + [
+    // Each file must import the modules whose members it uses, so the imports stay accurate
+    .enableUpcomingFeature("MemberImportVisibility"),
+]
+
 let package = Package(
     name: "stripe-kit",
     platforms: [
@@ -25,16 +31,27 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.4.0"),
     ],
     targets: [
+        // StripeKit is split so no module is too big to optimize in one compiler process (see
+        // `GeneratedModule` in the codegen). Users import StripeKit, which re-exports the rest.
         .target(name: "StripeKit", dependencies: [
+            .target(name: "StripeKitCore"),
+            .target(name: "StripeKitModels"),
+            .target(name: "StripeKitParams"),
             .product(name: "AsyncHTTPClient", package: "async-http-client"),
-            .product(name: "Crypto", package: "swift-crypto"),
             .product(name: "NIO", package: "swift-nio"),
             .product(name: "NIOHTTP1", package: "swift-nio"),
-        ], swiftSettings: swiftSettings + [
-            // Each file must import the modules whose members it uses, so the Foundation
-            // imports stay accurate
-            .enableUpcomingFeature("MemberImportVisibility"),
-        ]),
+        ], swiftSettings: librarySettings),
+        // Generated resources, their inline types, and events, with errors and webhooks
+        .target(name: "StripeKitModels", dependencies: [
+            .target(name: "StripeKitCore"),
+            .product(name: "Crypto", package: "swift-crypto"),
+        ], swiftSettings: librarySettings),
+        // Generated request params
+        .target(name: "StripeKitParams", dependencies: [
+            .target(name: "StripeKitCore"),
+        ], swiftSettings: librarySettings),
+        // Hand-written building blocks the generated code uses
+        .target(name: "StripeKitCore", swiftSettings: librarySettings),
         .executableTarget(
             name: "stripe-kit-codegen",
             dependencies: [

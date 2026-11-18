@@ -408,16 +408,26 @@ stripe.customers.create = { params, options in
 
 ## Codegen
 
-The `stripe-kit-codegen` CLI regenerates all files under `Generated/` from Stripe's OpenAPI spec. The hand-written files under `Infrastructure/` are never touched.
+The `stripe-kit-codegen` CLI regenerates all files under each module's `Generated/` directory from Stripe's OpenAPI spec. The hand-written code (`StripeKitCore/`, and each module's `Infrastructure/`) is never touched.
+
+The library is split into modules so that none is too big to optimize in one compiler process, which a single module of this size needed more than 8 GB to do in a release build. `import StripeKit` brings in all of them:
+
+| Module | Contents |
+|---|---|
+| `StripeKit` | `StripeClient`, routes, and the HTTP handler. Re-exports the modules below |
+| `StripeKitModels` | Resources and their types, events, errors, and webhook verification (generated, plus hand-written errors and webhooks) |
+| `StripeKitParams` | Request params (generated) |
+| `StripeKitCore` | Hand-written building blocks the others use: `JSONValue`, `Expandable`, `StripeList`, form encoding, … |
 
 ```bash
-# Reads spec3.sdk.json; writes Sources/StripeKit/Generated/ and Tests/StripeKitTests/Generated/
+# Reads spec3.sdk.json; writes Sources/{StripeKit,StripeKitModels,StripeKitParams}/Generated/
+# and Tests/StripeKitTests/Generated/
 swift run stripe-kit-codegen
 
 # Custom paths
 swift run stripe-kit-codegen \
     --spec path/to/spec3.sdk.json \
-    --output Sources/StripeKit \
+    --output Sources \
     --tests-output Tests/StripeKitTests
 ```
 
@@ -433,7 +443,7 @@ swift run stripe-kit-codegen
 
 # 3. Test, review and commit
 swift test
-git diff Sources/StripeKit/Generated/
+git diff Sources/*/Generated/
 git add -A && git commit -m "Update to Stripe API vXXXX-XX-XX"
 ```
 

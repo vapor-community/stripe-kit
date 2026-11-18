@@ -18,7 +18,7 @@ struct RouteGenerator {
         guard !operations.isEmpty else { return nil }
         
         let type = resource.swiftTypeName
-        var w = fileHeader("\(type)Routes.swift", imports: ["NIOHTTP1"])
+        var w = fileHeader("\(type)Routes.swift", in: .client, imports: ["NIOHTTP1"])
 
         // Route struct: one stored closure per operation (replaceable, e.g. to stub in tests)
         w.line("// MARK: - \(type) Routes")
