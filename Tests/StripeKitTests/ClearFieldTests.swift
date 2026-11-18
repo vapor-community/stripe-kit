@@ -30,18 +30,8 @@ struct ClearFieldTests {
         #expect(params.toFormBody() == "metadata=&name=Jane")
     }
 
-    @Test("Params without cleared fields encode as before, and decode without the key")
+    @Test("Params without cleared fields encode as before")
     func noClearedFields() throws {
-        let params = CustomerUpdateParams(name: "Jane")
-        #expect(params.toFormBody() == "name=Jane")
-
-        let decoded = try JSONDecoder().decode(CustomerUpdateParams.self, from: Data(#"{"name": "Jane"}"#.utf8))
-        #expect(decoded.fieldsToClear.isEmpty)
-        #expect(decoded.name == "Jane")
-
-        var cleared = params
-        cleared.clear(.metadata)
-        let roundTripped = try JSONDecoder().decode(CustomerUpdateParams.self, from: JSONEncoder().encode(cleared))
-        #expect(roundTripped.fieldsToClear == [.metadata])
+        #expect(CustomerUpdateParams(name: "Jane").toFormBody() == "name=Jane")
     }
 }

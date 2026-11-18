@@ -13,7 +13,10 @@ import Foundation
 
 /// Protocol for typed API parameter structs.
 /// Conforming types automatically get form-encoded body generation.
-public protocol StripeParams: Codable, Sendable {
+///
+/// Params are only sent, never received, so they're `Encodable` but not `Decodable`: the
+/// thousands of generated params types don't each carry a decoder nothing calls.
+public protocol StripeParams: Encodable, Sendable {
     /// Convert this params struct to a URL-encoded form body string.
     func toFormBody() -> String
 }
@@ -56,7 +59,7 @@ extension StripeParams {
 // MARK: - Clearing Fields
 
 /// A field of a params struct that Stripe lets you clear (see `ClearableParams`)
-public protocol StripeClearableField: RawRepresentable, Codable, Hashable, Sendable where RawValue == String {}
+public protocol StripeClearableField: RawRepresentable, Encodable, Hashable, Sendable where RawValue == String {}
 
 /// Params with fields Stripe lets you clear by sending them empty (`field=`), as its API
 /// reference describes for e.g. `metadata`, `shipping` or `discounts`. stripe-go calls this
@@ -78,13 +81,6 @@ extension ClearableParams {
     /// field isn't sent.
     public mutating func clear(_ field: ClearableField) {
         fieldsToClear.insert(field)
-    }
-}
-
-extension KeyedDecodingContainer {
-    /// Lets params JSON without `fieldsToClear` decode, as an empty set
-    public func decode<Field: StripeClearableField>(_ type: Set<Field>.Type, forKey key: Key) throws -> Set<Field> {
-        try decodeIfPresent(type, forKey: key) ?? []
     }
 }
 

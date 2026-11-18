@@ -715,16 +715,9 @@ public struct ThreeDSecureAuthenticationPaymentMethodDataCardCardToken: StripePa
 }
 
 /// One of the forms `card` accepts.
-public enum ThreeDSecureAuthenticationPaymentMethodDataCard: Codable, Sendable {
+public enum ThreeDSecureAuthenticationPaymentMethodDataCard: Encodable, Sendable {
     case card(ThreeDSecureAuthenticationPaymentMethodDataCardCard)
     case cardToken(ThreeDSecureAuthenticationPaymentMethodDataCardCardToken)
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? ThreeDSecureAuthenticationPaymentMethodDataCardCard(from: decoder) { self = .card(value); return }
-        if let value = try? ThreeDSecureAuthenticationPaymentMethodDataCardCardToken(from: decoder) { self = .cardToken(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of ThreeDSecureAuthenticationPaymentMethodDataCard matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

@@ -312,18 +312,11 @@ public struct PlanProductInlineProductTaxDetails: ClearableParams {
 }
 
 /// One of the forms `product` accepts.
-public enum PlanProduct: Codable, Sendable, ExpressibleByStringLiteral {
+public enum PlanProduct: Encodable, Sendable, ExpressibleByStringLiteral {
     case inlineProduct(PlanProductInlineProduct)
     case value(String)
 
     public init(stringLiteral value: String) { self = .value(value) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(String.self) { self = .value(value); return }
-        if let value = try? PlanProductInlineProduct(from: decoder) { self = .inlineProduct(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PlanProduct matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -369,24 +362,12 @@ public struct PlanTiers: StripeParams {
 }
 
 /// One of the forms `up_to` accepts.
-public enum PlanTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum PlanTiersUpTo: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `inf`
     case inf
     case value(Int)
 
     public init(integerLiteral value: Int) { self = .value(value) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "inf": self = .inf; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PlanTiersUpTo matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

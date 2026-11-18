@@ -502,7 +502,7 @@ struct ParamGenerator {
         let caseNames = keywordCases.map(\.name) + objects.map(\.caseName) + (scalar == nil ? [] : ["value"])
         guard Set(caseNames).count == caseNames.count else { return nil }
         
-        var conformances = ["Codable", "Sendable"]
+        var conformances = ["Encodable", "Sendable"]
         if let scalar { conformances.append(scalar.literal) }
         
         let finalName = nested.name(name)
@@ -520,29 +520,6 @@ struct ParamGenerator {
                 w.line("case value(\(scalar.type))")
                 w.line()
                 w.line("public init(\(scalar.literalType)) { self = .value(\(scalar.fromLiteral)) }")
-            }
-
-            // Decoding: keywords and the scalar from a single value, then each object form in turn
-            w.line()
-            w.block("public init(from decoder: any Decoder) throws {") { w in
-                w.line("let container = try decoder.singleValueContainer()")
-                if !keywordCases.isEmpty {
-                    w.block("if let keyword = try? container.decode(String.self) {") { w in
-                        w.line("switch keyword {")
-                        for keyword in keywordCases {
-                            w.line("case \"\(keyword.raw)\": self = .\(escapedSwiftName(keyword.name)); return")
-                        }
-                        w.line("default: break")
-                        w.line("}")
-                    }
-                }
-                if let scalar {
-                    w.line("if let value = try? container.decode(\(scalar.type).self) { self = .value(value); return }")
-                }
-                for object in objects {
-                    w.line("if let value = try? \(object.typeName)(from: decoder) { self = .\(escapedSwiftName(object.caseName))(value); return }")
-                }
-                w.line("throw DecodingError.dataCorruptedError(in: container, debugDescription: \"No form of \(finalName) matches\")")
             }
 
             // Encoding: keywords as their string, the scalar as itself, an object form as its fields

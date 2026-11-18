@@ -660,16 +660,9 @@ public struct SetupIntentMandateDataClientKeyCustomerAcceptanceType: RawRepresen
 }
 
 /// One of the forms `mandate_data` accepts.
-public enum SetupIntentConfirmMandateData: Codable, Sendable {
+public enum SetupIntentConfirmMandateData: Encodable, Sendable {
     case secretKey(SetupIntentMandateDataSecretKey)
     case clientKey(SetupIntentMandateDataClientKey)
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? SetupIntentMandateDataSecretKey(from: decoder) { self = .secretKey(value); return }
-        if let value = try? SetupIntentMandateDataClientKey(from: decoder) { self = .clientKey(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SetupIntentConfirmMandateData matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

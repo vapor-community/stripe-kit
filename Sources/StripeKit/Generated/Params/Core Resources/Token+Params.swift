@@ -1166,18 +1166,11 @@ public struct TokenCardCreditCardSpecsNetworksPreferred: RawRepresentable, Codab
 }
 
 /// One of the forms `card` accepts.
-public enum TokenCard: Codable, Sendable, ExpressibleByStringLiteral {
+public enum TokenCard: Encodable, Sendable, ExpressibleByStringLiteral {
     case creditCardSpecs(TokenCardCreditCardSpecs)
     case value(String)
 
     public init(stringLiteral value: String) { self = .value(value) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(String.self) { self = .value(value); return }
-        if let value = try? TokenCardCreditCardSpecs(from: decoder) { self = .creditCardSpecs(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TokenCard matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

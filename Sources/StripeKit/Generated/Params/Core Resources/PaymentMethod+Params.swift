@@ -676,16 +676,9 @@ public struct PaymentMethodCardToken: StripeParams {
 }
 
 /// One of the forms `card` accepts.
-public enum PaymentMethodCreateCard: Codable, Sendable {
+public enum PaymentMethodCreateCard: Encodable, Sendable {
     case cardDetails(PaymentMethodCardCardDetails)
     case token(PaymentMethodCardToken)
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? PaymentMethodCardCardDetails(from: decoder) { self = .cardDetails(value); return }
-        if let value = try? PaymentMethodCardToken(from: decoder) { self = .token(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentMethodCreateCard matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

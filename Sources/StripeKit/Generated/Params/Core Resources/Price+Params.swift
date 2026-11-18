@@ -373,24 +373,12 @@ public struct PriceCurrencyOptionsTiers: StripeParams {
 }
 
 /// One of the forms `up_to` accepts.
-public enum PriceCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum PriceCurrencyOptionsTiersUpTo: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `inf`
     case inf
     case value(Int)
 
     public init(integerLiteral value: Int) { self = .value(value) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "inf": self = .inf; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceCurrencyOptionsTiersUpTo matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -610,24 +598,12 @@ public struct PriceTiers: StripeParams {
 }
 
 /// One of the forms `up_to` accepts.
-public enum PriceTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum PriceTiersUpTo: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `inf`
     case inf
     case value(Int)
 
     public init(integerLiteral value: Int) { self = .value(value) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "inf": self = .inf; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PriceTiersUpTo matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

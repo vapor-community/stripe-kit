@@ -64,12 +64,4 @@ class ParamUnionTests: XCTestCase {
         XCTAssertEqual(SubscriptionCreateParams(billingCycleAnchor: date).toFormBody(), "billing_cycle_anchor=1700000000")
         XCTAssertEqual(SubscriptionCreateParams(trialEnd: .value(date)).toFormBody(), "trial_end=1700000000")
     }
-
-    // MARK: Round trip
-
-    func testUnionsDecodeWhatTheyEncode() throws {
-        let params = SubscriptionCreateParams(cancelAt: 1_800_000_000, trialEnd: .now)
-        let decoded = try JSONDecoder().decode(SubscriptionCreateParams.self, from: JSONEncoder().encode(params))
-        XCTAssertEqual(decoded.toFormBody(), params.toFormBody())
-    }
 }

@@ -435,24 +435,12 @@ public struct ProductDefaultPriceDataCurrencyOptionsTiers: StripeParams {
 }
 
 /// One of the forms `up_to` accepts.
-public enum ProductDefaultPriceDataCurrencyOptionsTiersUpTo: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum ProductDefaultPriceDataCurrencyOptionsTiersUpTo: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `inf`
     case inf
     case value(Int)
 
     public init(integerLiteral value: Int) { self = .value(value) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "inf": self = .inf; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of ProductDefaultPriceDataCurrencyOptionsTiersUpTo matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

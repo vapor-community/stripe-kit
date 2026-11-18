@@ -1792,16 +1792,9 @@ public struct PaymentIntentMandateDataClientKeyCustomerAcceptanceType: RawRepres
 }
 
 /// One of the forms `mandate_data` accepts.
-public enum PaymentIntentConfirmMandateData: Codable, Sendable {
+public enum PaymentIntentConfirmMandateData: Encodable, Sendable {
     case secretKey(PaymentIntentMandateDataSecretKey)
     case clientKey(PaymentIntentMandateDataClientKey)
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? PaymentIntentMandateDataSecretKey(from: decoder) { self = .secretKey(value); return }
-        if let value = try? PaymentIntentMandateDataClientKey(from: decoder) { self = .clientKey(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentIntentConfirmMandateData matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -1814,7 +1807,7 @@ public enum PaymentIntentConfirmMandateData: Codable, Sendable {
 }
 
 /// One of the forms `off_session` accepts.
-public enum PaymentIntentOffSession: Codable, Sendable, ExpressibleByBooleanLiteral {
+public enum PaymentIntentOffSession: Encodable, Sendable, ExpressibleByBooleanLiteral {
     /// `one_off`
     case oneOff
     /// `recurring`
@@ -1822,19 +1815,6 @@ public enum PaymentIntentOffSession: Codable, Sendable, ExpressibleByBooleanLite
     case value(Bool)
 
     public init(booleanLiteral value: Bool) { self = .value(value) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "one_off": self = .oneOff; return
-            case "recurring": self = .recurring; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Bool.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of PaymentIntentOffSession matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

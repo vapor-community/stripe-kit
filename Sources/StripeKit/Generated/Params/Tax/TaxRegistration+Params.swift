@@ -110,24 +110,12 @@ public struct TaxRegistrationUpdateParams: ClearableParams {
 }
 
 /// One of the forms `active_from` accepts.
-public enum TaxRegistrationActiveFrom: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum TaxRegistrationActiveFrom: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TaxRegistrationActiveFrom matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -4581,24 +4569,12 @@ public struct TaxRegistrationListStatus: RawRepresentable, Codable, Hashable, Se
 }
 
 /// One of the forms `expires_at` accepts.
-public enum TaxRegistrationExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum TaxRegistrationExpiresAt: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of TaxRegistrationExpiresAt matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

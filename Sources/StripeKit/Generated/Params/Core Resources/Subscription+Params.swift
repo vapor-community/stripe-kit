@@ -1079,7 +1079,7 @@ public struct SubscriptionCreateBillingThresholds: StripeParams {
 }
 
 /// One of the forms `cancel_at` accepts.
-public enum SubscriptionCancelAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionCancelAt: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `max_billed_until`
     case maxBilledUntil
     /// `max_period_end`
@@ -1089,20 +1089,6 @@ public enum SubscriptionCancelAt: Codable, Sendable, ExpressibleByIntegerLiteral
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "max_billed_until": self = .maxBilledUntil; return
-            case "max_period_end": self = .maxPeriodEnd; return
-            case "min_period_end": self = .minPeriodEnd; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionCancelAt matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -2358,24 +2344,12 @@ public struct SubscriptionCreateTransferData: StripeParams {
 }
 
 /// One of the forms `trial_end` accepts.
-public enum SubscriptionTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionTrialEnd: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionTrialEnd matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

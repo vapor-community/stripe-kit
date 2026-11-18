@@ -836,24 +836,12 @@ public struct QuoteSubscriptionDataBillingModeFlexibleProrationDiscounts: RawRep
 }
 
 /// One of the forms `effective_date` accepts.
-public enum QuoteSubscriptionDataEffectiveDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum QuoteSubscriptionDataEffectiveDate: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `current_period_end`
     case currentPeriodEnd
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "current_period_end": self = .currentPeriodEnd; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of QuoteSubscriptionDataEffectiveDate matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

@@ -4195,24 +4195,12 @@ public struct InvoiceScheduleDetailsPhasesDurationInterval: RawRepresentable, Co
 }
 
 /// One of the forms `end_date` accepts.
-public enum InvoiceScheduleDetailsPhasesEndDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum InvoiceScheduleDetailsPhasesEndDate: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceScheduleDetailsPhasesEndDate matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -4297,24 +4285,12 @@ public struct InvoiceScheduleDetailsPhasesProrationBehavior: RawRepresentable, C
 }
 
 /// One of the forms `start_date` accepts.
-public enum InvoiceScheduleDetailsPhasesStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum InvoiceScheduleDetailsPhasesStartDate: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceScheduleDetailsPhasesStartDate matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -4350,24 +4326,12 @@ public struct InvoiceScheduleDetailsPhasesTransferData: StripeParams {
 }
 
 /// One of the forms `trial_end` accepts.
-public enum InvoiceScheduleDetailsPhasesTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum InvoiceScheduleDetailsPhasesTrialEnd: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceScheduleDetailsPhasesTrialEnd matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -4689,7 +4653,7 @@ public struct InvoiceSubscriptionDetailsBillingSchedulesBillUntilDurationInterva
 }
 
 /// One of the forms `cancel_at` accepts.
-public enum InvoiceSubscriptionDetailsCancelAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum InvoiceSubscriptionDetailsCancelAt: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `max_billed_until`
     case maxBilledUntil
     /// `max_period_end`
@@ -4699,20 +4663,6 @@ public enum InvoiceSubscriptionDetailsCancelAt: Codable, Sendable, ExpressibleBy
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "max_billed_until": self = .maxBilledUntil; return
-            case "max_period_end": self = .maxPeriodEnd; return
-            case "min_period_end": self = .minPeriodEnd; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceSubscriptionDetailsCancelAt matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -5093,24 +5043,12 @@ public struct InvoiceSubscriptionDetailsResumeAt: RawRepresentable, Codable, Has
 }
 
 /// One of the forms `trial_end` accepts.
-public enum InvoiceSubscriptionDetailsTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum InvoiceSubscriptionDetailsTrialEnd: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of InvoiceSubscriptionDetailsTrialEnd matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

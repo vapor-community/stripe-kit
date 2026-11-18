@@ -129,24 +129,12 @@ public struct FileLinkUpdateParams: ClearableParams {
 }
 
 /// One of the forms `expires_at` accepts.
-public enum FileLinkExpiresAt: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum FileLinkExpiresAt: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of FileLinkExpiresAt matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

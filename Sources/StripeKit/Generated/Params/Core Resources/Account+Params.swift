@@ -3205,24 +3205,12 @@ public struct AccountSettingsPayoutsSchedule: StripeParams {
 }
 
 /// One of the forms `delay_days` accepts.
-public enum AccountSettingsPayoutsScheduleDelayDays: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum AccountSettingsPayoutsScheduleDelayDays: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `minimum`
     case minimum
     case value(Int)
 
     public init(integerLiteral value: Int) { self = .value(value) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "minimum": self = .minimum; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Int.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of AccountSettingsPayoutsScheduleDelayDays matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {

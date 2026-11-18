@@ -1670,24 +1670,12 @@ public struct SubscriptionSchedulePhasesTransferData: StripeParams {
 }
 
 /// One of the forms `start_date` accepts.
-public enum SubscriptionScheduleStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionScheduleStartDate: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionScheduleStartDate matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -1928,24 +1916,12 @@ public struct SubscriptionScheduleUpdatePhases: ClearableParams {
 }
 
 /// One of the forms `end_date` accepts.
-public enum SubscriptionSchedulePhasesEndDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionSchedulePhasesEndDate: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionSchedulePhasesEndDate matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -1960,24 +1936,12 @@ public enum SubscriptionSchedulePhasesEndDate: Codable, Sendable, ExpressibleByI
 }
 
 /// One of the forms `start_date` accepts.
-public enum SubscriptionSchedulePhasesStartDate: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionSchedulePhasesStartDate: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionSchedulePhasesStartDate matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
@@ -1992,24 +1956,12 @@ public enum SubscriptionSchedulePhasesStartDate: Codable, Sendable, ExpressibleB
 }
 
 /// One of the forms `trial_end` accepts.
-public enum SubscriptionSchedulePhasesTrialEnd: Codable, Sendable, ExpressibleByIntegerLiteral {
+public enum SubscriptionSchedulePhasesTrialEnd: Encodable, Sendable, ExpressibleByIntegerLiteral {
     /// `now`
     case now
     case value(Date)
 
     public init(integerLiteral value: Int) { self = .value(Date(timeIntervalSince1970: TimeInterval(value))) }
-
-    public init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let keyword = try? container.decode(String.self) {
-            switch keyword {
-            case "now": self = .now; return
-            default: break
-            }
-        }
-        if let value = try? container.decode(Date.self) { self = .value(value); return }
-        throw DecodingError.dataCorruptedError(in: container, debugDescription: "No form of SubscriptionSchedulePhasesTrialEnd matches")
-    }
 
     public func encode(to encoder: any Encoder) throws {
         switch self {
