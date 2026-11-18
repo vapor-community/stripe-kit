@@ -206,15 +206,20 @@ struct FixtureDecodingTests {
 // MARK: - Fixture loading
 
 enum Fixtures {
-    /// Raw JSON for each fixture, keyed by schema name.
+    /// Raw JSON for each fixture, keyed by schema name, from fixtures3.json at the repo root
+    /// (next to spec3.sdk.json, which it comes with).
     static let all: [String: Data] = {
+        let url = URL(filePath: #filePath)
+            .deletingLastPathComponent()  // StripeKitTests
+            .deletingLastPathComponent()  // Tests
+            .deletingLastPathComponent()  // repo root
+            .appending(path: "fixtures3.json")
         guard
-            let url = Bundle.module.url(forResource: "fixtures3", withExtension: "json"),
             let data = try? Data(contentsOf: url),
             let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
             let resources = root["resources"] as? [String: Any]
         else {
-            fatalError("Could not load fixtures3.json from the test bundle")
+            fatalError("Could not load fixtures3.json from the repo root")
         }
         return resources.compactMapValues { try? JSONSerialization.data(withJSONObject: $0) }
     }()

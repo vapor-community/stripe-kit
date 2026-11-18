@@ -374,8 +374,9 @@ swift run stripe-kit-codegen --spec path/to/spec3.sdk.json --output Sources/Stri
 ### Updating to a new API version
 
 ```bash
-# 1. Download the latest spec
+# 1. Download the latest spec, and the fixtures that come with it
 curl -o spec3.sdk.json https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.sdk.json
+curl -o fixtures3.json https://raw.githubusercontent.com/stripe/openapi/master/openapi/fixtures3.json
 
 # 2. Regenerate
 swift run stripe-kit-codegen
