@@ -1,0 +1,406 @@
+// MARK: - Route Generator
+// Generates a route struct per resource from the spec's paths: a stored closure per operation
+// (replaceable, e.g. to stub in tests), a method per operation with argument labels and
+// defaults that calls it, and a `.live(handler:)` factory that wires each closure to
+// `StripeAPIHandler`.
+
+import Foundation
+
+struct RouteGenerator {
+    let spec: OpenAPISpec
+    let parser: SpecParser
+    /// Deterministic mapping of schema name → API paths, built by SpecParser.buildPathMapping()
+    let pathMapping: [String: [(method: String, path: String)]]
+    
+    /// Generate the closure-based route struct for a resource from its `findOperations` result.
+    /// Returns nil if the resource has no operations.
+    func generate(resource: StripeResource, operations: [RouteOperation]) -> String? {
+        guard !operations.isEmpty else { return nil }
+        
+        let type = resource.swiftTypeName
+        var w = fileHeader("\(type)Routes.swift", in: .client, imports: ["NIOHTTP1"])
+
+        // Route struct: one stored closure per operation (replaceable, e.g. to stub in tests)
+        w.line("// MARK: - \(type) Routes")
+        w.line()
+        w.block("public struct \(type)Routes: Sendable {") { w in
+            for op in operations {
+                let args = arguments(for: op, resource: resource)
+                let closureParams = args.map { "_ \($0.name): \($0.type)" }.joined(separator: ", ")
+                w.line()
+                w.line("/// Performs `\(selector(op, args))`. Replace it to stub that route, e.g. in tests.")
+                w.line("public var \(escapedSwiftName(op.funcName)): @Sendable (\(closureParams)) async throws -> \(returnType(op, resource))")
+            }
+        }
+        w.line()
+
+        // The call API: a method per operation, with argument labels and defaults
+        w.block("extension \(type)Routes {") { w in
+            for (index, op) in operations.enumerated() {
+                let args = arguments(for: op, resource: resource)
+                if index > 0 { w.line() }
+                w.doc(op.description)
+                if op.isDeprecated {
+                    w.line("@available(*, deprecated, message: \"This API is deprecated by Stripe.\")")
+                }
+                let signature = args.map { arg in
+                    let label = arg.label.map { $0 == arg.name ? $0 : "\($0) \(arg.name)" } ?? "_ \(arg.name)"
+                    return "\(label): \(arg.type)" + (arg.defaultValue.map { " = \($0)" } ?? "")
+                }.joined(separator: ", ")
+                let name = escapedSwiftName(op.funcName)
+                w.block("public func \(name)(\(signature)) async throws -> \(returnType(op, resource)) {") { w in
+                    w.line("try await \(name)(\(args.map(\.name).joined(separator: ", ")))")
+                }
+            }
+        }
+        w.line()
+
+        // .live(handler:) factory
+        writeLiveFactory(resource: resource, operations: operations, to: &w)
+        return w.text
+    }
+    
+    // MARK: - Arguments
+
+    /// One argument of an operation: positional in its closure, and in its method with
+    /// `label` (nil for none) and `defaultValue`.
+    private struct RouteArgument {
+        let name: String
+        let type: String
+        let label: String?
+        let defaultValue: String?
+    }
+
+    /// An operation's arguments, in order. Following Swift's API guidelines and Stripe's SDKs
+    /// (`customers.retrieve(id, params, options)`):
+    /// - the first path parameter is unlabeled, later ones are labeled: `retrievePaymentMethod("cus_1", paymentMethod: "pm_1")`
+    /// - a params struct is unlabeled, defaulting to `.init()` when none of its fields is required
+    /// - otherwise `expand:` (default nil), and always `options:` last (default `.init()`)
+    private func arguments(for op: RouteOperation, resource: StripeResource) -> [RouteArgument] {
+        var args = op.pathParams.enumerated().map { index, param in
+            let name = snakeToCamel(param)
+            return RouteArgument(name: name, type: "String", label: index == 0 ? nil : name, defaultValue: nil)
+        }
+        if op.isMultipart {
+            args += [("file", "Data"), ("fileName", "String"), ("mimeType", "String"), ("purpose", "String")].map {
+                RouteArgument(name: $0.0, type: $0.1, label: $0.0, defaultValue: nil)
+            }
+        } else if op.hasBody || op.hasQueryParams {
+            let required = op.hasBody ? op.hasRequiredBodyFields : op.hasRequiredQueryParams
+            args.append(RouteArgument(
+                name: "params",
+                type: "\(resource.swiftTypeName)\(op.action)Params",
+                label: nil,
+                defaultValue: required ? nil : ".init()"
+            ))
+        } else {
+            args.append(RouteArgument(name: "expand", type: "[String]?", label: "expand", defaultValue: "nil"))
+        }
+        args.append(RouteArgument(name: "options", type: "RequestOptions", label: "options", defaultValue: ".init()"))
+        return args
+    }
+
+    /// The method's selector, e.g. `retrieve(_:expand:options:)`
+    private func selector(_ op: RouteOperation, _ args: [RouteArgument]) -> String {
+        "\(op.funcName)(\(args.map { "\($0.label ?? "_"):" }.joined()))"
+    }
+
+    private func returnType(_ op: RouteOperation, _ resource: StripeResource) -> String {
+        op.returnType ?? resource.swiftTypeName
+    }
+
+    // MARK: - Live Factory
+    
+    private func writeLiveFactory(resource: StripeResource, operations: [RouteOperation], to w: inout CodeWriter) {
+        w.block("extension \(resource.swiftTypeName)Routes {") { w in
+            w.block("static func live(handler: StripeAPIHandler) -> Self {") { w in
+                w.block("\(resource.swiftTypeName)Routes(", closer: ")") { w in
+                    for (index, op) in operations.enumerated() {
+                        let comma = index < operations.count - 1 ? "," : ""
+                        let closureParams = arguments(for: op, resource: resource).map(\.name).joined(separator: ", ")
+                        w.block("\(escapedSwiftName(op.funcName)): { \(closureParams) in", closer: "}\(comma)") { w in
+                            w.line("try await \(handlerCall(for: op))")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /// The handler call a route's closure makes with its arguments (see `arguments(for:)`)
+    private func handlerCall(for op: RouteOperation) -> String {
+        // Path params interpolated into the path. The handler takes it as a `StripePath`,
+        // which escapes each interpolated value as one path segment.
+        var apiPath = op.path
+        for param in op.pathParams {
+            apiPath = apiPath.replacing("{\(param)}", with: "\\(\(snakeToCamel(param)))")
+        }
+
+        if op.isMultipart {
+            var args = ["\"\(apiPath)\""]
+            if let serverURL = op.serverURL { args.append("baseURL: \"\(serverURL)\"") }
+            args += ["fileData: file", "fileName: fileName", "mimeType: mimeType", "purpose: purpose", "options: options"]
+            return "handler.sendMultipart(\(args.joined(separator: ", ")))"
+        }
+        var args = [".\(op.httpMethod)", "\"\(apiPath)\""]
+        args.append(op.hasBody || op.hasQueryParams ? "params: params" : "expand: expand")
+        if op.returnsFile, let serverURL = op.serverURL {
+            args.append("baseURL: \"\(serverURL)\"")
+        }
+        args.append("options: options")
+        return "handler.\(op.returnsFile ? "sendForData" : "send")(\(args.joined(separator: ", ")))"
+    }
+
+    // MARK: - Operation Discovery
+    
+    struct RouteOperation {
+        let funcName: String
+        let action: String
+        let httpMethod: String
+        let path: String
+        let pathParams: [String]
+        let description: String?
+        let isDeprecated: Bool
+        let hasBody: Bool
+        let hasRequiredBodyFields: Bool
+        let isMultipart: Bool
+        /// GET with query params beyond `expand`: takes a `{Resource}{Action}Params` struct
+        let hasQueryParams: Bool
+        let hasRequiredQueryParams: Bool
+        let returnType: String?  // nil means use resource type
+        /// False when the response's type couldn't be read from the spec and the route falls
+        /// back to the resource type (a polymorphic list or `anyOf` response, …)
+        let returnTypeFromSpec: Bool
+        /// Host from the operation's `servers` (no trailing slash), when it isn't the API host
+        let serverURL: String?
+        /// The response is a file (returned as `Data`), not JSON
+        let returnsFile: Bool
+
+        /// The same operation under another name (its params struct is named after it too).
+        func renamed(_ name: String) -> RouteOperation {
+            RouteOperation(
+                funcName: name, action: capitalize(name), httpMethod: httpMethod, path: path,
+                pathParams: pathParams, description: description, isDeprecated: isDeprecated,
+                hasBody: hasBody, hasRequiredBodyFields: hasRequiredBodyFields,
+                isMultipart: isMultipart,
+                hasQueryParams: hasQueryParams, hasRequiredQueryParams: hasRequiredQueryParams,
+                returnType: returnType, returnTypeFromSpec: returnTypeFromSpec,
+                serverURL: serverURL, returnsFile: returnsFile
+            )
+        }
+    }
+    
+    /// The return type an operation declares when its response is, or can be, a deleted object:
+    /// - `deleted_customer` (DELETE /v1/customers/{customer}) → `DeletedCustomer`
+    /// - `customer | deleted_customer` (GET /v1/customers/{customer}) → `ObjectOrDeleted<Customer, DeletedCustomer>`
+    /// Returns nil for every other response, which then uses the resource type.
+    /// Same approach as the async-stripe Rust SDK, which also follows the spec's response types.
+    private func deletedResponseType(_ op: OperationObject) -> String? {
+        guard let schema = op.responses?["200"]?.content?["application/json"]?.schema else { return nil }
+        if let ref = schema.ref {
+            let name = refToSchemaName(ref)
+            return name.starts(with: SpecParser.deletedPrefix) ? parser.schemaNameToSwiftType(name) : nil
+        }
+
+        let names = (schema.anyOf ?? []).compactMap { $0.ref.map(refToSchemaName) }
+        let deleted = names.filter { $0.starts(with: SpecParser.deletedPrefix) }
+        let objects = names.filter { !$0.starts(with: SpecParser.deletedPrefix) }
+        guard names.count == 2, deleted.count == 1, objects.count == 1 else { return nil }
+        return "ObjectOrDeleted<\(parser.schemaNameToSwiftType(objects[0])), \(parser.schemaNameToSwiftType(deleted[0]))>"
+    }
+
+    /// Swift type of a list/search response's items (`data.items.$ref`), if it names one.
+    private func listItemType(_ op: OperationObject) -> String? {
+        guard let ref = op.responses?["200"]?.content?["application/json"]?.schema?.properties?["data"]?.items?.ref
+        else { return nil }
+        return parser.schemaNameToSwiftType(refToSchemaName(ref))
+    }
+
+    /// Swift type of a response that is `anyOf` several object types (none deleted), as the
+    /// polymorphic schema covering them all.
+    private func polymorphicResponseType(_ op: OperationObject) -> String? {
+        guard let anyOf = op.responses?["200"]?.content?["application/json"]?.schema?.anyOf, anyOf.count > 1 else { return nil }
+        let refs = anyOf.compactMap { $0.ref.map(refToSchemaName) }
+        guard refs.count == anyOf.count, !refs.contains(where: { $0.starts(with: SpecParser.deletedPrefix) }),
+              let schema = parser.polymorphicSchema(covering: Set(refs))
+        else { return nil }
+        return parser.schemaNameToSwiftType(schema)
+    }
+
+    /// Swift type of a response that is a plain `$ref`.
+    private func referencedResponseType(_ op: OperationObject) -> String? {
+        guard let ref = op.responses?["200"]?.content?["application/json"]?.schema?.ref else { return nil }
+        return parser.schemaNameToSwiftType(refToSchemaName(ref))
+    }
+
+    /// The 200 response's wrapper kind, read from its `object` enum.
+    private func responseWrapper(_ op: OperationObject) -> String? {
+        guard let schema = op.responses?["200"]?.content?["application/json"]?.schema,
+              let values = schema.properties?["object"]?.enum, values.count == 1 else { return nil }
+        return values[0]
+    }
+
+    /// The operations generated for a resource. The CLI computes these once per resource and
+    /// passes them to every generator (routes, params, client, coverage check), so params
+    /// structs get the same names the routes refer to.
+    func findOperations(for resource: StripeResource) -> [RouteOperation] {
+        var results: [RouteOperation] = []
+        
+        // Deterministic: look up paths directly from the spec-derived mapping
+        guard let resourcePaths = pathMapping[resource.schemaName] else { return [] }
+        
+        // Get unique paths (a path may appear multiple times for list + direct refs)
+        let uniquePaths = Set(resourcePaths.map { $0.path })
+        // Paths mapped here by response type. On these, every method not owned by another
+        // resource is generated; on paths mapped here only through spec ownership, just the
+        // owned methods are.
+        let responseMappedPaths = Set(resourcePaths
+            .filter { parser.reassignedOwner(method: $0.method, path: $0.path) == nil }
+            .map(\.path))
+        
+        // basePath: shortest path that is a segment-aligned prefix of at least one other path
+        // (e.g. /v1/customers). An operation under it is in the resource's own namespace,
+        // which decides who keeps a name when several share one (see below).
+        let basePath: String = {
+            let sorted = uniquePaths.sorted { $0.count < $1.count }
+            for candidate in sorted {
+                let isPrefix = sorted.contains { other in
+                    other != candidate && other.starts(with: candidate + "/")
+                }
+                if isPrefix { return candidate }
+            }
+            return sorted.first ?? ""
+        }()
+        
+        for path in uniquePaths.sorted() {
+            guard let pathItem = spec.paths[path] else { continue }
+            
+            let methods: [(String, OperationObject?)] = [
+                ("GET", pathItem.get),
+                ("POST", pathItem.post),
+                ("DELETE", pathItem.delete)
+            ]
+            
+            for (method, operation) in methods {
+                guard let op = operation else { continue }
+                if let owner = parser.reassignedOwner(method: method, path: path) {
+                    guard owner == resource.schemaName else { continue }
+                } else {
+                    guard responseMappedPaths.contains(path) else { continue }
+                }
+                
+                let pathParams = extractPathParams(path)
+                // Named from the spec's x-stripeOperations, as Stripe's own SDKs are. Every
+                // operation has one today; without it the coverage check fails generation, so
+                // the operationId fallback only needs to be unique enough to report.
+                let funcName = parser.stripeMethodName(method: method, path: path, schemaName: resource.schemaName).map(snakeToCamel)
+                    ?? (op.operationId.map { $0.prefix(1).lowercased() + $0.dropFirst() } ?? "unnamed")
+                let action = capitalize(funcName)
+                
+                // Check if POST has a requestBody with properties
+                let isMultipart = method == "POST" && op.requestBody?.content?["multipart/form-data"] != nil
+                let hasBody = method == "POST" && !isMultipart && op.requestBody?.content?["application/x-www-form-urlencoded"]?.schema?.properties?.isEmpty == false
+                let requiredFields = op.requestBody?.content?["application/x-www-form-urlencoded"]?.schema?.required ?? []
+                
+                // Query params (GET only; no other method has any besides `expand`)
+                let queryParams = method == "GET" ? op.queryParameters : []
+
+                // Return type, from the 200 response's shape
+                let returnType: String?
+                // An operation grouped under its spec owner can return another type
+                // (customers.listPaymentMethods → PaymentMethodList), so use the response's types.
+                let listItem = listItemType(op)
+                let itemType = listItem ?? resource.swiftTypeName
+                let returnTypeFromSpec: Bool
+                let returnsFile = op.fileResponseContentType != nil
+                let serverURL = op.servers?.first.map { $0.url.hasSuffix("/") ? String($0.url.dropLast()) : $0.url }
+                switch responseWrapper(op) {
+                case _ where returnsFile:
+                    returnType = "Data"
+                    returnTypeFromSpec = true
+                case "list":
+                    returnType = "StripeList<\(itemType)>"
+                    returnTypeFromSpec = listItem != nil
+                case "search_result":
+                    returnType = "StripeSearchResult<\(itemType)>"
+                    returnTypeFromSpec = listItem != nil
+                default:
+                    // A deleted object type when the spec's response can be one; otherwise the
+                    // referenced type, or the resource type
+                    returnType = deletedResponseType(op) ?? referencedResponseType(op) ?? polymorphicResponseType(op)
+                    returnTypeFromSpec = returnType != nil
+                }
+                
+                results.append(RouteOperation(
+                    funcName: funcName,
+                    action: action,
+                    httpMethod: method,
+                    path: path,
+                    pathParams: pathParams,
+                    description: op.description,
+                    isDeprecated: op.deprecated == true,
+                    hasBody: hasBody,
+                    hasRequiredBodyFields: !requiredFields.isEmpty,
+                    isMultipart: isMultipart,
+                    hasQueryParams: !queryParams.isEmpty,
+                    hasRequiredQueryParams: queryParams.contains { $0.required == true },
+                    returnType: returnType,
+                    returnTypeFromSpec: returnTypeFromSpec,
+                    serverURL: serverURL,
+                    returnsFile: returnsFile
+                ))
+            }
+        }
+        
+        // Resolve name collisions. The spec reuses a method name for the same resource under
+        // different parents (tax_id `create` is both POST /v1/tax_ids and
+        // POST /v1/customers/{customer}/tax_ids); Stripe's SDKs put those on different services.
+        // The operation in the resource's own namespace keeps the name; the others get a
+        // parent suffix (`createForCustomer`). Without a local one, all get a suffix.
+        // One with no path param acts on the API key's own object (GET /v1/account next to
+        // GET /v1/accounts/{account}) and gets `Current`: `retrieveCurrent`.
+        var byFunc: [String: [RouteOperation]] = [:]
+        for op in results { byFunc[op.funcName, default: []].append(op) }
+        var resolved: [String: RouteOperation] = [:]
+        for funcName in byFunc.keys.sorted() {
+            let group = byFunc[funcName]!
+            guard group.count > 1 else { resolved[funcName] = group[0]; continue }
+            let local = group.filter { $0.path.starts(with: basePath) }
+            let keeper = local.count == 1 ? local[0] : nil
+            for op in group {
+                if let keeper, op.path == keeper.path {
+                    resolved[funcName] = op
+                    continue
+                }
+                let name = op.pathParams.first.map { funcName + "For" + capitalize(snakeToCamel($0)) } ?? funcName + "Current"
+                guard resolved[name] == nil, byFunc[name] == nil else { continue }
+                resolved[name] = op.renamed(name)
+            }
+        }
+        results = Array(resolved.values)
+        
+        return results.sorted { a, b in
+            // Sort by: create, retrieve, update, list, delete, then alphabetical
+            let order = ["create": 0, "retrieve": 1, "update": 2, "list": 3, "search": 4, "delete": 5]
+            let aOrder = order[a.funcName] ?? 10
+            let bOrder = order[b.funcName] ?? 10
+            if aOrder != bOrder { return aOrder < bOrder }
+            return a.funcName < b.funcName
+        }
+    }
+    
+    // MARK: - Helpers
+    
+    private func extractPathParams(_ path: String) -> [String] {
+        var params: [String] = []
+        var remaining = path[...]
+        while let start = remaining.firstIndex(of: "{"),
+              let end = remaining.firstIndex(of: "}") {
+            let param = String(remaining[remaining.index(after: start)..<end])
+            params.append(param)
+            remaining = remaining[remaining.index(after: end)...]
+        }
+        return params
+    }
+    
+}
