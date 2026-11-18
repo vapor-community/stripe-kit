@@ -127,7 +127,7 @@ public struct StripeAPIHandler: Sendable {
             query.append(form)
         }
         for value in expand ?? [] {
-            query.append("expand[]=\(value.addingPercentEncoding(withAllowedCharacters: .stripeQueryAllowed) ?? value)")
+            query.append("expand[]=\(value.percentEncoded())")
         }
 
         var url = (baseURL ?? self.baseURL) + path.description

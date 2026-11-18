@@ -12,7 +12,7 @@ struct RequestEncodingTests {
     @Test("GET params go in the query string, with no body")
     func getParamsInQuery() {
         let request = handler.request(.GET, "/v1/customers", params: CustomerListParams(email: "a+b@example.com", limit: 3))
-        #expect(request.url == "https://api.stripe.com/v1/customers?email=a%2Bb@example.com&limit=3")
+        #expect(request.url == "https://api.stripe.com/v1/customers?email=a%2Bb%40example.com&limit=3")
         #expect(request.body == nil)
         #expect(request.headers["Content-Type"].isEmpty)
     }

@@ -48,7 +48,7 @@ extension StripeParams {
         var pairs: [(String, String)] = []
         json.flatten(key: "", into: &pairs)
         return pairs
-            .map { "\($0.0)=\($0.1.addingPercentEncoding(withAllowedCharacters: .stripeQueryAllowed) ?? $0.1)" }
+            .map { "\($0.0)=\($0.1.percentEncoded())" }
             .joined(separator: "&")
     }
 }
@@ -125,21 +125,9 @@ private extension JSONValue {
             }
             // Sorted for deterministic output; Stripe doesn't care about field order.
             for (name, value) in fields.sorted(by: { $0.key < $1.key }) {
-                let name = name.addingPercentEncoding(withAllowedCharacters: .stripeQueryAllowed) ?? name
+                let name = name.percentEncoded()
                 value.flatten(key: key.isEmpty ? name : "\(key)[\(name)]", into: &pairs)
             }
         }
     }
-}
-
-extension CharacterSet {
-    /// URL query allowed characters minus `+`, `&`, and `=` which have special
-    /// meaning in form-encoded bodies.
-    static let stripeQueryAllowed: CharacterSet = {
-        var cs = CharacterSet.urlQueryAllowed
-        cs.remove("+")
-        cs.remove("&")
-        cs.remove("=")
-        return cs
-    }()
 }

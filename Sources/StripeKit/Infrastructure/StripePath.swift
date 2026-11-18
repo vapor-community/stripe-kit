@@ -55,14 +55,7 @@ public struct StripePath: ExpressibleByStringInterpolation, Sendable, Hashable, 
 
         /// Appends `value` escaped as one path segment.
         public mutating func appendInterpolation(_ value: String) {
-            path += value.addingPercentEncoding(withAllowedCharacters: .stripePathSegmentAllowed) ?? value
+            path += value.percentEncoded()
         }
     }
-}
-
-extension CharacterSet {
-    /// RFC 3986 unreserved characters, ASCII only
-    static let stripePathSegmentAllowed = CharacterSet(
-        charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
-    )
 }

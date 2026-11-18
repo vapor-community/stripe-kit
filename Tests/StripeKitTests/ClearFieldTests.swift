@@ -20,7 +20,7 @@ struct ClearFieldTests {
         settings.clear(.customFields)
         settings.clear(.renderingOptions)
         let params = CustomerUpdateParams(invoiceSettings: settings)
-        #expect(params.toFormBody() == "invoice_settings[custom_fields]=&invoice_settings[footer]=Thanks!&invoice_settings[rendering_options]=")
+        #expect(params.toFormBody() == "invoice_settings[custom_fields]=&invoice_settings[footer]=Thanks%21&invoice_settings[rendering_options]=")
     }
 
     @Test("Clearing a field replaces a value set on it")

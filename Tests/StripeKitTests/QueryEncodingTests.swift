@@ -128,6 +128,6 @@ class StripeParamsTests: XCTestCase {
     func testFormBodyEscapesReservedCharacters() throws {
         // `+`, `&` and `=` would otherwise be read as a space and as separators.
         let params = TestParams(amount: 1, currency: "usd", customer: "Hamlin, Hamlin & McGill+a=b")
-        XCTAssertTrue(params.toFormBody().contains("customer=Hamlin,%20Hamlin%20%26%20McGill%2Ba%3Db"), params.toFormBody())
+        XCTAssertTrue(params.toFormBody().contains("customer=Hamlin%2C%20Hamlin%20%26%20McGill%2Ba%3Db"), params.toFormBody())
     }
 }
